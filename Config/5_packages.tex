@@ -54,7 +54,155 @@
 % \usepackage{minted}    % Fontification of source code listings
 
 % \usepackage{listings}    % Fontification of source code listingsConfig/5_packages.tex
-%                          % In alternative, use the package “minted” (highly recomended)
+%                          % In alternative, use the package “minted” (highly
+% recomended)
+% src: https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+\usepackage{listings}
+\input{./sty/listing.sty}
+
+%Caption formatting
+%\usepackage[small]{caption}
+% src: https://tex.stackexchange.com/a/72981
+%\usepackage[skip=0cm,list=true,labelfont=it]{subcaption}
+%\usepackage[list=true,labelfont=it,font=small]{subcaption}
+
+% Date
+%\renewcommand{\today}{\ifcase \month \or January\or February\or March\or %
+%April\or May \or June\or July\or August\or September\or October\or November\or %
+%December\fi, \number \year}
+
+\usepackage[shortcuts]{extdash} % to hyphenate words with hyphens
+\usepackage[export]{adjustbox} % to position images 
+
+
+\usepackage{enumerate}
+\usepackage{enumitem}
+\newlist{enum-c}{enumerate}{1}
+\setlist[enum-c,1]{labelindent=\parindent, label=\arabic*., nolistsep,
+align=left, leftmargin=*} %,label=$\star$
+
+\newlist{item-c}{itemize}{1}
+\setlist[item-c,1]{labelindent=\parindent, label=\textbullet, nolistsep,
+align=left, leftmargin=*} %,label=$\star$
+
+%%%%%%%%%%%%%%% Latex Tables %%%%%%%%%%%%%%
+%\usepackage{tabularray}[xcolor]
+\usepackage{booktabs}
+%\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{longtable}
+%\usepackage{pdflscape}
+
+%\usepackage{colortbl}
+
+%\usepackage[table,xcdraw]{xcolor}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{textcomp} % for registered and trademark symbols
+\usepackage[percent]{overpic}
+\usepackage{multirow}
+\usepackage{pdfpages}
+\usepackage{wasysym}
+
+%%%%%%%%%%%%% Unicode support %%%%%%%%%%%%%
+\usepackage{fontspec}
+\usepackage{newunicodechar}
+%\newunicodechar{ǚ}{\v{ü}}
+%\newunicodechar{Ǚ}{\v{Ü}}
+%\newunicodechar{ǎ}{\v{a}}
+%\newunicodechar{Ǎ}{\v{A}}
+%\newunicodechar{ǒ}{\v{o}}
+%\newunicodechar{Ǒ}{\v{O}}
+
+% https://tex.stackexchange.com/a/280718
+\usepackage{pifont} % for check mark
+\usepackage{gensymb}
+
+% src: https://tex.stackexchange.com/a/476574
+\makeatletter
+
+\newunicodechar{ǚ}{\add@accent{`^^^^02c7}{ü}}
+\newunicodechar{Ǚ}{\add@accent{`^^^^02c7}{Ü}}
+\newunicodechar{ǎ}{\add@accent{`^^^^02c7}{a}}
+
+%\newfontfamily{\eurofont}{Best Font}[Scale=MatchUppercase]
+\newunicodechar{€}{{€}}
+
+\newunicodechar{✓}{\ding{51}}
+\newunicodechar{✗}{\ding{55}}
+
+%\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}  
+%\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ================== PlantUML latex output
+%\usepackage{tikz}
+%\usepackage{aeguill}\
+%\usepackage{svg}
+%\svgpath{{../img/svg/}} % <- using \svgpath to avoid warning
+\usepackage{epstopdf} %converting to PDF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%% ========== Footnotes
+% src: https://tex.stackexchange.com/a/16871
+\newcommand*{\fnref}[1]{\textsuperscript{\ref{#1}}}
+%\newcommand*{\fnlicA}{\footnotetext{Used under the terms of the Creative Commons BY-SA 3.0 licence.}}%
+\newcommand*{\fnlicCCSA}[1]{\footnotetext{\label{#1}Used under the terms of the
+    \href{https://creativecommons.org/licenses/by-sa/3.0/}{Creative Commons
+      BY-SA 3.0 licence.}}}%
+\newcommand*{\fnlicCC}[1]{\footnotetext{\label{#1}Used under the terms of the
+    \href{https://creativecommons.org/licenses/by/3.0/}{Creative Commons BY 3.0
+      licence.}}}%
+%
+\newcommand*{\fnlicCCNCa}[1]{\footnotetext{\label{#1}Used under the terms of the
+    \href{https://creativecommons.org/licenses/by-nc-nd/4.0/}{Creative Commons
+      BY-NC-ND 4.0 licence.}}}%
+\newcommand*{\fnlicCCNC}[1]{\footnotetext{\label{#1}Used under the terms of the
+    \href{https://creativecommons.org/licenses/by-nc/3.0/}{Creative Commons
+      BY-NC 3.0 licence.}}}%
+\newcommand*{\fnlicReq}[2]{\footnotetext{Used with permission from #1: licence
+    nr. #2}}%
+%\feetbelowfloat%
+% ==================
+
+% ================================ Algorithmic ===============================
+% algorithms and pseudocode
+\usepackage{algorithm}
+%\usepackage[noend]{algpseudocode}
+\usepackage[end]{algpseudocode}
+% src: https://tex.stackexchange.com/a/328067
+\algdef{SE}[VARIABLES]{Variables}{EndVariables}
+   {\algorithmicvariables}
+   {\algorithmicend\ \algorithmicvariables}
+   \algnewcommand{\algorithmicvariables}{\textbf{variables declaration}}
+
+   % src:
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+% https://tex.stackexchange.com/a/33798 
+\algnewcommand{\algorithmicgoto}{\textbf{go to}}%
+\algnewcommand{\Goto}{\algorithmicgoto\xspace}%
+\algnewcommand{\Label}{\State\unskip}%
+% ============================================================================
+
+%\renewcommand{\cftpartleader}{\cftdotfill{\cftnodots}} % for parts
+%\renewcommand{\cftchapleader}{\cftdotfill{\cftnodots}} % for chapters
+%\renewcommand{\cftsecleader}{\cftdotfill{\cftnodots}} % for sections
+%\renewcommand{\cftsubsecleader}{\cftdotfill{\cftnodots}} % for subsections
+%\renewcommand{\cftsubsubsecleader}{\cftdotfill{\cftnodots}} % for subsubsections
+%\renewcommand{\cftfigleader}{\cftdotfill{\cftnodots}} % for figures
+%\renewcommand{\cfttableader}{\cftdotfill{\cftnodots}} % for tables
+
+% Better looking bibliography references
+%\usepackage[square, numbers]{natbib}
+%\usepackage{notoccite}
+%\bibliographystyle{unsrtnat}
 
 % \lstset{
 %     captionpos=t,

@@ -8,8 +8,20 @@
 
 \typeout{NT FILE dedicatory.tex}%
 
-\begin{ntdedicatory}
+\begin{ntdedicatory}[10cm]
 
-Dedicatory lorem ipsum.
+  %\usefont{T1}{LobsterTwo-LF}{bx}{it}
+  % src: https://en.wikibooks.org/wiki/LaTeX/Fonts
+  \rmfamily
+  {\Large To my parents,}\\
+  {\large for always pushing me forward.}
+  \par   %% or a blank line
+  \vspace{4\baselineskip}
+  
+  \normalfont
+  \emph{"Wir m{\"u}ssen wissen,\\ 
+  Wir werden wissen"}\\
+  \vspace{\baselineskip}
+  David Hilbert, 1930
 
 \end{ntdedicatory}

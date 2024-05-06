@@ -1,0 +1,167 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% chapter1.tex
+%% NOVA thesis document file
+%%
+%% Chapter with introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE INTRO.tex}%
+
+%\chapter{Introduction}
+%Hello
+%
+%%\prependtographicspath{{Chapters/Figures/Covers/}}
+%\definecolor{Schlgray}{gray}{0.95}
+
+% CHAPTER - Introduction -------------------------
+\chapter{Introduction}%
+\label{cha:introduction}
+\glsxtrfull{uav}s, \glsxtrfull{uas}s, or more commonly drones, are a class of
+unmanned robotic vehicles that can execute flying missions and carry payloads,
+guided either by remote control stations or in an autonomous
+way~\cite{alladi2022UAVBlockain,glossner2021overview}.
+
+The \glsxtrfull{uav}s market is booming. In 2017 the North America market had a revenue of
+737 million USD dollars and a eight-fold increase is expected for 2026 with a
+staggering 6.7 billion USD dollars, with strong contributions from the sectors
+of agriculture and farming, and security and law
+enforcement~\cite{mohsan2022towards}.
+
+The versatility and utility of \glspl{uav} are well displayed is by its wide
+range of applications, performing tasks with high added value and that would be
+somewhat hard or impossible for a person to achieve: rescue operations and
+saving lifes, agriculture and farming, building structures, pipeline
+inspections, delivering goods and medical supplies, video capturing and filming,
+surveying, inventory management, providing telecommunications in remote areas,
+among others~\cite{alladi2022UAVBlockain}.
+
+However, only recently regulations have been explicitly enforced on \glspl{uav},
+with many countries allowing drones to fly over populated areas (at altitudes
+lower than 150 m)~\cite{nassi2021sok}. This poses several safety and security
+concerns. First, because a drone's crash, unintentional or not, can severely
+harm people and goods. Secondly, because they are cyber-physical systems which
+are able to record sensitive and private information. Thus,
+it is critical to ensure the security of an \gls{uav} system.
+
+Furthermore, \gls{uav}'s applications have real-time constraints but with mixed
+criticality levels, i.e., the risk of failure is more severe in some case than others.
+For example, lets consider an automotive infotainment system that displays
+navigation and rear-view camera information. The navigation information is a
+commodity for the user, and if, for example, the radio volume suddenly
+increases, although uncomfortable, it poses no safety risk for the user. On the
+other hand, the rear-view camera information assists the user in parking
+maneuvers, and, if a failure occurs, the vehicle may collide causing damage or
+harming people.
+
+This is an example of a \gls{mcs}, i.e., a system comprised of computer
+\gls{hw} and \gls{sw} that executes several tasks/applications of different
+criticality (safety) levels. Furthermore, as this example illustrates, an increasingly relevant trend in the design of real-time and embedded systems
+is the integration of mixed-criticality components onto a common hardware
+platform while trying to meet the stringent \gls{swap-c} and safety requirements
+provided by safety-critical standards, such as those for automotive~\cite{iso26262}, avionics~\cite{rtca1992software},
+and railway~\cite{cenelec201250128} industries.
+
+As a result of this integration
+complexity increases, requiring higher computational power, and thus, these
+\gls{hw} platforms are migrating from single cores to multi-cores and in the
+future many-core architectures~\cite{burns2022mixed}. This leads to the
+fundamental question of how to reconcile the
+conflicting requirements of \emph{partitioning} for (safety) assurance and \emph{sharing} for
+efficient resource usage. Consequently, problems arise in the modelling, design,
+implementation, and verification of the required \gls{hw} and
+\gls{sw}~\cite{burns2022mixed}.
+
+Two major areas of research stem from this dichotomy: a more theorethical one,
+largely focused on using criticality-specific \glspl{wcet} to schedule systems
+at each criticality level, but at the expenses of high processor utilization; a
+more practical one, focused on the safe partitioning of a system with the
+sharing of computational and communication resources, but with increased
+complexity.
+Unfortunately, the combination of both areas is not easy: flexible scheduling
+requires, at least, dynamic partitioning, whereas certified systems require
+complete separation or, at least, static partitioning. This mismatch needs to be
+addressed in future work~\cite{burns2022mixed}.
+
+%\section{Motivation}
+%Mixed-criticality systems such as \gls{uav} applications have stringent
+%requirements on temporal and criticality-level, but also in the security level.
+%
+%The present works addresses this by developing a trustworthy \gls{sw} stack for
+%\gls{uav} applications that can 
+
+\section{Goals}
+The main goal of the present work is the development of a trustworthy
+open-source software stack for \gls{uav} applications, where security and safety
+are paramount, thus closing the gap between open-source and commercial solutions
+and contributing for the widespread adoption of secure and safe features.
+
+To this end several main objectives have been outlined:
+\begin{enumerate}
+\item Identify the \gls{uav} application requirements and select the target
+  \gls{hw} platform with several security primitives
+  (e.g, virtual memory, memory protection, TrustZone, criptographic
+  accelerators, etc.).
+\item Design an open-source \gls{sw} software stack using as reference a
+  \gls{sph}, namely Bao.
+\item Provide support for autonomous mode (autopilot).
+\item Implement the device drivers for UAV's control.
+\item Perform the remote update of the system, through an \gls{ota} mechanism.
+\item Assess and demonstrate the security advantages of the UAV's prototype over
+  others open-source competitors.
+%\item Utilize a platform with several \gls{hw} primitives focused on security
+%  (e.g, virtual memory, memory protection, TrustZone, criptographic
+%  accelerators, etc.).
+\end{enumerate}
+
+\section{Document structure}
+This thesis is organised as follows:
+In Chapter~\ref{ch:state-art}, some background is provided concerning mixed criticality
+systems, its relevance and the challenges it poses, alongside with the current
+approach to address its complexity.
+Next, \glspl{uav} are discussed,
+namely the reference hardware and software, both as open-source and commercial
+solutions. Lastly, the related work is
+presented, showing the current research directions and topics.%
+%% the additive
+%% manufacturing technology, \gls{lpbf}, and \gls{mmam} is presented, with special
+%% focus on the last, namely on \gls{fgm} structures. Lastly, a brief overview of
+%% the available methodologies in these fields are presented.
+
+%% Chapter~\ref{ch:theor-found} lays out the theoretical foundations for this work,
+%% namely the project development methodologies and associated tools,
+%% markup languages, and database management systems.
+%% %the \gls{lpbf} process in detail.
+%% %This chapter can be skipped without 
+%% 
+%% Chapter~\ref{ch:prob-challenge} presents the multi-material design and production
+%% problem and its challenges using the \gls{lpbf} technology. The methodology
+%% devised for multi-material production via \gls{lpbf} technology is presented to tackle the high complexity of the process
+%% and the lack of a supporting methodology, taking into account the key agents of
+%% the process and leveraging the process information.
+%% 
+%% Chapter~\ref{ch:development} shows all the development phase of the
+%% project. A specific workflow was instantiated from
+%% the methodology, attending to the specific requirements and constraints of the
+%% project. Based on this workflow, a toolchain was assembled, designing the
+%% required software components. Finally, based on the requirements and constraints
+%% of the process itself, the mechanical and electronic infrastructures were
+%% designed, and on top of the last, the control software was designed.
+%% 
+%% In Chapter~\ref{ch:application}, the workflow, and the equipment were put to the test
+%% to verify their suitability to the process and their performance for
+%% multi-material component production. Additionally, production manufacturing
+%% tests were also performed. Tests were used to validate the workflow and
+%% equipment, pointing out also straightforward ways to adapt and implement custom
+%% paths for the multi-material \gls{lpbf} process.
+%% 
+%% The Chapter~\ref{ch:conclusion} gives a summary of this thesis as well as
+%% prospect for future work.
+%% 
+%% Lastly, the appendices contain detailed information about the toolchain, wiring schematics, use cases, EzCAD \gls{api}, and sequence
+%% diagrams, and the annexes contain the paper submitted, stemming out of this work.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../template"
+%%% End:
