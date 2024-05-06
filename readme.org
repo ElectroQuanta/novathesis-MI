@@ -13,6 +13,8 @@
   - [[#template-macros][Template macros]]
   - [[#folder-struct][Folder struct]]
   - [[#update-repo][Update repo]]
+  - [[#packages][Packages]]
+    - [[#fail-to-compile-caption-and-subcaption][Fail to compile: caption and subcaption]]
 - [[#writing][Writing]]
   - [[#-done-title][✔ DONE Title]]
   - [[#abstract][Abstract]]
@@ -210,6 +212,19 @@ version of it, it was more than 1 year ago (Jan 2023).
 6) [ ] Compile it again
 7) [ ] Add it as submodule of the current repo
   
+** Packages
+
+*** Fail to compile: caption and subcaption                         :Problem:
+
+I had to comment the lines below
+#+begin_src latex
+%Caption formatting
+\usepackage[small]{caption}
+% src: https://tex.stackexchange.com/a/72981
+%\usepackage[skip=0cm,list=true,labelfont=it]{subcaption}
+\usepackage[list=true,labelfont=it,font=small]{subcaption}
+#+end_src
+
 * Writing
 ** ✔ DONE Title
 :LOGBOOK:
