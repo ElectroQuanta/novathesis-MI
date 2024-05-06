@@ -1,0 +1,389 @@
+#+TITLE: MIEEIC Thesis writing
+#+AUTHOR: José Pires
+#+DATE: [2024-05-06 seg 20:20]
+#+EMAIL: a50178@alunos.uminho.pt
+
+#+LATEX_COMPILER: xelatex
+
+* TOC :noexport::TOC_3:
+- [[#preamble][Preamble]]
+  - [[#git-workflow][Git Workflow]]
+  - [[#template-struct][Template Struct]]
+  - [[#template-organization][Template Organization]]
+  - [[#template-macros][Template macros]]
+  - [[#folder-struct][Folder struct]]
+  - [[#update-repo][Update repo]]
+- [[#writing][Writing]]
+  - [[#-done-title][✔ DONE Title]]
+  - [[#abstract][Abstract]]
+  - [[#-done-ask-for-permissions-for-figures-httpswwwresearchgatenetpostdo_i_need_a_permission_to_copy_any_figure_from_a_research_article_for_my_review_article5de8fdb7f0fb623dd7346896citationdownload][✔ DONE Ask for permissions for figures https://www.researchgate.net/post/Do_I_need_a_permission_to_copy_any_figure_from_a_research_article_for_my_review_article/5de8fdb7f0fb623dd7346896/citation/download]]
+    - [[#licence-footnote][Licence footnote]]
+  - [[#intro-14][Intro]]
+  - [[#state-of-the-art-16][State of the Art]]
+    - [[#uav-intro][UAV Intro]]
+    - [[#security-concerns][Security concerns]]
+    - [[#diagrams-uav][Diagrams UAV]]
+    - [[#autopilot][Autopilot]]
+    - [[#px4][PX4]]
+
+* Preamble
+** Git Workflow
+[[id:B5099895-B69D-4599-9295-DEE12EA81B89][src]]
+   #+begin_src markdown
+    > When you push, do so on `origin` with `git push origin`.
+   
+    > When you want to pull changes from `upstream` you can just fetch the remote and rebase on top of your work.
+    ```bash
+      git fetch upstream
+      git rebase upstream/master
+      ```
+      And solve the conflicts if any
+   #+end_src
+** Template Struct
+1) *Fonts*:
+   1) Download NewsGott fonts from [[https://github.com/joaomlourenco/novathesis-extras/tree/main/Fonts][Novathesis-extras]] repo
+   2) Place it in: =/FontStyles/Fonts=
+2) *Compilation*: Compile the document with you favorite LaTeX processor
+   (pdfLaTeX, XeLaTeX or LuaLaTeX):
+   - The main file is named “template.tex”.
+   - Compilation step:
+     - load it in your favorite LaTeX text editor or
+     - compile it in the terminal with latexmk -pdf template.
+     - run =make xe=: *IMPORTANT*
+       - UM template requires NewsGott fonts which require Xelatex to run
+   - If you use a LaTeX text editor, please notice that the NOVAthesis template
+     uses biberand not bibtex to process the bibliography, which means that most
+     probably you have to open the Editor Preferences and somehwere (depends on
+     the Editor) chage bibtexto biber.
+   - If Murphy is elsewhere, LaTeX will create the file “template.pdf”.
+3) *Writing*: Edit the files in the “Config” folder [3/8]:
+   1) [X] =0_memoir.tex=: Options specific for the memoir package. Don't touch
+      this file unless you know what you are doing!
+   2) [X] =1_novathesis.tex=: Configure the template, i.e., the document type,
+      the school, etc.
+   3) [X] =2_biblatex.tex=: Configure the bibliography.
+   4) [ ] =3_cover.tex=: Configure cover contents (e.g., author's name,
+      thesis/dissertation title, advisers, committee, etc)
+      1) [ ] Fontes de financiamento
+      2) [ ] Committee
+   5) [ ] =4_files.tex=: Configure the the files for chapters, appendices,
+      annexes, etc...
+   6) [ ] =5_packages.tex=: Configure additional packages and commands
+   7) [ ] =6_list_of.tex=: Configure the lists to be printed (table of contents,
+      list of figures, list of tables, list of listings, etc). Don't touch this
+      file unless you know what you are doing!
+   8) =9_nova_fct.tex=: Configuration specific to nova/fct
+   9) =9_nova_ims.tex=: Configuration specific to nova/ims
+   10) =9_nova_itqb.tex=: Configuration specific to nova/itqb
+   11) =9_ulisboa_fmv.tex=: Configuration specific to ulisboa/fmv
+   12) [ ] =9_uminho.tex=: Configuration specific to uminho (all schools)
+** Template Organization                                          :Important:
+see [[pdfview:/Users/zemiguel/OneDrive - Universidade do Minho/Documents/Univ/PhD/writing/PhD-Mech-Thesis/template_novathesis.pdf::18][template_novathesis.pdf]]
+
+Chapters: [0/3]
+1) [ ] Introduces the Novathesis template and how it is organized
+2) [ ] specific instructions on how to use the novathesis template
+3) [ ] Examples and hints on how to write your text
+   
+  Front Matter (1)
+  Cover (1)
+  Front Page (3)
+  Copyright (4)
+  Acknowledgements (5)
+  Statement (6)
+  Quote (7)
+  Resumo (8)
+  Abstract (9)
+  Contents (10)
+  List of Figures (12)
+  List of Tables (13)
+  Glossary (14)
+  Acronyms (15)
+  Symbols (16)
+  Chemical Symbols (17)
+1 Introduction (18)
+  1.1 If You Use this Template… (18)
+    1.1.1 Your Time is Precious (18)
+    1.1.2 Recognition (19)
+  1.2 The NOVAthesis template (19)
+  1.3 Getting Started (24)
+    1.3.1 Using Overleaf (24)
+    1.3.2 Using a Local LaTeX Installation (25)
+  1.4 Getting Help (25)
+    1.4.1 Suggestions, Bugs and Feature Requests (26)
+  1.5 Donors (26)
+  1.6 Disclaimer (26)
+2 NOVAthesis Template User's Manual (27)
+  2.1 Introduction (27)
+  2.2 Quick Start (27)
+    2.2.1 With a Local LaTeX Installation (27)
+    2.2.2 With a Remote Cloud-based Service (30)
+  2.3 [[pdfview:/Users/zemiguel/OneDrive - Universidade do Minho/Documents/Univ/PhD/writing/PhD-Mech-Thesis/template_novathesis.pdf::30][Folder and Files]] (30)
+  2.4 [[pdfview:/Users/zemiguel/OneDrive - Universidade do Minho/Documents/Univ/PhD/writing/PhD-Mech-Thesis/template_novathesis.pdf::31][novathesis.cls Class Options]] (31)
+  2.5 Additional considerations about the class options (32)
+    2.5.1 The main language (32)
+    2.5.2 Class of Text (33)
+    2.5.3 Printing (33)
+    2.5.4 Font Size (34)
+    2.5.5 Text Encoding (34)
+    2.5.6 Examples (34)
+  2.6 How to Write Using LaTeX (34)
+  2.7 Example glossary, acronyms, and symbols (34)
+3 A Short LaTeX Tutorial with Examples (36)
+  3.1 Document Structure (36)
+  3.2 Dealing with Bibliography (36)
+  3.3 Inserting Tables (36)
+  3.4 Importing Images (36)
+  3.5 Floats, Figures and Captions (36)
+  3.6 Text Formatting (38)
+  3.7 Generating PDFs from LaTeX (38)
+    3.7.1 Generating PDFs with pdflatex (38)
+    3.7.2 Dealing with Images (39)
+    3.7.3 Creating Source Files Compatible with both latex and pdflatex (39)
+  3.8 Equações (41)
+  3.9 Test for listings (41)
+  3.10 Test for algorithms (44)
+Bibliography (45)
+A NOVAthesis covers showcase (47)
+B Appendix 2 Lorem Ipsum (48)
+I Annex 1 Lorem Ipsum (50)
+Back Matter (52)
+  Back Cover (53)
+  
+** Template macros                                                :Important:
+#+begin_src latex
+  % Syntax - all arguments are optional and can be omitted from the last to the first
+  % \begin{ntquote}
+	  % [max width of citation box]
+	  % [author name]
+	  % [where/source]
+	  % [profession]
+	  % [lang]
+  % YOUR TEXT HERE
+  % \end{ntquote}
+  
+\begin{ntquote}[8cm][Galileo][Somewhere in a book or speach][Astronomer, physicist and engineer][en]
+  You cannot teach a man anything; you can only help him discover it in himself.%
+\end{ntquote}
+#+end_src
+** Folder struct
+- [[file:writing][folder]]
+- [[file:writing/Bibliography][Bibliography]]: bibliography references spread through multiple files
+- [[file:writing/Chapters][Chapters]]: thesis's chapters
+- [[file:writing/Config][Config]]: configuration files for the thesis formatting
+  0) [@0] [[file:writing/Config/0_memoir.tex][memoir.tex]]: defines paper size and font size
+  1) [[file:writing/Config/1_novathesis.tex][novathesis.tex]]: actual template configuration
+  2) [[file:writing/Config/2_biblatex.tex][biblatex.tex]]: bibliography configuration
+  3) cover.tex: cover configuration 
+  4) files.tex: where we define what files/chapters must be added to the thesis
+  5) packages.tex: extra packages to be added
+  6) list_of.tex: lists used in the thesis, e.g., TOC, figures, tables,
+     listings, acronyms
+  7) 9_uminho.tex
+- [[file:writing/doc][doc]]: LaTeX template documentation
+- [[file:writing/img][img]]: images used in the thesis, in multiple formats (.eps, .jpg, .pdf, .png,
+  .svg)
+- [[file:writing/listing][listing]]: code snippets
+- [[file:writing/mine][mine]]: misc files comprising the former thesis
+- [[file:writing/NOVAthesisFiles][NovathesisFiles]]: template files
+- [[file:writing/pdf][pdf]]: extra pages that must be added as PDF, like appendices, but also the
+  *license* and the *integrity statement*
+- [[file:writing/sty][sty]]: styles used in the thesis for things like *listings*
+- [[file:writing/tables][tables]]: LaTeX tables generated externally
+
+** Update repo
+Last time I used the =template_novathesis=, and more specifically my freezed
+version of it, it was more than 1 year ago (Jan 2023).
+- Meanwhile, I wrote my PhD thesis using it, with some improvements
+- Furthermore, the template has also evolved
+- Thus, it is useful to update the repo
+- Furthermore, it can also be useful to add it as a submodule of the current
+  repository
+
+
+*Tasks* [2/7]:
+1) [X] Fork the current version of the Novathesis template
+2) [X] Compile it
+3) [ ] Update it with my current state of the thesis
+4) [ ] Compile it again
+5) [ ] Update it with some tweaks from my PhD thesis
+6) [ ] Compile it again
+7) [ ] Add it as submodule of the current repo
+  
+* Writing
+** ✔ DONE Title
+:LOGBOOK:
+- State "✔ DONE"     from              [2022-12-22 Thu 21:04]
+:END:
+   Trustworthy Open-Source Reference Software Stack for UAV applications
+** Abstract
+** ✔ DONE Ask for permissions for figures https://www.researchgate.net/post/Do_I_need_a_permission_to_copy_any_figure_from_a_research_article_for_my_review_article/5de8fdb7f0fb623dd7346896/citation/download
+   :LOGBOOK:
+   - State "✔ DONE"     from "☛ TODO"     [2022-04-26 Tue 06:48]
+   - State "☛ TODO"     from              [2022-04-25 Mon 08:15]
+   :END:
+*** Licence footnote
+    #+begin_src latex
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.3\textwidth]{./img/svg-slice-example.png}%
+    \caption[SVG slice example]{SVG slice example~\cite{slic3rSvg}\footnotemark}%
+      %\fnref{foot:cc-lic}}%
+      %\textsuperscript{\ref{foot:cc-lic}}%
+    \label{fig:svg-slice-example}
+\end{figure}
+%
+\footnotetext{\label{foot:cc-lic}Used under the terms of the Creative Commons BY-SA 3.0 licence.}%
+
+This uses the same note\fnref{foot:cc-lic};
+    #+end_src
+** Intro [1/4]
+- [ ] Context
+- [ ] Motivation
+- [X] Goals
+- [ ] Document structure
+** State of the Art [1/6]
+1) [X] Mixed criticality
+   - [X] Virtualizacao como tecnologia
+   - [X] Supervisores/Bao
+2) [ ] UAVs
+   1) [ ] Definition ([[id:334F0101-8105-4371-B4D5-2931ED1F791F][src]])
+   2) [ ] Background and history of UAVs ([[id:D3D4BD81-83E1-4416-96E9-C8995A345BF7][src]])
+   3) [ ] Market ([[id:F55021FF-0926-4272-B6D8-DF4178C79ED7][src]])
+   4) [ ] Applications ([[id:334F0101-8105-4371-B4D5-2931ED1F791F][src]])
+   5) [ ] Classifications ([[id:334F0101-8105-4371-B4D5-2931ED1F791F][src]], [[id:F55021FF-0926-4272-B6D8-DF4178C79ED7][src]])
+   6) [ ] Regulations ([[id:334F0101-8105-4371-B4D5-2931ED1F791F][src]], [[file:~/OneDrive - Universidade do Minho/Documents/Univ/MI_Electro/Tese/Papers/SoK-SecurityAndPrivacyIntheAgeOfCommercialDrones.pdf::%PDF-1.5][src]])
+   7) [ ] Characteristics ([[id:F55021FF-0926-4272-B6D8-DF4178C79ED7][src]])
+   8) [ ] Functional hierarchy, Structure of a UAV system, Components and system
+ telecommunications in remote areas ;
+      architecture ([[id:E74C5DFF-D2E8-4AF4-A694-043D0FA813BA][src]], [[id:403BBCCA-0249-452C-8F69-DD931A34173E][src]], [[id:9BE3E921-FD5E-4A32-9E34-6B1B097299AC][src]], [[id:D2AD5333-0676-4C84-9E6B-47F47753EBC4][src]])
+   9) [ ] Network comm architecture ([[id:E74C5DFF-D2E8-4AF4-A694-043D0FA813BA][src]])
+   10) [ ] Communications protocols ([[id:E74C5DFF-D2E8-4AF4-A694-043D0FA813BA][src]])
+   11) [ ] Cybersecurities vulnerabilities, attacks, mitigations ([[id:0CF6B2C5-CBBD-42DB-B926-B6168D1AD2A2][src]], [[id:1B1A2FE1-2E63-4D83-AA11-54A0A0133D3B][src]], [[id:F55021FF-0926-4272-B6D8-DF4178C79ED7][src]])
+   12) [ ] Security and privacy ([[id:0CF6B2C5-CBBD-42DB-B926-B6168D1AD2A2][src]])
+   13) [ ] General structure of existing SW ([[id:915C248C-4762-4BA3-ACB6-F5E5EC4DB64E][src]])
+   14) [ ] Comparison of FCS and its features  ([[id:915C248C-4762-4BA3-ACB6-F5E5EC4DB64E][src]])
+   15) [ ] Analysis of the open-source SW modules ([[id:915C248C-4762-4BA3-ACB6-F5E5EC4DB64E][src]])
+   16) [ ] Aircraft selection ([[id:8CCE1A69-5464-4342-823C-B4510F26B396][src]])
+   17) [ ] Safety failures ([[id:2060592A-9AD8-4D87-8BCB-EED98E8B7DC8][src]])
+3) [ ] HW platforms para drones
+   1) [ ] Architectures for UAVs ([[id:2060592A-9AD8-4D87-8BCB-EED98E8B7DC8][src]])
+      1) [ ] Comparative analysis ([[id:2060592A-9AD8-4D87-8BCB-EED98E8B7DC8][src]])
+   2) [ ] Open-source HW ([[id:403BBCCA-0249-452C-8F69-DD931A34173E][src]], [[eww:][src]])
+   3) [ ] Comparison of COTS UAVs ([[id:8CCE1A69-5464-4342-823C-B4510F26B396][src]])
+4) [ ] SW platforms
+   1) [ ] Open-source SW ([[id:403BBCCA-0249-452C-8F69-DD931A34173E][src]], [[id:D2AD5333-0676-4C84-9E6B-47F47753EBC4][src]])
+   2) [ ] Analysis of the open-source SW modules ([[id:915C248C-4762-4BA3-ACB6-F5E5EC4DB64E][src]])
+   3) [ ] General structure of existing SW ([[id:915C248C-4762-4BA3-ACB6-F5E5EC4DB64E][src]])
+   4) [ ] Comparison of FCS and its features  ([[id:915C248C-4762-4BA3-ACB6-F5E5EC4DB64E][src]])
+5) [ ] Related work
+   1) [ ] List of UAVs surveys, their challenges and focus ([[id:F55021FF-0926-4272-B6D8-DF4178C79ED7][src]])
+   2) [ ] Future research directions of UAVs ([[id:F55021FF-0926-4272-B6D8-DF4178C79ED7][src]])
+   3) [ ] Virtualization solution for UAV AI applications ([[id:D6DB242E-FB99-4DC1-A733-76CA540C173C][src]])
+6) [ ] Final Remarks
+*** UAV Intro
+[[file:~/Documents/Univ/MI_Electro/Tese/Papers/An-Overview-of-the-Drone-Open-Source-Ecosystem.pdf::%PDF-1.7][src]]
+PX4 also supports Unmanned Vehicles (UV) beyond
+aerial systems including Unmanned Ground Vehicles
+(UGV), Unmanned Surface Vehicles (USV) (e.g., boats) and
+Unmanned Under Water Vehicles (UUV).
+
+[[file:~/OneDrive - Universidade do Minho/Documents/Univ/MI_Electro/Tese/Papers/UAVs-ComprehensiveReview-2022.pdf::%PDF-1.7][src]]
+-------------------
+In recent years, UAVs have gained significant attention. Generally, UAVs refer
+to controlled aerial vehicles without carrying a human pilot on them. It can be
+autonomously controlled and operated through sensors, microprocessors and other
+electronic gadgets [35].
+
+Figure 1 depicts a typical UAV system architecture, showing how UAVs interact with
+satellites, ground control systems (GCS), smart phones, and computers via communication
+links. A human operator is used to control and operate a UAV remotely. UAVs can perform
+autonomous tasks in situations where human intervention is difficult or dangerous [36].
+At present, UAVs have become a very convenient approach for logistics. In particular,
+there is a notable upsurge in the civilian market for UAVs. The key applications of UAVs
+include remote operations such as search and rescue, disaster monitoring, environmental
+monitoring, and delivery of airmail, medical items, and packages. Figure 2 presents the
+growing revenue of USA for commercial UAV market in different sectors.
+
+Despite increasing attention, mostly UAVs are being controlled by human-aided
+remote controls. Generally, UAVs’ characteristics, configurations, and
+mechanisms vary according to the application, speed, weight, and
+operation.
+- Figure 3 shows different types of aircraft in terms of thrust forces and
+  flight principles [38].
+- Piloting a UAV is hard for human beings while manual controls are vulnerable
+  to inconvenience, inefficiency, and human error.
+
+*Vertical TakeOff and Landing (VTOL)*
+- key feature of UAVs
+- high speed
+- high efficiency
+- vertical hanging capability in the air
+- Example: Blimp
+
+-------------------
+*** Security concerns
+2017, USA: banned the Dji drones for cybersecurity concerns
+https://www.thedronegirl.com/2017/08/18/dji-follows-u-s-army-ban-new-stealth-mode/
+
+*Security is not part of design*
+UAVs often include onboard wireless communication modules that use open,
+unencrypted, and unauthenticated channels, exposing them to a variety of
+cyber-attacks[112-114] ([[file:~/Documents/Univ/MI_Electro/Tese/Papers/UAVs-ComprehensiveReview-2022.pdf::%PDF-1.7][UAV-ComprehensiveReview]])
+
+*Hacking of drones* is another major concerns of using UAVs for data collection
+and wireless delivery. ([[file:~/Documents/Univ/MI_Electro/Tese/Papers/UAVs-ComprehensiveReview-2022.pdf::%PDF-1.7][UAV-ComprehensiveReview]])
+- Military operations
+
+*Denial-of-Service* (DoS) and Distributed Dos (DDoS) are the most common attacks
+on UAVs. ([[file:~/Documents/Univ/MI_Electro/Tese/Papers/UAVs-ComprehensiveReview-2022.pdf::%PDF-1.7][UAV-ComprehensiveReview]])
+- Cause severe availability challenges as the challenger sends several requests
+  to cause UAV network congestion
+- DoS attacks are performed by:
+  - depleting the batteries,
+  - overloading the processing units
+  - and flooding the comm links to cause huge interruptions
+
+*GPS Spoofing attack*: inserting or passing false data through the GPS miscreant
+
+*Ground Control System attacks*
+- Very dangerous because the attacker can steal all the data from UAV
+- Enables the adversary to send malicious and erroneous commands
+- Usually performed through key loggers, viruses and malwares
+
+*Malicious HW attack* [118] ([[file:~/Documents/Univ/MI_Electro/Tese/Papers/UAVs-ComprehensiveReview-2022.pdf::%PDF-1.7][UAV-ComprehensiveReview]])
+- goal: steak confidential data or cause a failure in UAVs mission
+- Any attack to interrupt UAVs flight control and comm links to modify mission
+  parameters is known as *flight control computer attack*.
+  - Can be mitigated through onboard SW and HW mechanisms, such as, RT
+    monitoring, instantaneous estimation of the controller, alert warning and
+    immediate action on any alteration from the intended controller model.
+
+
+
+*** Diagrams UAV
+1) uav.pu: Concept, History, Market, Applications, Characteristics, Regulations,
+   Classifications
+2) uav2.pu: UAV System Overview - Tasks, Components, Functional Hierarchy, Sys
+   Arch, HW, SW, Network Comm
+3) uav2-1.pu: UAV Sys Overview - Tasks, Components
+4) uav2-2.pu: UAV Sys Overview - Functional Hierarchy
+5) uav2-3.pu: UAV Sys Overview - FCS Arch, HW, SW, Network Comm
+6) uav3.pu: UAV Security and Safety
+
+*** Autopilot
+*Autopilot shortcomings*:
+  - limited battery life
+  - limited autonomy
+  - landing accuracy (can be improved through CV techniques, but needs resources
+    and protocols that are not available for commercial drones)
+  - limited mission time and distance
+
+*** PX4
+The flight controller runs the normal PX4 flight stack, while a companion computer provides advanced features like object avoidance and collision prevention. The two systems are connected using a fast serial or IP link, and typically communicate using the MAVLink protocol (opens new window). Communications with the ground stations and the cloud are usually routed via the companion computer (e.g. using the MAVLink Router
+
+(opens new window) (from Intel)).
+
+PX4 systems typically run a Linux OS on the companion computer (because the PX4/PX4-Avoidance
+(opens new window) project delivers ROS-based avoidance libraries designed for Linux). Linux is a much better platform for "general" software development than NuttX; there are many more Linux developers and a lot of useful software has already been written (e.g. for computer vision, communications, cloud integrations, hardware drivers). Companion computers sometimes run Android for the same reason.
+

@@ -1,0 +1,314 @@
+%
+% src: http://texdoc.net/texmf-dist/doc/latex/listings/listings.pdf
+%\lstdefinestyle{customc}{
+%  belowcaptionskip=1\baselineskip,
+%  breaklines=true,
+%  %frame=L,%lines, whole
+%  xleftmargin=\parindent,
+%  language=C,
+%  showstringspaces=false,
+%  basicstyle=\scriptsize\ttfamily,
+%  keywordstyle=\bfseries\color{green!40!black},
+%  commentstyle=\itshape\color{purple!40!black},
+%  identifierstyle=\color{blue},
+%  stringstyle=\color{orange},
+%  numberstyle={\tiny},
+%  numbers=left,
+%  numberblanklines=false,
+%  stepnumber=5,
+%  backgroundcolor=\color{yellow!10}, 
+%  frame=tlb
+%}
+%
+%\lstdefinestyle{customasm}{
+%  belowcaptionskip=1\baselineskip,
+%  frame=L,
+%  xleftmargin=\parindent,
+%  language=[x86masm]Assembler,
+%  basicstyle=\footnotesize\ttfamily,
+%  commentstyle=\itshape\color{purple!40!black},
+%}
+%
+%\lstset{escapechar=@,style=customc}
+
+  % C++
+  % VS2017 C++ color scheme
+\definecolor{clr-background}{RGB}{255,255,255}
+\definecolor{clr-text}{RGB}{0,0,0}
+\definecolor{clr-string}{RGB}{163,21,21}
+\definecolor{clr-namespace}{RGB}{0,0,0}
+\definecolor{clr-preprocessor}{RGB}{128,128,128}
+\definecolor{clr-keyword}{RGB}{0,0,255}
+\definecolor{clr-type}{RGB}{43,145,175}
+\definecolor{clr-variable}{RGB}{0,0,0}
+\definecolor{clr-constant}{RGB}{111,0,138} % macro color
+\definecolor{clr-comment}{RGB}{0,128,0}
+
+\lstdefinestyle{custom-cpp-vscode}{
+	language=C++,
+	backgroundcolor=\color{clr-background},
+	basicstyle=\color{clr-text}, % any text
+	stringstyle=\color{clr-string},
+	identifierstyle=\color{clr-variable}, % just about anything that isn't a directive, comment, string or known type
+	commentstyle=\color{clr-comment},
+	directivestyle=\color{clr-preprocessor}, % preprocessor commands
+	% listings doesn't differentiate between types and keywords (e.g. int vs return)
+	% use the user types color
+	keywordstyle=\color{clr-type},
+	keywordstyle={[2]\color{clr-constant}}, % you'll need to define these or use a custom language
+	tabsize=2,
+	numbers = left, %% display line numbers on the left
+	basicstyle = \scriptsize\ttfamily, %% set listing font and size
+	breaklines = true, %% enable line breaking
+	numberstyle = \tiny,
+        frame=L,
+      }
+%
+% C++ (solarized):
+% https://github.com/jez/latex-solarized/blob/master/solarized-dark.sty
+% Solarized colour scheme for listings
+\definecolor{solarized@base03}{HTML}{002B36}
+\definecolor{solarized@base02}{HTML}{073642}
+\definecolor{solarized@base01}{HTML}{586e75}
+\definecolor{solarized@base00}{HTML}{657b83}
+\definecolor{solarized@base0}{HTML}{839496}
+\definecolor{solarized@base1}{HTML}{93a1a1}
+\definecolor{solarized@base2}{HTML}{EEE8D5}
+\definecolor{solarized@base3}{HTML}{FDF6E3}
+\definecolor{solarized@yellow}{HTML}{B58900}
+\definecolor{solarized@orange}{HTML}{CB4B16}
+\definecolor{solarized@red}{HTML}{DC322F}
+\definecolor{solarized@magenta}{HTML}{D33682}
+\definecolor{solarized@violet}{HTML}{6C71C4}
+\definecolor{solarized@blue}{HTML}{268BD2}
+\definecolor{solarized@cyan}{HTML}{2AA198}
+\definecolor{solarized@green}{HTML}{859900}
+%
+% Define C++ syntax highlighting colour scheme
+\lstdefinestyle{custom-cpp-solarized-dark}
+{
+  language=C++,
+  basicstyle=\footnotesize\ttfamily,
+  numbers=left,
+  numberstyle=\footnotesize,
+  tabsize=2,
+  breaklines=true,
+  escapeinside={@}{@},
+  numberstyle=\tiny\color{solarized@base01},
+  keywordstyle=\color{solarized@green},
+  stringstyle=\color{solarized@cyan}\ttfamily,
+  identifierstyle=\color{solarized@blue},
+  commentstyle=\color{solarized@base01},
+  emphstyle=\color{solarized@red},
+  frame=single,
+  rulecolor=\color{solarized@base2},
+  rulesepcolor=\color{solarized@base2},
+  showstringspaces=false
+}
+%
+% Solarized colors
+\definecolor{sbase03}{HTML}{002B36}
+\definecolor{sbase02}{HTML}{073642}
+\definecolor{sbase01}{HTML}{586E75}
+\definecolor{sbase00}{HTML}{657B83}
+\definecolor{sbase0}{HTML}{839496}
+\definecolor{sbase1}{HTML}{93A1A1}
+\definecolor{sbase2}{HTML}{EEE8D5}
+\definecolor{sbase3}{HTML}{FDF6E3}
+\definecolor{syellow}{HTML}{B58900}
+\definecolor{sorange}{HTML}{CB4B16}
+\definecolor{sred}{HTML}{DC322F}
+\definecolor{smagenta}{HTML}{D33682}
+\definecolor{sviolet}{HTML}{6C71C4}
+\definecolor{sblue}{HTML}{268BD2}
+\definecolor{scyan}{HTML}{2AA198}
+\definecolor{sgreen}{HTML}{859900}
+%
+\lstdefinestyle{custom-cpp-solarized-light}
+{
+  language=C++,
+  numbers=left,
+  numberstyle=\scriptsize,
+    % How/what to match
+    sensitive=true,
+    % Border (above and below)
+    frame=lines,
+    % Extra margin on line (align with paragraph)
+    xleftmargin=\parindent,
+    % Put extra space under caption
+    belowcaptionskip=1\baselineskip,
+    % Colors
+    backgroundcolor=\color{sbase3},
+    basicstyle=\color{sbase00}\scriptsize\ttfamily,
+    keywordstyle=\color{scyan},
+    commentstyle=\color{sbase1},
+    stringstyle=\color{sblue},
+    numberstyle=\color{sviolet},
+    identifierstyle=\color{sbase00}\tiny,
+    % Break long lines into multiple lines?
+    breaklines=true,
+    % Show a character for spaces?
+    showstringspaces=false,
+    tabsize=2,
+    stepnumber=5,
+}
+\lstdefinestyle{custom-cpp}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  %frame=L,%lines, whole
+  xleftmargin=\parindent,
+  language=C++,
+  showstringspaces=false,
+  basicstyle=\scriptsize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{sblue},
+  numberstyle={\tiny},
+  numbers=left,
+  numberblanklines=false,
+  % firstnumber=1,
+  %stepnumber=5,
+  backgroundcolor=\color{sbase3}, 
+  frame=tlb
+}
+
+% src: http://texdoc.net/texmf-dist/doc/latex/listings/listings.pdf
+% c/c++
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  %frame=L,%lines, whole
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\scriptsize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{sblue},
+  numberstyle={\tiny},
+  numbers=left,
+  numberblanklines=false,
+  %firstnumber=1,
+  %stepnumber=5,
+  backgroundcolor=\color{sbase3}, 
+  frame=tlb
+}
+\lstset{escapechar=@,style=customc}
+% ASM
+\lstdefinestyle{customasm}{
+  belowcaptionskip=1\baselineskip,
+  frame=L,
+  xleftmargin=\parindent,
+  language=[x86masm]Assembler,
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\itshape\color{purple!40!black},
+}
+% MATLAB: src: https://tex.stackexchange.com/a/75124
+\definecolor{greenmb}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{lilasmb}{RGB}{170,55,241}
+\lstdefinestyle{custom-matlab}{
+  % \lstset{language=Matlab,%
+  language=Matlab,
+    %basicstyle=\color{red},
+  basicstyle=\scriptsize\ttfamily,
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{lilasmb},
+    commentstyle=\color{greenmb},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    %emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+% Java: src: 
+\lstdefinestyle{custom-java}{
+	language=Java,
+	tabsize = 2, %% set tab space width
+	showstringspaces = false, %% prevent space marking in strings, string is defined as the text that is generally printed directly to the console
+	numbers = left, %% display line numbers on the left
+	commentstyle = \itshape\color{purple!40!black}, %% set comment color
+	keywordstyle = \bfseries\color{green!40!black}, %% set keyword color
+	identifierstyle=\color{blue},
+	stringstyle = \color{orange}, %% set string color
+	rulecolor = \color{black}, %% set frame color to avoid being affected by text color
+	basicstyle = \scriptsize\ttfamily, %% set listing font and size
+	breaklines = true, %% enable line breaking
+	numberstyle = \tiny,
+%        firstnumber=1,
+	stepnumber=5,
+	xleftmargin=\parindent,
+	backgroundcolor=\color{yellow!10}, 
+    frame=L,
+  }
+  % Makefiles
+  % src: https://tex.stackexchange.com/a/101730
+\definecolor{keycolor}{RGB}{172, 42, 42}
+\definecolor{mbleu}{RGB}{64,96,127}
+\definecolor{vimvert}{RGB}{46, 139, 87}
+\lstdefinestyle{makefile}{
+  language={[gnu] make},
+  tabsize = 2, %% set tab space width
+  numbers = left, %% display line numbers on the left
+  breaklines = true, %% enable line breaking
+  numberstyle = \tiny,
+  % firstnumber=1,
+  stepnumber=5,
+  xleftmargin=\parindent,
+  basicstyle=\ttfamily\scriptsize\color{black!90},%
+  stringstyle=\itshape\color{magenta},%
+  showstringspaces=false,%
+  keywordstyle={[1]\bfseries\color{keycolor}},%
+  keywordstyle={[2]\bfseries\color{mbleu}},%
+  commentstyle=\color{blue}\slshape,%
+  %framexleftmargin=1mm,%
+  frame=L,
+  backgroundcolor=\color{black!2},%
+  otherkeywords={.SUFFIXES},
+  alsoletter={:},
+  morekeywords=[1]{SUFFIX, CPP_}, morekeywords=[2]{vasp:,makeparam:,zgemmtest:,dgemmtest:,ffttest:,kpoints:,clean:},  
+morecomment=[l][commentstyle]{\#},%
+emphstyle={\color{vimvert}},%
+moredelim=[s][\color{vimvert}]{\$(}{)}%
+}
+%
+%\lstdefinestyle{make-pretty}{
+%  tabsize = 2, %% set tab space width
+%  numbers = left, %% display line numbers on the left
+%  breaklines = true, %% enable line breaking
+%  numberstyle = \tiny,
+%  % firstnumber=1,
+%  stepnumber=5,
+%  xleftmargin=\parindent,
+%  upquote=true,
+%  showstringspaces=false,
+%  basicstyle=\ttfamily\scriptsize\mktextstyle,
+%  sensitive=true,
+%  alsoletter=.-,
+%  keywords = {.CC,.CFLAGS,.PHONY,.SUFFIXES,SUFFIX,CPP_},
+%  keywordstyle = \mkkeywordstyle,
+%  moredelim=[is][\mkvariablestyle(\aftergroup\closingparen@make]{(}{)},
+%  moredelim=*[l][\mkcommandstyle]{\^^I},
+%  morestring=[b]',
+%  morestring=[b]",
+%  stringstyle=\mkstringstyle,
+%  literate =
+%    {\%}{{{\mkvariablestyle\%}}}1
+%    {\$}{{{\mkvariablestyle\$}}}1
+%    {\$*}{{{\mkvariablestyle\$*}}}2
+%    {\\}{{{\mklinecontstyle\lstum@backslash}}}1,
+%  MoreSelectCharTable =
+%    \processColon@make
+%    \processEqual@make
+%    \processBackslash@make
+%    \processTab@make,
+%  morecomment = [l]{\#},
+%  commentstyle = \mkcommentstyle,
+%}
+%\lstset{escapechar=@,style=make-pretty}
