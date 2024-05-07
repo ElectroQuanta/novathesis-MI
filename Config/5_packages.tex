@@ -9,26 +9,39 @@
 % \ntlangsetup{pt/contentsname=O MEU ÍNDICE}
 % \ntlangsetup{en/contentsname=MY LITTLE TOC}
 
+%% \printorder(frontmatter,final):={%
+%%   statement;       % The statement page
+%%   copyright;       % (*) The copyright page
+%%   dedicatory;      % (*) Print the dedicatory
+%%   acknowledgements;% (*) Print the acknowledgments
+%%   quote;           % (*) Print the quote
+%%   abstracts;       % Print abstracts in multiple languages.
+%%   alllistof;       % Print all the listof defined in “6_list_of.tex”
+%%   printglossaries; % Print the Glossary, Acronyms, Symbols, etc…
+%% }
+%% 
+%% \printorder(frontmatter,provisional):={\theprintorder(frontmatter,final)}
+
 %%============================================================
 %%  FOR DEMO PURPOSES ONLY --- YOU SHOULD REMOVE THESE PACKAGES
 %%============================================================
-\usepackage{float}        % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-\usepackage{wrapfig}      % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-\restylefloat{figure}     % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-\usepackage{metalogo}     % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-\usepackage{lipsum}       % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
-\IfFileExists{byo-twemojiss.sty}{
-  \usepackage{byo-twemojis}     % to typeset emojis
-  \newcommand{\emojiSmile}{\raisebox{-3pt}{\scalebox{1.3}{\byoTwemoji{head; eyes normal opened; mouth laughing}}}}
-}{
-  \newcommand{\emojiSmile}{\texttt{:D}}
-  \newlength{\twemojiDefaultHeight}
-}
-
-\newcommand{\MikTeX}{Mik\TeX}
-\newcommand{\TeXLive}{\TeX Live}
-\newcommand{\pdfLaTeX}{pdf\LaTeX}
-\definecolor{Schlgray}{gray}{0.95}
+%% \usepackage{float}        % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+%% \usepackage{wrapfig}      % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+%% \restylefloat{figure}     % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+%% \usepackage{metalogo}     % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+%% \usepackage{lipsum}       % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+%% \IfFileExists{byo-twemojiss.sty}{
+%%   \usepackage{byo-twemojis}     % to typeset emojis
+%%   \newcommand{\emojiSmile}{\raisebox{-3pt}{\scalebox{1.3}{\byoTwemoji{head; eyes normal opened; mouth laughing}}}}
+%% }{
+%%   \newcommand{\emojiSmile}{\texttt{:D}}
+%%   \newlength{\twemojiDefaultHeight}
+%% }
+%% 
+%% \newcommand{\MikTeX}{Mik\TeX}
+%% \newcommand{\TeXLive}{\TeX Live}
+%% \newcommand{\pdfLaTeX}{pdf\LaTeX}
+%% \definecolor{Schlgray}{gray}{0.95}
 
 
 %%============================================================
@@ -204,6 +217,56 @@ align=left, leftmargin=*} %,label=$\star$
 %\usepackage{notoccite}
 %\bibliographystyle{unsrtnat}
 
+
+%%%%%%%%%%%%%% Quotes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define a custom environment for quotes with alignment option
+%\newenvironment{alignedquote}[2]{%
+%    \begin{quote}
+%    \ifx#1r%
+%        \hfill
+%    \else%
+%        \relax % do nothing for left alignment
+%    \fi%
+%    \textit{#2}
+%}{%
+%  %  \ifx#1r%
+%  %      \relax % do nothing for right alignment
+%  %  \else%
+%  %      \hfill
+%  %  \fi%
+%    \end{quote}
+%  }
+
+  % Define a custom environment for quotes with alignment option
+%% \newenvironment{alignedquote}[2]{%
+%%     \def\alignquote{#1}%
+%%     \begin{quote}
+%%     \ifx#1r%
+%%         \begin{flushright}
+%%     \else%
+%%         \begin{flushleft}
+%%     \fi%
+%%     \textit{#2}
+%% }{%
+%%   \if\alignquote r%
+%%   \end{flushright}%
+%% \else%
+%% \end{flushleft}%
+%% \fi%
+%% \end{quote}
+%% }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%   Chapter styles %%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of default chapter styles
+\newcommand{\defaultstyles}{default, section, hangnum, article, bianchi, bringhurst, brotherton, chappell, crosshead, culver, dash, demo2, dowding, ell, ger, komalike, lyhne, madsen, ntglike, southall, tandh, thatcher, veelo, verville, wilsondob}
+
+% List of additional chapter styles
+\newcommand{\additionalstyles}{bar-compact, bar, bluebox, compact, elegant, fmv, hansen, ist, vz34, vz43}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % \lstset{
 %     captionpos=t,
 %     basicstyle={\ttfamily\footnotesize},
@@ -230,4 +293,4 @@ align=left, leftmargin=*} %,label=$\star$
 %       {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
 %       {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
 %       {€}{{\EUR}}1 {£}{{\pounds}}1
-% }
+%     }

@@ -15,6 +15,9 @@
   - [[#update-repo][Update repo]]
   - [[#packages][Packages]]
     - [[#fail-to-compile-caption-and-subcaption][Fail to compile: caption and subcaption]]
+- [[#formatting][Formatting]]
+  - [[#normas-para-a-formatação-gráfica][Normas para a formatação gráfica]]
+  - [[#normas-para-o-depósito-no-repositorium][Normas para o depósito no RepositoriUM]]
 - [[#writing][Writing]]
   - [[#-done-title][✔ DONE Title]]
   - [[#abstract][Abstract]]
@@ -27,6 +30,7 @@
     - [[#diagrams-uav][Diagrams UAV]]
     - [[#autopilot][Autopilot]]
     - [[#px4][PX4]]
+  - [[#-done-chapter-style][✔ DONE Chapter style]]
 
 * Preamble
 ** Git Workflow
@@ -225,6 +229,139 @@ I had to comment the lines below
 \usepackage[list=true,labelfont=it,font=small]{subcaption}
 #+end_src
 
+* Formatting
+- [[file:doc/1_Despacho_RT-31_2019-NormasFormatacaoTese.pdf][Normas formatacao tese]]
+
+
+
+** Normas para a formatação gráfica
+
+
+** Normas para o depósito no RepositoriUM
+1. *Tipo de Letra*: NewsGotT
+2. *Capas e respetivas contracapas*, dos trabalhos de Mestrado devem ter:
+   - fundo branco,
+   - verso da capa e da contracapa a cor cinza (pantone Cool Gray 7).
+   - O lettering da capa e da lombada deve também ser cinza, no tipo de letra
+     NewsGotT, e ter os tamanhos e formatações especificados no Manual.
+3. *Todas as capas* devem ter a dimensão A4 e, de acordo com o Anexo 2, incluir:
+   - o logótipo da Unidade Orgânica (UO) no âmbito do qual os trabalhos foram
+   desenvolvidos. Este logótipo deve constar no topo da capa, ao centro da
+   página. Integram o logótipo, para além dos símbolos, o lettering
+   identificativo da UMinho e da UO;
+   - nome completo do autor;
+   - o título da Tese ou do trabalho de Mestrado;
+   - mês e ano de submissão da Tese ou do trabalho de Mestrado.
+4. *As lombadas*, de acordo com o Anexo 2, devem possuir:
+   - o logótipo em formato vertical, e sem o lettering, da UO no âmbito do qual
+     os trabalhos foram desenvolvidos;
+   - o nome do autor (não necessariamente completo);
+   - o título da Tese ou do trabalho de Mestrado;
+   - a indicação "UMinho" e o ano de submissão da Tese.
+5. Nas *contracapas*:
+   - não existe obrigatoriedade de constar qualquer informação,
+   - podendo, no entanto, ser utilizadas para a introdução de outros elementos
+     tais como logótipos ou nomes de entidades que apoiaram ou financiaram os
+     trabalhos (ex.: FCT, Erasmus, etc.).
+     - Estas indicações devem, sempre que possível, constar a uma única cor
+       (branco, no caso do fundo cinza; cinza, no caso do fundo branco) e no
+       fundo da página (Anexo 2).
+6. *Folha de rosto*: todos os trabalhos devem ter uma folha de rosto:
+   1. branca,
+   2. também com letteríng cinza,
+   3. tipo de letra NewsGotT,
+   4. com os tamanhos e formatações especificados no Manual.
+   5. Nesta folha, também exemplificada no Anexo 2 devem constar os seguintes
+      elementos:
+      1. o logótipo da UO no âmbito do qual a Tese ou o trabalho de Mestrado foi
+         desenvolvido.
+	 Este logótipo deve constar no topo da folha, ao centro.
+	 Integram o logótipo, para além dos símbolos, o lettering identificativo
+         da UMinho e da respetiva UO;
+      2. o nome completo do autor;
+      3. o título da Tese ou do trabalho de Mestrado;
+      4. o tipo trabalho, de acordo com o grau académico a obter ("Dissertação
+         de Mestrado")
+   6. o ramo do doutoramento e a respetiva especialidade (caso se aplique), no
+      caso das Teses de Doutoramento,
+      1. ou a indicação "Trabalho realizado sob a orientação do Professor",
+         seguida do nome do orientador, devendo a redação ser adequada em termos
+         de género;
+   7. mês e ano de submissão da Tese ou do trabalho de Mestrado, ou, no caso de
+      o candidato ser solicitado a introduzir correções na versão inicialmente
+      entregue, antes ou depois das provas públicas, do mês e ano de entrega da
+      versão corrigida.
+7. *Verso da folha de rosto* (_Copyright_): Na página seguinte, deve constar a
+   declaração    relativa às condições de utilização do trabalho por terceiros
+   ou à eventual reprodução de partes do mesmo (*Anexo 3*).
+8. *Agradecimentos*: Na folha 2 - página 3 do trabalho, devem constar:
+   - os agradecimentos do autor, quando aplicável;
+   - uma menção ao apoio financeiro, quando aplicável;
+9. *Declaração de Integridade (Anexo 4)*: Na página seguinte (folha 2- página 4
+   ou na folha 2- página 3, se não houver lugar a agradecimentos ou referência
+   ao apoio financeiro) deve constar a Declaração de Integridade (Anexo 4).
+10. *Abstract (pt)*: Na página seguinte deve constar o título e o resumo do
+    trabalho, em português.
+    1. *Palavras-chave*: No final do resumo, devem ser apresentadas três a cinco
+       palavras chave, escritas por ordem alfabética.
+    2. O resumo e as palavras chave deverão ter a _extensão máxima de uma
+       página_.
+11. *Abstract (en)*: Na página seguinte deve constar o título e o resumo do
+    trabalho redigido em uma língua estrangeira de ampla divulgação.
+    1. No final do resumo e na mesma língua, devem existir as palavras chave.
+    2. Este resumo (incluindo as palavras chave) deverá ter uma extensão máxima
+       de uma página.
+12. Sempre que, mediante autorização expressa do Conselho Científico, o trabalho
+    seja redigido em língua estrangeira, o resumo mencionado no ponto anterior
+    deve ser redigido na mesma língua que o trabalho.
+13. *Indice e listas*: De seguida deve ser apresentado:
+    1. o índice, ao qual se seguem as
+    2. listas de abreviaturas e siglas, de figuras,
+    3. de símbolos,
+    4. de ilustrações,
+    5. de tabelas, etc., quando aplicável.
+14. *Numeração*: Excetuando a folha de rosto, que não deve ser numerada, mas
+    deve ser contada, todas as páginas de texto devem ser numeradas da seguinte
+    forma:
+    1. _as páginas iniciais ou preliminares_ - declarações, agradecimentos,
+       resumos, índice, etc. - _devem ser numeradas_, preferencialmente ao fundo
+       da página e ao centro, em _algarismos romanos minúsculos_;
+    2. as páginas referentes a corpo do texto. referências bibliográficas e anexos e/ou apêndices devem ser numerados de
+forma contínua, também preferencialmente ao fundo da página e ao centro, mas em algarismos árabes.
+16. O trabalho deve ser organizado em frente e verso, em continuo (sem páginas em branco), com margens de 2,5cm,
+usando a fonte NewsGotT e uma dimensão de 12, para a letra do texto, e de 8, para a letra das notas de rodapé (caso
+se aplique). O espaçamento entre linhas deve ser de 1.5, salvo nas referências bibliográficas e anexos onde pode ser
+considerado um espaçamento entre linhas de 1.
+17. As tabelas, quadros, gráficos, figuras, etc. devem ser numerados, em cada caso, de 1 a N, e conter um titulo, sintético,
+que traduza claramente o respetivo conteúdo.
+18. Nas Teses de Doutoramento ou nos trabalhos de Mestrado, não podem ser incluídos dados ou imagens que permitam
+identificar pessoas ou instituições, pelo menos sem prévia autorização, escrita dos mesmos ou dos seus responsáveis
+legais, a qual deve ser integrada no trabalho.
+19. Em trabalhos que envolvam investigação com humanos, tecidos, animais ou ambiente, deve ser anexado comprovativo
+de que a investigação mereceu parecer positivo do Conselho de Ética da Universidade ou de uma sua Subcomissão.
+20. De modo a facilitar a conceção das capas, são disponibilizados na Intranet, mediante Login, ficheiros com a matriz das
+capas de Teses de Doutoramento (ou afim) e de trabalhos de Mestrado (a adaptar consoante o tipo de trabalho de
+Mestrado – Dissertação de Mestrado, Relatório de Estágio, Projeto ou outro), permitindo a edição/alteração direta do
+corpo do texto. São ainda disponibilizados outros elementos úteis no âmbito da preparação das capas e das respetivas
+folhas de rosto, tais como os logótipos das várias UO ou o tipo de letra de utilização obrigatória.
+21. No caso de Teses de Doutoramento ou de trabalhos de Mestrado elaborados no âmbito de Cursos em Associação, a
+respetiva capa e folha de rosto poderão incluir os logótipos das instituições parceiras, a seguir ao logótipo da UMinho,
+desde que o Acordo assinado entre essas instituições assim o preveja.
+
+
+*Summary*:
+1) Capa
+2) Contracapa
+3) copyright
+4) Acknowledgments
+5) Statement of integrity
+6) Quote (*Optional*)
+7) Abstract (pt)
+8) Abstract (en)
+9) Index and lists
+10) Chapters
+  
+
 * Writing
 ** ✔ DONE Title
 :LOGBOOK:
@@ -402,3 +539,31 @@ The flight controller runs the normal PX4 flight stack, while a companion comput
 PX4 systems typically run a Linux OS on the companion computer (because the PX4/PX4-Avoidance
 (opens new window) project delivers ROS-based avoidance libraries designed for Linux). Linux is a much better platform for "general" software development than NuttX; there are many more Linux developers and a lot of useful software has already been written (e.g. for computer vision, communications, cloud integrations, hardware drivers). Companion computers sometimes run Android for the same reason.
 
+** ✔ DONE Chapter style
+:LOGBOOK:
+- State "✔ DONE"     from              [2024-05-07 ter 02:28]
+:END:
+   % The chapter style to be used
+ You can use any of the default memoir style files:
+ #+begin_example
+     [ default, section, hangnum, article, bianchi,
+       bringhurst, brotherton, chappell, crosshead,
+       culver, dash, demo2, dowding, ell, ger,
+       komalike, lyhne , madsen, ntglike, southall,
+       tandh, thatcher, veelo, verville, wilsondob ]
+ #+end_example
+ 
+ Or any of the additional styles
+ #+begin_example
+     [ bar-compact, bar, bluebox, compact, elegant,
+       fmv, hansen, ist, vz34, vz43 ]
+ #+end_example
+
+ I already tested this.
+ - The result can be seen in [[file:doc/chapters_styles.pdf][ChaptersStyles]]
+
+
+ I used the default: =bar=
+
+
+       
