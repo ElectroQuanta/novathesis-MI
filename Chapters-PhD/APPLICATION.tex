@@ -1,0 +1,1323 @@
+% !TEX root = ../template.tex
+%
+\typeout{NT FILE APPLICATION.tex}%
+\chapter{Tests}%
+\label{ch:application}
+In this chapter, the \gls{3dmmlpbf} methodology's is applied to multi-material
+fabrication, using one or multiple lasers.
+Thus, the complete process, from inception to produced part is tested as a
+whole, to ensure the full validation of the designed ecosystem, i.e.,
+methodology, workflow, toolchain, and equipment.
+Lastly, the prospects for process improvement are outlined, leveraging the
+process knowledge acquired for systematic and consistent evolution of the
+\gls{3dmmlpbf} manufacturing chain.
+
+\section{Multi-material mono-laser}%
+\label{sec:multi-material-mono-laser}
+The multi-material fabrication was tested out using a
+\texttt{CO\textsubscript{2}} laser or a \texttt{YAG-Nd} one. These tests are
+described next.
+
+\subsection{CO\textsubscript{2} Laser}%
+\label{sec:co2-laser-test}
+As a proof-of-concept, a bi-material model --- cylinder and cross --- was
+designed in FreeCAD (see Fig.~\ref{fig:cylCross-co2-model-freecad}), and each material was exported to an \gls{stl} file. The
+cylinder has 25 millimeters in diameter and 11 millimeters in height. The cross
+is an ``assembly'' of a parallelepiped with 7 x 7 x 2 mm, totaling a bounding
+volume of 21 x 21 x 6 mm. The cross
+referenced to the top plane of the cylinder, so that the cylinder's first layers
+act as support material.
+
+\begin{figure}[htbp!]
+  \centering
+  %
+  \includegraphics[width=0.6\textwidth]{./img/cylCross-co2-model-freecad.png}
+  \caption{CO\textsubscript{2} laser --- bi-material manufacturing test: FreeCAD modelling}%
+  \label{fig:cylCross-co2-model-freecad}
+\end{figure}
+
+\subsubsection{Pre-Manufacturing}%
+\label{sec:pre-manufacturing-co2}
+The \gls{stl} files corresponding to each material were loaded in the
+\underline{Pre-Manufacturer} \gls{sw} for processing
+(Fig.~\ref{fig:cylCross-co2-model}) and the results are displayed in Fig.~\ref{fig:cylCross-co2-test}. The same slicing and path generation
+parameters were defined for both entities (Fig.~\ref{fig:cylCross-co2-cfg}):
+first layer height and layer height of $50~\mu m$, null fill angle, fill density
+of $20\%$, and infill extrusion width of $50~\mu m$, without connected
+paths.
+%
+The manufacturing model was generated with 579 slices
+(Fig.~\ref{fig:cylCross-co2-main}). Layer $0$, located at $z = 50~\mu m$, shows the
+cylinder's bottom layers, without any intersecting slices belonging to the cross
+(Fig.~\ref{fig:cylCross-co2-layer0}).
+Layer 100, located at
+$z = 5025~\mu m$, shows, as expected, the first bi-material layers (Fig.~\ref{fig:cylCross-co2-layer100-mat2}, and
+Fig.~\ref{fig:cylCross-co2-layer100-mat1}).
+Lastly, layer 120, located at $z = 7025~\mu m$, shows the first of the internal
+layers where the cross is fully displayed
+(Fig.~\ref{fig:cylCross-co2-layer180-mat2} and Fig.~\ref{fig:cylCross-co2-layer180-mat1}).
+
+Thus, the slicing and path generation complied to the geometrical data (input
+\gls{stl} models) and the configuration established, further validating the \underline{Pre-Manufacturer} \gls{sw}.
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.75\textwidth]{./img/cylCross-co2-model.png}
+  \caption{3D model preview}%
+  \label{fig:cylCross-co2-model}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.66\textwidth]{./img/cylCross-co2-cfg.png}
+  \caption{Slicing and path generation setup}%
+  \label{fig:cylCross-co2-cfg}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-co2-main-crop.png}
+  \caption{Output: main view}%
+  \label{fig:cylCross-co2-main}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-co2-layer0.png}
+  \caption{Output: Layer 0}%
+  \label{fig:cylCross-co2-layer0}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-co2-layer100-mat1.png}
+  \caption{Output: Layer 100 --- material 1}%
+  \label{fig:cylCross-co2-layer100-mat1}
+\end{subfigure}
+%
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-co2-layer100-mat2.png}
+  \caption{Output: Layer 100 --- material 2}%
+  \label{fig:cylCross-co2-layer100-mat2}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-co2-layer180-mat2.png}
+  \caption{Output: Layer 180 --- material 2}%
+  \label{fig:cylCross-co2-layer180-mat2}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-co2-layer180-mat1.png}
+  \caption{Output: Layer 180 --- material 1}%
+  \label{fig:cylCross-co2-layer180-mat1}
+\end{subfigure}
+  % 
+  \caption{CO\textsubscript{2} laser --- bi-material manufacturing test: Pre-Manufacturing
+  processing}%
+  \label{fig:cylCross-co2-test}
+\end{figure}
+
+\subsubsection{Manufacturing}%
+\label{sec:manufacturing-co2}
+The resulting manufacturing model was then loaded to the \texttt{Manufacturer}'s
+\gls{sw} as illustrated in Fig.~\ref{fig:cylCross-co2-manuf-init}. The master system
+was connected to the \gls{3dmmlpbf} machine via COM port.
+Upon the successful connection, the machine was automatically homed.
+The process parameters
+were mapped to each material through the \texttt{Manage Pens} pushbutton, as
+depicted in Fig.~\ref{fig:cylCross-co2-manuf-pens}.
+A calibration was also performed to minimize powder usage.
+
+% subfigures
+\begin{figure}[htbp!]
+%
+  \begin{subfigure}[t]{0.70\textwidth}
+    \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-co2-manuf-init.png}
+  \caption{Initialization}%
+  \label{fig:cylCross-co2-manuf-init}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.28\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-co2-manuf-pens.png}
+  %\caption{Mapping geometry to process parameters}%
+  \caption{Process parameters}%
+  \label{fig:cylCross-co2-manuf-pens}
+  \end{subfigure}
+%
+  %
+  \begin{subfigure}[t]{.70\textwidth}
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/cylCross-co2-manuf-middle.png}
+  \caption{Manufacturing on-going}%
+  \label{fig:cylCross-co2-manuf-middle}
+  \end{subfigure}
+%
+  \centering
+  \begin{subfigure}[t]{.28\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/cross-cube-bed-01.jpg}
+  \caption{Machine bed}%
+  \label{fig:cylCross-co2-manuf-middle-bed}
+  \end{subfigure}
+  \centering
+  \begin{subfigure}[t]{0.9\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/cylCross-co2-manuf-end.png}
+  \caption{Manufacturing complete}%
+  \label{fig:cylCross-co2-manuf-end}
+  \end{subfigure}
+  % 
+  \caption{CO\textsubscript{2} laser --- bi-material manufacturing test: Manufacturing}%
+  \label{fig:cylCross-co2-manuf}
+\end{figure}
+
+The filling procedure was executed for both materials. 
+For easier
+demonstration, the same material was used for the cylinder and the cross --- an electrostatic polymeric coating
+based on TGIC polyester~\cite{eastwoodPowder} --- but with different colors for better visualization.
+After concluding these
+steps and validating the calibration, the machine's initialization was complete.
+
+The manufacturing was then initiated by selecting all layers to manufacture and
+pressing the \texttt{Run} pushbutton. 
+Fig.~\ref{fig:cylCross-co2-manuf-middle} and Fig.~\ref{fig:cylCross-co2-manuf-middle-bed} illustrates the manufacturing: on the left the visualization
+of the current layer and the corresponding \gls{ui} status; on the right the
+result of the layer after being printed. As it can be seen, the layer is
+correctly printed, in compliance with the process and geometrical data provided.
+After more than two hours, the 579 layers were manufactured (Fig.~\ref{fig:cylCross-co2-manuf-end}).
+
+Fig.~\ref{fig:cylCross-co2-produced-part} illustrates the bi-material part produced, in
+cross-section (Fig.~\ref{fig:cylCross-co2-part-crossSection}) and orthogonal views (Fig.~\ref{fig:cylCross-co2-part-ortho}), where it is clearly visible the
+tridimensional material variation, as defined by the original 3D CAD
+model.
+
+%
+\begin{figure}[hbtp!]
+  \centering
+  \begin{subfigure}[t]{.48\textwidth}
+    \includegraphics[width=0.8\textwidth]{./img/cross-cube-02.jpg}
+  \caption{Cross-section view}%
+  \label{fig:cylCross-co2-part-crossSection}
+  \end{subfigure}
+%
+  \centering
+  \begin{subfigure}[t]{.48\textwidth}
+  \centering
+    \includegraphics[width=0.59\textwidth]{./img/cylCross-part-ortho.png}
+  \caption{Orthogonal view}%
+  \label{fig:cylCross-co2-part-ortho}
+  \end{subfigure}
+  % 
+  \caption{CO\textsubscript{2} laser --- bi-material manufacturing test:
+    Produced part}%
+  \label{fig:cylCross-co2-produced-part}
+\end{figure}
+
+\subsubsection{Post-Manufacturing}%
+\label{sec:post-manufacturing-co2}
+After manufacturing was completed, several analysis were performed on the
+produced part to assess the manufacturing quality, namely on geometrical
+compliance and densification.
+
+Geometrical compliance was assessed using a image processing \gls{sw} package
+based on \texttt{ImageJ} ---
+\texttt{Fiji}~\cite{fijiImageJ,schindelin2012fiji} --- using a 1 cent coin as a
+base for the measurements (Fig.~\ref{fig:cylCross-co2-imagej}). The measurements
+performed showed a slight discrepancy, especially in the z-axis, which may be
+due to the densification effect or measurement errors, but overall the dimensions of the produced part
+match the ones from the 3D \gls{cad} model.
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-co2-imagej.png}%
+  % \caption{\gls{gui}}%
+  \caption{CO\textsubscript{2} laser --- bi-material manufacturing test:
+    Geometrical measurements using Fiji's SW}%
+  \label{fig:cylCross-co2-imagej}
+\end{figure}
+
+The \gls{sem} analysis performed on the part
+(Fig.~\ref{fig:sem-analysis}) showed good densification, demonstrating the good
+manufacturing performance of the equipment.
+
+Thus, the equipment is capable of
+producing multi-material components using the \gls{3dmmlpbf} process, in
+compliance to the 3D models geometry, and with good overall manufacturing
+performance by enabling the mapping of geometrical and topological data to
+process parameters and through robust control of the process.
+%
+% subfigures
+\begin{figure}[htb!]
+  \centering
+  %
+  \begin{subfigure}[t]{.48\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/SEM.jpg}%
+  %\caption{\gls{gui}}%
+  \label{fig:sem}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{.48\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/SEM-2.jpg}%
+  %\caption{Machine bed}%
+  \label{fig:sem-2}
+  \end{subfigure}
+  % 
+  %
+  \begin{subfigure}[t]{.48\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/SEM-3.jpg}%
+  %\caption{\gls{gui}}%
+  \label{fig:sem-3}
+\end{subfigure}
+  %
+  \begin{subfigure}[t]{.48\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/SEM-4.jpg}%
+  %\caption{\gls{gui}}%
+  \label{fig:sem-4}
+  \end{subfigure}
+  \caption{CO\textsubscript{2} laser --- bi-material manufacturing test:
+    SEM analysis}%
+  \label{fig:sem-analysis}
+\end{figure}
+
+The information concerning the manufacturing process as a whole was then
+collected and added to the \emph{Post\=/Manufacturer}.
+Fig.~\ref{fig:postManuf-premanuf-co2} shows the \underline{Pre-Manufacturer}'s data
+collection, storing the input and output files' related information,
+respectively. It allows quick navigation and visualisation of these information
+flows, which are indexed to a produced part.
+
+% subfigures
+\begin{figure}[htb!]
+  \centering
+  %
+  \begin{subfigure}[t]{.8\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-premanuf-input-co2.png}%
+  \caption{Pre-Manufacturer input files manager}%
+  \label{fig:postManuf-premanuf-input-co2}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{.8\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-premanuf-output-co2.png}%
+  \caption{Pre-Manufacturer output files manager}%
+  \label{fig:postManuf-premanuf-output-co2}
+\end{subfigure}
+%
+  \caption{CO\textsubscript{2} laser --- Post-Manufacturer: Pre-Manufacturer
+    data management}%
+  \label{fig:postManuf-premanuf-co2}
+\end{figure}
+
+Fig.~\ref{fig:postManuf-manuf-co2} shows the \underline{Manufacturer}'s data
+collection, storing the input, configuration and logs' related information,
+respectively. It allows quick navigation and visualisation of these information
+flows, which are also indexed to a produced part. The input and configuration
+data can be used in conjunction with the mechanical tests to analyse the
+manufacturing performance and behavior. On the other hand, the logs can be used
+by the control/systems engineer to analyse the equipment and software behavior,
+and improve it.
+
+% subfigures
+\begin{figure}[htb!]
+  \centering
+  %
+  \begin{subfigure}[t]{.6\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-manuf-layers-co2.png}%
+  \caption{Manufacturer input manager}%
+  \label{fig:postManuf-manuf-layers-co2}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{.6\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-manuf-pens-co2.png}%
+  \caption{Manufacturer configuration manager}%
+  \label{fig:postManuf-manuf-pens-co2}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{.6\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-manuf-logs-co2.png}%
+  \caption{Manufacturer logs manager}%
+  \label{fig:postManuf-manuf-logs-co2}
+\end{subfigure}
+%
+  \caption{CO\textsubscript{2} laser --- Post-Manufacturer: Manufacturer
+    data management}%
+  \label{fig:postManuf-manuf-co2}
+\end{figure}
+
+Fig.~\ref{fig:postManuf-mechTestManager} depicts the \texttt{Mechanical tests
+  manager} \gls{ui} added to the \texttt{Post-Manufacturer} software to handle
+the mechanical tests performed on the produced components. These tests can be
+added to the database with an accompanying image, for example \gls{sem}, which
+can then be downloaded and used for analysis, for example, using \gls{ai}. The analysis results can then be uploaded back to the database for
+tracking and process improvement.
+\begin{figure}[hbtp!]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-mechTestManager.png}
+  %A
+  \caption{CO\textsubscript{2} laser --- Post-Manufacturer: Mechanical tests manager}%
+  \label{fig:postManuf-mechTestManager}
+\end{figure}
+
+
+\subsection{YAG-Nd Laser}%
+\label{sec:yag-nd-laser-test}
+After proving the correctness of the overall process --- methodology, workflow,
+toolchain and equipment --- more multi-material parts can be produced, but now,
+using metals.
+
+\subsubsection{Pre-Manufacturing}%
+\label{sec:pre-manufacturing-yag}
+The \texttt{CO\textsubscript{2}} laser's
+spot diameter is very large (50~$\mu$m) for metallic powders granulometry, thus
+requiring the usage of a different laser type, like the \texttt{YAG-Nd} one.
+In that sense, a multi-material metallic component was conceptualized for
+manufacturing.
+
+However, this time, the conventional method was used to illustrate its
+difficulties. Thus, instead of 3D modelling and running the multi-material model
+through the Pre\=/Manufacturer software, the multi-material component was
+designed directly in a 2D vector drawing \gls{sw}, EzCAD, in this case.
+This forced the designer to draw 2D layers and stack them on top of each other
+--- mimicking the slicing --- and manually perform the hatching --- mimicking
+the path generation.
+With this approach the designer loses the 3D perspective, which makes it significantly harder for the
+conceptual design of the component. This downside is especially critical if
+multi-material is added to the equation, as now, the designer needs to be aware
+and track, not only, the tridimensional shape of the component, but also the
+materials' placement and its interfaces.
+As it becomes obvious, this completely defeats the purpose of functional design.
+Nonetheless, the \texttt{Manufacturer} is still able to process such models, as
+long as the layer naming convention is respected. 
+
+Fig.~\ref{fig:custom-yag-ezcad} illustrates the modelling procedure,
+with some layers containing sets of grouped points (pattern), and others being
+hatched (to act as a supporting layer).
+
+\begin{figure}[hbtp!]
+  \centering
+    \includegraphics[width=0.7\textwidth]{./img/custom-yag-ezcad.png}
+  %A
+  \caption{YAG-Nd laser: bi-material manufacturing test --- Modelling in EzCAD}%
+  \label{fig:custom-yag-ezcad}
+\end{figure}
+
+This model was then loaded into the \texttt{Manufacturer} \gls{sw} for
+validation, as it eases the visualisation
+process. Fig.~\ref{fig:custom-yag-model-preview} shows the basic stratification
+of the model. The model has 62 slices totaling $4275~\mu m$ in height
+(Fig.~\ref{fig:custom-yag-model-overview}).
+The first ten layers (Fig~\ref{fig:custom-yag-model-init}), with $150~\mu m$ in height, correspond to a
+cross pattern replicated across the whole area. Then, from layer 11 to 20 (Fig.~\ref{fig:custom-yag-model-layer11}), with
+$75~\mu m$ in height, we have a hatched pattern to act as a supporting substrate
+for the multi-material layers. From layer 21 to 31, we have slices containing
+both materials with a chess board pattern, but offsetted, to promote mechanical
+interlocking of the layers (see Fig.~\ref{fig:custom-yag-model-layer21-mat2},
+and Fig.~\ref{fig:custom-yag-model-layer21-mat1}, respectively).
+Lastly, from layer 32 to the end, we have a hatched pattern to close off the
+part (Fig.~\ref{fig:custom-yag-model-preview}).
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/custom-yag-model-overview.png}
+  \caption{3D model preview}%
+  \label{fig:custom-yag-model-overview}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/custom-yag-model-init.png}
+  \caption{Layer 0}%
+  \label{fig:custom-yag-model-init}
+\end{subfigure}
+  % 
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/custom-yag-model-middle-mat2.png}
+  \caption{Layer 11}%
+  \label{fig:custom-yag-model-layer11}
+\end{subfigure}
+  % 
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/custom-yag-model-layer21-mat2.png}
+  \caption{Layer 21 --- material 2}%
+  \label{fig:custom-yag-model-layer21-mat2}
+\end{subfigure}
+  % 
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/custom-yag-model-layer21-mat1.png}
+  \caption{Layer 21 --- material 1}%
+  \label{fig:custom-yag-model-layer21-mat1}
+\end{subfigure}
+  % 
+  % 
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/custom-yag-model-layer43.png}
+  \caption{Layer 32}%
+  \label{fig:custom-yag-model-layer43}
+\end{subfigure}
+%
+  \caption{YAG-Nd laser --- bi-material manufacturing test: Model preview}%
+  \label{fig:custom-yag-model-preview}
+\end{figure}
+
+\subsubsection{Manufacturing}%
+\label{sec:manufacturing-yag}
+After loading the model, the initialization procedure was performed, as
+illustrated in Fig.~\ref{fig:custom-yag-manuf-init}, comprising the
+\gls{3dmmlpbf} machine communication setup and homing, the calibration for
+powder minimisation, and powder filling.
+The process parameters
+were mapped to each material, Ti6Al4V and CoCrMo, as shown in
+Fig.~\ref{fig:custom-yag-manuf-pens}. The same set of parameters were applied to
+both materials, with significantly slower marking speeds ($10~mm/s$) and higher
+power ratios ($55\%$).
+
+% subfigures
+\begin{figure}[htbp!]
+%
+  \begin{subfigure}[t]{0.70\textwidth}
+    \centering
+  \includegraphics[width=1.0\textwidth]{./img/custom-yag-manuf-init.png}
+  \caption{Initialization}%
+  \label{fig:custom-yag-manuf-init}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.28\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/custom-yag-manuf-pens.png}
+  %\caption{Mapping geometry to process parameters}%
+  \caption{Process parameters}%
+  \label{fig:custom-yag-manuf-pens}
+  \end{subfigure}
+%
+  \centering
+  \begin{subfigure}[t]{0.7\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/custom-yag-manuf-end.png}
+  \caption{Manufacturing halted}%
+  \label{fig:custom-yag-manuf-end}
+  \end{subfigure}
+%
+  \centering
+  \begin{subfigure}[t]{.28\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/custom-yag-manuf-bed.jpg}
+  \caption{Machine bed}%
+  \label{fig:custom-yag-manuf-bed}
+\end{subfigure}
+%
+  \caption{YAG-Nd laser --- bi-material manufacturing test: Manufacturing}%
+  \label{fig:custom-yag-manuf}
+\end{figure}
+
+The manufacturing was then initiated by selecting all layers to manufacture and
+pressing the \texttt{Run} pushbutton. More than half the layers were correctly
+manufactured, however, at layer 29, the process was halted (Fig.~\ref{fig:custom-yag-manuf-end}), as some significant
+distortion were occurring at the interfaces between the two
+metals. Fig.~\ref{fig:custom-yag-manuf-bed} illustrates the machine bed when the
+halting occurred.
+
+Fig.~\ref{fig:custom-yag-produced-part} shows the bi-material part produced,
+where it is clearly visible some of the distortions that took place and led to
+process aborting. Thus, more work in the 3D model design and manufacturing setup
+for this geometry with the designated metallic pair.
+%
+\begin{figure}[hbtp!]
+  \centering
+    \includegraphics[width=0.5\textwidth]{./img/custom-yag-part.jpg}
+%
+  \caption{YAG-Nd laser --- bi-material manufacturing test:
+    Produced part}%
+  \label{fig:custom-yag-produced-part}
+\end{figure}
+
+\subsubsection{Post-Manufacturing}%
+\label{sec:post-manufacturing-yag}
+As important as documenting the successes, is the failed trials
+documentation. As such, the process information was collected and stored in the
+\texttt{Post\=/Manufacturer}.
+
+Fig.~\ref{fig:postManuf-manuf-yag} shows the \underline{Manufacturer}'s data
+collection, storing the input, configuration and logs' related information,
+respectively. As can be seen, this information is appended to the already stored data.
+
+% subfigures
+\begin{figure}[htb!]
+  \centering
+  %
+  \begin{subfigure}[t]{.6\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-manuf-layers-yag.png}%
+  \caption{Manufacturer input manager}%
+  \label{fig:postManuf-manuf-layers-yag}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{.6\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-manuf-pens-yag.png}%
+  \caption{Manufacturer configuration manager}%
+  \label{fig:postManuf-manuf-pens-yag}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{.6\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-manuf-logs-yag.png}%
+  \caption{Manufacturer logs manager}%
+  \label{fig:postManuf-manuf-logs-yag}
+\end{subfigure}
+%
+  \caption{YAG-Nd laser --- Post-Manufacturer: Manufacturer
+    data management}%
+  \label{fig:postManuf-manuf-yag}
+\end{figure}
+
+Fig.~\ref{fig:postManuf-mechTestManager-yag} shows the \gls{em} image
+analysis performed on the component added to the database. These images further
+support the manufacturing's halting decision, as the defects become
+clearer. Once again, data is appended, contributing to the increasing process
+knowledge base.
+
+\begin{figure}[hbtp!]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-mechTestManager-yag.png}
+  %A
+  \caption{YAG-Nd laser --- Post-Manufacturer: Mechanical tests manager}%
+  \label{fig:postManuf-mechTestManager-yag}
+\end{figure}
+
+\section{Multi-material multi-laser}%
+\label{sec:multi-material-multi}
+The multi-material fabrication was also tested using multiple lasers, in this
+case, CO2 and YAG-Nd. This is important because polymeric/composite materials
+have different absorption wavelength spectrum than the metallic ones, which requires the
+usage of different laser types.
+Thus, for multi-material fabrication consisting
+of a combination of polymeric/composite materials with metallic ones, multiple
+lasers must be used efficiently.
+
+The cylinder and cross model was used once again, but
+scaled, (see Fig.~\ref{fig:cylCross-co2-model-freecad}), and each material was exported to an \gls{stl} file. The
+cylinder has 11 millimeters in diameter and 2.5 millimeters in height. The cross
+is an ``assembly'' of a parallelepiped with 2 x 2 x 0.4 mm, totaling a bounding
+volume of 6 x 6 x 1.2 mm. The cross
+referenced to the top plane of the cylinder, so that the cylinder's first layers
+act as support material.
+
+\begin{figure}[htbp!]
+  \centering
+  %
+  \includegraphics[width=0.6\textwidth]{./img/cylCross-multi-model-freecad.png}
+  \caption{Multi-laser --- bi-material manufacturing test: FreeCAD modelling}%
+  \label{fig:cylCross-multi-model-freecad}
+\end{figure}
+
+One very interesting idea behind the usage of dissimilar types of materials is
+the \underline{sacrificial substrate}. In this concrete example, the cross can be produced
+using a polymeric material, which could then be removed to yield its negative
+made out of a metallic alloy. The sacrificial substrate is significantly cheaper
+than the base material, and enables the production of a negative without
+manufacturing defects such as the ones resulting from hanging slices (without
+support material). This also limits cross contamination to the base material.
+
+\subsection{Pre-Manufacturing}%
+\label{sec:pre-manufacturing-multiLaser}
+The \gls{stl} files corresponding to each material were loaded in the
+\underline{Pre-Manufacturer} \gls{sw} for processing
+(Fig.~\ref{fig:cylCross-multi-model}) and the results are displayed in Fig.~\ref{fig:cylCross-multi-test}. The same slicing and path generation
+parameters were defined for both entities (Fig.~\ref{fig:cylCross-multi-cfg}):
+first layer height and layer height of $50~\mu m$, null fill angle, fill density
+of $10\%$, and infill extrusion width of $20~\mu m$, without connected
+paths.
+%
+The manufacturing model was generated with 103 slices
+(Fig.~\ref{fig:cylCross-multi-main}). Layer $0$, located at $z = 50~\mu m$, shows the
+cylinder's bottom layers, without any intersecting slices belonging to the cross
+(Fig.~\ref{fig:cylCross-multi-layer0}).
+Layer 27, located at
+$z = 1325~\mu m$, shows, as expected, the first bi-material layers (Fig.~\ref{fig:cylCross-multi-layer27-mat1}, and
+Fig.~\ref{fig:cylCross-multi-layer27-mat2}).
+Lastly, layer 42, located at $z = 1725~\mu m$, shows the first of the internal
+layers where the cross is fully displayed
+(Fig.~\ref{fig:cylCross-multi-layer42-mat1} and Fig.~\ref{fig:cylCross-multi-layer42-mat2}).
+
+Thus, once again, the slicing and path generation complied to the geometrical data (input
+\gls{stl} models) and the defined configuration, further validating the \underline{Pre-Manufacturer} \gls{sw}.
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{./img/cylCross-multi-model.png}
+  \caption{3D model preview}%
+  \label{fig:cylCross-multi-model}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.66\textwidth]{./img/cylCross-multi-cfg.png}
+  \caption{Slicing and path generation setup}%
+  \label{fig:cylCross-multi-cfg}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-multi-main.png}
+  \caption{Output: main view}%
+  \label{fig:cylCross-multi-main}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-multi-layer0.png}
+  \caption{Output: Layer 0}%
+  \label{fig:cylCross-multi-layer0}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-multi-layer27-mat1.png}
+  \caption{Output: Layer 27 --- material 1}%
+  \label{fig:cylCross-multi-layer27-mat1}
+\end{subfigure}
+%
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-multi-layer27-mat2.png}
+  \caption{Output: Layer 27 --- material 2}%
+  \label{fig:cylCross-multi-layer27-mat2}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-multi-layer42-mat1.png}
+  \caption{Output: Layer 42 --- material 1}%
+  \label{fig:cylCross-multi-layer42-mat1}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-multi-layer42-mat2.png}
+  \caption{Output: Layer 42 --- material 2}%
+  \label{fig:cylCross-multi-layer42-mat2}
+\end{subfigure}
+  % 
+  \caption{Multi-laser --- bi-material manufacturing test: Pre-Manufacturing
+  processing}%
+  \label{fig:cylCross-multi-test}
+\end{figure}
+
+
+\subsection{Manufacturing}%
+\label{sec:manufacturing-multiLaser}
+Multi-laser manufacturing requires a special setup, due to the available lasers'
+characteristics and its specifics, namely, bulky laser generation systems, and
+different focus distances.
+
+Thus, firstly, the lasers arrangement was modelled in a
+\gls{cad} software for quick iteration (see Fig.~\ref{fig:multiLaser-setup-model}).
+The bulkiness and different
+focus distances dictate that the lasers must be tilted in order to obtain a
+working overlapping area. However, the laser tilting produces focus
+field distortion, which must be corrected to limit geometrical deviations.
+
+The lasers' focus cones were placed at the focus height and with a minimum
+offset apart (Fig.~\ref{fig:multiLaser-setup-model-1}), and the lasers were
+tilted (Fig.~\ref{fig:multiLaser-setup-model-2}), determining the
+intersection between them (Fig.~\ref{fig:multiLaser-setup-model-3}). The intersection plane must have at least the area of
+the printing bed --- a circle of 28 mm in diameter (Fig.~\ref{fig:multiLaser-setup-model-4}). The minimum tilting angle
+that yields a working overlapping area of 28 mm in diameter is circa 27 degrees.
+
+% subfigures
+\begin{figure}[htbp!]
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+  \includegraphics[width=0.5\textwidth]{./img/multiLaser-setup-model-1.png}
+  \caption{Initial state}%
+  \label{fig:multiLaser-setup-model-1}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.8\textwidth]{./img/multiLaser-setup-model-2.png}
+  %\caption{Mapping geometry to process parameters}%
+  \caption{Tilting}%
+  \label{fig:multiLaser-setup-model-2}
+  \end{subfigure}
+%
+  %
+  \begin{subfigure}[t]{.48\textwidth}
+  \centering
+    \includegraphics[width=0.6\textwidth]{./img/multiLaser-setup-model-3.png}
+  \caption{Determining intersection plane}%
+  \label{fig:multiLaser-setup-model-3}
+  \end{subfigure}
+%
+  \centering
+  \begin{subfigure}[t]{.48\textwidth}
+    \includegraphics[width=0.7\textwidth]{./img/multiLaser-setup-model-4.png}
+  \caption{Measuring the intersection area}%
+  \label{fig:multiLaser-setup-model-4}
+  \end{subfigure}
+  \centering
+  % 
+  \caption{Multi-laser --- bi-material manufacturing test: Lasers' setup modelling}%
+  \label{fig:multiLaser-setup-model}
+\end{figure}
+
+However, for practical reasons, such as secure placement of both lasers and the
+collision with the powder recovery systems, only the CO\textsubscript{2} laser
+was tilted (Fig~\ref{fig:multiLaser-setup-1}). Then, both laser beams were
+calibrated and aligned to the centre of printing bed (Fig.~\ref{fig:multiLaser-setup-2}).
+
+% subfigures
+\begin{figure}[htbp!]
+%
+  \centering
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+  \includegraphics[width=0.6\textwidth]{./img/multiLaser-alignment-side.jpg}
+  \caption{Laser tilting}%
+  \label{fig:multiLaser-setup-1}
+\end{subfigure}
+  %
+  \begin{subfigure}[t]{.48\textwidth}
+  \centering
+    \includegraphics[width=0.85\textwidth]{./img/multiLaser-alignment.jpg}
+  \caption{Lasers' beam calibration}%
+  \label{fig:multiLaser-setup-2}
+  \end{subfigure}
+  % 
+  \caption{Multi-laser --- bi-material manufacturing test: Lasers' setup}%
+  \label{fig:multiLaser-setup}
+\end{figure}
+
+Following the \texttt{Manufacturer}'s deployment diagram (see
+Fig.~\ref{fig:manuf-deployment}), one instance of the software was deployed to
+each laser's computer (Fig~\ref{fig:multiLaser-setup-annotated}). The computers were connected using an Ethernet cable, and
+the main system (master) was connected to the machine via \gls{usb} cable. 
+
+\begin{figure}[htbp!]
+%
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/multiLaser-setup.png}
+  \caption{Multi-laser --- bi-material manufacturing test: Manufacturing setup}%
+  \label{fig:multiLaser-setup-annotated}
+\end{figure}
+
+The resulting manufacturing model was then loaded to each
+\texttt{Manufacturer}'s \gls{sw} instance and the network was configured and
+setup for master
+and slave connection. Fig.~\ref{fig:cylCross-multi-networkSetup}
+illustrates the network setup configuration: in the master system the slave
+network address and port is added
+(Fig.~\ref{fig:cylCross-multi-manuf-networkSetup-master}), and the connection is
+established by pressing
+the \texttt{Connect} pushbutton. If the network configuration is correct, the
+master system connects to the slave, which then prints its network ID (Fig.~\ref{fig:cylCross-multi-manuf-networkSetup-slave}).
+
+% subfigures
+\begin{figure}[htbp!]
+%
+  \centering
+  \begin{subfigure}[t]{0.80\textwidth}
+    \centering
+  \includegraphics[width=1.0\textwidth]{./img/cylCross-multi-manuf-networkSetup.png}
+  \caption{Master configuration and connection establishment}%
+  \label{fig:cylCross-multi-manuf-networkSetup-master}
+\end{subfigure}
+%
+  %
+  \begin{subfigure}[t]{.80\textwidth}
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/cylCross-multi-manuf-networkSetup-slave.png}
+  \caption{Slave accepts connection and prints its ID}%
+  \label{fig:cylCross-multi-manuf-networkSetup-slave}
+  \end{subfigure}
+  % 
+  \caption{Multi-laser --- bi-material manufacturing test: Manufacturing
+    (network setup)}%
+  \label{fig:cylCross-multi-networkSetup}
+\end{figure}
+%
+
+The manufacturing parameters were configured, as illustrated in
+Fig.~\ref{fig:cylCross-multi-manuf-pens}, with pen $0$ being mapped to the
+polymeric material, and pen $1$ to the metallic alloy.
+Layers were then assigned to each laser, by sorting them by material and
+defining the laser, as shown in Fig.~\ref{fig:cylCross-multi-manuf-pensMap}.
+
+% subfigures
+\begin{figure}[htbp!]
+%
+  \centering
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+  \includegraphics[width=0.8\textwidth]{./img/cylCross-multi-manuf-pens.png}
+  \caption{Parameters setup}%
+  \label{fig:cylCross-multi-manuf-pens}
+\end{subfigure}
+%
+  %
+  \begin{subfigure}[t]{.48\textwidth}
+  \centering
+    \includegraphics[width=0.6\textwidth]{./img/cylCross-multi-manuf-pensMap.png}
+  \caption{Layers assignment to lasers}%
+  \label{fig:cylCross-multi-manuf-pensMap}
+  \end{subfigure}
+  % 
+  \caption{Multi-laser --- bi-material manufacturing test: Manufacturing
+    (Parameters and lasers setup)}%
+  \label{fig:cylCross-multi-manuf-pensLasers}
+\end{figure}
+
+The master system
+was connected to the \gls{3dmmlpbf} machine via COM port.
+Upon the successful connection, the machine was automatically homed.
+A calibration was performed to minimize powder usage and the filling procedure was executed for both materials. 
+After concluding these
+steps and validating the calibration, the machine's initialization was complete.
+
+Fig.~\ref{fig:cylCross-multi-manuf-procedure} illustrates the manufacturing
+procedure. The manufacturing was initiated by selecting all layers to manufacture and
+pressing the \texttt{Run} pushbutton~\ref{fig:cylCross-multi-manuf-init}.
+Fig.~\ref{fig:cylCross-multi-manuf-bed} and Fig.~\ref{fig:cylCross-multi-manuf-bed-2} illustrates the on-going manufacturing,
+where it can be seen the multi-material part being built, first adding the
+material and then marking the paths with the laser.
+Fig.~\ref{fig:cylCross-multi-manuf-end} and
+Fig.~\ref{fig:cylCross-multi-manuf-slave} shows the final manufacturing state:
+on layer 70 it was detected some defects on the polymeric sintering, which
+forced the process to be aborted. These defects may arise from the selected
+layer height (the same as the metallic alloy), from the powder's bed
+temperature, from the different processing parameters, or from a combination of
+all of them.
+
+% subfigures
+\begin{figure}[htbp!]
+%
+  \centering
+  \begin{subfigure}[t]{1.0\textwidth}
+    \centering
+  \includegraphics[width=0.65\textwidth]{./img/cylCross-multi-manuf-init.png}
+  \caption{Start}%
+  \label{fig:cylCross-multi-manuf-init}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.3\textwidth}
+    %\centering
+  \includegraphics[width=0.66\textwidth, center]{./img/multiLaser-manuf-bed.jpg}
+  \caption{Printing bed: Adding material}%
+  \label{fig:cylCross-multi-manuf-bed}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.3\textwidth}
+    \raggedright%
+  \includegraphics[width=0.8\textwidth, center]{./img/cylCross-multi-manuf-bed2-copy.png}
+    %\centering
+  \caption{Printing bed: Laser actuation}%
+  \label{fig:cylCross-multi-manuf-bed-2}
+\end{subfigure}
+  %
+  \begin{subfigure}[t]{1.0\textwidth}
+  \centering
+    \includegraphics[width=0.65\textwidth]{./img/cylCross-multi-manuf-end.png}
+  \caption{Master final state}%
+  \label{fig:cylCross-multi-manuf-end}
+  \end{subfigure}
+  %
+  \begin{subfigure}[t]{1.0\textwidth}
+  \centering
+    \includegraphics[width=0.65\textwidth]{./img/cylCross-multi-manuf-slave.png}
+  \caption{Slave final state}%
+  \label{fig:cylCross-multi-manuf-slave}
+  \end{subfigure}
+  % 
+  \caption{Multi-laser --- bi-material manufacturing test: Manufacturing procedure}%
+  \label{fig:cylCross-multi-manuf-procedure}
+\end{figure}
+
+Fig.~\ref{fig:cylCross-multi-produced-part} shows the bi-material part produced,
+where it is clearly visible the defects in the polymeric manufacturing.
+%
+\begin{figure}[hbtp!]
+  \centering
+    \includegraphics[width=0.4\textwidth]{./img/cylCross-multi-part.jpg}
+%
+  \caption{Multi-laser --- bi-material manufacturing test:
+    Produced part}%
+  \label{fig:cylCross-multi-produced-part}
+\end{figure}
+
+
+\subsection{Post-Manufacturing}%
+\label{sec:post-manufacturing-multiLaser}
+Even though the part was not completely manufactured, it is important to
+document and analyse the reasons behind this.
+In that sense, several analysis were performed on the
+produced part to assess the manufacturing quality, namely on geometrical
+compliance and densification.
+
+Geometrical compliance was assessed, once again, using \texttt{Fiji}~\cite{fijiImageJ} and using a 1 cent coin as a
+base for the measurements (Fig.~\ref{fig:cylCross-co2-imagej}).
+The measurements
+performed showed a higher discrepancy, which can be due to the laser focus
+distortion induced by the tilting. This must be further investigated and
+corrected.
+Nonetheless, overall, the geometry of the produced part matched the one from the
+3D \gls{cad} model, but with a discrepancy in the dimensions.
+% subfigures
+
+\begin{figure}[htbp!]
+  \centering
+  %
+  \includegraphics[width=0.6\textwidth]{./img/cylCross-multi-imagej.png}%
+  \caption{Multi-laser --- bi-material manufacturing test:
+    Geometrical measurements using Fiji's SW}%
+  \label{fig:cylCross-multi-imagej}
+\end{figure}
+
+The \gls{em} analysis performed on the part
+(Fig.~\ref{fig:cylCross-multi-EM-analysis}) showed poor densification, further supporting the
+decision to halt the manufacturing. 
+
+%
+% subfigures
+\begin{figure}[htb!]
+  \centering
+  %
+  \begin{subfigure}[t]{.48\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/cylCross-multi-em1.jpg}%
+  %\caption{\gls{gui}}%
+  \label{fig:cylCross-multi-EM1}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{.48\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/cylCross-multi-em2.jpg}%
+  %\caption{Machine bed}%
+  \label{fig:cylCross-multi-EM2}
+  \end{subfigure}
+  % 
+  %
+%  \begin{subfigure}[t]{.48\textwidth}
+%    \includegraphics[width=1.0\textwidth]{./img/cylCross-multi-em3.jpg}%
+%  %\caption{\gls{gui}}%
+%  \label{fig:cylCross-multi-EM3}
+%\end{subfigure}
+  %
+  \caption{Multi-laser --- bi-material manufacturing test:
+    EM analysis}%
+  \label{fig:cylCross-multi-EM-analysis}
+\end{figure}
+
+The information concerning the manufacturing process as a whole was then
+collected and added to the \emph{Post\=/Manufacturer}.
+Fig.~\ref{fig:postManuf-premanuf-multi} shows the \underline{Pre-Manufacturer}'s data
+collection, storing the input and output files' related information,
+respectively. It allows quick navigation and visualisation of these information
+flows, which are indexed to a produced part.
+
+% subfigures
+\begin{figure}[htb!]
+  \centering
+  %
+  \begin{subfigure}[t]{.8\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-premanuf-input-multi.png}%
+  \caption{Pre-Manufacturer input files manager}%
+  \label{fig:postManuf-premanuf-input-multi}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{.8\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-premanuf-output-multi.png}%
+  \caption{Pre-Manufacturer output files manager}%
+  \label{fig:postManuf-premanuf-output-multi}
+\end{subfigure}
+%
+  \caption{Multi-laser --- Post-Manufacturer: Pre-Manufacturer
+    data management}%
+  \label{fig:postManuf-premanuf-multi}
+\end{figure}
+
+Fig.~\ref{fig:postManuf-manuf-multi} shows the \underline{Manufacturer}'s data
+collection, storing the input, configuration and logs' related information,
+respectively. It allows quick navigation and visualisation of these information
+flows, which are also indexed to a produced part. The input and configuration
+data can be used in conjunction with the mechanical tests to analyse the
+manufacturing performance and behavior. On the other hand, the logs can be used
+by the control/systems engineer to analyse the equipment and software behavior,
+and improve it.
+
+% subfigures
+\begin{figure}[htb!]
+  \centering
+  %
+  \begin{subfigure}[t]{.6\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-manuf-layers-multi.png}%
+  \caption{Manufacturer input manager}%
+  \label{fig:postManuf-manuf-layers-multi}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{.6\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-manuf-pens-multi.png}%
+  \caption{Manufacturer configuration manager}%
+  \label{fig:postManuf-manuf-pens-multi}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{.6\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-manuf-logs-co2.png}%
+  \caption{Manufacturer logs manager}%
+  \label{fig:postManuf-manuf-logs-multi}
+\end{subfigure}
+%
+  \caption{Multi-laser --- Post-Manufacturer: Manufacturer
+    data management}%
+  \label{fig:postManuf-manuf-multi}
+\end{figure}
+
+Fig.~\ref{fig:postManuf-mechTestManager-multi} shows the electron microscope image
+analysis performed on the component added to the database.
+Once again, data is appended, contributing to the increasing process
+knowledge base.
+
+\begin{figure}[hbtp!]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/postManuf-mechTestManager-multi.png}
+  %A
+  \caption{Multi-laser --- Post-Manufacturer: Mechanical tests manager}%
+  \label{fig:postManuf-mechTestManager-multi}
+\end{figure}
+
+
+
+
+%\subsubsection{Discussion}
+The equipment and manufacturing tests performed clearly demonstrates the
+feasibility of \gls{3dmmlpbf} process and validates the equipment developed, as
+well as the accompanying toolchain.
+
+
+
+\section{3DMMLPBF Improvement}%
+\label{sec:prosp-proc-impr}
+The \texttt{Post-Manufacturer}'s software provides a knowledge base for
+\gls{3dmmlpbf} process analysis and improvement in a myriad of ways. One such
+example is illustrated in Fig.~\ref{fig:post-manuf-ai-application}, where
+\gls{ai} is applied to the analysis of the \gls{sem} images that enable the
+assessment of the
+mechanical structure and properties of the produced parts.
+It should be noted that this is only a possible venue, as tools and
+methodologies may differ.
+
+\begin{figure}[hbtp!]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/post-manuf-ai-example.pdf}
+  %A
+  \caption{AI application for process improvement: \gls{sem} image analysis
+    example}%
+  \label{fig:post-manuf-ai-application}
+\end{figure}
+
+In this example, the \gls{sem} analysis is performed through deep learning using
+\gls{cnn}. The conventional image processing methods,
+such as traditional segmentation, threshold method, or watershed segmentation,
+rely on the similarity or intensity (or both) of the image's pixels to locate or
+delineate the boundaries of objects~\cite{chen2020DeepLearningSEM}. Thus, when
+image's pixels lack intensity or contrast it becomes extremely difficult to
+distinguish boundaries, even for trained professionals. 
+On the other hand, deep learning tries to mimic the human expert's analysis. By
+building computational models that can learn
+representations of data without such requirements, they can be used to
+perform tasks as efficiently as human experts in specialized fields, saving time
+and money~\cite{chen2020DeepLearningSEM}. For this purpose, deep learning
+network architecture comprises multiple layers of artificial neural net
+units --- convolutional neural networks~\cite{chen2020DeepLearningSEM}.
+
+One paradigmatic example of a fully convolutional network architecture is the
+\emph{U-Net}, initially developed in 2014 for biomedical image
+segmentation~\cite{Ronneberger2015UNet}. It provides more precise segmentation
+maps using fewer training images~\cite{Ronneberger2015UNet}.
+As machine-learning may still be a daunting subject, in 2019 Falk and Mai~\cite{Falk2019UNet}
+designed a plugin module to the image processing software \texttt{ImageJ} that
+enables non-expert personnal to design their own training model with the U-Net.
+
+Since then the U-Net has been
+used for segmenting image data of non-medical materials. For example, Chen
+et.~al~\cite{chen2020DeepLearningSEM} presented a strategy to segment clay
+particles from matrix mineral grains in \gls{sem} images of shale samples using
+the U-Net architecture with a revised weighting algorithm, where no obvious grayscale contrast can be used to differentiate between the two interlocked minerals.
+
+Based on these considerations, Fig.~\ref{fig:post-manuf-ai-application}
+illustrates a possible \gls{ai} application to \gls{sem} images's analysis using
+the \texttt{U-Net} deep learning \gls{cnn} architecture and the \texttt{U-Net}
+\texttt{ImageJ} plugin. The plugin is the front-end, interacting directly with the \texttt{User}, while the deep learning
+neural network runs on the back-end for performance reasons. These components
+use the client-server model, connected by a \gls{tcp-ip} link. The plugin runs on
+any main \gls{os} (Linux, MacOs, Windows), while the back-end may run on a
+cloud-service or even a Linux workstation.
+
+The \texttt{Post-Manufacturer} stores the \gls{sem}
+images associated to the mechanical tests performed on the manufactured
+components. These images can then be loaded into the \texttt{U-Net}
+\texttt{ImageJ} plugin for pre-processing. For example, image annotation may be
+required to identify relevant areas to account for or to ignore when the neural
+network is learning. Then, the neural network is setup initially for training,
+providing the neural network model, the weights, and the training data. The
+training yields the trained model, which can now be used to segment or detect
+features in the pre-processed images. After processing, the output image is
+analysed and validated. If valid, it is stored in the \texttt{Post-Manufacturer}
+database (see also Fig.~\ref{fig:postManuf-mechTestManager}). Otherwise, the model is fine-tuned until significant accuracy is
+attained.
+
+Another interesting option is the addition of more manufacturing data
+collection, which could be used on-line and in real-time --- for adaptative control of the
+process --- or off-line --- for structured improvement of the process's control
+through heuristics or new control models sustained by \gls{ai} data mining. For
+example, the inclusion of infrared thermal cameras or \gls{lsp}. The former
+allows to assess the stability of the process, but not on the material
+condition. On the other hand, \gls{lsp} analyses the change in the interference
+patterns of the laser (speckles) to identify inhomonogeneities in 3D printing
+and even ``invisible'' defects~\cite{chen2019laser}.
+Obviously, this requires a significant investment and resources, but could
+greatly benefit the manufacturing quality.
+
+\section{Results}%
+\label{sec:results}
+The manufacturing tests performed validated the \gls{3dmmlpbf}'s methodology
+devised. The \gls{3dmmlpbf} equipment was successfully tested and
+deployed, serving as a means to produce multi-material components via laser
+powder bed fusion process, thanks to the devised \gls{3dmmlpbf} methodology, the
+instantiated workflow and the supporting toolchain. Furthermore, the
+manufacturing is highly customizable and extensible due to the open source
+nature of the toolchain, acting as a ramp for fast prototyping.
+
+However, the manufacturing tests also suggested that more investigation is
+required for attaining a reliable manufacturing quality, especially when
+handling dissimilar types of materials, such as polymeric and metal alloys. The
+scope of action can be varied, as different layer heights or path topologies can
+be needed --- pre\=/manufacturing --- or different process parameters, such as
+laser related, powder bed's temperature, shielding atmosphere control --- manufacturing.
+This highlights the importance of the \texttt{Post\=/Manufacturer} software,
+storing and tracking the different information flows, enabling quick analysis and iteration.
+
+multi-material fabrication using the \gls{3dmmlpbf} process can also leverage
+from the usage
+of multiple lasers for different material types, in a scalable and reliable
+architecture, although contingent to the proper arrangement of the lasers' set
+over the printing bed. Using lasers with different beam generation systems, such
+as solid-state, can significantly reduce its volume, and facilitate this
+integration.
+
+
+%
+%\subsection{Discussion}
+%The workflow tests performed over the toolchain, helped to improve the respective tools by feeding
+%back relevant information.
+%More importantly, these tests allowed to validate the
+%toolchain:
+%\begin{itemize}
+%\item \underline{Pre-Manufacturer}: the slicer and path generator are
+%  capable of slicing and generating paths for various 3D models with different
+%  fill angle, fill density, infill extrusion width, layer height, and number of
+%  materials. The slicer is agnostic about the input files. It was also seen that
+%  a significant number of path topologies are available and that the fill
+%  density and infill extrusion width can be varied to mimic the required path
+%  filling for laser trajectories.
+%  Due to the high number of path topologies available off-the-shelf and the
+%  possible adaptation from the 3D printing area to the \gls{lpbf} one, fast
+%  iteration on part production is possible. Lastly, due to the open source
+%  nature of the slicer and path generator, the modification of the available
+%  path topologies or the addition of new ones is relatively straightforward.
+%\item \underline{Manufacturer}: the post-processor is capable of
+%  processing the geometric and material data in the manufacturing file and
+%  mapping them to the desired processing parameters, irrespective of the
+%  material, layer height and layer number. The printer was successfully tested
+%  on offline mode to produce the part. Additionally, it was also seen the tight
+%  coupling between post-processor and printer, signalled by the restriction on
+%  the production of parts with more than two materials.
+%\item \underline{Post-Manufacturer}: the process information can be
+%conveniently and correctly added to the process knowledge database for
+%management and visualisation. The database can be exported separately to provide
+%the relevant information for each agent individually. This approach also allows
+%for tests reproducibility and for fast process bootstrapping: if a normal
+%\texttt{User} wants to start using the equipment following the \texttt{3dmmlpbf}
+%methodology, it can source all the toolchain, the models and the process
+%parameters (via database exporting) to reproduce it or test it. Then, the
+%\texttt{User} can choose to improve the database by sharing it with other users,
+%which can then import those files, leveraging from the collaborative and
+%open-source approach to boost the \gls{3dmmlpbf} enviroment.
+%\end{itemize}
+
+
+\section{Summary}
+In this chapter the \gls{3dmmlpbf}'s manufacturing was tested, and by extension
+also the whole ecosystem --- methodology, workflow, toolchain, and equipment.
+
+The workflow and accompanying toolchain proved itself capable of: handling various 3D models ---
+irrespective of the number of materials, layer height, path topology and layer
+number; supporting different materials processing and with multiple lasers; and
+conveniently storing all process related information for posterior analysis and
+process improvement.
+
+A manual and naive procedure for the manufacturing file generation was also used
+--- in the YAG-Nd laser testing ---
+to further illustrate the difficulty of generating such files without the
+appropriate tooling. Even though it may serve as a quick workaround for testing
+some geometries, it is extremely complex to apply this to functional design, as
+it would require the \texttt{Designer} to think in a 2D fashion, which defeats
+the purpose of using a 3D multi-material fabrication process.
+
+The modifications performed on the slicer and path generator enabled the 
+adaptation of 3D paths topologies for the \gls{3dmmlpbf} process. This paves the
+way for quick iteration of the different path topologies and the associated
+parameters to assess its impact on the overall manufacturing quality of the
+produced component.
+
+The \texttt{Pre-Manufacturer} slices and generates the manufacturing paths for each input
+model (material) in compliance to the user-defined configuration and merges
+them, yielding a 3D multi-material manufacturing file.
+
+This file is then loaded into the \texttt{Manufacturer}'s \gls{sw},
+and the manufacturing is configured by mapping the process parameters to each
+layer and assigning it to one or multiple lasers simultaneously. This \gls{sw}
+efficiently handles the manufacturing process, controlling the equipment and the laser network.
+Furthermore, the generated data streams ---
+layers, configuration, and logs --- can be easily exported for storing and analysis.
+
+The \texttt{Post-Manufacturer}
+allows the \texttt{User} to manage the process knowledge database by importing
+manufacturing chain files (models, manufacturing output, mechanical tests) and to export database,
+enabling the widespread of the \gls{3dmmlpbf} technology through bootstrapping.
+
+The manufacturing tests yielded varied results. The polymeric bi-material
+(CO\textsubscript{2} laser) showed good densification and geometrical
+compliance to the 3D model. On the other hand, the metallic alloy bi-material and
+polymeric/metallic alloy bi-material components, showed mild to poor
+densification and discrepancies in geometrical compliance. These unsatisfactory
+results mandate further investigation on the topic, especially on the
+parametrization of the process.
+
+Lastly, some venues were presented for \gls{3dmmlpbf}'s improvement, utilising
+the collected data by the Post\=/Manufacturer application, namely
+manufacturing quality assessment off-line --- using \gls{sem} analysis supported by
+deep learning \gls{cnn} --- manufacturing quality assesment on-line and
+adaptative control --- using infrared thermography or
+\gls{lsp}.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../template"
+%%% End:
