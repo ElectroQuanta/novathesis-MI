@@ -1,0 +1,264 @@
+% !TEX root = ../template.tex
+%
+\typeout{NT FILE PROB-CHALLENGE.tex}%
+	% CHAPTER - Problem and Challenges ---------------
+\chapter{The problem and its challenges}%
+\label{ch:prob-challenge}
+The fabrication of multi-material parts using \gls{lpbf} is a complex and challenging topic. Most commercially available systems are designed for mono-material fabrication, lacking the flexibility and processing capability for multi-material processing~\cite{mussatto2022research}. The systems that allow multi-material fabrication only use metallic powders, limiting their scope of applications and hindering functional design.
+
+Moreover, the \gls{mmlpbf} process presents a multi-objective problem, requiring specialized equipment, toolchain, and experimental design. However, the current status of the manufacturing chain forces users to search for workarounds to handle specific problems, as a global infrastructure is not established. This shifts the focus from functional design to the manufacturing process, defeating the intended purpose.
+
+Thus, there is a need for a comprehensive methodology to produce multi-material metallic and composite components that can handle the inherent complexity of the \gls{mmlpbf} process and leverage its knowledge throughout the manufacturing chain to all relevant agents.
+
+This chapter lays the foundation for such infrastructure, devising a global methodology for the \gls{mmlpbf} process. This methodology adopts a holistic model-based approach to problem-solving, serving as a supporting framework for the establishment of a suitable workflow and the development of an appropriate toolchain that can be used to design and manufacture multi-material metallic and composite components.
+
+%This uses the same note\fnref{foot:cc-lic};
+\section{Proposed Approach --- solution}
+A model-driven approach was adopted to address the complexity associated
+with the fabrication of multi-material parts using the \gls{lpbf} process. A
+model is an abstract representation of a system that can be used to answer
+questions about it~\cite{bruegge2004object}, and it forms the foundation of the
+proposed global methodology for the \gls{mmlpbf} process. Modelling has also been shown to be an effective tool for prototyping, developing, and testing mechatronics systems, which aligns with the proposed methodology and aims to improve the quality of the solution while minimizing time, costs, and errors.
+
+The proposed solution includes a global methodology for \gls{lpbf} processes
+that can leverage the process's knowledge throughout the manufacturing chain,
+making it more accessible while reducing the overall complexity to a manageable
+level. Additionally, a specific \gls{3dmmlpbf} workflow that considers project
+constraints and resources is proposed. The necessary toolchain for the entire
+process is assembled, and the \gls{3dmmlpbf} machine is developed, tested, and
+integrated with the process's framework. Finally, the process data is systematically collected and fed back to the relevant manufacturing agents to improve the process.
+
+%
+\section{A Global Methodology for 3DMMLPBF processes}
+The global methodology for \gls{3dmmlpbf} processes is described next.
+
+\subsection{Motivation}
+The proposed methodology aims to address the shortcomings of available pre-processing methodologies and is based on three fundamental aspects. Firstly, there is a lack of a comprehensive methodology that encompasses the \gls{mmlpbf} process as a whole, which considers all the key agents and leverages the existing knowledge. Secondly, there is a need to develop customisable equipment that can fabricate multi-material metallic and composite components, as currently available processing technology does not provide the desired level of freedom and customisation. Finally, there is a need for an efficient way to handle the inherent complexity of the \gls{mmlpbf} process.
+
+Additionally, the high cost and lack of customisation of current commercial equipment limits its potential, as the end-user has limited access to the machine and process parameters. This is particularly critical in research environments, as it reduces research opportunities, increases inequality in the field, and hinders the evolution of the \gls{mmlpbf} process.
+
+The underlying philosophy of the proposed methodology is reminiscent of
+open-source principles, which emphasize transparency and bootstrapping
+capabilities. This approach applies to both software and hardware tools.
+
+\subsection{Core Principles}
+Knowledge, the theoretical or practical understanding of a subject, is the most
+important human asset. However, knowledge acquisition is a nonlinear process, as
+a single piece of additional data can invalidate complete
+models~\cite{bruegge2004object}.
+Still, \gls{mmlpbf} knowledge is scattered around its agents without an apparent
+connection.
+Moreover, some techniques used in \gls{lpbf} processes are based on empirical evidence~\cite{thompson2015overview}, requiring the capture of contextual and rationale information behind such decisions. To address these challenges, it is imperative to capture the relevant knowledge and context and deliver it to the appropriate agents, thereby facilitating the efficient usage of knowledge throughout the \gls{mmlpbf} process.
+
+
+The \gls{mmlpbf} methodology is based on several core principles, which include:
+\begin{itemize}
+\item \underline{Abstraction}: The provision of layer(s) to abstract from the internal specifics of the process, while maintaining tractable interfaces.
+\item \underline{Modularity}: The ability to replace every component of the process with another of identical functionality.
+\item \underline{Independence}: The agnosticism of the process regarding inputs, as long as the valid interfaces are respected.
+\item \underline{Flexibility}: The capability to handle different inputs/components, allowing for the inclusion of new parameters or the conjunction of their effects, thereby supporting different materials, machines modules, slicing strategies, among others.
+\item \underline{Extensibility}: The ability to add new components to the process without compromising it.
+\item \underline{High Customisation}: Both software and hardware-based components should allow for a high degree of customisation of their operation.
+\item \underline{Capability of managing different information flows}: The ability to collect and deliver pre-manufacturing, manufacturing, and post-manufacturing data to its handler in a convenient way.
+\item \underline{Evolution}: The acquisition of knowledge should be used to improve the process continually.
+\item \underline{Guidance to end-users}: The acquired knowledge should enable the creation of guidelines and heuristics to aid the end-user.
+\item \underline{Maximisation of process control}: An open developing environment enhances the end-users' capability to control the process, allowing normal users to evolve into power users, as opposed to closed environments.
+\end{itemize}
+
+\subsection{Concept}
+The objective is to gain a comprehensive understanding of the \gls{3dmmlpbf} manufacturing chain from a first-principles perspective using models to represent the system with manageable complexity and to provide insights into the system~\cite{bruegge2004object}. The \gls{uml} was chosen to create the relevant models due to its flexibility in modelling a wide range of artefacts, including software systems, processes, and work products~\cite{bruegge2004object}.
+
+Initially, the actors involved in the process were identified as the key agents
+interacting with the system and classified as either internal, those that take
+effective action in the process, or external, those that benefit from or induce
+actions in the process.
+
+The \underline{internal} actors include:
+\begin{itemize}
+\item \textbf{Designer}: ideates a concept and translates it to a virtual
+  3D representation (CAD model).
+\item \textbf{Manufacturer}: utilises the
+  appropriate materials, techniques and tools to convert the virtual 3D model
+  into a physical object.
+\end{itemize}
+  
+The \underline{external} actors include:
+\begin{itemize}
+\item \textbf{Physicist}:
+  studies all physical phenomena in the process and contributes to greater knowledge of the process by providing physics models and parameters, enabling better control strategies, better materials properties, and faster processes.
+\item \textbf{Materials/Mechanical Engineer}:
+contributes to the process by studying all materials/mechanical properties of the produced part in service and usually provides empirical knowledge in the form of a set of rules that improve the part's properties and performance.
+\item \textbf{Control Engineer}:
+studies the process control, which is an effective means of achieving system goals in a regulated and bounded way, and generates the control strategies to be used in the process~\cite{shamsaei2015overview}.
+\item \textbf{Mathematician}: studies the manufacturing path topology, the geometric and interchange data representation of the 3D virtual model for machine execution.
+\item \textbf{Data Scientist}: studies all process-generated data using
+  data-driven models, leveraging the immense quantity of data available to
+  identify patterns to produce more efficient and accurate empirical
+  knowledge. This information can be used to design better experiments, using
+  \gls{doe}, and to control the process more effectively,
+  using \gls{ai} techniques~\cite{mussatto2022research, shamsaei2015overview}.
+\end{itemize}
+
+Subsequently, the manufacturing chain was decomposed into four models that will be
+detailed next, namely: design model, pre-manufacturing model, manufacturing
+model and post-manufacturing model.
+
+\subsubsection{Design Model}
+Figure~\ref{fig:design_model} depicts the design model of the manufacturing
+chain in detail. The design process starts with the identification of the object's function or application by the designer. Subsequently, a comprehensive requirements analysis is conducted, and design criteria are established based on the obtained results. Following this, the object is modeled in a \gls{cad} software, which yields a 3D \gls{cad} model of the object. Ideally, this model should undergo an optimisation stage where it is converted into a parametric \gls{cae} model and then passed to a \gls{cae} optimiser. This optimiser determines the optimal material distribution as a function of the design criteria. If the optimal configuration is not achieved, the designer should optimize the 3D CAD model. Finally, for both optimised and non-optimised 3D \gls{cad} models, a data file representing the object's geometry is generated, with the most common being an \gls{stl} file.
+
+%
+\begin{figure}[!hbt]
+\centering
+  \includegraphics[width=1.0\textwidth]{./img/design-model.pdf}
+%
+  \caption{Model of the design activity}%
+\label{fig:design_model}
+\end{figure}
+
+%
+\subsubsection{Pre-Manufacturing Model}
+Fig.~\ref{fig:pre-manuf_model} illustrates the pre-manufacturing
+phase. The dashed components are included to optimise the process, while the
+solid-lined ones represent the conventional setup.
+
+In the conventional workflow, the \underline{Manufacturer} transfers the 3D
+geometry file to the Slicer, which, in turn, slices it into 2D layers by using
+cross xy planes. However, issues may arise in this phase, particularly when the
+geometry representation file is a surface tesselation (\gls{stl}), which is unable to accurately represent holes, porosity and discontinuities. This challenge will be addressed in greater detail later.
+
+The \texttt{Slicer} merges these 2D layers, derived from several materials, into
+a single layer for each layer height, and then the \texttt{Post-Processor} maps
+the process parameters to them. Moreover, the \texttt{Post-Processor} generates
+the manufacturing file, which contains the corresponding machine instructions,
+such as the \texttt{.lcode} file. The \emph{Post-Processor} requires the
+development of a grammar that the machine can comprehend, thereby compiling a
+standard code that the machine can interpret, such as modified
+G-code. Consequently, this standard code comprises language tokens based on the
+machine, process, and material tokens, and generates manufacturing instruction
+tokens that are leveraged by the compiler to generate machine-compliant
+instruction code. The interpreter is constructed based on these tokens and adds
+to the firmware.
+
+
+The \emph{\gls{cam} optimiser} and \emph{Adviser} are optional components that can be used to refine the manufacturing process. The \emph{CAM optimiser} optimises the geometry representation based on the manufacturing technology, employing structured knowledge derived from machine, process, and material data. The Adviser, in contrast, provides convenient part orientation, file data sanity check, and conformity to standards, based on empirical knowledge originating from machine, process, and material data. Although both of these optional components can be employed to optimise the 3D CAD model from the design stage, the CAM optimizer relies on structured knowledge and should issue recommendations as errors or warnings, thereby halting the process. Conversely, the Adviser is guided by heuristics and guidelines and should offer suggestions.
+
+\begin{figure}[!hbt]
+\centering
+  \includegraphics[width=1.0\textwidth]{./img/pre-manuf-model.pdf}
+%
+  \caption{Model of pre-manufacturing activity}%
+\label{fig:pre-manuf_model}
+\end{figure}
+
+\subsubsection{Manufacturing Model}%
+\label{sec:lbam-manuf-model}
+The manufacturing model includes the control model and the manufacturing process
+model (Fig.~\ref{fig:manuf_model}) tightly coupled together.
+
+The \emph{Manufacturer} supplies the manufacturing
+instruction file, containing the manufacturing process relevant data for the
+part fabrication, to the interpreter --- a software module of the
+machine's firmware.
+The interpreter then reads, parses and interprets the
+\emph{.lcode} instructions. While the End-of-File (EOF) has not been reached,
+the \emph{Firmware} issues commands sequentially to the control chain: the control board and the
+controlled parts like motors, the laser, the heating elements, etc.
+This yields an effect on the manipulated variable (e.g., mean voltage of a
+heating resistor) which affects the manufacturing
+process, represented as a transfer function, different for each process
+variable.
+
+The result of the control action will be a variation in the
+controlled variable state (e.g., temperature, laser speed, etc.), affecting
+the manufactured part, which is measured by a sensor (e.g.~encoder,
+thermocouple, pyrometer, etc.) and fed back to the control board for
+comparison with the desired values for the process variables, with the
+control action being adjusted accordingly.
+
+Additionally, the process
+variables are registered by another software component --- the logger --- which
+reads, converts, and logs the relevant parameters as a process info data
+file to be stored in the process trials database. When the manufacturing
+file reaches the end, the part is produced and ready for the next stage ---
+the post-manufacturing phase.
+
+  \begin{figure}[!hbt]
+    \centering
+      \includegraphics[width=1.0\textwidth]{./img/manuf-model.pdf}
+    %
+    \caption{Model of manufacturing activity}%
+\label{fig:manuf_model}
+  \end{figure}
+
+\subsubsection{Post-Manufacturing Model}%
+\label{sec:post-manuf_model}
+The post-manufacturing stage (fig.~\ref{fig:post-manuf_model}) is arguably
+the most crucial phase in the manufacturing chain, yet often the most overlooked, as the
+quality analysis of the process and of the produced part are conducted in
+this phase, with the relevant outputs cascading to the preceding stages.
+
+For instance, material and mechanical engineers can respectively perform the material analysis and mechanical behavior analysis of the produced parts, thereby increasing the material and mechanical properties databases.
+
+\begin{figure}[!hbtp]
+\centering
+\includegraphics[width=1.0\textwidth]{./img/post-manuf-model.pdf}
+\caption{Model of post-manufacturing activity}%
+\label{fig:post-manuf_model}
+\end{figure}
+
+The mechanical properties and material information aid the physicist in performing the physical analysis through simulation or modeling techniques, resulting in physical models that ultimately generate physical laws or theories, predicting what happens or proposing why it happens.
+
+Another often neglected role in the manufacturing chain is that of the data
+scientist, who conducts process data analysis through one of two methods:
+\glsxtrfull{doe} or \glsxtrfull{ai}. Analysing process data history via \gls{doe} enables the design of more effective and statistically relevant experiments, resulting in another iteration of the manufacturing phase; analysing via \gls{ai} enables the recognition of data patterns, leading to empirical models that can generate empirical laws or theories, producing heuristics and guidelines that update the \texttt{Adviser} software component.
+
+The process models will then be generated from both physical and empirical
+laws/theories that together form the process trials data information, allowing the control engineer to conduct the control analysis. From this analysis
+stems an integrated model of the \emph{control + process} combination,
+which yields control algorithms and parameters. Both these outputs are used
+to update the machine's firmware and are stored in the process control
+database. Additionally, they are also used, along with the material
+information, the mechanical properties, and physical laws/theories, to update
+the \emph{\gls{cam} optimiser}.
+
+Lastly, the designer and the manufacturer conduct the specification analysis, taking into account the compliance of the produced part and its mechanical properties with the function/application in question. If the function/application is not fulfilled, the design should be repeated. If the quality of the produced part, namely mechanical properties, dimensions, surface finishing, etc., is not obtained, better manufacturing paths or better process control may be required, leading to a new iteration starting at the pre-manufacturing or manufacturing phases.
+
+This information should be properly debugged to be conveniently and correctly
+delivered to the appropriate agent: if the former is verified, this
+information should be conveyed to the mathematician for topology
+optimization; if the latter is true, the relevant information should be
+conveyed to all the agents responsible, directly or indirectly for the
+control, such as the physicist, data scientist, and control engineer. If the
+quality is according to the specifications, the result will be a produced
+part that is ready for service, and this trial should be signalled as
+successful, with the relevant information cascading to all databases for
+further improvement of all involved models.
+
+The post-manufacturing model developed highlights the untapped potential in the
+manufacturing chain of \gls{3dmmlpbf} components. The structured data stemming
+from this model could be used to train the current cutting-edge neural networks in
+the search of better heuristics.
+This improvement can be particularly significant for the control models employed, given the highly intricate nature of the multi-physics problem. Moreover, with an adequate amount of data, notable advancements can be made without adding noticeable complexity.
+
+
+\section{Summary}%
+\label{sec:summary-prob}
+The inherent complexity of multi-material fabrication drives away most
+commercial solutions, specially in the metallic and composite panorama due to
+the multi-physics problem associated to the project, the vast number of process
+parameters, and the lack of a global structure that supports the multi-material
+procesing development, worsened by its closed nature, hindering the
+technological advances in this area.
+
+To address these challenges, this section proposes a global methodology for the
+\gls{3dmmlpbf} process. This methodology leverages the knowledge of the
+manufacturing process throughout the production chain, using a model-based
+approach to reduce the overall complexity to a more manageable level.
+
+Further, the proposed methodology facilitates the derivation of a customized workflow that aligns with the project's constraints and resources, and supports the assembling of the necessary toolchain for the overall process. Additionally, it empowers the development of a low-cost \gls{3dmmlpbf} machine, allowing for subsequent testing and integration with the process's framework.
+  
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../template"
+%%% End:

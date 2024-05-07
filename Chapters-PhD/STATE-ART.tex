@@ -1,0 +1,1185 @@
+% !TEX root = ../template.tex
+%
+\typeout{NT FILE STATE-ART.tex}%
+\chapter{State of the art}%
+\label{ch:state-art}
+This chapter provides a comprehensive review of the current state of the art of
+multi-material fabrication for metals and ceramics. The functional design
+approach is introduced, followed by a discussion on the use of laser-based
+additive manufacturing processes as a viable solution for metallic and composite
+manufacturing, with particular attention given to the \glsxtrfull{lpbf} process. To
+fully support functional design, the \glsxtrfull{mmlpbf} process is introduced,
+which bridges the gap between \gls{lpbf} processes. An overview of \gls{mmlpbf}
+is presented, including the current panorama, manufacturing chain, challenges,
+and potential solutions. Finally, the specific applications envisioned in this work are listed.
+
+\section{Functional design}%
+\label{sec:functional-design}
+Functional design is a design approach that aims to optimise the functional
+performance of a product while minimizing its cost and complexity. It is a
+concept that transcends various fields --- biomedical~\cite{yang2017biomimetic,
+  wang2016dual, el2013hydrogel}, aerospace~\cite{marques2022RocketEngine, zhu2018light, hu2017design}, food~\cite{portanguen2019toward},
+chemistry~\cite{jin2023structural}, and even clothing~\cite{gupta2011design,mckinney2023inclusion}.
+--- and is not limited to a specific
+technology.
+
+Functional design draws inspiration from nature, with its wide spectrum of
+lightweight and functional structures, such as branched plant shapes, bone
+tissues, and honeycomb patterns~\cite{anton2019-ReviewBiomimetic-AM}.
+Historically, humans tried to replicate this design, but simplifications must be
+made to accommodate manufacturing and assembly constraints. Nonetheless, the
+fundamental premise is nature-inspired: how to design and manufacture components
+in a sustainable way with an efficient usage of resources.
+
+Thus, and although the concept of functional design is not new~\cite{chiang2001designing}, it has become
+increasingly feasible with the emergence and evolution of technologies such as additive manufacturing~\cite{anton2019-ReviewBiomimetic-AM}, enabling designers
+to create complex structures and functional parts that were previously difficult
+or impossible to produce using traditional manufacturing techniques.
+As a result, a paradigm shift in
+product design and manufacturing is in motion, allowing for the exploration of
+features, shapes, and geometries to comply with the required functionalities,
+withoug being limited by production constraints~\cite{plocher2019review}.
+
+\gls{am} was the main driver for functional design by showcasing how material
+could be added to specific areas of a component to fulfil a function, which
+would be otherwise impossible to produce using the traditional subtractive
+methods, like \gls{cnc} machining.
+Furthermore, the number and diversity of the \gls{am} technologies contributed
+to functional design in a myriad of ways, and can be primarily categorized into
+four distinct groups~\cite{leung2019challenges}: multi-material, multiscale, multiform, and multifunctional.
+
+The first category, multi-material, aims to enhance the
+mechanical or material properties of an object by depositing multiple dissimilar
+materials within a single entity. This is required for components with
+interface with specific properties. For example, in the hip
+implant, the core material must provide the load bearing capabilities, but the
+external interface should be composed of bioactive materials to promote
+osseointegration (e.g., bioceramic)~\cite{rafiq2023MultiFunc-coatings-hip}.
+
+The second category, multiscale, focuses on
+the design of geometric features in various scales to achieve functional
+requirements. For example, the wettability of an object is changed from
+hydrophilic to super-hydrophobic when the surfaces are embedded with micropillars~\cite{yang20183d}.
+
+The third category, multiform, is aimed at designing objects with
+programmable shape-changing properties after fabrication. This means that the
+shape of the component will evolve according to an external stimulus, e.g.
+thermal~\cite{khoo20153d,chae2015four}, light~\cite{liu2017sequential}, or moisture~\cite{sydney2016biomimetic}.
+
+Lastly, the fourth category, multifunctional, pertains to the design of objects
+such as multifunctional flexible sensors, and electronics, 
+where the primary focus is on non-structural properties, despite the objects still possessing
+structural properties. These non-structural properties include sensing~\cite{senthil2019review},
+thermal~\cite{tirado2021conductive, fornells2020integrated},
+hydrodynamic~\cite{liu20223d}, biologic~\cite{freyman20203d}, and
+electric~\cite{wajahat2022three, fu2020functional}.
+
+The limitations of \gls{am} must be emphasized, particularly with respect to
+product quality and productivity, system efficiency, and sustainability. AM
+processes are constrained by certain manufacturing restrictions, such as the
+presence of sharp corners, thin geometries requiring support structures, and
+height errors that result in poor surface finish~\cite{danish2022experimental}. In contrast, conventional
+\gls{sm} techniques, such as turning and milling, can yield parts with a
+superior surface finish but exhibit low throughput in producing highly complex
+geometries. Consequently, a \gls{hm} approach combining \gls{am} and \gls{sm} techniques is advocated as an optimal solution, as it can produce components with intricate geometries and the desired surface finish while minimizing both setup time and waste generation~\cite{hegab2023design, lauwers2014hybrid}.
+
+It can easily be recognised that the extra freedom provided by hybrid
+manufacturing suits better the purpose of functional design.
+However, this comes at the cost of even greater complexity, especially if
+multi-material applications are considered.
+Furthermore,
+as \gls{hm} is a superset of \gls{am}, it is expected that the improvements on
+the latter will cascade to the former.
+
+Thus, the present aims to approach functional design through the lens of
+\gls{am} processes. In particular, the investigation centers on the application
+of multi-material functional design utilising \gls{am} technology, which is
+essential for the development of biomedical implants, such as the hip implant.
+
+\section{Mono-material Laser-Powder Bed Fusion}%
+\label{sec:monom-laser-powd}
+
+%\subsection{Additive Manufacturing}%
+%\label{sec:am}
+The basic concept of additive manufacturing (AM) involves the addition and
+bonding of material solely in the necessary regions to create the desired
+component, typically in a layer-by-layer approach through \gls{cnc} displacement
+using three-dimensional (3D) model data~\cite{thompson2015overview}. As each
+layer of material is added, the 3D part is incrementally constructed by bonding
+similar or dissimilar materials. To enable the manufacturing paths to be
+generated, which dictate the CNC displacement, the 3D models are typically
+represented in \gls{cad} form in the \gls{stl} file format and numerically
+sliced into numerous virtual layers or cross-sectional data.
+A wide variety of \gls{am} application have been reported namely:
+aerospace~\cite{marques2022RocketEngine, hu2017design, boeing20173DPrinting},
+\glspl{uav}~\cite{bronz2020mission, tadjdeh2014navy}, houses~\cite{stott2014chinese},
+tooling~\cite{rannar2007efficient, dalgarno2001production}, biomedical
+implants~\cite{bartolomeu2020additive, esmaeili2019artificial,cansiz2016computer}, among others.
+
+To accomplish the effective material bonding, the successful combination of
+material and energy delivery is required, differing with the material and the \gls{am}
+process\cite{thompson2015overview,mccann2021situ}.
+The \gls{am} processes can be classified by
+~\cite{vayre2012metallic}:
+\begin{itemize}
+  \item \emph{state of raw material}: liquid, solid sheet or discrete particle;
+  \item \emph{type of material}: metal (layer or direct deposition); polymer
+    (\gls{fdm}, stereolithography, polyjet); paper (\gls{lom}; wood
+    stratoconception).
+\end{itemize}
+The following methods are classified as \gls{am}
+ones~\cite{thompson2015overview, sefene2022ham}: material extrusion, material jetting, sheet
+lamination, vat polymerisation, binder jetting, \gls{ded} and
+\gls{pbf}. Fig.~\ref{fig:am-proc} depicts these seven categories and the related
+technologies with energy sources, materials used, advantages and drawbacks, and
+their suitability to produce metallic parts~\cite{sefene2022ham}. The processes
+delimited in red are often used for metallic parts.
+%
+\begin{figure}[!hbtp]
+  \centering
+    \includegraphics[width=0.9\textwidth]{./img/am-processes.png}%
+    \caption[Additive manufacturing processes]{AM processes (withdrawn from~\cite{sefene2022ham})\footnotemark}%
+      %\fnref{foot:cc-lic}}%
+      %\textsuperscript{\ref{foot:cc-lic}}%
+    \label{fig:am-proc}
+\end{figure}
+%
+\fnlicReq{Springer}{5296320585850}
+
+The \gls{am} started out from being a rapid prototyping tool, enabling fast
+iteration over design at a reduced cost --- reducing the development cycle, and
+providing resource efficiency~\cite{guo2013additive}. This remained the case for long, due to
+production times being higher than for conventional methods, and to the
+generally lower surface quality finishing, so it was
+commonly cast aside for anything else than as prototyping tool. However,
+\gls{am} provides highly desirable features for the production of high-value
+products, where time constraints are not so relevant, thus justifying a strong
+investment in its evolution.
+This process is traditionally `open-loop' due to its lower complexity
+and lower cost; however feedback control was introduced to ensure better
+part quality, in some cases with real-time
+characteristics~\cite{radel2019skeleton, garanger20183d,
+  purtonen2014monitoring}.
+
+%\subsection{Laser-Powder Bed Fusion}%
+%\label{sec:lpbf}
+When it comes to the additive manufacturing of metallic parts and composites
+\gls{ded} and \gls{pbf} are the most proven and feasible
+methods~\cite{thompson2015overview, vaezi2013multiple}.
+%
+Both processes involve the deposition of powder metal (or less common preforms
+such as wire) and their simultaneous or subsequent melting, respectively, via a
+focused thermal energy source, namely an electron beam or a laser beam.
+In case a laser beam is used the processes can be referred as form of
+\gls{lpbf}, while \gls{ded} can be further specified as
+\gls{dld}~\cite{thompson2015overview}. The usage of an electron beam (\gls{ebm}) makes high scanning speed possible (up to several
+km/s) due to the lack of moving parts to guide the building spot~\cite{vayre2012metallic}; however, the increased complexity and cost does not
+make it commercially viable yet.
+
+Besides being easier to use, laser sources are attractive for numerous other
+reasons~\cite{yang2016role}: small spot diameter, minimising the molten pol and the surrounding area
+(heat-affected zone); high energy density; accurate control of the energy flow.
+Thus, they are widely used in \gls{am} processes, especially concerning metallic
+materials with high melting points~\cite{collins2016microstructural}.
+
+Comparing both laser-based technologies, \gls{lpbf} offers the following
+advantages over \gls{dld}: smaller spot diameter, providing better processing
+accuracy and a smaller
+melt pool, thus yielding smaller surface roughness and greater geometric
+resolution. For the opposite reasons, \gls{dld} can process larger parts,
+providing the range of deposition head is large
+enough~\cite{wei2020overview}. This can be extended to the multi-material
+domain, with \gls{lpbf} being better suited to process high-precision small and
+medium-size multi-metal parts~\cite{wei2020overview}. Thus, the \gls{lpbf}
+process arises as the current bet for commercial and industrial applications for
+the fabrication of high-precision multi-material parts using metals and
+ceramics~\cite{aconityMachinesSite, slm500, eosM300, trumpfTruprint500,
+  auroraLabsRMP1, mussatto2022research}.
+
+\gls{lpbf} uses a focused laser beam to selectively melt (\gls{slm}) or to
+coalesce (\gls{sls}) metallic or composite powders, layer-by-layer, to build 3D components.
+As shown in Fig.~\ref{fig:sls-slm-process}, the powder is fed and
+uniformly distributed on the powder bed using a spreading mechanism, like a
+roller. The laser beam melts specifics areas of the powder bed, accordingly to
+the laser scanning pattern. After a layer is completed, the powder bed lowers by
+the height of the deposited layer, a new layer is deposited on the powder bed
+and the process is repeated. Depending on the energy density of the laser beam
+and the materials used, the material can be fully melted rather than sintered, allowing different properties (crystal structure, porosity, etc.)
+
+This repetitive process results in unmelted excess metal, providing structural
+support and additional protection from oxidation and thermal
+stress, ideal for overhanging structures. Thus, the 
+the powder bed is also usually heated to diminish temperature gradients which can weaken the part, leading to its collapse or fracture~\cite{thompson2015overview}.
+
+The metallic powders are highly susceptible to oxidation, which is further
+aggravated by the high thermal gradients induced by laser operation and the
+powder bed heating. Thus, to minimise this effect, an enclosing and controlled
+shielding system with an inert gas, typically argon or nitrogen, is used.
+
+The part is generally built upon a substrate
+plate to prevent powder bed platform damage, which must be removed to obtain the
+finished part upon process completion.
+%
+\begin{figure}[!hbtp]
+  \centering
+ \includegraphics[width=0.6\textwidth]{./img/sls-slm-process.png} 
+ \caption[LPBF process]{\gls{lpbf} process (withdrawn from~\cite{thompson2015overview})\footnotemark}%
+\label{fig:sls-slm-process}
+\end{figure}
+%
+\fnlicReq{Elsevier}{5296180869039}%
+
+Figure~\ref{fig:lpbf-params} delineates the key processing parameters for the
+\gls{lpbf} process. The thermal history, residual
+stress, and microstructure of a fabricated part are profoundly influenced by the
+laser processing parameters, ultimately impacting its
+quality~\cite{pratt2008residual}. Laser power, laser scanning speed, hatch
+distance, and energy density constitute the most notable parameters, affecting
+the geometry of melt pools, thermal gradients, and cooling rates. The energy
+density is the primary driver of melting and can be achieved through various
+combinations of the aforementioned parameters~\cite{sing2016selective}. This
+makes the process of determining optimal parameters a multi-objective
+optimization problem. Scanning strategy is the primary driver of energy density
+and can be leveraged to optimize surface roughness, refine microstructure, and
+reduce porosity~\cite{yu2019influence,zou2020numerical}, while mitigating
+residual stresses, thermal deformation, and
+defects~\cite{kruth2004selective,cheng2016stress,wan2018effect}.
+
+%
+\begin{figure}[!hbtp]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/mmlpbf-params.jpg}%
+    \caption[LPBF process and key parameters]{\gls{lpbf} process and key
+      parameters\footnotemark: white fonts indicate machine components while the black fonts
+      illustrate the key processing parameters (withdrawn from~\cite{sing2021emerging})}%
+      %\fnref{foot:cc-lic}}%
+      %\textsuperscript{\ref{foot:cc-lic}}%
+    \label{fig:lpbf-params}
+\end{figure}
+%
+\fnlicReq{Elsevier}{5296470787752}
+
+Zou et al.~conducted a numerical simulation to analyse the scanning strategy of single and multi-laser scanning for residual stress\cite{zou2020numerical}. They discovered that due to higher energy heat input, the residual stress of a sample increases with the number of lasers used, but careful planning of scanning sequence and direction can mitigate this. Moreover, they found that the two-scanning strategy can reduce residual stresses by more than 10\% when compared to the single-scanning strategy. This re-melting can improve surface roughness and porosity~\cite{yu2019influence}.
+
+\section{Multi-material Laser-Powder Bed Fusion}%
+\label{sec:mult-laser-powd}
+The capability to fabricate multiple material parts is highly desirable as it
+allows for the accurate placement of material according to its functionality,
+providing custom-tailored parts for specific applications with enhancement of
+its mechanical properties and behaviour in service.
+However, the existing 3D printing techniques are mainly for
+mono-material part fabrication~\cite{wei2020overview}.
+The emerging \gls{mmam} technology can
+enhance the AM parts performance by varying compositions or type within layers,
+unachievable by conventional manufacturing processes~\cite{vaezi2013multiple}, 
+without the need for complex manufacturing process and expensive
+tooling~\cite{han2020recent,bandyopadhyay2018additive}.
+
+The range of applications are vast and pivotal. In the biomedical engineering
+field, \gls{mmam} enabled the production of 3D engineered tissue (3D spinal
+cord~\cite{joung20183d}), biomedical devices such as microneedle
+arrays~\cite{lu2015microstereolithography} and diagnostic
+devices~\cite{li2018multimaterial}, multi-material cellular structures targeting
+orthopedic implants~\cite{bartolomeu2020additive}, and
+3D artificial models for preclinical or preoperative surgical
+training~\cite{coelho2018multimaterial,cresswell2018approaches}, among others.
+%
+In the soft robotics field, where flexibility is key for complex actuations and
+motions, \gls{mmam} enabled the production of pneumatically driven elastomeric
+actuators~\cite{sydney2016biomimetic} and direct integration of functional components required for it (e.g.,
+a silver-nanoparticle ink acting acting as a resistive heating
+element~\cite{yuan20173d}).
+%
+In electronics \gls{mmam} is critical for direct manufacturing of 3D electronic
+devices where electrically dissimilar materials including conductors,
+semiconductors, and dielectrics are integrated
+together~\cite{han2020recent}. Some examples are a 3D magnetic sensor with
+integrated electronics components and conductive paths~\cite{espalin20143d}, stretchable strain or
+pressure sensors~\cite{valentine2017hybrid} and a highly stretchable electronic LED board~\cite{huangagoh2018highly}, yielding high
+potential for wearable electronics, and even an fully 3D printed and package
+Li-ion battery~\cite{wei20183d}. 
+
+To achieve this superior performance over \gls{am}, different materials or chemicals need to be physically
+delivered to any point in the 3D space during the additive manufacturing. In
+some processes, like direct 3D printing in Objet, \gls{fdm}, this is
+relatively straight-forward to achieve as the materials are deposited in the
+platform dot-by-dot or line-by-line via nozzles; to incorporate multi-material
+fabrication multiple nozzles can be added~\cite{vaezi2013multiple}.
+
+For multi-material fabrication of metals, a similar result could be achieved
+through the use of LENS process or \gls{dld}, as they can use multiple
+nozzles/hoppers in the part fabrication. For example, multi-material components
+manufactured by \gls{lmd} has been demonstrated in literature~\cite{brueckner2018enhanced,shah2014parametric}.
+However, in other processes, like \gls{lpbf}, and \gls{lom}, this is not trivial, as the materials are delivered as
+whole layer by a scraper or as a solid sheet, requiring new material delivery
+systems to be first developed~\cite{vaezi2013multiple}.
+
+Nonetheless, \gls{lpbf}
+provides higher precision, smaller feature size and the ability to produce
+lightweight structures based on lattices, such as turbine blades, which cannot be easily achieved by
+\gls{lmd}~\cite{liu2019additive,bartolomeu2021selective}.
+On top of that, \gls{dld} is a
+more difficult process to master due to added complexity of deposition control,
+on top of the melt-pool control, which can cause variations in the laser spot
+due to local increase of part's height as a result of the
+deposition~\cite{shamsaei2015overview}.
+
+Thus, \gls{lpbf} is the most well-suited option for the manufacturing of
+multi-material components using metals and ceramics, which was further
+demonstrated by several works~\cite{walker2022multi, anstaett2017fabrication,
+  sing2015interfacial, LIU2014116}.
+
+\subsection{Technological Overview}%
+\label{sec:overview}
+This section presents the technological challenges and the possible solutions
+to tackle \gls{mmlpbf} current drawbacks.
+
+Fig.~\ref{fig:mmlpbf-mach-stateArt} illustrates the overview of a \gls{mmlpbf}
+system based on the commercial equipments available and the scientific
+literature~\cite{aconityMachinesSite, slm500, eosM300, renishawAM500,
+  trumpfTruprint500, auroraLabsRMP1, mussatto2022research}. The dashed
+components are optional.
+Upon careful examination of Fig.~\ref{fig:mmlpbf-mach-stateArt}, numerous
+resemblances with the traditional \gls{lpbf} procedure
+portrayed in Fig.~\ref{fig:sls-slm-process} can be observed. Such parallels
+should be expected since the most straightforward technique for manufacturing
+multi-material components using \gls{lpbf} involves modifying the powder delivery
+system of a pre-existing commercial equipment~\cite{bareth2022Implem,
+  schneck2022capability, nadimpali2019MMSteels, anstaett2017fabrication, edgar2015additive, liu2014interfacial}.
+%
+\begin{figure}[!hbtp]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/mmlpbf-mach-stateArt.pdf}%
+    \caption[MMLPBF system overview]{\gls{mmlpbf} system overview}%
+    \label{fig:mmlpbf-mach-stateArt}
+  \end{figure}
+
+  The \gls{mmlpbf} system comprises:
+  \begin{itemize}
+  \item \underline{Powder bed}: reciprocating platform, moving along the z-axis,
+    where the component is built.
+  \item \underline{Powder delivery system}: mechanism by which powder is fed and
+    delivered to the building platform.
+    The precise and dependable placement of materials within the powder bed is
+    contingent upon the proper functioning of this paramount system, rendering
+    it indispensable to the process of multi-material fabrication. It must be
+    carefully designed to limit cross contamination. Several technologies were
+    applied to this pivotal system, namely, conventional
+    recoating~\cite{bai2020dual, koopmann2019additive}, patterning
+    drums~\cite{aerosintPatternDrum2019}, powder spreading with removal by
+    suction~\cite{schneck2022capability, bareth2022Implem,
+      bartolomeu2020additive, marques2022RocketEngine}, vibrating
+    nozzle~\cite{zhang2019integrated, wei2019additive, demir2017multi}, hopper
+    powder feeding~\cite{walker2022multi, auroraLabsRMP1}, alternating powder
+    deposition~\cite{wang2022multi}, and electrophotographic powder
+    deposition~\cite{stichel2020electrophotographic, foerster2020aspects,
+      benning2018proof, stichel2018electrophotographic}.
+  \item \underline{Powder recovery/recycling system}: another very common issue
+    associated with the combination of multiple materials is
+powder contamination, which is an inevitable consequence of material joining and
+powder removal, unmelted areas of powder in the vicinity of the melt pool,
+and oxidation. The reuse of this material is, therefore, even more challenging,
+which is aggravated by its high cost. Powder recovery/recycling systems are applied to
+mitigate this issue partially achieved by using the
+variation of different physical properties between powders, such as particle size
+distribution (sieving)~\cite{chivel2016new},  magnetism\cite{seidel2018status},
+wettability~\cite{woidasky2017recyclingtechnik}, and particle inertia induced by
+different powder densities~\cite{ullrich2013mechanische}.
+    Efforts should be made to recuperate the surplus powder conveyed by the
+    powder delivery system with the aim of minimizing powder contamination and
+    facilitating its inertization, thereby achieving optimal levels of
+    recyclability and contributinb for overall process sustainability and cost-effectiveness~\cite{obeidi2022LPBFGuidelines}.
+  \item \underline{Temperature control system}: powder materials should be
+    preheated to facilitate fusion or coalescence induced by the laser
+    paths and to diminish temperature gradients which can weaken the part,
+    leading to its collapse or fracture~\cite{thompson2015overview}.
+    It is mandatory on the powder bed, and typically also included in the
+    powder reservoirs.
+  \item \underline{Atmosphere control system}: for powder materials, particularly metallic ones, it is essential to maintain a
+controlled atmosphere to prevent oxidation. This is particularly crucial when
+considering the elevated thermal gradients induced by laser operation and the
+heating of the powder bed. To mitigate this effect, an enclosing and controlled
+shielding system, which utilises an inert gas, typically argon or nitrogen, is
+employed~\cite{thompson2015overview}.
+  \item \underline{Laser}: the laser's systems are responsible for generation the
+    beam (beam generation) and focusing it in the powder bed accordingly to the
+    provided 2D coordinates (galvo scanning), inducing the melting
+    of the powder materials. Optionally, additional lasers can be used. Firstly,
+    to increase productivity. In this case, lasers are used with materials of
+    the same type (e.g., metal alloys) and, thus, are usually just a duplicate
+    with the same wavelenght. Hence, they can be combined through a
+    single set of mirrors and focusing lens, and used
+    simultaneously, moving along a X-Y gantry~\cite{nadimpali2019MMSteels}. Secondly, if different types of materials are
+    used, e.g., metals and ceramics, lasers of different wavelengths are
+    required, due to the variation in the sprectrum of radiation absorption and
+    spot size.
+  \item \underline{Control system}: controls the manufacturing process,
+    commanded by an application. The User manages the process interacting with
+    this application to provide the topological data and process parameters. The
+    topological data (slices and paths information) is typically conveyed in
+    the \texttt{*.SLI} format --- proprietary, used in the EOS and 3D Systems
+    systems frameworks~\cite{zeng2013layer} --- or \gls{cli} or \texttt{*.ILT} formats --- open source, used, e.g.,
+    in the Aconity or Renishaw frameworks~\cite{aconityMachinesSite,
+      renishawAM500}. Aurora Labs equipments, on the other hand, require the
+    machine instructions to be provided directly (G-Code)~\cite{nadimpali2019MMSteels}.
+    The application will then generate the appropriate machine
+    instructions, if required, and dispatch them. 
+  \item \underline{Process Monitoring}: the \gls{lpbf} process benefits greatly
+    of a closed-loop and adaptative control. This becomes even more true for
+    \gls{mmlpbf} due to its increased complexity.
+    The melt pool is monitored
+    using \gls{ir} cameras, pyrometers, or laser speckles. The first two
+    sensors are used to analyse the temperature evolution of the component, and
+    allow to assess the stability of the process, but not on the material
+    condition. On the other hand, \gls{lsp} analyses the change in the interference
+patterns of the laser (speckles) to identify inhomonogeneities in 3D printing
+and even ``invisible'' defects~\cite{chen2019laser}. The high-speed camera is
+used to capture the melting process only for qualitative assessment of the build
+process and powder distribution~\cite{obeidi2022LPBFGuidelines}.
+Obviously, this requires a significant investment and resources, but could
+greatly benefit the manufacturing quality.
+  \end{itemize}
+
+Next, the main \gls{mmlpbf} topics are analysed and discussed, namely, the
+powder delivery system, the manufacturing chain and equipments, and the
+manufacturing methodologies.
+
+\subsection{Powder delivery systems}%
+\label{sec:powd-deliv-syst}
+One of most crucial parts of \gls{mmlpbf} fabrication is the correct and
+adequate placement of the different materials in the building area, while
+minimising the cross contamination between them. Thus, there are significant
+efforts in the research and commercial domains to pursue more effective powder
+delivery systems~\cite{mussatto2022research, aerosintPatternDrum2019}.
+
+The simplest powder deposition system relies on the adaptation of \gls{3dmmlpbf}
+process to use the conventional \gls{lpbf} system~\cite{bai2020dual, koopmann2019additive}: (1) the build process is halted
+at the layer where the material transition is desired, (2) the powder is
+changed, (3) the building is resumed. This imposes several limitations. First,
+only a single material can be used at a time. Second, the material transitions
+occur in a layer-wise manner\cite{mussatto2022research}, and the abrupt changes in the physical properties of the materials'
+interfaces leads to defects and, consequently, stress concentrations, which can
+induce fracture of the components~\cite{mahamood2015laser}.
+Furthermore, powder
+compactation and bed levelling require several passages of the recoating unit,
+and the laser procedure should be repeated on the transition layer 2--3 times to
+ensure better fusion between materials~\cite{bai2020dual}.
+
+The next improvement step is ensuring that cross contamination is minimised
+through the use of a proper removal method between materials' depositions. Thus,
+the same limitations of the conventional method apply.
+The simplest method to remove the powder is resorting to a vaccum
+suction system~\cite{schneck2022capability}, which ideally should be dedicated
+to each material~\cite{bartolomeu2020additive} to avoid cross contamination. Bareth et al.~\cite{bareth2022Implem} upgraded
+a commercial unit of a AconityONE printer with a multi-material mobile plug-in
+module to feed a second material to the building chamber (Fig.~\ref{fig:aconityONE-upgrade}). However, the same
+suction system is used for both materials. Marques
+et al.~\cite{marques2022RocketEngine}, on the other hand, utilised a dedicated
+powder removal system.
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{0.44\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/aconityONE-upgrade-schem.png}
+  \caption{Schematic}%
+  \label{fig:aconityONE-upgrade-schem}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.54\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/aconityONE-upgrade-mach.png}
+  \caption{Implementation}%
+  \label{fig:aconityONE-upgrade-mach}
+\end{subfigure}
+%
+  % 
+  \caption[Conventional LPBF printer upgraded with a multi-material
+  mechanism]{Conventional LPBF printer upgraded with a multi-material mechanism --- 1: AconityONE; 2: process chamber; 3: scan head;
+    4: powder deposit (material B); 5: powder conveyor; 6: recoater and suction
+    unit; 7: powder slide; 8: cyclone separator; 9: vaccum pump; 10: electronic
+    control unit
+    (withdrawn from~\cite{bareth2022Implem})\footnotemark}%
+  \label{fig:aconityONE-upgrade}
+\end{figure}
+
+\fnlicCCNCa{foot:aconityUpgrade}%
+
+Another variation of the spreading principle is used by
+alternating powder deposition systems. These systems utilise two opposing
+recoaters, whether aligned~\cite{wang2020formation} or perpendicular~\cite{goll2019additive} to each other, to spread two materials and obtain
+a inter-layer material variation.
+
+Powder hoppers provide separate housing for delivering powders to the
+building chamber, sectioning the build area. They can be employed for mono-material
+processing or for blending multiple powders simultaneously to obtain a specific composition. They are typically placed externally and above the processing
+chamber, and operated with piezoelectric transducers and solenoid valves to
+regulate the unloading of powder~\cite{wang2022multi, chen2020influence}, which is then spread onto the powder bed by a
+recoating system, such as a coating blade~\cite{wang2022multi}. This system allows, not only
+layer-wise material transitions, but also discrete
+and gradient material transition along the build
+direction~\cite{demir2017multi}. Very recently, Walker et
+al.~\cite{walker2022multi} installed a powder hopper system into a \gls{lpbf}
+machine for graded alloy processing, with the capability to deposit specific powder of varying material composition in any 3-dimensional location (see Fig.~\ref{fig:mmlpbf-mach}).
+The composition mixtures
+are created prior to processing and separated into individual hoppers or the
+powder supply, for multi-material processing.
+
+%
+\begin{figure}[!hbtp]
+  \centering
+  %
+  \begin{subfigure}[t]{1.0\textwidth}
+  \centering
+  \includegraphics[width=0.6\textwidth]{./img/mmlpbf-mach.jpg}%
+  \caption{Structure and process}%
+  \label{fig:mmlpbf-multiHopper}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{1.0\textwidth}
+  \centering
+  \includegraphics[width=0.6\textwidth]{./img/multiHopper-prototypes.jpg}
+  \caption{Components produced: (a) concentric circles of Ti to Ta on the
+    vertical plane; (b) IN 718 to GRCop-42 in the horizontal plane and (c) Ti to Ta in both the vertical and horizontal planes}%
+  \label{fig:mmlpbf-multiHopper-prototypes}
+\end{subfigure}
+
+    \caption[MMLPBF machine with multiple hoppers]{\gls{mmlpbf} machine with
+      multiple hoppers (withdrawn from~\cite{walker2022multi})\footnotemark}%
+      %\fnref{foot:cc-lic}}%
+      %\textsuperscript{\ref{foot:cc-lic}}%
+    \label{fig:mmlpbf-mach}
+\end{figure}
+%
+\fnlicReq{Elsevier}{5296470140711}
+
+The ultrasonic vibration-assisted powder delivery system with a vortex suction
+nozzle is currently the most researched approach for multiple powder
+delivery~\cite{mussatto2022research}. The powders are selectively deposited by
+means of nozzles with small orifices~\cite{stichel2014powder} regulated by controlling the electrical
+pulses to the piezoelectric transducers~\cite{wei2019easy, zhang2019integrated, wei2019additive}. This allows for more precise control of
+the powder flow rates. Wei et al.~\cite{wei2019additive} developed a vibrating
+nozzle system capable of depositing up to six discrete powder materials within
+one layer. Demir and
+Previtali~\cite{demir2017multi} used a mixed approach and developed a double hopper powder delivery system
+based on piezoelectric transducers which enabled the manufacturing of a
+Fe/Al-12Si specimen, with an intermixed region between the two
+materials (Fig.~\ref{fig:ultrasonic-dispensing}).
+Kumar et al.~\cite{kumar2004direct} used glass pipettes as
+`hopper-nozzles' to spread powder, by means of gas pressure or vibration
+feed, allowing a precise powder delivery, without the need to vacuuming the
+excess~\cite{kumar2004direct}.
+
+\begin{figure}[!hbtp]
+  \centering
+  %
+  \includegraphics[width=0.68\textwidth]{./img/ultrasonic-dispensing.jpg}
+  \caption[Vibrating nozzle dispenser system]{Vibrating nozzle dispenser system:
+    a) Concept of using multi-material transition zone for assembling Al-alloys
+    with steel. b) In-house built prototype SLM system with multi-material
+    processing capability. c) Design of the powder feeder system. d) Working
+    principle of the powder feeder for mixing powders. e) Calibration curves of
+    the delivered powder mass (m) of pure Fe and f) Al-12Si as a function of
+    applied voltage (A) and vibration time ($t_v$). Error bars depict 95\%
+    confidence interval for the mean. (withdrawn from~\cite{demir2017multi})\footnotemark}%
+    \label{fig:ultrasonic-dispensing}
+\end{figure}
+%
+\fnlicReq{Elsevier}{5536180654674}
+
+Next, we shall discuss the most disruptive technologies.
+The electrophotographic technology is used to build patterned layers
+composed of multiple powders using metal powder transfer. The working principle
+relies on the electrical charge of the powders, simillarly to common paper toner
+printers xerographic process~\cite{van2005metal}.
+First, a photoreceptor is uniformly charged using an electrical corona to a
+specified charge density~\cite{bakkelund1997fabrication}. Following this, laser
+exposure is used to selectively discharge the photoreceptor according to layer
+data, resulting in an electrostatic image containing powder data of the
+component for a given layer~\cite{psarommatis2022systematic,
+  stichel2020electrophotographic}. The photoreceptor is then brought close to
+the powder supplier, causing powder particles to attach to the appropriate
+charged areas of the photoreceptor. The developed powder image is then
+transferred onto the charged build substrate via electrostatic attraction
+force~\cite{mehrpouya2022multimaterial}. In the final step, the photoreceptor is
+cleaned with a blade to remove residual particles and discharged with a second
+laser exposure before the start of the next powder deposition
+cycle~\cite{benning2018proof}.
+
+In 2019, Aerosint used the electrophotographic principle~\cite{wang2022recent} to develop a novel selective powder deposition technology that
+enables the deposition of dry powder particles, such as polymer, metal, or
+ceramic, to form a single layer containing at least two materials with low
+waste~\cite{aerosintPatternDrum2019} (Fig.~\ref{fig:aerosint-recoater}). The technology employs rotating patterning drums, where each drum
+deposits one material. This process selectively deposits a volume pixel (voxel)
+of powder in a layer-by-layer fashion, with speeds up to 200 mm/s, and is less
+sensitive to powder characteristics than conventional
+systems~\cite{eckes2018multi}. Currently, Aerosint selective powder deposition
+system is used only in Aconity machines --- AconityMIDI+ and AconityMICRO
+\gls{lpbf} printers --- to enable multi-material fabrication~\cite{aerosintSite}.
+
+%
+\begin{figure}[!hbtp]
+  \centering
+  %
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/aerosint-process.png}%
+  \caption{}%
+  \label{fig:aerosint-proc}
+  \end{subfigure}
+  %
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/aerosint-mech.png}%
+  \caption{}%
+  \label{fig:aerosint-mech}
+  \end{subfigure}
+%
+  %
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/aerosint-heatExchanger-bed.png}%
+  \caption{}%
+  \label{fig:aerosint-heatExchanger-bed}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.6\textwidth]{./img/aerosint-heatExchanger-part.png}%
+  \caption{}%
+  \label{fig:aerosint-heatExchanger-part}
+  \end{subfigure}
+%
+  \caption[Aerosint selective powder deposition system for MMLPBF]{
+    Aerosint selective powder deposition system for MMLPBF: (a) Process~\cite{aerosintPatternDrum2019}; (b) Dual
+    powder recoater~\cite{aerosintSite}; (c) CuCrZr--316L Heat Exchangers part printing on Aconity
+    MIDI+ LPBF printer powered with Aerosint's multi-material recoater~\cite{aerosintHeatExchanger}; (d)
+    printed part~\cite{aerosintSite}. Reproduced with permission, copyright Aerosint SA}%
+      %\fnref{foot:cc-lic}}%
+      %\textsuperscript{\ref{foot:cc-lic}}%
+    \label{fig:aerosint-recoater}
+\end{figure}
+%
+
+Mussatto~\cite{mussatto2022research} classified the powder deposition systems technologies accordingly to
+the type of powder material used, the cross contamination level, material
+transition between layers, the gradative powder deposition within one layer, the
+discrete powder deposition within one layer, and the time to form a powder bed
+(Table~\ref{tab:powder-deposit-systems}). The results show that the level of
+productivity is low for all technologies except conventional and alternating
+spreading. Furthermore, powder spreading with suction is overall the most well
+performant. It can be used with all types of powder materials, and has the
+lowest cross contamination, although with the significant shortcoming of not
+allowing gradient powder deposition.
+
+\begin{table}[!hbt]
+\centering
+\caption[Overview of the advantages and disadvantages of the various
+multi-powder deposition systems for L-PBF]{Overview of the advantages and
+  disadvantages of the various multi-powder deposition systems for L-PBF
+  (adapted from~\cite{mussatto2022research})\footnotemark}%
+\label{tab:powder-deposit-systems}
+\resizebox{1.0\textwidth}{!}{%
+\begin{tabular}{llllllllllll}
+\hline
+System & SP & PB & MP & PP & MEP & CP & PPPCCL & OPPLLT & GPDWOL & DPDWOL & LPTFPB \\
+\hline
+Conventional spreading & ✓ & ✓ &  & ✓ & ✓ & ✓ & L & ✓ &  &  & T \\
+%\hline
+Patterning Drums & ✓ &  & ✓ &  & ✓ & ✓ & H & ✓ &  & ✓ & S \\
+%\hline
+Spreading + suction & ✓ & ✓ & ✓ & ✓ & ✓ & ✓ & L & ✓ &  & ✓ & VS \\
+%\hline
+Vibrating Nozzle & ✓ & ✓ & ✓ &  & ✓ & ✓ & M & ✓ & ✓ & ✓ & VS \\
+%\hline
+Hopper feeding & ✓ & ✓ & ✓ &  & ✓ & ✓ & H & ✓ & ✓ & ✓ & S \\
+%\hline
+Alternating & ✓ & ✓ & ✓ & ✓ & ✓ & ✓ & M & ✓ &  &  & T \\
+%\hline
+Electrophotographic & ✓ &  & ✓ &  & ✓ & ✓ & H & ✓ &  & ✓ & VS \\ 
+  \hline
+  \multicolumn{12}{l}{SP = Single Powder; PB = Powder blends; MP = Multi powder} \\
+  \multicolumn{12}{l}{PP = polymeric powders; MEP = Metallic Powders; CP = Ceramic Powders} \\
+  \multicolumn{12}{l}{
+  PPPCCL = Post Printing Powder Cross Contamination Level;
+  L = Low; M = Medium; H = High;} \\
+  \multicolumn{12}{l}{
+  OPPLLT = One Powder Per Layer (Material Transition Between Layers)} \\
+  \multicolumn{12}{l}{
+  GPDWOL = Gradient Powder Deposition Within One Layer} \\
+  \multicolumn{12}{l}{
+  DPDWOL = Discrete Powder Deposition Within One Layer} \\
+  \multicolumn{12}{l}{
+  LPTFPB = Level of Productivity (Time to Form a Powder)}
+\end{tabular}
+}
+\end{table}
+
+\fnlicCCNCa{foot:mmlpbfPowderDepSys}%
+
+The author further concluded that despite
+many significant advances in the multi-material processing over the last few
+years, the issue of powder cross-contamination remains a serious problem that
+needs to be addressed. Furthermore, there is an urgent need for an in-depth
+analysis of the \gls{mmlpbf} process so that the knowledge generated can be used
+to optimise and improve the process to specific needs. 
+
+\subsection{Manufacturing chain}%
+\label{sec:manuf-chain-equipm}
+Fig.~\ref{fig:mmlpbf-stateArt-Manuf-Chain} illustrates the \gls{mmlpbf}
+manufacturing chain based on the scientific literature~\cite{seidel2022multi} and the commercial
+equipment panorama~\cite{aconityMachinesSite, slm500, eosM300, renishawAM500,
+  trumpfTruprint500, auroraLabsRMP1}. 
+The manufacturing chain is divided into three stages: pre-process,
+in-process, and post-process.
+%
+\begin{figure}[!hbtp]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/mmlpbf-stateArt-Manuf-Chain.pdf}%
+    \caption[MMLPBF manufacturing chain overview]{\gls{mmlpbf} manufacturing chain overview}%
+    \label{fig:mmlpbf-stateArt-Manuf-Chain}
+  \end{figure}
+
+
+\subsubsection{Pre-Process}%
+\label{sec:pre-process}
+In the pre-process stage, the component is designed as an
+assembly of multiple individual \gls{cad} models corresponding to each
+material, and the transition between them, according to
+the requirements specifications~\cite{altenhofen2018continuous, yao2018multi}.
+This is a result of the limitation of most of the mainstream commercial
+software to express material information, which hinders multi-material
+design~\cite{wang2022recent}. On the other side of the sprectrum one has specialised software
+for the generation of graded material transitions in volumetric models, like
+GraMMaCAD (Graded Multi-Material CAD), which supports the assignment of
+locally varying material properties within a 3D model~\cite{grammacad}.
+
+The model is then simulated both at a
+material scale and integrated (assembled) scale. The geometry of each model
+is exported independently, usually in the \gls{stl} format, OBJ (Object file format), \gls{amf}, and PLY (polygon file
+format)~\cite{loh2018overview}. A sanity check is performed on the geometry
+file (and repaired) and the topology is optimised. The \gls{dfm} or
+\gls{dfam} imposes constraints on the topology taking into consideration the
+manufacturing process.
+
+Then, in the \gls{cam} phase, the model is virtually
+placed into the building platform, and the orientation is optimised, and, if
+required, supports are generated for the component to ensure adequate
+printing. Each material model is then sliced, and the paths are generated,
+yielding the layer information typically in the open-source formats
+(\gls{cli}, ILT --- Aconity~\cite{aconityMachinesSite}, Reinshaw~\cite{renishawAM500}), or the proprietary SLI (EOS, 3D
+Systems)~\cite{zeng2013layer}. Each material model is then merged in the
+manufacturing model. The topological data is mapped to the process parameters,
+accordingly to each material, yielding the manufacturing instructions for
+the equipment, typically in a G-Code simillar
+format~\cite{nadimpali2019MMSteels}.
+
+Fig.~\ref{fig:mmlpbf-preprocess-SW}
+shows an extensive list of some of the many software applications for the
+\gls{mmlpbf} pre-processing compiled by Moreno et.al~\cite{moreno2021design}. The vast majority of these applications are
+closed-source and released under commercial licences.
+
+% 
+\begin{figure}[!hbtp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/mmlpbf-preprocess-SW.png}%
+  \caption[MMLPBF Pre-Process software]{\gls{mmlpbf} Pre-process software
+    (withdrawn from~\cite{moreno2021design}\footnotemark)}%
+  \label{fig:mmlpbf-preprocess-SW}
+\end{figure}
+\fnlicCCNCa{foot:preproc-SW}%
+
+The pre-processing procedure is time and effort consuming and it involves the
+generation of large amounts of data~\cite{binder2018potentials,
+  schneck2021review, wang2022recent}. Nonetheless, the available software
+suite does not provide the automation required for the process.
+Fig.~\ref{fig:mmlpbf-data-proc} shows one example of a custom manual data
+pre-processing procedure devised by Wei et al.~\cite{wei20183d} to surpass the
+lack of software tools for the \gls{mmlpbf} process. The parts were modelled and assembled, and
+individual material geometry converted into the \gls{stl} format. Then, each
+material is sliced and hatched using a proprietary \gls{cnc} CAM tool to
+generate the toolpaths and G-Code for the powder dispensing system.
+Furthermore, the process is complex and does not scale well to industrial applications~\cite{wang2022recent}.
+
+\begin{figure}[!hbtp]
+  \centering
+ \includegraphics[width=0.5\textwidth]{./img/mmlpbf-data-proc.jpg} 
+ \caption[Flowchart for data flow for \gls{mmlpbf}]{Flowchart for data flow for \gls{mmlpbf} (withdrawn from~\cite{wei20183d})\footnotemark}%
+\label{fig:mmlpbf-data-proc}
+\end{figure}
+%
+\fnlicReq{Elsevier}{5296410224943}
+
+Thus, several methods have been proposed to address the shortcomings of the current
+pre-processing procedure for the \gls{mmlpbf} process.
+Firstly, there is the need for a data interface file that can convey both
+geometrical and material information~\cite{wang2022recent}. \gls{stl} files are
+a tesselation of facets and the corresponding normals without any material
+data. Furthermore, it is unable to accurately represent holes,
+porosity and discontinuities. As a result, back in 2009, Hiller and Lipson have proposed STL 2.0 to combine geometric and
+material information~\cite{hiller2009stl}, but it never gained
+traction~\cite{wang2022recent}. The OBJ file can store colour information, but
+not material one~\cite{wang2022recent}. On the other hand, the \gls{amf} file
+conveys geometric and material information, but occupies a large storage space
+and is not yet mature~\cite{chenyan2019multi, shi2017status}. The PLY file can
+express texture and colour, but not when a part contains different material
+properties~\cite{xiaowei2017new}.
+
+Hence, other file formats were developed for \gls{mmlpbf} fabrication, namely \gls{fav},
+\gls{svx}, and \gls{3mf}, which can convey information about the material
+gradient and micro-scale physical properties~\cite{loh2018overview}. The first
+two are based in volume discretization using volume pixels (voxels): \gls{fav}
+incorporates colours, materials, and connection strength information (Fig.~\ref{fig:fav}); \gls{svx}
+comprises material allocation, density, and colour information~\cite{wang2022recent}. The \gls{3mf}
+is a open source standard file format based on the \gls{xml} specification to
+describe the intrinsic and extrinsic information of a model. However, it does
+not support higher-order representations such as \gls{nurbs} (used by
+GraMMaCAD~\cite{grammacad}) and \gls{step}~\cite{wang2022recent}.
+
+Secondly, comes the slicing and path generation procedure. As aforementioned
+(see Section~\ref{sec:monom-laser-powd}) the energy density is the primary
+driver of melting and can be regulated through a combination of scanning
+strategy (type, hatching distance, angle) and process parameters (laser power, laser
+scanning speed). Several scanning strategies were tried out, namely simple,
+alternate, stripes, island, sinusoidal, and
+chessboard~\cite{obeidi2022LPBFGuidelines, wang2022recent}. Mussatto et
+al.~\cite{mussatto2022laser} used Solidworks to 3D model the specimens which
+were then sliced by the commercial slicing tool Netfabb Autodesk. In the same
+work, the authors needed to generated the 3D models of the specimens using a
+sine function and Excel Macro and the JavaScript programming language to
+generate the sinusoidal hatching and export it to the \gls{cli} format.
+Thus, the commercial \gls{cam} tools available are not able to produce custom
+paths in a straightforward and flexible manner.
+
+Lastly, we have the manufacturing file generation. Most commercial \gls{lpbf}
+equipments are only available for mono-material fabrication~\cite{mussatto2022research} and, as
+aforementioned, they require upgrading for multi-material fabrication. For
+example, Nadimpali et al.~\cite{nadimpali2019MMSteels} upgraded an Aurora Labs
+S-Titanium PRO to use two 150 W CO\textsubscript{2} lasers
+simultaneously, but they needed to modify directly the G-Code instructions to
+operate the machine. This defeats the purpose of pre-processing, as it requires
+specialised staff to do the on-line programming of the machine with explicit
+manufacturing instructions that would otherwise been generated by the
+pre-processing procedure.
+
+%
+\begin{figure}[!hbtp]
+  \centering
+  %
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/fav1.jpg}%
+  \caption{}%
+  \label{fig:fav1}
+  \end{subfigure}
+  %
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/fav2.jpg}%
+  \caption{}%
+  \label{fig:fav2}
+  \end{subfigure}
+%
+  %
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/fav3.jpg}%
+  \caption{}%
+  \label{fig:fav3}
+\end{subfigure}
+%
+%
+  \caption[Fabricated Voxel file format]{
+    \gls{fav} file format~\cite{fujifilmFAV}: (a) Conceptual diagram showing voxels arranged
+    three-dimensionally; (b) the FAV format can retain information on internal
+    structure, colour, and material; (c) Simulations can be performed on voxel data as-is, and designs can be modified to reflect simulation results. Reproduced with permission, copyright
+    FUJIFILM Business Innovation Japan Corp.}%
+      %\fnref{foot:cc-lic}}%
+      %\textsuperscript{\ref{foot:cc-lic}}%
+    \label{fig:fav}
+\end{figure}
+%
+
+\subsubsection{In-Process}%
+\label{sec:process}
+In the \underline{In-Process} stage, the manufacturing instructions are used to
+control the \gls{mmlpbf} building cycle. Process monitoring and closed-loop
+control are optional, but strongly recommended, to ensure optimal
+manufacturing quality.
+
+The most significant challenge in the \gls{mmlpbf}
+process is to guarantee the accurate and effective delivery of the different
+materials to the building chamber. However, only few commercial systems  can be used for multi-material fabrication
+out of the box~\cite{aconityMachinesSite, aerosintPatternDrum2019, slm280}. Thus, in this section, we explore further the
+panorama of available solutions, both in the commercial and research fields.
+
+Table~\ref{tab:lpbf-commercial-equip} shows a list of most relevant \gls{lpbf}
+commercial equipments, based on a survey over product specifications~\cite{aconityMINI, aconityMIDI, trumpf300, slm280, slm280Temp, renishawAM500, eosM300}. The
+prices were obtained from quotations provided directly by the manufacturers, and
+do not include taxes.
+From this list, all equipments use a feedstock of metallic powder, but only the AconityMIDI+~\cite{aconityMIDI}
+and the SLM 280 2.0~\cite{slm280} can be used for multi-material fabrication. The \gls{sw} stack for
+these two equipments includes commercial proprietary software for pre-process or
+in-process management. The entry-level product for Aconity --- AconityMINI ---
+starts at 228 K €, thus it is expected that AconityMINI+ costs even more. On the
+other hand, the
+SLM 280 2.0 starts at 500 K €. This clearly demonstrates that the initial
+investment in a \gls{mmlpbf} equipment is significantly high. Furthermore, in
+the current setup, these equipments can only be used with metallic powders,
+which limits the scope of applications.
+
+\begin{table}[!hbtp]
+\centering
+\caption[LPBF commercial equipments]{\gls{lpbf} commercial
+  equipments~\cite{aconityMINI, aconityMIDI, trumpf300, slm280, slm280Temp, renishawAM500, eosM300}}%
+\label{tab:lpbf-commercial-equip}
+\resizebox{1.0\textwidth}{!}{%
+\begin{tabular}{lllllllllll}
+\hline
+Equipment & Build Volume & Materials & LT (µm) & MM & \# Lasers & PH (\degree C) & PM & SW Stack & NW (kg) & Cost (€) \\
+\hline
+AconityMINI & \diameter 250 x 250 mm & metals & 10 (min) & No & 1 (Fiber) & 800 (max) & Optional & Autodesk Fabb Premium & 850 & 228 K \\
+ &   &  &  &  &  &  &  & AconityStudio &  &  \\
+  \hline
+AconityMIDI+ & \diameter 150 x 150 mm & metals & 10 (min) & Yes & 4 (Fiber) & 1000 (max) & Optional & Autodesk Fabb Premium & 1600 & N.D. \\
+ &   &  &  &  &  &  &  & AconityStudio &  &  \\
+  \hline
+TruPrint3000 & \diameter 300 x 400 mm & metals & 20 & No & 4 (Fiber) & 200 (max) & Optional & Proprietary Tool Suite & 4300 & 950 K \\
+  \hline
+SLM 280 2.0 & 280 x 280 x 280 mm & metals & 20 (min) & Yes & 2 (Fiber) & 550 & Included & Proprietary Tool Suite & 1300 & 500 K \\
+  \hline
+RenAM 500Q/S & 250 x 250 x 350 mm & metals & 30 (min) & No & 4 (Fiber) & N.D. & Included & QuantAM & 1960 & N.D. \\
+ & & & & & &  &  & RenAMP &  &  \\
+ & & & & & &  &  & InfiniAM &  &  \\
+  \hline
+EOS M300-4 & 300 x 300 x 400 mm & metals & N.D. & No & 4 (Fiber) & N.D. & Included & EOSPRINT2 & 5500 & 1300 K \\
+ & & & & & &  &  & EOS ParameterEditor &  &  \\
+ & & & & & &  &  & EOSTATE Monitoring Suite &  &  \\
+ & & & & & &  &  & EOSCONNECT Core &  &  \\
+ & & & & & &  &  & EOSCONNECT Core &  &  \\
+ & & & & & &  &  & EOSCONNECT MachinePark &  &  \\
+ & & & & & &  &  & Materialise Magics Metal &  &  \\
+ & & & & & &  &  & Packages and modules &  &  \\
+  \hline
+ \multicolumn{11}{l}{LT: Layer Thickness; MM: Multi-material; PH: Preheating; PM: Process Monitoring; SW: Software; NW: Net weight}
+\end{tabular}
+}
+\end{table}
+
+As a result of the lack of commercial solutions for \gls{mmlpbf} and/or their
+cost, researchers tried to upgrade some of these equipments.
+Liu et al.~\cite{liu2014interfacial} and Sing et al.~\cite{sing2015interfacial} upgraded a powder
+feeder of a conventional \gls{lpbf} system --- SLS 250 HL from SLM Solutions ---
+equipped with a 400 W fiber laser to store and deliver two metallic powder materials separately.
+C18400 copper have been successfully
+deposited on top of 316L stainless steel and AlSi10Mg, although the transition zone
+between the two materials could not be controlled, which is the most critical in a multi-material part.
+Anstaett et al.~\cite{anstaett2017fabrication} also upgraded a SLS 250 HL
+\gls{lpbf} system to deposit two metallic powders, combining a Cu-alloy and a
+tool steel to produce a multi-material component~\cite{anstaett2017fabrication}.
+
+More recently, Nadimpali et al.~\cite{nadimpali2019MMSteels} upgraded an Aurora
+Lavs S-Titanium Pro \gls{lpbf} equipment, due to its multiple hopper dispenser, to combine 150 W CO\textsubscript{2}
+lasers simultaneously, with an average maximum power output of 255 W. The 
+two beams pass separately through a set of optics before entering
+into the focus lens resulting in a single spot with approximately $150~\mu m$
+in diameter in the processing plane. The powders are mixed thanks to the powder
+dispensation and sweeping mechanisms. However, the authors required to
+explicitly modify the G-Code to operate the machine.
+In 2022, Schneck et al.~\cite{schneck2022capability} also upgraded a SLM 250 HL
+\gls{lpbf} equipment with a powder dispensing system consisting of a suction
+module and blade coater to manufacture a prototype injection nozzle for an
+internal combustion engine using metallic powders. The pre-processing was
+manual, with each material of the 3D component modelled independently and
+exported as \gls{stl} file, which was then sliced and converted to the
+proprietary SLM file format using AutoFab \gls{cam} \gls{sw}.
+
+Lastly, Bareth et al.~\cite{bareth2022Implem} upgraded an Aconity MINI
+\gls{lpbf} equipment with a multi-material mobile plug-in
+module to feed a second material to the building chamber (Fig.~\ref{fig:aconityONE-upgrade}). However, the same
+suction system is used for both materials, which increases the cross
+contamination and diminishes the powder recyclability rate. The multi-material
+module was connected to the machine's \gls{plc}, which made it possible
+to be controlled directly from the software by modifying the custom G-Code.
+
+\subsubsection{Post-Process}%
+\label{sec:post-process}
+The \gls{lpbf} and \gls{mmlpbf} post-processing are identical and involve
+several fundamental steps and challenges such as powder removal and recycling, part
+separation, in-situ process monitoring, post-processing treatments and quality
+control. However, there are currently no specific guidelines available for the
+mechanical and thermal post-processing of multi-material
+parts~\cite{schneck2021review}.
+
+Separation of mixed powders represents an additional challenge, which requires
+the removal of various powder materials from each other as well as the
+elimination of process-related impurities.
+
+The current state of the art in
+material separation proves to be challenging and has not been implemented in
+practice~\cite{binder2018potentials, wei2021recent}.
+Seidel~\cite{seidel2022multi} evaluated the different working principles for
+powder reciclability, such as, particle size, ferromagnetism, density, mass,
+electrical conductivity and surface wettability. The author concluded that
+ferromagnetic separation and sieving are the most promising technologies.
+
+When validating the part, it is important to investigate mechanical and thermal
+parameters and microstructural analyses in the joining zone. Several
+investigations have been conducted to characterise the joining zone of 2D
+specimens using optical methods such as optical and scanning electron microscope
+(SEM) images to analyse the microstructure, strength, and
+defects~\cite{anstaett2017fabrication, wei2019additive, bartolomeu2020additive,
+  marques2022RocketEngine, mao2022effects}.
+
+The last fundamental problem is related to process knowledge. It is critical to
+understand the process thoroughly to obtain good quality
+parts~\cite{fayazfar2018critical,tey2020additive,wei2021understanding}.
+
+\subsubsection{Prospects for improvement}%
+\label{sec:prosp-impr-stateArt}
+The main takeway is that the \gls{mmlpbf} fabrication is a multi-objective
+problem, requiring specially designed equipments and toolchains, and
+experimental design.
+
+Back in 2012, Gu et al.~\cite{gu2012laser} highlighted the need to create a
+process knowledge database to handle the inherent complexity of the process and
+support its evolution. Yet, ten years later Mussatto~\cite{mussatto2022research}
+reports the gap was not still not addressed and there is an urgent need for an
+in-depth analysis of the \gls{mmlpbf} process to ensure sustainable process improvement. 
+
+It is essential to develop a multi-material simulation
+software tool or an \gls{ai} prediction method of the optimal process parameters
+beforehand to narrow the actual experimental range~\cite{wei2020overview}.
+Last year, Exponential Technologies, in a collaboration with Aerosint, reported
+the two-fold improvement in component density within 2 print jobs and 46 samples
+printed without any prior statistical knowledge. This yielded a reliable
+parameter set for printing Stainless Steel 316L and Inconel 625 combinations,
+saving time and money~\cite{xtSAAM2022AI}.
+
+Furthermore, machine learning can be used as a means for automated evaluation
+and classification of sensor data to assist in process monitoring and
+closed-loop control of the \gls{mmlpbf} equipment. However, the research is
+still in a developing stage~\cite{mccann2021situ, yadav2020situ}.
+
+Only a handful of commercial equipments support multi-material fabrication out
+of the box, and all of them, use metallic powders, limiting the scope of
+applications and, inherently, functional design. This may be a limitation of
+some powder deposition systems, but it most linked to the fact that only fiber
+lasers are used for the printing. Moreover, the significant initial investment
+may be a obstacle, especially in the research field, further hindering the
+process evolution.
+
+The manufacturing chain is complex and the toolchain varies greatly among
+manufacturers, specially within the pre-process stage.
+Specific guidelines for \gls{mmlpbf} were not identified and most pre-processing
+procedures use a manual method based on inadequate data format (\gls{stl})~\cite{schneck2021review}.
+Further research is
+required to assemble a coherent and straightforward pre-processing tool to
+enable multi-material functional design, simulation, and optimisation. The most
+promising approaches are based on volume discretization (voxels), like the
+\gls{fav} format and the GraMMaCAD software. In the post-processing, further
+research is required for the surface and heat treatments involving
+multi-material components~\cite{schneck2021review}.
+
+\section{Applications}%
+\label{sec:applications}
+
+After introducing the theoretical foundations for multi-material fabrication,
+it's important to highlight the possible applications, as they usually drive
+any given methodology, and they certainly should drive the functional design,
+providing a more clear view of what is being accomplished and how.
+
+The main application for functional design through the use of multiple materials
+in the scope of this PhD project is in the biomedical field --- the hip implant.
+This aims to address several issues encountered in the current hip implants that
+lead to a short lifespan of these prosthetic implants, with forced
+retreament surgeries spanning a short period of time (ten to fifteen years after
+the implantation surgery)~\cite{soliman2022review}.
+
+%And, according to the annual report \emph{Transparency Market
+%Research}~\cite{market2015global}, there is
+%an increasing demand trend: the increase in life expectancy of the population,
+%the obesity and the increase of hip fractures will demand 6\% more hip
+%implants in 2019 when compared to 2013.
+
+The goal of the hip implant to mimic the natural behaviour of the bone to serve
+as its suitable replacement; as such, and not surprisingly, the material
+composition, properties and structure needs to be varied.
+Fig.~\ref{fig:hip-implant} illustrates the hip implant constitution. The artificial acetabular cup and
+femoral head replace the damaged natural articulation~\cite{derar2015recent}. Thus, here
+allocated materials must have low friction and withstand wear and mechanical
+loads. The femoral head is anchored in the femur by the stem.
+The acetabular cup
+is anchored in the pelvis and is composed of a shell in which a liner is
+inserted that provided the load bearing articulating surface.
+On other hand, shell and stem have to provide good bone
+integration~\cite{eltit2019mechanisms}. Furthermore, the leaching of toxic
+metallic ions, the tribocorrosion effect, and stress shielding, imposes
+significant challenges on the design~\cite{rafiq2022review}.
+%
+This requires different materials and varying compositions to achieve the
+desired individual component's function; however, the most important design goal is the
+overall function of the hip implant, requiring especial attention to the
+interfaces between components, but maintaining good properties for the
+individual components also.
+
+\begin{figure}[!hbtp]
+  \centering
+    \includegraphics[width=0.8\textwidth]{./img/hip-implant-new.jpg}
+  \caption[Hip prosthesis and components detail]{Three main types of hip implants showing ball-and-socket joint regions: (A) Large head metal-on-metal (MoM) total hip implant. (B) MoM hip resurfacing. (C) Metal-on-polyethylene (MoP) total hip implant.
+    (withdrawn from~\cite{eltit2019mechanisms}\footnotemark)}%
+  \label{fig:hip-implant}
+\end{figure}
+%
+% (Fig.~\ref{fig:hip-implant})
+\fnlicCCNC{foot:hip}%
+
+According to a recent review article~\cite{rafiq2022review}, crosslinked polyethylene, titanium alloys, CoCr alloys, stainless steel, zirconium-niobium alloy, tantalum, ceramics, and composite combinations are among the commonly used materials for prosthesis fabrication. In particular, bioceramics coatings such as DLC and TiN have demonstrated promising results in enhancing osseointegration. However, due to the significant disparity in mechanical properties among the current implant materials, the lifespan of hip implants may be considerably reduced.
+
+The multi-material additive manufacturing, and more specifically \gls{mmlpbf},  can mitigate this problem by allowing
+some of the assembled components to be merged in a single component, where the
+characteristics of the interfaces are custom-tailored to obtain the desired local properties, obviously through careful design.
+
+\section{Summary}%
+\label{sec:summary-state}
+This chapter provides an overview of the current state of the art in the realm
+of multi-material fabrication of metals and composites and its contribution to
+functional design. \gls{am} processes were examined and categorized, with a
+particular focus on their usefulness in rapid prototyping and the manufacture of
+high-value parts by facilitating material addition only where needed, thereby
+achieving functional design objectives.
+Hybrid
+processes were briefly mentioned as a better, but more complex, match for
+functional design. Therefore, the focus in this work is limited to \gls{am} processes.
+
+Laser sources are an attractive option for \gls{am} processes due to their small spot diameter, high energy density, and precise energy control, making them well-suited for fabricating metallic parts with high melting points. \gls{lpbf} and \gls{dld} represent the two dominant approaches in this field, with \gls{lpbf} being best-suited for small and medium-sized multi-metal parts with high resolution and \gls{dld} being preferable for larger parts. Given the additional complexity of \gls{dld}, \gls{lpbf} processes currently represent the best commercial and industrial option for fabricating high-precision multi-material parts.
+
+The \gls{lpbf} process was examined in detail, along with its requirements and working principle. Multi-material additive manufacturing (MMAM) was introduced as a highly desirable technology, facilitating the precise placement of material based on its functionality, thereby yielding custom-tailored parts for specific applications with improved mechanical properties and behavior in service beyond what is achievable by conventional methods. The potential applications of MMAM are wide-ranging and critical, particularly in the fields of biomedical engineering, soft robotics, and electronics.
+
+Subsequently, the current panorama for the \gls{mmlpbf} process was presented,
+highlighting the subsystems that make up the \gls{mmlpbf} equipment, with particular emphasis on the powder delivery system, which is critical for multi-material fabrication. Several working principles and available technologies for this system were discussed, with the powder spreading with suction being the most mature technology, while the most promising one is based on the electrophotographic principle, the patterning drum.
+
+The manufacturing chain was examined, focusing on the most significant challenges, including material variation across several directions in the powder-deposit system, joining dissimilar materials, powder contamination, numerous process parameters affecting the quality of the produced part, lack of design guidelines, manual pre-processing, and the absence of post-processing treatment research. The most relevant commercial equipment capable of multi-material fabrication was presented, with only a handful of these able to handle metallic powders, limiting their scope of application. Furthermore, the initial investment required for these machines is considerably high, which may explain why the majority of research literature focuses on upgrading mono-material LPBF equipment with multi-material powder delivery mechanisms, despite the need for manual pre-processing and manual programming of the equipment.
+
+The prospects for improvement across the manufacturing chain were outlined. Tools for designing and simulating multi-material components manufacturable by the \gls{mmlpbf} process are required, and machine learning could have a significant impact on the process, by mining process data to provide sets of parameters and build strategies for producing components with better mechanical properties in a cost-effective manner.
+
+Finally, the specific applications of interest to this work were presented, with the hip implant being a notable example. There is high demand for improved quality implants due to their high replacement rate and invasive procedures. They require multiple materials, including metals and composites, to perform effectively in various regions of the body, making them a perfect showcase for \gls{mmlpbf}.
+
+In conclusion, \gls{mmlpbf} fabrication presents a multi-objective problem requiring
+a specialized equipment and toolchain, as well as experimental design.
+The present state of \gls{mmlpbf} pre-processing techniques is primarily focused
+on addressing specific issues within the multi-material processing domain, and
+lacks a holistic approach that could enhance knowledge transfer throughout the
+manufacturing process. Additionally, these techniques are closely connected with
+proprietary solutions that hinder customisation and impede the evolution of the
+process. Therefore, there is a need for a comprehensive methodology to produce
+multi-material metallic and composite components that can handle the inherent
+complexity of the MMLPBF process and leverage its knowledge. This entails
+establishing a \gls{mmlpbf} process database, as suggested by Gu et al.\cite{gu2012laser} and Mussatto\cite{mussatto2022research}, that is accessible to all relevant parties in the manufacturing chain.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../template"
+%%% End:

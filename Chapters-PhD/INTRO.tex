@@ -1,0 +1,272 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% chapter1.tex
+%% NOVA thesis document file
+%%
+%% Chapter with introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE INTRO.tex}%
+%\chapter{Introduction}
+%Hello
+%
+%%\prependtographicspath{{Chapters/Figures/Covers/}}
+%\definecolor{Schlgray}{gray}{0.95}
+
+% CHAPTER - Introduction -------------------------
+\chapter{Introduction}%
+\label{cha:introduction}
+Functional design is a highly desirable approach to design, optimising the
+functional performance of a product while minimising the resources usage and the
+cost.
+
+However, functional design requires a shift in the manufacturing design
+paradigm from being process-centered to be function-centered, i.e., product
+design should focus on the functionality and overall properties of the
+manufactured component, instead of the technologies required to achieve this.
+
+Furthermore, the adoption of functional design may dictate the use of multiple
+materials or a combination of them, which is hindered by the current
+manufacturing methodologies. Conventional manufacturing technologies are mono-material and
+subtractive, starting from a pre-shape, incurring in wasted material and energy. 
+
+Thus, if functional design is the aspiring concept, then additive manufacturing
+is the vehicle to bring it to life. By adding material only where it is
+functionally required, the components' properties can be tailored for optimal
+performance while minimising materials and energy. Intricates geometries can be
+achieved, which would be otherwise unfeasible by conventional manufacturing
+technologies.
+
+Nonetheless, the multi-material additive manufacturing is still in its infancy,
+especially when using metallic and ceramic materials. The current panorama shows that only a handful of commercial equipments can
+be used for this purpose~\cite{aconityMIDI, slm280}. However, they require a significant initial
+investment and are only suited for metals, which limits the scope of applications.
+
+On the other hand, functionally design components are are highly attractive to top-shelf industries like
+the aeronautical, aerospace and biomedical ones, as they address specific
+problems in these fields. 
+A paradigmatic example in the
+biomedical field is the hip implant, whose goal is to mimic the natural
+behaviour of the bone. As such and not surprisingly, the material composition,
+properties and structure needs to be varied, as the bone is a great example of
+an \gls{fgm}'s component.
+
+However, the design and fabrication of these implants are still far
+from the desired behaviour, as can be proved from the number of forced
+retreament surgeries spanning a short period of time (ten to fifteen years after
+the implantation surgery)~\cite{soliman2022review}.
+An explanation can be given by the fact that
+the multi-material processing of metals and ceramics needed, as well as the
+respective design methodologies, are still in a premature stage.
+% \ifdef{\comm}{\mbox{}\marginpar{Goal}}
+
+\gls{lpbf}, a standardization of all laser powder fusion processes, like
+\gls{sls} and \gls{slm}, is the most promising technology for multi-material
+fabrication using metallic and composite powders. However, it is extremely complex, with hundreds of parameters~\cite{schneck2021review,
+  thompson2015overview}, even in the mono-material scenario.
+The problem becomes even worst when addressing the controlled combination of
+multiple metals or ceramics, as this requires some special form of the material
+(e.g powder) and a great amount of energy to produce it (e.g.~metals require at
+least semi-pasty characteristics to be morphed). In order to successfully
+produce multi-material components from metals, ceramics, or both, a specific
+combination of controlled deposition of mass and controlled supply of energy
+must be achieved, while still managing the interactions with the environment
+(oxidation, heat transfer, etc.) and among materials (e.g.~delamination). This
+is clearly a multi-physics problem and, as the timing and order of material
+addition and energy supply is crucial, a topological problem is added up to the
+stack, indicating why the progress in this field is still fairly limited.
+
+As a result, the research field primarily focuses on upgrading mono-material
+equipment to add multi-material capabilities~\cite{bareth2022Implem, schneck2022capability,
+  nadimpali2019MMSteels, anstaett2017fabrication, sing2015interfacial,
+  liu2014interfacial},  which undesirably also requires manual workarounds to
+setup the manufacturing chain and equipments.
+This is further aggravated by the lack of specific design guidelines for the 
+\gls{mmlpbf} process and by the fact that most pre-processing procedures use a
+manual method based on an inadequate data format~\cite{schneck2021review}.
+%
+The main takeway is that the \gls{mmlpbf} fabrication is a multi-objective
+problem, requiring specially designed equipments and toolchains, and
+experimental design.
+
+Thus, the present work aims to close the gap between design and fabrication of
+multi-material components like the aforementioned implants by proposing a holistic
+approach to the multi-material fabrication of metals/ceramics that can leverage
+the process knowledge and support functional design. An appropriate workflow is
+required to clearly guide end-users and an accompanying toolchain capable of
+handling the intricacies of the \gls{mmlpbf} process. Furthermore, a custom
+equipment is also required to enable the combination of metals and ceramics in
+the same component, which is not yet addressed by the commercial field. This
+implies the usage of different types of lasers integrated into a single
+equipment, which can be further used for procedures such as preheat treatments
+to alleviate mechanical tensions or to promote better bonding of the materials.
+
+Lastly, and often the most overlooked aspect in any emergent technology, is the
+process knowledge potential. \gls{ai} tools, like deep learning or machine
+learning, can provide critical insights for the process evolution, mining and
+leveraging the \gls{mmlpbf} process data.
+A paradigmatic example was reported last year, when Exponential Technologies, in
+a collaboration with Aerosint, announced a two-fold improvement in component
+density in a multi-metallic component, within 2 print jobs and 46 samples
+printed without any prior statistical knowledge, saving time and money~\cite{xtSAAM2022AI}.
+
+%\ifdef{\comm}{\mbox{}\marginpar{multi-material processing of metals and
+%ceramics problem}}
+
+%\ifdef{\comm}{\mbox{}\marginpar{Designer's perspective: The need for an easier path}}
+
+
+\section{Motivation}
+The functional design of components is a complex topic, with a myriad of
+questions to be answered: what is the function of the component?; what design
+criteria must be met to fulfil its function?; how will the component be
+produced, and what data does it require?; how will the component's performance
+be measured?, among others. The answers are often not clear or simple as they
+dictate the use of several materials and several manufacturing technologies,
+increasing severely the complexity of producing such components: how to
+effectively combine two or more materials into a single component in a
+synergistic way?
+
+From the designer's perspective it becomes even worst as it must be intimately
+acquainted with the manufacturing process and apply corrective factors to the
+design which still might fail due to the complexity of the process, limiting its
+creativity and the ability to produce functional parts as desired. A good
+analogy to the multi-material product designer would be of an early programmer:
+the latter needed to know in full-depth all the intricacies of the underlying
+hardware and the moment of its ``liberation'' was the emergence of the so-called
+high-level languages; for the former no such liberation is available yet, but
+will certainly boost the functional design and manufacturing.
+
+The possibility of controlling composition or structure and thus obtain
+components with desired local properties, as regarding mechanical, tribological,
+thermal properties, and others are of great interest, as material is only added
+where it functionally needed, minimising waste and enhancing the overall
+properties of the component being built. 
+This idea meets its pinnacle with the concept of an \gls{mmfgm} --- multi-material components with materials gradations in between. High value products
+would benefit tremendously from this opportunity, namely biomedical implants,
+like the hip implant, where the outer layers contact directly the living tissue,
+designing it for osseointegration, but the inner layers act merely as a
+supporting structure.
+
+The multi-material component's fabrication from metals and/or ceramics is still
+in its infancy, due to the lack of an unsupporting structure that tackles its
+high complexity, while guiding the end-user. Thus, the present work aims to
+provide such a supporting structure, building the necessary toolchain, and providing as
+effective means to materialise the design, by building a proof-of-concept
+equipment.
+
+\section{Main objectives}
+The goal of the present work is to close the gap between design and fabrication
+of multi-material components from metallic/ceramic materials using
+the \gls{lpbf} technology.
+To this end several main objectives have been outlined:
+\begin{enumerate}
+  \item Investigate the current panorama of multi-material fabrication of
+    metal/ceramics, with special focus on the \gls{lpbf} technology, and
+    identify its main gaps and shortcomings.
+  \item Develop a design methodology for multi-material fabrication of
+    metals/ceramics via the \gls{lpbf} technology, using a holistic approach
+    to support functional design and leverage the process knowledge throughout
+    the whole manufacturing chain.
+  \item Instantiate a practical workflow from the design methodology, taking
+    into account the project constraints and restrictions;
+  \item Develop an integrated toolchain for the \gls{mmlpbf} process, supporting
+    all stages of the manufacturing chain.
+  \item Develop and build a proof-of-concept's equipment for the fabrication of
+    multi-material metallic/ceramic components.
+  \item Test the production of such components using the proposed
+    workflow/toolchain and the equipment built;
+  \item Develop a process knowledge database that can be used for process
+    improvement, using tools such as \gls{doe} and \gls{ai};
+  \item Investigate and incorporate mechanisms for process optimisation, namely:
+    \begin{itemize}
+      \item Design strategy optimization;
+      \item Manufacturing process optimization: parameters, manufacturing paths,
+        etc;
+      \item \gls{3dmmlpbf} machine optimization; 
+      \item Data flow optimization: leverage the knowledge acquired through the
+        process to cascade `naturally' and efficiently to the
+        \gls{mmlpbf} process's optimization;
+    \end{itemize}
+\end{enumerate}
+
+The main focus of this work is to provide a sustainable development path for
+3D multi-material design and fabrication of metallic and ceramics components.
+The author asserts that this is the most effective way to address the high
+complexity inherent to this process. Accordingly, the development of a machine
+capable of producing multi-material metallic/ceramics components is viewed as a
+means to achieve the overall objective, which is functional design of
+multi-material components.
+
+The emergence of 3D printing technology provides a paradigmatic example of such
+a transformation. The concept was first introduced in 1972, when
+Ciraud~\cite{ciraud1972process} proposed a powder process capable of
+constructing three-dimensional components from a variety of semi-meltable
+materials. Although Stratasys started to commercialize \gls{fff} printers in the
+early 1990s, the real boom only occurred in the mid-2000s when RepRap started to
+release open-source 3D printers.
+This enabled each user to produce 3D components, but also, and more importantly,
+to customize, replicate, and enhance their machines. This revolutionized 3D printing, generating multiple projects and emergent companies, which eventually led to the shutdown of RepRap's business.
+
+The legacy and lesson that RepRap taught us, simillar to Prometheus\footnote{Titan who stole the fire
+from the Olympian gods to give it to mankind, condemned for eternity by Zeus to
+be tied to a rock and have its liver eaten}, was that knowledge is the most important and
+expensive asset in any technology, and when knowledge is openly divulged, and
+every user can effectively make use of it, the hardware and software costs drop
+massively, and the process evolves greatly from users' tinkering and experience.
+
+The same fundamental principle underlies the philosophy of this project. By
+developing an ecosystem for multi-material functional design, knowledge from all
+agents can leverage the process, mimicking natural processes and boosting its
+evolution. Therefore, knowledge needs to be captured, tracked, and fed back
+adequately and efficiently to the process by means of a global picture, a design
+methodology that is applied by instantiating a practical workflow and brought to
+life by a cost-effective equipment that can fabricate multi-material components
+embodying this knowledge. A viable technology and a suitable cost-effective
+manufacturing equipment can be achieved as side effects of this global
+perspective, serving the greater good of functional design. This can open new
+prospects in the research field, providing a bootstrapping environment for
+the \gls{3dmmlpbf} process.
+
+\section{Thesis organisation}
+This thesis is organised as follows.
+Chapter~\ref{ch:state-art} provides a comprehensive review of the current state of the art of
+multi-material fabrication for metals and ceramics. The functional design
+approach is introduced, followed by a discussion on the use of laser-based
+additive manufacturing processes as a viable solution for metallic and composite
+manufacturing, with particular attention given to the \glsxtrfull{lpbf} process. To
+fully support functional design, the \glsxtrfull{mmlpbf} process is introduced,
+which bridges the gap between \gls{lpbf} processes. An overview of \gls{mmlpbf}
+is presented, including the current panorama, manufacturing chain, challenges,
+and potential solutions. Finally, the specific applications envisioned in this work are listed.
+
+Chapter~\ref{ch:prob-challenge} presents the multi-material fabrication
+problem and its challenges using the \gls{lpbf} technology. A methodology
+devised for multi-material production via \gls{lpbf} technology is introduced to tackle the high complexity of the process
+and the lack of a supporting methodology, taking into account the key agents of
+the process and leveraging the process information.
+
+In Chapter~\ref{ch:development}, the knowledge acquired through the relevant models contained
+in the proposed methodology is applied to the development of a specialised
+workflow for the \gls{3dmmlpbf}'s process and respective toolchain,
+contingent of the project's restrictions and resources, and to the development
+of a machine capable of producing multi-material components from
+metallic/ceramic powders matching the designed workflow. Based on this workflow,
+the toolchain was assembled and the missing software components were developed,
+tested, and validated. Lastly, a custom equipment for the production of
+multi-material metallic and ceramic components was developed, tested and
+validated across the mechanical, electronic, and control domains.
+
+In Chapter~\ref{ch:application} the multi-material
+fabrication of metallic and composites parts is tested, using one or multiple
+lasers. The complete process, from inception to produced part, is tested as a
+whole, to ensure the full validation of the designed \gls{3dmmlpbf} ecosystem,
+i.e., methodology, workflow, toolchain, and equipment.
+Lastly, the prospects for process improvement are outlined, leveraging the
+process knowledge acquired for systematic and consistent evolution of the
+\gls{3dmmlpbf} manufacturing chain.
+
+The Chapter~\ref{ch:conclusion} gives a summary of this thesis as well as
+prospect for future work.
+
+Lastly, the appendices contain detailed information about the software \gls{api}, and the annexes contain the paper submitted, stemming out of this work.

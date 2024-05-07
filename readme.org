@@ -23,6 +23,7 @@
   - [[#abstract][Abstract]]
   - [[#-done-ask-for-permissions-for-figures-httpswwwresearchgatenetpostdo_i_need_a_permission_to_copy_any_figure_from_a_research_article_for_my_review_article5de8fdb7f0fb623dd7346896citationdownload][✔ DONE Ask for permissions for figures https://www.researchgate.net/post/Do_I_need_a_permission_to_copy_any_figure_from_a_research_article_for_my_review_article/5de8fdb7f0fb623dd7346896/citation/download]]
     - [[#licence-footnote][Licence footnote]]
+  - [[#-done-chapter-style][✔ DONE Chapter style]]
   - [[#intro-14][Intro]]
   - [[#state-of-the-art-16][State of the Art]]
     - [[#uav-intro][UAV Intro]]
@@ -30,7 +31,6 @@
     - [[#diagrams-uav][Diagrams UAV]]
     - [[#autopilot][Autopilot]]
     - [[#px4][PX4]]
-  - [[#-done-chapter-style][✔ DONE Chapter style]]
 
 * Preamble
 ** Git Workflow
@@ -176,6 +176,7 @@ Back Matter (52)
 - [[file:writing][folder]]
 - [[file:writing/Bibliography][Bibliography]]: bibliography references spread through multiple files
 - [[file:writing/Chapters][Chapters]]: thesis's chapters
+- [[file:Chapters-PhD][Chapters-PhD]]: PhD thesis chapters to help the writing
 - [[file:writing/Config][Config]]: configuration files for the thesis formatting
   0) [@0] [[file:writing/Config/0_memoir.tex][memoir.tex]]: defines paper size and font size
   1) [[file:writing/Config/1_novathesis.tex][novathesis.tex]]: actual template configuration
@@ -187,10 +188,11 @@ Back Matter (52)
      listings, acronyms
   7) 9_uminho.tex
 - [[file:writing/doc][doc]]: LaTeX template documentation
+  - UM formatting norms
+  - chapter styles
 - [[file:writing/img][img]]: images used in the thesis, in multiple formats (.eps, .jpg, .pdf, .png,
   .svg)
 - [[file:writing/listing][listing]]: code snippets
-- [[file:writing/mine][mine]]: misc files comprising the former thesis
 - [[file:writing/NOVAthesisFiles][NovathesisFiles]]: template files
 - [[file:writing/pdf][pdf]]: extra pages that must be added as PDF, like appendices, but also the
   *license* and the *integrity statement*
@@ -232,12 +234,7 @@ I had to comment the lines below
 * Formatting
 - [[file:doc/1_Despacho_RT-31_2019-NormasFormatacaoTese.pdf][Normas formatacao tese]]
 
-
-
 ** Normas para a formatação gráfica
-
-
-** Normas para o depósito no RepositoriUM
 1. *Tipo de Letra*: NewsGotT
 2. *Capas e respetivas contracapas*, dos trabalhos de Mestrado devem ter:
    - fundo branco,
@@ -294,7 +291,8 @@ I had to comment the lines below
 7. *Verso da folha de rosto* (_Copyright_): Na página seguinte, deve constar a
    declaração    relativa às condições de utilização do trabalho por terceiros
    ou à eventual reprodução de partes do mesmo (*Anexo 3*).
-8. *Agradecimentos*: Na folha 2 - página 3 do trabalho, devem constar:
+8. *Agradecimentos* (_Acknowledgments_): Na folha 2 - página 3 do trabalho,
+   devem constar:
    - os agradecimentos do autor, quando aplicável;
    - uma menção ao apoio financeiro, quando aplicável;
 9. *Declaração de Integridade (Anexo 4)*: Na página seguinte (folha 2- página 4
@@ -326,27 +324,40 @@ I had to comment the lines below
     1. _as páginas iniciais ou preliminares_ - declarações, agradecimentos,
        resumos, índice, etc. - _devem ser numeradas_, preferencialmente ao fundo
        da página e ao centro, em _algarismos romanos minúsculos_;
-    2. as páginas referentes a corpo do texto. referências bibliográficas e anexos e/ou apêndices devem ser numerados de
-forma contínua, também preferencialmente ao fundo da página e ao centro, mas em algarismos árabes.
-16. O trabalho deve ser organizado em frente e verso, em continuo (sem páginas em branco), com margens de 2,5cm,
-usando a fonte NewsGotT e uma dimensão de 12, para a letra do texto, e de 8, para a letra das notas de rodapé (caso
-se aplique). O espaçamento entre linhas deve ser de 1.5, salvo nas referências bibliográficas e anexos onde pode ser
-considerado um espaçamento entre linhas de 1.
-17. As tabelas, quadros, gráficos, figuras, etc. devem ser numerados, em cada caso, de 1 a N, e conter um titulo, sintético,
-que traduza claramente o respetivo conteúdo.
-18. Nas Teses de Doutoramento ou nos trabalhos de Mestrado, não podem ser incluídos dados ou imagens que permitam
-identificar pessoas ou instituições, pelo menos sem prévia autorização, escrita dos mesmos ou dos seus responsáveis
-legais, a qual deve ser integrada no trabalho.
-19. Em trabalhos que envolvam investigação com humanos, tecidos, animais ou ambiente, deve ser anexado comprovativo
-de que a investigação mereceu parecer positivo do Conselho de Ética da Universidade ou de uma sua Subcomissão.
-20. De modo a facilitar a conceção das capas, são disponibilizados na Intranet, mediante Login, ficheiros com a matriz das
-capas de Teses de Doutoramento (ou afim) e de trabalhos de Mestrado (a adaptar consoante o tipo de trabalho de
-Mestrado – Dissertação de Mestrado, Relatório de Estágio, Projeto ou outro), permitindo a edição/alteração direta do
-corpo do texto. São ainda disponibilizados outros elementos úteis no âmbito da preparação das capas e das respetivas
-folhas de rosto, tais como os logótipos das várias UO ou o tipo de letra de utilização obrigatória.
-21. No caso de Teses de Doutoramento ou de trabalhos de Mestrado elaborados no âmbito de Cursos em Associação, a
-respetiva capa e folha de rosto poderão incluir os logótipos das instituições parceiras, a seguir ao logótipo da UMinho,
-desde que o Acordo assinado entre essas instituições assim o preveja.
+    2. as páginas referentes a corpo do texto, referências bibliográficas e
+       anexos e/ou apêndices devem ser numerados de forma contínua, também
+       preferencialmente ao fundo da página e ao centro, mas em
+       _algarismos árabes_.
+15. *Layout*: O trabalho deve ser organizado:
+    1. em _frente e verso_, em contínuo (sem páginas em branco),
+    2. com _margens de 2,5cm_,
+    3. usando a _fonte NewsGotT_:
+       1. e uma _dimensão de 12_, /para a letra do texto/,
+       2. e _de 8_, para a letra das /notas de rodapé/ (caso se aplique).
+    4. _O espaçamento entre linhas_:
+       1. deve ser de =1.5=,
+       2. salvo nas referências bibliográficas e anexos onde pode ser
+          considerado um espaçamento entre linhas de =1=.
+16. *As tabelas, quadros, gráficos, figuras*, etc.:
+    1. devem ser numerados, em cada caso, de 1 a N,
+    2. e conter um titulo, sintético, que traduza claramente o respetivo
+       conteúdo.
+17. *Copyrifht de dados ou imagens de outros autores*:
+    - não podem ser incluídos dados ou imagens que permitam identificar pessoas
+      ou instituições,
+    - pelo menos sem prévia autorização, escrita dos mesmos ou dos seus
+      responsáveis legais,
+    - a qual deve ser integrada no trabalho.
+18. *Conceção das capas*: De modo a facilitar a conceção das capas:
+    1. são disponibilizados na Intranet, mediante Login, ficheiros com a matriz
+       das capas de Teses de Doutoramento (ou afim) e de trabalhos de Mestrado
+       (a adaptar consoante o tipo de trabalho de Mestrado – Dissertação de
+       Mestrado, Relatório de Estágio, Projeto ou outro), permitindo a
+       edição/alteração direta do corpo do texto.
+    2. São ainda disponibilizados outros elementos úteis no âmbito da preparação
+       das capas e das respetivas folhas de rosto, tais como:
+       1. os logótipos das várias UO
+       2. ou o tipo de letra de utilização obrigatória.
 
 
 *Summary*:
@@ -361,6 +372,66 @@ desde que o Acordo assinado entre essas instituições assim o preveja.
 9) Index and lists
 10) Chapters
   
+
+** Normas para o depósito no RepositoriUM
+Nos termos da legislação em vigor, existe obrigatoriedade legal de efetuar o
+depósito de uma cópia digital das Teses de Doutoramento e dos trabalhos de
+Mestrado num repositório integrante da rede do Repositório Científico de Acesso
+Aberto de Portugal (RCAAP), como é o caso do RepositóriUM (Repositório
+Institucional da Universidade do Minho).
+- Este depósito visa o tratamento e a preservação dos trabalhos científicos
+  mencionados, bem como a sua difusão em regime de acesso aberto,
+  salvaguardando-se, no entanto, situações em que são aplicáveis restrições ou
+  embargos.
+
+  
+1. No caso dos trabalhos de Mestrado, as Unidades Orgânicas (UO) procedem:
+   1. no prazo máximo de 45 dias após a sua aprovação,
+   2. ao registo dos trabalhos no RENATES
+   3. e ao seu envio para os Serviços de Documentação (SDUM), em formato
+      digital,
+   4. acompanhadas:
+      1. da declaração do autor de cada trabalho
+      2. e do formulário constantes do anexo 4 ao presente despacho, a fim de
+         dar cumprimento ao estabelecido na legislação em vigor.
+2. Os SDUM procedem, no prazo máximo de 15 dias após a receção dos trabalhos de
+   mestrado, ao seu depósito e ao registo dos respetivos metadados no
+   RepositóriUM, que passam a incluir a classificação que lhe foi atribuída,
+   comunicada pela UO responsável pela gestão do ciclo de estudos e no âmbito da
+   qual a prova foi realizada
+3. As referências e os metadados dos trabalhos ficam publicamente disponíveis
+   no RepositóriUM imediatamente após o depósito do trabalho.
+   1. O acesso ao conteúdo integral dos trabalhos é estabelecido nos termos
+      definidos na licença a conceder pelo autor da Tese de doutoramento ou do
+      trabalho de Mestrado, em conformidade com a Declaração constante do
+      Anexo 5.
+4. De acordo com a política de acesso aberto, recomenda-se que os autores
+   autorizem a disponibilização dos seus trabalhos para acesso mundial,
+   imediato.
+   1. Em casos devidamente justificados, os autores podem solicitar que o
+      trabalho fique, temporariamente, com um acesso mais restrito, através de
+      um requerimento dirigido ao Reitor, a apresentar juntamente como o
+      processo de requerimento de provas.
+   2. Esse requerimento além identificar o autor, o(s) orientador(es), o curso e
+      o trabalho, deve indicar a restrição de acesso pretendida e explicitar
+      claramente as razões que justificam a necessidade desse estatuto de
+      excecionalidade.
+   3. Essas solicitações de excecionalidade deverão ser despachadas antes de ser
+      efetuado o registo no RENATES e enviados os trabalhos para os SDUM.
+5. A versão digital dos trabalhos deve obedecer às seguintes orientações:
+   - Ser constituída, sempre que possível, por um único ficheiro;
+   - Ser apresentada em formato PDF/A (componentes textuais)
+   - Caso o trabalho inclua ficheiro(s) de imagem, áudio ou multimédia, estes
+     devem ser também incluídos, preferencialmente em formatos normalizados e
+     não-proprietários que constem da lista de formatos autorizados para efeitos
+     de depósito no Repositório Científico de Acesso Aberto de Portugal (RCAAP)
+     publicada no Despacho n.º 14167/2015
+6. A versão digital dos trabalhos deverá passar a ser entregue em pen-drive,
+   devidamente identificada.
+7. Não será necessário incluir na pen-drive nem entregar os resumos,
+   independentes, do trabalho mencionados em diversos artigos do Regulamento
+   Académico da Universidade do Minho.
+   
 
 * Writing
 ** ✔ DONE Title
@@ -389,6 +460,34 @@ desde que o Acordo assinado entre essas instituições assim o preveja.
 
 This uses the same note\fnref{foot:cc-lic};
     #+end_src
+** ✔ DONE Chapter style
+:LOGBOOK:
+- State "✔ DONE"     from              [2024-05-07 ter 02:28]
+:END:
+   % The chapter style to be used
+ You can use any of the default memoir style files:
+ #+begin_example
+     [ default, section, hangnum, article, bianchi,
+       bringhurst, brotherton, chappell, crosshead,
+       culver, dash, demo2, dowding, ell, ger,
+       komalike, lyhne , madsen, ntglike, southall,
+       tandh, thatcher, veelo, verville, wilsondob ]
+ #+end_example
+ 
+ Or any of the additional styles
+ #+begin_example
+     [ bar-compact, bar, bluebox, compact, elegant,
+       fmv, hansen, ist, vz34, vz43 ]
+ #+end_example
+
+ I already tested this.
+ - The result can be seen in [[file:doc/chapters_styles.pdf][ChaptersStyles]]
+
+
+ I used the default: =bar=
+
+
+       
 ** Intro [1/4]
 - [ ] Context
 - [ ] Motivation
@@ -539,31 +638,3 @@ The flight controller runs the normal PX4 flight stack, while a companion comput
 PX4 systems typically run a Linux OS on the companion computer (because the PX4/PX4-Avoidance
 (opens new window) project delivers ROS-based avoidance libraries designed for Linux). Linux is a much better platform for "general" software development than NuttX; there are many more Linux developers and a lot of useful software has already been written (e.g. for computer vision, communications, cloud integrations, hardware drivers). Companion computers sometimes run Android for the same reason.
 
-** ✔ DONE Chapter style
-:LOGBOOK:
-- State "✔ DONE"     from              [2024-05-07 ter 02:28]
-:END:
-   % The chapter style to be used
- You can use any of the default memoir style files:
- #+begin_example
-     [ default, section, hangnum, article, bianchi,
-       bringhurst, brotherton, chappell, crosshead,
-       culver, dash, demo2, dowding, ell, ger,
-       komalike, lyhne , madsen, ntglike, southall,
-       tandh, thatcher, veelo, verville, wilsondob ]
- #+end_example
- 
- Or any of the additional styles
- #+begin_example
-     [ bar-compact, bar, bluebox, compact, elegant,
-       fmv, hansen, ist, vz34, vz43 ]
- #+end_example
-
- I already tested this.
- - The result can be seen in [[file:doc/chapters_styles.pdf][ChaptersStyles]]
-
-
- I used the default: =bar=
-
-
-       

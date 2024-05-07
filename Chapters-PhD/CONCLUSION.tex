@@ -1,0 +1,199 @@
+% !TEX root = ../template.tex
+%
+\typeout{NT FILE CONCLUSION.tex}%
+	% CHAPTER - Conclusion/Future Work --------------
+\chapter{Conclusion}%
+\label{ch:conclusion}
+In this chapter the conclusions and prospect for future work are outlined.
+
+\section{Conclusions}
+Functional design represents a shift in the product design paradigm, because the
+focus is on overall components' functionality instead of on the manufacturing
+process or materials to achieve it.
+This means that material is only added where it is strictly required to perform
+its function, optimizing resources, such as materials and energy, and frees the
+designer to use its creativity and ingenuity.
+
+On one hand, functional design may dictate the usage of several materials or a combination of them to fulfill its goal, which is hindered by the
+current manufacturing methodologies.
+On the other hand, functional design is very attractive for the design of high-value products, such
+as the biomedical implants. As a consequence, in the present work, the functional design is applied to the
+multi-material manufacturing using metals and ceramics to pursuit a path for the
+easier design and manufacturing of such relevant components.
+
+For this purpose, laser powder bed fusion proves to be
+the most well suitable technology for the job. However, current \gls{lpbf}
+technology only is guided towards mono-material fabrication. Adding to that,
+functional design is hard and complex, especially if requiring multiple
+materials, which drives away the end user, preventing widespread adoption.
+
+Thus, the present work aimed to close the gap between design and fabrication of
+multi-material components like the aforementioned implants, by: proposing a
+design methodology for multi-material fabrication of metals/ceramics using the
+\gls{lpbf} process --- \texttt{3DMMLPBF-CAD2Part};
+instantiating a practical workflow and the respective toolchain from the
+methodology; building a proof-of-concept low-cost equipment able to produce such
+components.
+
+The \texttt{3DMMLPBF-CAD2Part} methodology devised tries to address
+the high complexity associated with the design and manufacturing of multi-material parts and fill the gap in this domain,
+as no such methodology was found in the literature.
+It uses a model-driven approach to reduce the problem's complexity, taking into account all key agents in the process and enabling
+fast prototyping and testing. Four models and the relevant agents were
+considered: design model --- designer; pre-manufacturing model ---
+manufacturer; manufacturing model --- manufacturer; post-manufacturing model ---
+designer, manufacturer, material engineer, mechanical engineer, control
+engineer, physicist and data scientist.
+
+At plain sight the methodology may seem trivial, but it provided a bird's eye
+view over the whole process: the knowledge acquired
+through its models was crucial for the development of a specialised
+workflow for the \gls{3dmmlpbf} process and the respective toolchain, and to the
+development of a machine capable of producing multi-material components from
+metallic/ceramic powders matching the designed workflow.
+
+Then, a toolchain was assembled and the missing software components were
+developed, following the waterfall model, namely:
+\begin{itemize}
+\item \underline{Pre-Manufacturer}: The \texttt{3DMMLPBF-CAD2Part} methodology
+  views each 3D multi-material model as an assembly of 3D mono-material models.
+  Each model is exported into an \gls{stl}
+  file and imported to the Pre-Manufacturer, where it is sliced and infilled
+  with the manufacturing paths, according to the user-defined
+  configuration. These infilled slices are then merged into a single
+  manufacturing model, sorting them by z-value, and encoding the material and
+  topological data into a custom version of an \gls{svg} file.
+\item \underline{Manufacturer}: the manufacturing model is loaded into the
+  \texttt{Manufacturer} \gls{sw}, where its topological and material information
+  is mapped to the relevant process parameters, enabling the accurate
+  and adequate manufacturing of the parts. Furthermore, it also allows the
+  assignment of the component's layers into different lasers, widening the
+  scope of multi-material fabrication to different types of materials.
+  This application controls the
+  \gls{3dmmlpbf}'s machine and the network of lasers, responsible for the actual
+  multi-material fabrication. Lastly, process related information can be
+  exported for storing and posterior analysis.
+\item \underline{Post-Manufacturer}: the \emph{post-manufacturer} provides a
+  process knowledge database that can be used by all manufacturing agents for
+  process improvement. It enables models, manufacturing files, and mechanical
+  tests images to be directly imported, easing this process.
+  Furthermore, it can be used to bootstrap the
+  process, as all information is readily available to use and test the equipment and the toolchain.
+\end{itemize}
+
+The toolchain was extensively tested and validated. The \texttt{Pre-Manufacturer} tests
+demonstrated that this tool is capable of slicing and generating paths for
+various 3D models, irrespective of their provenance, the configuration used and the
+number of materials. It preserves the models coordinates and supports different
+parameters for each model, even different layer heights.
+It also
+pointed out that the fill density and infill extrusion width can be varied to
+mimic the required path filling for \gls{lpbf} trajectories.
+The \texttt{Manufacturer} tests showed that it accurately maps the geometrical
+and topological data to process parameters and that it efficiently handles the
+\gls{3dmmlpbf} manufacturing, driving both the machine and the array of
+lasers. The \texttt{Post-Manufacturer} tests proved that it can efficiently
+store the process related information and displaying it a convenient way to each
+manufacturing agent for further analysis.
+
+The machine was developed using the V-model methodology in the three domain
+areas: mechanics, electronics and software. The overall equipment was divided
+into smaller subsystems. The mechanics were designed by another member of the
+laboratory staff and assembled. The electronics were designed to control the
+machine operation: motions, temperature, shielding and powder removal. The
+machine's firmware was developed to handle the low-level tasks of the system,
+responding to \texttt{Manufacturer}'s commands.
+
+The equipments tests performed allow to assess the mechanics, control and laser
+domains on operating conditions. A testing dialog was created in the
+\texttt{Manufacturer}'s application to enable on-line testing of the equipment
+in a straightforward and easy way. 
+The tests conducted demonstrated the good performance of these subsystems.
+
+In the product manufacturing tests, several bi-material components were
+fabricated using one or multiple lasers. The polymeric bi-material component manufactured
+using the CO\textsubscript{2} laser was
+correctly produced, in compliance with the process and geometrical data
+provided. The cross-sectioning and \gls{sem} analysis performed on the part
+demonstrated the tridimensional material variation in both horizontal and
+vertical directions, alongside with good densification. The metallic alloy
+bi-material component manufactured followed a manual pre-manufacturing
+strategy as a quick workaround, which demonstrated the difficulty of generating
+such files without proper tooling. This component was produced using an YAG-Nd
+laser and the results showed mild densification and
+some geometric discrepancy between the model and the produced component.
+Lastly, a multi-material component made out of one polymeric and one metallic alloy
+material was manufactured using a CO\textsubscript{2} laser and a YAG-Nd
+one. The multi-laser setup was cumbersome and, in the present format, it induces
+focus field distortion that must be corrected. The results showed poor
+densification and higher geometrical deviations, which are mostly due to this
+distortions. Nonetheless, the concept was proven and may be applied using lasers
+with less bulky beam generation systems, such as solid-state.
+
+Lastly, some paths for \gls{3dmmlpbf}'s process improvement were outlined,
+leveraging from the process knowledge database established by the
+\texttt{Post-Manufacturer}. Data mining can be applied using \gls{ai}, for
+example, for the assessment of manufacturing quality within the available
+\gls{sem} analysis sets. This can be used to infer heuristics
+regarding process parameters. The assessment of the manufacturing quality can
+also be performed on-line using infrared thermography or \gls{lsp} technology,
+which can be used for the adaptative control of the process.
+
+Overall, the main goals of this work were fulfilled.
+A global \gls{3dmmlpbf} methodology was devised and layed the foundations for the instantiation of a practical workflow and the derived
+toolchain, as an effective means to materialise the functional design using
+multiple materials. A low-cost equipment was designed and built as
+proof-of-concept enabling the multi-material fabrication of parts through the
+\gls{lpbf} technology, for only a very small fraction of the cost --- 10
+k\texteuro~when compared to the commercial equipments costing hundreds of
+thousands dollars or more. The manufacturing chain information feeds a growing
+process knowledge database that can be used for process
+improvement. Furthermore, the \gls{3dmmlpbf} ecosystem assembled can be easily and conveniently bootstrapped and replicated, due to its the
+open-source nature, enabling a more widespread adoption of multi-material
+fabrication and functional design.
+%
+\section{Prospect for future work}
+%
+The \gls{3dmmlpbf} methodology devised and implemented is still on its
+infancy. This work represents only the first stone on paving the way for
+multi-material manufacturing of materials and ceramics in a sustained way,
+approaching the problem from a wider perspective and including all the key
+agents in the manufacturing chain. The envisioned future work goals are listed as
+follows, accordingly to its priority:
+\begin{enumerate}
+\item \textbf{High}
+\begin{itemize}
+\item Perform more tests on multi-material fabrication with: different
+  materials, namely metallic
+  and ceramics; processing
+  parameters; topologies, including custom ones; manufacturing strategies.
+  The manufacturing strategies may include sacrificial substrate, preheat
+  treatments or chemical treatments (oxidation, nitruration).
+\item Improve shielding and temperature control, centrally managed by the microcontroller's firmware.
+\end{itemize}
+%
+\item \textbf{Medium}
+\begin{itemize}
+\item Design a \gls{pcb} to integrate the electronic components in a single board.
+\end{itemize}
+%
+\item \textbf{Low}
+\begin{itemize}
+\item Abstract from Laser API --- design an open-source controller for
+lasers with a custom gcode language, as \emph{grbl} --- a no-compromise, high
+performance, low cost alternative to parallel-port-based motion control for CNC
+milling --- is already doing~\cite{grbl}.
+\item Implement database mining for process optimization through heuristics and
+  guidelines.
+\item Investigate alternative and more compact methods to store the
+  manufacturing file information, migrating from the user-readable \gls{svg}
+  file to a more machine-readable version.
+\end{itemize}
+%
+\end{enumerate}
+%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../template"
+%%% End:
+

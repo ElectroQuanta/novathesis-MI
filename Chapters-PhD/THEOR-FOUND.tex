@@ -1,0 +1,760 @@
+% !TEX root = ../template.tex
+%
+\typeout{NT FILE THEOR-FOUND.tex}%
+
+\chapter{Theoretical foundations}
+\label{ch:theor-found}
+In this chapter some background is provided for the main subjects. The
+fundamental technical concepts are presented as they proved its usefulness along
+the project, namely the project development methodologies and associated tools,
+and the \gls{lpbf} process in detail.
+%
+%\input{./tex/Chap/Theor-Found/proj-methods}
+%\input{./tex/Chap/Theor-Found/dom-spec-langs}
+\section{Project methodologies}
+The methodologies used for the project development are briefly described next.
+%\input{./tex/Chap/Theor-Found/vdi-2206}
+%\input{./tex/Chap/Theor-Found/sw-meth}
+
+\subsection{Development methodology of mechatronics --- VDI 2206}%
+\label{subsec:vdi-2206}
+Mechatronics, was defined by Harashima et. al~\cite{harashima1996mechatronics}
+as: \emph{''the synergistic integration of mechanical engineering
+with electronic and intelligent computer control in the design of industrial
+products and processes''}. This definition has more than twenty years, and
+nowadays it could be extended to other domains beyond the industrial sector,
+but a central idea remains: the synergy between these fields of knowledge, able
+to produce products better than the sum of its parts, by the right combination
+of parameters. Van Brussel adds~\cite{van1996mechatronics}: \emph{''This is
+exactly what mechatronics is aiming at; it is a concurrent-engineering view on
+the machine design''}; this is the opposite of the traditional sequential
+domain-specific design. 
+
+Based on these ideas, a flexible procedural methodology for the development of
+mechatronics systems was proposed by the \gls{vdi} (''German Engineers
+Association'') 2206 guideline to leverage the cross-domain synergy (see~\cite{gausemeier2003new}), characterised by two levels of design support (micro
+and macro) and elements for adaptation to individual design tasks, respectively:
+\begin{enumerate}
+  \item General problem-solving cycle on the micro-level;
+  \item V model on the macro-level;
+  \item Predefined process modules for handling recurrent working steps;
+\end{enumerate}
+
+The design process distinguishes between~\cite{gausemeier2003new}: the problem
+solving process of the individual designer (micro-level), supporting him/her in
+the design of sub-tasks, reacting in unforeseen ways, etc.; and the generic
+process related to design phases and corresponding product states (macro-level)
+which helps to plan, control and assess the design progress.
+
+\subsubsection{Micro-level}
+The micro-level problem solving cycle originates from systems engineering~\cite{daenzer1994systems} and its validity
+was confirmed from the point of view of psychology~\cite{von1986group},
+consisting mainly in two distinct development approaches based on either: the
+actual state (improving an existent product) or the desired state (developing
+something ground-breaking). It comprises the following phases:
+\begin{enumerate}
+  \item \textbf{\emph{Situation analysis and/or take-over of target}}: depending
+    on the approach (actual state or desired state), the cycle starts with the
+    situation analysis or the external definition of the target, following
+    respectively the target definition or the situation analysis;
+  \item \textbf{\emph{Analysis and synthesis}}: dichotomous process of the search
+    for solutions and alternative solutions, where both analysis and synthesis
+    interact;
+  \item \textbf{\emph{Analysis and evaluation}}: the solution variants are
+    evaluated based on defined criteria within the target formulation and
+    solution search, yielding a proposition of several solution alternatives;
+  \item \textbf{\emph{Decision}}: verdict about the solution alternatives. If a
+    satisfactory result is achieved, one or more solutions can be selected;
+    otherwise, the upstream process should be iterated;
+  \item \textbf{\emph{Planning of further proceeding and learning}}: the lessons
+    learn with the process should be converted into useful knowledge and the
+    next steps planned, as means to reincorporate that knowledge and improve further
+    iterations of the process.
+\end{enumerate}
+%
+%\begin{figure}[!hbt]
+%  \centering
+%    \includegraphics[width=.5\textwidth]{./img/general-prob-solv.png}
+%  %
+%  \caption{Cycle of problem solving in the micro-level~\cite{daenzer1994systems}}
+%\label{fig:general-prob-solv}
+%\end{figure}
+
+\subsubsection{Macro-level}
+The V-model
+%(fig~\ref{fig:v-model-macro})
+originates from and is
+well-established in software engineering~\cite{brohl1993v}, rendering itself
+suitable for mechatronics for three main reasons~\cite{gausemeier2003new}:
+\begin{enumerate}
+  \item The v-model combines two approaches --- top-down (system design), and
+    bottom-up (system integration) --- decomposing the system into sub-functions
+    and integrating the results in the overall system, respectively;
+  \item It enforces the need of permanent verification/validation between the
+    requirements/specified functions (left hand side) and the actual (virtual
+    and/or real) system (right hand side);
+  \item It is already used by the mechatronics' industry, bolstering the
+    acceptance of the overall guideline.
+\end{enumerate}
+
+Thus, the V-model was adapted to the mechatronics context to describe the
+generic procedure for the design of mechatronics systems, which has to be
+specified according to the individual design task, comprising the following
+relevant concepts
+%(fig~\ref{fig:v-model-macro})
+~\cite{gausemeier2003new}:
+\begin{itemize}
+  \item \textbf{\emph{Requirements}}: Defined characteristics/features for the
+    individual design task, representing at the same time the starting point in
+    the design and the measure for the evaluation of the later product;
+  \item \textbf{\emph{System design}}: Definition of a cross-domain solution
+    concept describing the essential features of the future product. The overall
+    function of a system is divided into sub-functions with suitable working
+    principles and/or solution elements assigned to them and the performance of
+    the functions is evaluated in the overall system context.
+  \item \textbf{\emph{Domain-specific design}}: The solution concept --- developed
+    conjointly by the involved domains --- is now detailed separately in the those
+    domains, as specialised design and calculations are required to guarantee
+    the functional performance, especially with the critical functions. 
+  \item \textbf{\emph{System integration}}: The results from the specific domains
+    are integrated synergistically to form the overall system.
+  \item \textbf{\emph{Verification/Validation}}: The solution concept is
+    compared to the requirements to assure the actual system characteristics are
+    verified (the product matches the specifications) and validated (the
+    product is suitable for its intended use).
+  \item \textbf{\emph{Modelling and model analysis}}: The described phases are
+    flanked by the modelling and analysis of the system characteristics by
+    modelling and simulating its behaviour using computer-aided tools.
+  \item \textbf{\emph{Product}}: Result of a successful macro-cycle. This does
+    not mean its the final product, but the ongoing concretion of the future
+    product (product maturity).
+\end{itemize}
+
+A complex mechatronic product will normally not be finished within one
+macro-cycle, requiring several iterations.
+%(fig.~\ref{fig:v-model-iter}).
+Thus,
+the V-model is used as generic procedure pattern that can be adapted to the
+context, varying the level of abstraction from a generic one (one macro-cycle)
+to a more detailed one (several macro-cycles), e.g., for project management and
+design controlling.
+% src:
+% https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions#Subfloats
+%\begin{figure}[!hbt]
+%    \centering
+%    %\captionsetup[sub]{margin=10pt}
+%    % a)
+%    \subcaptionbox{One macro cycle
+%\label{fig:v-model-macro}}
+%    [0.5\linewidth]{\includegraphics[width=0.45\textwidth]{./img/v-model-macro.png}}
+%    % b)
+%    %\subcaptionbox{One macro cycle (refined)~\cite{isermann2008mechatronic} 
+%    %\label{fig:v-model-isermann}}
+%    %[0.8\linewidth]{\includegraphics[width=0.8\textwidth]{./img/v-model-isermann.png}}
+%    % b)
+%    \subcaptionbox{Iterating over a number of macro-cycles with increasing
+%      process maturity
+%\label{fig:v-model-iter}}
+%    [1.0\linewidth]{\includegraphics[width=0.55\textwidth]{./img/v-model-iter.png}}
+%    % c)
+%    % fig
+%    \caption{Mechatronics design V-model, VDI 2206 2003~\cite{gausemeier2003new}}
+%\label{fig:v-model}
+%\end{figure}
+
+%\subsubsection{Process modules for recurrent working steps}
+%The main phases in the v-model are not yet detailed: this needs to be done by
+%the designer. However, some design procedures occur regularly during the design
+%and were identified by field practitioners in terms of predefined process
+%modules, representing procedures and methods for different design tasks,
+%organised in a data base
+%(fig.~\ref{fig:v-model-recurrent}\cite{gausemeier2003new}).
+%The VDI 2206
+%guideline provides detailed process modules for the V-model macro cycle. One
+%such example is given in fig.~\ref{fig:v-model-recurrent} for the system design,
+%which can be described phase-milestone-diagrams, checklists, process-flow
+%diagrams, etc..
+%
+%\begin{figure}[!hbt]
+%  \centering
+%    \includegraphics[width=0.65\textwidth]{./img/v-model-recurrent.png}
+%  %
+%  \caption{Configuration of process modules for individual operation steps}
+%\label{fig:v-model-recurrent}
+%\end{figure}
+
+\subsection{Waterfall}%
+\label{subsec:waterfall}
+For the domain-specific design of software the waterfall methodology is used.
+The waterfall model
+%(fig.~\ref{fig:waterfall})
+~represents the first effort to
+conveniently tackle the increasing complexity in the software development
+process, being credited to Royce, in 1970, the first formal description of the
+model, even though he did not coin the term~\cite{sommerville1996software}. It
+envisions the optimal method
+as a linear sequence of phases, starting from requirement elicitation to system
+testing and product shipment~\cite{cusumano1995beyond} with the process flowing
+from the top to the bottom, like a cascading waterfall.
+
+In general, the phase sequence is as follows: analysis, design, implementation,
+verification and maintenance.
+\begin{enumerate}
+  \item Firstly, the project requirements are elicited, identifying the key
+    requirements and constraints the system being developed must meet from the
+    end-user perspective, captured in natural language in a product requirements document.
+  \item In the analysis phase, the developer should convert the application
+    level knowledge, enlisted as requirements, to the solution domain knowledge
+    resulting in analysis models, schema and business rules.
+  \item In the design phase, a thorough specification is written allowing the
+    transition to the implementation phase, yielding the decomposition in
+    subsystems and the software architecture of the system. 
+  \item In the implementation stage, the system is developed, following the
+    specification, resulting in the source code.
+  \item Next, after system assembly and integration, a verification phase occurs
+    and system tests are performed, with the systematic discovery and debugging
+    of defects.
+  \item Lastly, the system becomes a product and, after deployment, the
+    maintenance phase start, during the product life time.
+\end{enumerate}
+While this cycle occurs, several transitions between multiple phases might
+happen, since an incomplete specification or new knowledge about the system,
+might result in the need to rethink the document.
+
+The advantages of the waterfall model are: it is simple and easy to understand
+and use and the phases do not overlap; they are completed sequentially. However,
+it presents some drawbacks namely: difficulty to tackle change and high
+complexity and the high amounts of risk and uncertainty. However, in the present
+work, due to its simplicity, the waterfall model proves its usefulness and will
+be used along the project.
+
+As a reference in the sequence of phases and the expected outcomes from each
+one, it will be used the chain of development activities and their products
+suggested by Bruegge
+%depicted in fig.~\ref{fig:sw-devel-activities} (withdrawn from
+~\cite{bruegge2004object}.
+
+%\begin{figure}[!hbt]
+%\centering
+%    \includegraphics[width=0.6\textwidth]{./img/waterfall.png}
+%  \caption{Waterfall model diagram}\label{fig:waterfall}
+%\end{figure}
+%
+\subsection{Unified Modeling Language (UML)}%
+\label{subsec:uml}
+To aid the software development process, a notation is required, to articulate
+complex ideas succinctly and precisely. The notation chosen was the \gls{uml},
+as it provides a spectrum of notations for representing different aspects of a
+system and has been accepted as a standard notation in the software
+industry~\cite{bruegge2004object}.
+
+The goal of \gls{uml} is to provide a standard notation that can be used by all
+object- oriented methods and to select and integrate the best elements of
+precursor software notations, namely \gls{omt}, Booch, and \gls{oose}
+~\cite{bruegge2004object}. It provides
+constructs for a broad range of systems and activities (e.g., distributed
+systems, analysis, system design, deployment). System development focuses on
+three different models of the system
+%(fig.~\ref{fig:sw-devel-activities})
+~\cite{bruegge2004object}:
+\begin{enumerate}
+  \item \textbf{\emph{The functional model}}: represented in UML with use case
+    diagrams, describes the functionality of the system from the user's point of
+    view.
+  \item \textbf{\emph{The object model}}: represented in UML with class
+    diagrams, describes the structure of the system in terms of objects,
+    attributes, associations, and operations.  
+  \item \textbf{\emph{The dynamic model}}: represented in UML with interaction
+    diagrams, state-machine diagrams, and activity diagrams, describes the
+    internal behaviour of the system.
+  \end{enumerate}
+
+%The system design starts by clearly defining the problem --- \textbf{problem
+%statement}. Then, the requirements are elicited and the functional model is built
+%with use case diagrams --- \textbf{requirements elicitation}. Next, the formalising the
+%use cases' concepts in a consistent and systematic way, to produce a model of
+%the application domain, that is correct, complete and unambiguous, yielding a
+%preliminary static and dynamic models of the system --- \textbf{analysis}. Using these
+%models, a solution can be effectively designed by defining the goals of the
+%project and the system is decomposed into smaller subsystems that can be
+%realised by individual teams --- \textbf{design}. The design models are then mapped into
+%actual code, using one or many programming languages --- \textbf{implementation}. The
+%system implementation is then tested for requirements verification and
+%validation --- \textbf{testing}. Lastly, every system must be maintained as part of its
+%constant evolution --- \textbf{maintenance}. 
+%
+%\begin{figure}[!hbt]
+%\centering
+%    \includegraphics[width=0.7\textwidth]{./img/sw-devel-activities.png}
+%  \caption{An overview of the object-oriented software engineering development
+%  and their products. This diagram depicts only logical dependencies among work
+%  products (withdrawn from~\cite{bruegge2004object})}
+%\label{fig:sw-devel-activities}
+%\end{figure}
+
+\section{Markup languages}
+A markup language is a system for annotating a document with distinguishable
+syntax from the text~\cite{markup2019webster}. Early markup system typically included typesetting
+instructions, as \emph{troff}, \emph{TeX}, and \emph{LaTeX}, which was used to
+write this thesis.
+Markup languages can be distinguished in strict and free interpretation, if
+their specification prescribes generally how to present the structured data on
+particular media.
+Examples of strict interpretation markup languages are \gls{html} and
+\gls{svg}. \gls{xml}, on the other hand, allows users to define any custom
+documents as they wish.
+
+\subsection{Scalable Vector Graphics (SVG)}
+\gls{svg} is a language based on \gls{xml} for describing two-dimensional
+graphics~\cite{svg2Specs}. However, unlike \gls{xml} it is strict on
+interpretation allowing three types of graphic object: vector graphic shapes
+(e.g., paths consisting of straight lines and curves), images and
+text. Nonetheless, is still extensible allowing custom tagging to be performed
+under certain rules. Additionally, graphical objects can be grouped, styled, transformed and
+composited. The current version of the specification is 2.
+
+The type of object one is most interested is the vector graphics shape, as it
+can be used to encode manufacturing trajectory paths using custom tagging. Furthermore, these vector
+graphic shapes can be grouped together to form more complex shapes and can be
+rendered directly from any web browser, providing a quick way to verify the
+manufacturing paths produced. As example of the \texttt{.svg} syntax is
+presented in Listing~\ref{lst:svg-syntax-ex}.
+
+\begin{lstlisting}[language=xml, caption=SVG syntax example, label=lst:svg-syntax-ex]
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10 10"/>
+  <circle cx="10" cy="10" r="2" fill="red"/>
+  </svg>
+\end{lstlisting}
+
+Slic3r --- an open source G-code generator for 3D printers~\cite{Slic3r}, for
+instance, uses \gls{svg} as an output for other types of 3D printers which
+require each layer to be represented as image, for example DLP resin or
+powder-bed printers.
+These expect an image usually consisting of a white silhouette on a
+black background (see fig.~\ref{fig:svg-slice-example}). Almost all image formats can be used (bmp, png, etc.), however, because the image may have to be scaled, it is usually desirable to use a vector format, rather than a bitmap format. For this reason it is common to use \gls{svg} format.
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.3\textwidth]{./img/svg-slice-example.png}%
+    \caption[SVG slice example]{SVG slice example~(withdrawn from~\cite{slic3rSvg})\footnotemark}%
+      %\fnref{foot:cc-lic}}%
+      %\textsuperscript{\ref{foot:cc-lic}}%
+    \label{fig:svg-slice-example}
+\end{figure}
+%
+\fnlicCCSA{foot:cc-lic}% CC licence
+%\footnotetext{\label{foot:cc-lic}Used under the terms of the Creative Commons BY-SA 3.0 licence.}%
+%This uses the same note\fnref{foot:cc-lic};
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../template"
+%%% End:
+%
+\section{Relational Database Management System}%
+\label{sec:rdbms}
+A database is a collection of data, typically describing the activities of one
+or more related organizations. For example, a university database might contain
+information about the following~\cite{ramakrishnan2003database}:
+\begin{item-c}
+\item \emph{Entities}: such as students, faculty, courses and classrooms
+\item \emph{Relationships} between entities: such as students' enrollment in
+  courses, faculty teaching courses, and the use of rooms for courses.
+\end{item-c}
+
+An \gls{dbms} is a software designed to assist in maintaining and utilizing
+large collections of data.
+A \gls{rdbms} is a subset of \gls{dbms} with relationship between tables (entities)
+and rows (entities' attributes). The tables are related to each other
+using primary and foreign keys. It is the most used database model widely used
+by enterprises and developers for storing complex and huge amounts of
+data~\cite{ramakrishnan2003database}. Some examples of \gls{rdbms} are Oracle
+Database, MySQL, IBM DB2, SQLite, PostgreSQL, and MariaDB.
+
+%From the users' application standpoint, a \gls{rdbms} is a management system
+%for databases, but is useless unless it provides an efficient and easy method to
+%pose questions involving the data stored in the databases. These questions are
+%called queries~\cite{ramakrishnan2003database}.
+%A \gls{dbms} provides a
+%specialized language --- query language --- in which queries can be performed.
+%The \gls{sql} for relational databases, is now the standard.
+%Arguably, the most widely used form
+%of concurrent programming is the concurrent execution of database programs
+%(called transactions). Users write programs as if they are to be run by
+%themselves, and the responsibility for running them concurrently is given to the
+%\gls{dbms}~\cite{ramakrishnan2003database}.
+
+In this section an overview is presented about \gls{rdbms} foundations. Additionally, a brief overview over \gls{sql} and a C++ interface is presented.
+
+%\subsection{Relational model}%
+%\label{sec:relational-model}
+%The central data description construct in the relational model is a \emph{relation},
+%which can be thought as a set of
+%\emph{records}~\cite{ramakrishnan2003database}.
+%A \emph{schema} is a description of data in terms of the data model. In the
+%relation model, the schema for a relation specifies its name, the name of each
+%\emph{field} (or \emph{attribute} or \emph{column}), and the type of each
+%field. As an example, student information in a university database may be stored
+%in a relation with the following schema~\cite{ramakrishnan2003database}:
+%\begin{quote}
+%\texttt{Students(\emph{sid}: string, \emph{name}: string, \emph{login}: string, \emph{age}: integer, \emph{gpa}: real)}
+%\end{quote}
+%%
+%The preceding schema states that each record in the Students relation has five
+%fields, with field names and types as indicated. As example instance of the
+%student relation appears in Table~\ref{tab:relational-model-example}~\cite{ramakrishnan2003database}.
+%%
+%\begingroup
+%\renewcommand{\arraystretch}{0.9} % Default value: 1
+%\begin{table}[hbt!]
+%\centering
+%\caption{An instance of the students relation --- withdrawn from~\cite{ramakrishnan2003database}}%
+%\label{tab:relational-model-example}
+%\begin{tabular}{@{}lllll@{}}
+%\toprule
+%\textbf{sid} & \textbf{name} & \textbf{login} & \textbf{age} & \textbf{gpa} \\ \midrule
+%53666        & Jones         & jones@cs       & 18           & 3.4          \\
+%53688        & Smith         & smith@ee       & 18           & 3.2          \\
+%53650        & Smith         & smith@math     & 19           & 3.8          \\
+%53831        & Madayan       & madayan@music  & 11           & 1.8          \\
+%53932        & Guldu         & guldu@music    & 12           & 2.0          \\ \bottomrule
+%\end{tabular}
+%\end{table}
+%\endgroup
+%
+%Each row in the Students relation is a record that describes a student,
+%following the schema of the Students relation. Thus, the schema can be thought
+%as a template for describing a student. This description can be made more
+%precise by specifying integrity constraints, i.e., the conditions that the
+%records in a relation must satisfy~\cite{ramakrishnan2003database}.
+%For example, one could specify that every
+%student had a unique \texttt{sid} value, thus making a potential candidate for a
+%primary key, i.e., an unique identifier that univocally identifies each record
+%in a relation.
+%This information cannot be captured by simply adding another
+%field to the Students schema, thus requiring integrity constraints to increase
+%the expressiveness of the constructs of a data model~\cite{ramakrishnan2003database}.
+
+%\subsection{Database design overview}%
+%\label{sec:datab-design-overv}
+%%
+%The database design process can be divided into six steps, namely~\cite{ramakrishnan2003database}:
+%\begin{enum-c}
+%\item \emph{Requirements Analysis}:
+%  the requirements for the database
+%  application are elicited and analyzed assessing what data is to be stored in
+%  the database, what applications must be built on top of it, and what operations are most frequent and subject to performance
+%  requirements.
+%Several methodologies have been proposed for organizing and presenting the
+%information gathered in this step, and some automated tools have been developed
+%to support this process.
+%\item \emph{Conceptual Database Design}:
+%the information gathered in the previous step is used to develop a high-level
+%description of the data to be stored in the database, along with the constraints that are known to hold over this data. This
+%step is often carried out using the \gls{er} model, or a similar high-level data model.
+%\item \emph{Logical Database Design}:
+%  A DBMS must be chosen to implement the database
+%design, and convert the conceptual database design --- \gls{er} schema --- into a database schema in the
+%data model of the chosen DBMS --- relational schema.
+%\item \emph{Schema Refinement}:
+%  Next, the collection of relations in the relation database schema are analyzed
+%  to identify potential problems, and to refine it. This is performed by
+%  normalizing relations, restructuring them to ensure some desirable
+%  properties.
+%\item \emph{Physical Database Design}:
+%  In this step, the typical expected workloads that the database must support
+%  are analyzed and further refine the database design to ensure that it meets
+%  desired performance criteria. This may simply involve building indexes on some tables and clustering some tables, or it may involve a substantial
+%  redesign of parts of the database schema obtained from the earlier design steps.
+%\item \emph{Security Design}:
+%  Lastly, the different user groups and different
+%roles played by various users are identified (e.g., the development team for a
+%product, the customer support representatives, the product manager).
+%For each role and user group, the permitted and forbidden parts of the database
+%are identified and the policies are enforced to ensure this. A DBMS provides
+%several mechanisms to assist in this step.
+%\end{enum-c}
+%
+\subsection{Entity-Relationship model}%
+\label{sec:entity-relat-model}
+%
+The \acrfull{er} data model enables the description of the data involved in a
+real-world enterprise in terms of entities and their relationships and is widely
+used to develop an initial database design. This section presents the
+key concepts for the \gls{er} model as a database design modeling tool, namely~\cite{ramakrishnan2003database}:
+\begin{itemize}
+\item \emph{Entity}: is an object in the real world that is distinguishable from
+  other objects, e.g., the Pokemon toy, the toy department, the manager of the
+  toy department, etc.
+\item \emph{Entity set}: collection of entities. They do not need to be
+  disjoint, i.e., entities can simultaneously belong to different entity
+  sets. For example, one can define an entity set called \texttt{Employees} that
+  contain both the toy and appliance department employee sets.
+  An entity set is represented by a rectangle in the \gls{er} model.
+\item \emph{Attributes}: an entity is described using a set of attributes. All
+  entities in a given entity set have the same attributes. For example, the
+  \texttt{Employees} entity set could use \texttt{name}, social security number
+  (\texttt{ssn}) and parking lot (\texttt{lot}) as attributes.
+  An attribute is represented by an oval in the \gls{er} model.
+\item \emph{Domain}: for each attribute associated with a set, one must identify
+  a domain of possible values. For example, the domain associated with the
+  attribute \texttt{name} of \texttt{Employees} might be the set of 20-character
+  strings.
+  The domain information can be listed along the attribute name.
+\item \emph{Key}: minimal set of attributes whose values uniquely identify an
+  entity in the set. There could be more than one \emph{candidate} key: if so,
+  one designate one of them as the \emph{primary} key.
+  Each attribute in the primary key is underlined in the \gls{er} model. The
+  \emph{foreign key} is(are) the
+  attribute(s) which in a relationship one-to-many is(are) primary key(s) in the
+  entity of the side \texttt{one} and integrates the set of attributes of the
+  entity in the side \texttt{many} of that relationship
+\item \emph{Relationship}: association between two or more entities.
+  For example, one may have the relationship that Joe works in the pharmacy
+  department.
+  A relationship is represented by a straight line in the \gls{er} model and may
+  also have \emph{descriptive attributes}.
+%\item \emph{Key constraints}: restrictions over entities.
+%  For example, the restriction that each department has at most one manager, and
+%  is denoted by using an arrow from the entity to the relationship.
+%\item \emph{Participation constraints}: states the participation of an entity
+%  set in the relationship. It can be \emph{partial} or \emph{total}.
+%  For example, if every department is required to have a manager, the
+%  participation of the entity set \texttt{Departments} in the relationship set
+%  \texttt{Manages} is said to be \emph{total}.
+%\item \emph{Class hierarchies}: classification of entities in an entity set into
+%  subclasses, using the relationship \emph{is a}. For example, a \texttt{Car}
+%  \texttt{is a} \texttt{Vehicle} and a \texttt{Truck} \texttt{is a}
+%  \texttt{Vehicle} too. 
+%\item \emph{Aggregation}: indicates that a relationship set (identified through
+%  a dashed box) participates in another relationship set.
+\end{itemize}
+
+The \glspl{erd} use a graphical conventional to quickly and clearly depict the
+entities involved and how they relate to each other. In a \gls{erd} entities are
+represented by rectangles, attributes by ellipses, and the relationships as
+lines between entities. In the rectangles and ellipses are placed the names of
+the different entities and attributes. The relationships have cardinalities --- \texttt{1:1}
+(one-to-one), \texttt{1:M} (one-to-many), and \texttt{M:N} (many-to-many) ---
+and may be mandatory or optional --- e.g., a vehicle may not have any parking
+space assigned, but to each parking space is assigned one, and one only,
+vehicle.
+
+Several notations can be used, namely, crow's foot, \gls{uml}, Chen, Barker,
+etc~\cite{crowsfootNotation}.
+In crow's foot notation:
+\begin{itemize}
+\item A multiplicity of one and a mandatory relationship is represented by a
+  straight line perpendicular to the relationship line.
+\item A multiplicity of many is represented by the three-pronged `crow-foot'
+  symbol.
+\item An optional relationship is represented by an empty circle.
+\end{itemize}
+
+Fig.~\ref{fig:erd-example} illustrates an example of an \acrfull{erd} using
+crow's foot notation for an a company. There are three entity sets ---
+\texttt{Customers}, \texttt{Orders}, and \texttt{Shipments}. Within each of
+these are the attributes, with the primary key being underlined. Additionally it
+also indicates the foreign key that resolves the \texttt{one-to-many}
+relationship. Thus, a customer can place \texttt{0} or \texttt{many} orders, which, in
+turn, can have \texttt{0} or \texttt{many} shipment methods.
+
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.8\columnwidth]{./img/erd-example.png}
+  \caption{Example of an \gls{erd}}%
+\label{fig:erd-example}
+\end{figure}
+%
+%
+\subsection{Choice of the RDBMS}%
+\label{sec:choice-rdbms}
+In this section are presented the most relevant \glspl{rdbms}, its advantages
+and disadvantages, and the best use case, which can help the database designer
+to appropriately choose a \gls{rdbms}. Special focus is given to the free
+systems, namely \texttt{MySQL} and\texttt{SQLite}, due to its open-source nature.
+
+The most relevant \glspl{rdbms} are~\cite{modernDBChoice}:
+% src: https://www.xplenty.com/blog/which-database/
+\begin{item-c}
+\item \textbf{Oracle Database}: 
+Oracle has provided high-quality database solutions since the 1970s. The most
+recent version of Oracle Database was designed to integrate with cloud-based
+systems, and it allows you to manage massive databases with billions of
+records.
+    \begin{itemize}
+    \item \emph{Advantages}: the most advanced technology and a wide range of
+    solutions.
+    \item \emph{Disadvantages}: an expensive solution and system upgrades might be
+    required ---  many businesses have to upgrade their hardware before using Oracle
+    solutions.
+    \item \emph{Best use case}: if you're a large organization that needs to manage
+    a massive amount of data, Oracle could be the ideal choice.
+  \end{itemize}
+\item \textbf{Microsoft SQL Server}: it is a database engine that is compatible
+  with, both, on-site and cloud-based servers, and supports Windows and Linux
+  OSes.
+    \begin{itemize}
+    \item \emph{Advantages}: it is mobile: this database engine allows you to
+      access dashboard graphics and visuals via mobile devices. It integrates
+      with Microsoft products.  It is fast and stable.
+    \item \emph{Disadvantages}: an expensive solution and requires a lot of
+      \gls{hw} resources.
+    \item \emph{Best use case}: if you're an enterprise-level corporation that
+      relies heavily on Microsoft products, the speed, agility, and reliability
+      of Microsoft SQL Server could be an excellent choice.
+  \end{itemize}
+\item \textbf{MySQL}: MySQL is a free, open-source RDBMS solution that Oracle
+  owns and manages. Even though it's freeware, MySQL benefits from frequent
+  security and features updates. Large enterprises can upgrade to paid versions of MySQL to benefit from additional features and user support.
+    \begin{itemize}
+    \item \emph{Advantages}: it is open-source, free of charge (freeware) and
+      highly compatible with many other database systems.
+    \item \emph{Disadvantages}: lacking features common to other \glspl{rdbms}:
+      because MySQL prioritizes speed and agility over features, some of the
+      standard features found in other solutions may be missing, e.g., the
+      ability to create incremental backups. Challenges getting quality support:
+      The free version of MySQL does not come with on-demand support. However,
+      MySQL does have an active volunteer community, useful forums, and a lot of
+      documentation.
+    \item \emph{Best use case}: MySQL is a particularly valuable RDBMS solution
+      for businesses that need a solution with enterprise-level capabilities,
+      but are operating under strict budget constraints. It is an extremely
+      powerful and reliable modern RDBMS with a free tier.
+  \end{itemize}
+\item \textbf{SQLite}~\cite{MysqlVsSqlite}: it is a C-language library that
+  implements a small, fast, self-contained SQL database engine --- 
+  an embedded \gls{db} --- which means the \gls{db} engine runs as a part of the
+  app.
+    \begin{itemize}
+    \item \emph{Advantages}: it is open-source, free of charge (freeware), a
+      server-less and file-based database, and self-contained. It has a small
+      storage footprint (the \texttt{SQLite} library is 250 KB in size, while the \texttt{MySQL}
+      server is about 600 MB). It directly stores information into a single
+      file, making it easy to copy, and no configuring is required.
+    \item \emph{Disadvantages}: it lacks user management (not suitable for
+      multiple users) and security features (the database can be accessed by
+      anyone). It is not easily scalable and cannot be customized.
+    \item \emph{Best use case}: \texttt{SQLite} is best suited for developing
+      small standalone apps or smaller projects which do not require much
+      scalability.
+  \end{itemize}
+\end{item-c}
+%
+\subsection{SQL}%
+\label{sec:sql}
+Ideally, a database language allows the creation of a database and table
+structures, the execution of basic data management tasks (add, delete, and
+modify), and the execution of complex queries designed to transform the raw data
+into useful information. Moreover, it must provide a clear and easy suntax, it
+must be portable and conform to some basic standard. \gls{sql} complies well to
+these requirements~\cite{coronel2016database}.
+
+\gls{sql} functions fit into two broad categories~\cite{coronel2016database}:
+\begin{enumerate}
+\item \emph{\gls{ddl}}: it includes commands to create database objects
+  such as tables, indexes, and views, as well as commands to define access
+  rights to those database objects.
+  %(see Fig.~\ref{fig:sql-dll}).
+\item \emph{\gls{dml}}: it includes commands to insert, update, delete,
+  and retrieve data within the database tables
+  %(see Fig.~\ref{fig:sql-dml}).
+\end{enumerate}
+%
+%\begin{figure}[htb!]
+%\centering
+%    \includegraphics[width=0.9\columnwidth]{./img/sql-dll.png}
+%  \caption{SQL data definition commands --- withdrawn from~\cite{coronel2016database}}%
+%  \label{fig:sql-dll}
+%\end{figure}
+%%
+%\begin{figure}[htb!]
+%  \centering
+%  % 
+%  \begin{subfigure}[t]{.9\textwidth}
+%  \includegraphics[width=\textwidth]{img/sql-dml-1.png}%
+%  %\caption{main}%
+%  %\label{fig:state-mach-local-superv-main}
+%\end{subfigure}
+%%
+%%\vspace{-0.1\textwidth}
+%%
+%  \begin{subfigure}{.9\textwidth}
+%  \includegraphics[width=\textwidth]{img/sql-dml-2.png}%
+%  %\caption{Mode Manager}%
+%  %\label{fig:state-mach-local-superv-mode}
+%\end{subfigure}
+%  % 
+%  \caption{SQL data manipulation commands --- withdrawn from~\cite{coronel2016database}}%
+%  \label{fig:sql-dml}
+%\end{figure}
+%
+
+\subsection{MySQL Interfaces}%
+%\label{sec:sql-interfaces}
+\label{sec:c++-connector}
+\texttt{MySQL} works under the client---server paradigm. It has several client
+interfaces that can interact with the server, through connectors and
+\glspl{api}, i.e., the drivers and libraries that one can use to connect
+applications in different programming languages to \texttt{MySQL} database
+servers.
+The application and database server can be on the same machine, or communicate
+across the network~\cite{MysqlConnAPIs}.
+The following interfaces are available: \texttt{Java}, \texttt{Python},
+\texttt{JavaScript}, \texttt{C++}, \texttt{C},
+\texttt{C\#},
+\texttt{PHP},
+\texttt{OBDC}, \texttt{NBD Cluster},
+\texttt{MySQL Shell}, and \texttt{X DevAPI}.
+
+%\subsubsection{C++ connector}%
+From the list of available interfaces, the most well suited to interface the
+\gls{rdbms} are the \texttt{C \gls{api}} and the \texttt{C++ connector}, as they
+are they provide better performance.
+The \texttt{C++ connector} was chosen for compatibility with the toolchain
+devised. It is licenced under the GPL with the FLOSS License Exception.
+
+Listing~\ref{lst:mysql-cpp-example} illustrates an application to connect
+to the \texttt{MySQL} server using the \texttt{C++} connector~\cite{MysqlConnC++Example1}. Starting from the
+line 24 the application tries to connect to the \texttt{MySQL} database and
+execute a query and, if any exception is thrown, it is caught by the
+\texttt{catch} block at line 50.
+Looking into more detail at the \texttt{try} block, the pointers to objects \texttt{sql::Driver},
+\texttt{sql::Connection}, \texttt{sql::Statement} and \texttt{sql::ResultSet}
+are instantiated for later usage. A connection to the \texttt{MySQL server} is
+established  at line 32 --- via \texttt{driver} --- using the \texttt{TCP/IP}
+protocol at \texttt{localhost} address and port \texttt{3306} (the default for \texttt{MySQL server}), and passing the
+username and the password. Next, the specific database --- \texttt{test} --- is
+defined for access.
+
+Then, at line 36, a statement is created to execute a query (line 37), with the
+result being captured by \texttt{res} (the \texttt{sql::ResultSet} object). A
+loop is performed to retrieve all data, and lines 41 and 44 illustrate different
+methods to access the column data --- by column name or by numeric offset,
+respectively. Finally, all objects dynamically allocated are released (lines
+46--48) and, if everything works well, the application returns successfully
+(line 61).
+%
+\lstinputlisting[language=c++,
+%firstline=1, lastline=3,%
+caption={MySQL Connector example --- adapted from~\cite{MysqlConnC++Example1}},
+label=lst:mysql-cpp-example,
+style=custom-cpp]{./listing/mysql_c++_example.cpp}
+
+\subsection{Summary}%
+\label{sec:summary}
+The entity-relationship model is used for database modelling, using the
+crow's foot notation.
+
+The \gls{rdbms} solution chosen is \texttt{MySQL}, suited for distributed
+architectures, as a trade-off between cost, ease of use, scalability, security
+and user management.
+
+\gls{sql} can be used to define and model data, enabling database creation and
+management in a straightforward way.
+
+Finally, a C++ interface will be used to interact with the \texttt{MySQL}
+back-end, providing a convenient access to the database from within a custom application.
+%

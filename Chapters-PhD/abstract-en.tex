@@ -1,0 +1,61 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% abstrac-en.tex
+%% NOVA thesis document file
+%%
+%% Abstract in English([^%]*)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE abstrac-en.tex}%
+%
+Functional design is a highly desirable approach to design, optimising the
+performance of a product while minimising the resources usage and
+cost.
+However, the adoption of functional design may dictate the use of multiple
+materials or a combination of them, which is hindered by the current manufacturing methodologies. Biomedical implants, such as hip implants, represent a class of products where functional design is critical.
+
+Currently, only a handful of commercial equipments is capable of multi-material
+fabrication~\cite{aconityMIDI, slm280}. 
+Moreover, they require a significant
+initial investment and are only suited for metals, which limits the scope of
+applications.
+Consequently, research primarily focuses on upgrading mono-material equipment to
+add multi-material capabilities~\cite{bareth2022Implem, schneck2022capability,
+  nadimpali2019MMSteels, anstaett2017fabrication, sing2015interfacial,
+  liu2014interfacial},  which undesirably also requires manual workarounds to
+setup the manufacturing chain and equipments.
+This is further aggravated by the lack of specific design guidelines for the 
+\gls{mmlpbf} process and by the fact that most pre-processing procedures use a
+manual method based on an inadequate data format~\cite{schneck2021review}.
+%
+The main takeway is that the \gls{mmlpbf} fabrication is a multi-objective
+problem, requiring specially designed equipments and toolchains, and
+experimental design.
+
+Thus, the present work aims to close the gap between design and fabrication of
+multi-material components like the aforementioned implants by proposing a holistic
+approach to the multi-material fabrication of metals/ceramics that can leverage
+the process knowledge and support functional design. A model-based methodology
+was devised to address the high complexity associated with the design and manufacturing of multi-material parts and fill the
+gap in this domain. 
+The knowledge acquired through the relevant models was used for the
+instantiation of a specialised workflow for the \gls{mmlpbf} process and the
+development of a supporting toolchain. Then, a custom equipment was developed that
+integrates multiple lasers
+of different types, which can be effectively used for the fabrication of
+multi-material components using metallic and ceramic powders. To the best of the
+author's knowledge, this is the first equipment with this feature.
+
+Several multi-material components were designed and manufactured following the
+devised methodology. These tests validated the whole ecosystem, demonstrating
+its suitability to support the functional design of multi-material components
+using the \gls{mmlpbf} process.
+Lastly, some prospects to leverage the process knowledge database created are
+presented, where tools like \gls{ai} can be used for straightforward and fast
+improvement of the \gls{mmlpbf} process.
+
+% Palavras-chave do resumo em Inglês
+\begin{keywords}
+functional design, 3D multi-material laser powder bed fusion, 3D multi-material fabrication, methodology,
+software toolchain, low-cost equipment
+\end{keywords} 

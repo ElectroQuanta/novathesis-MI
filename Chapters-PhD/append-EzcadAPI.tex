@@ -1,0 +1,16 @@
+% !TEX root = ../template.tex
+%
+\typeout{NT FILE append-EzcadAPI.tex}%
+% the appendix no longer requires the prefix Appendix <Letter>
+\chapter{Ezcad API}%
+\label{ch:append-EzcadAPI}
+The relevant part of the Ezcad \gls{api} for this project is extensively
+presented below, with a self-documenting prototypes, thus self-explanatory. 
+
+% src: https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+%\lstinputlisting[language=C, firstline=37, lastline=45]{./listing/MarkEzdDll_copy.h}
+\lstinputlisting[language=C, caption={Ezcad API},label=EzcadAPI, style=customc]{./listing/MarkEzdDll-clean.h}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../template"
+%%% End:

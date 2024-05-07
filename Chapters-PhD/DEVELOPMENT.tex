@@ -1,0 +1,3763 @@
+% !TEX root = ../template.tex
+% 
+\typeout{NT FILE DEVELOPMENT.tex}%
+% CHAPTER - Contribution -------------------------
+\chapter{Development}%
+\label{ch:development}
+% 
+In this chapter, the knowledge acquired through the relevant models contained
+in the proposed methodology is applied to the development of a specialised
+workflow for the \gls{3dmmlpbf}'s process and respective toolchain,
+contingent of the project's restrictions and resources, and to the development
+of a machine capable of producing multi-material components from
+metallic/ceramic powders matching the designed workflow. The toolchain is
+assembled and the missing software components are developed, tested, and
+validated.
+Lastly, a custom equipment for the production of
+multi-material metallic and ceramic components was developed, tested and
+validated across the mechanical, electronic, and control domains.
+
+\section{Project methodologies}%
+\label{sec:proj-meth}
+A foreword is required for the development methodologies and the sequence of
+development steps: for the software development --- toolchain, machine's
+control and user interface --- the waterfall methodology was used; for the mechanical and electronics
+development and integration the V's cycle was used as both systems' development
+needs to be done side-by-side.
+
+\paragraph{Waterfall model}
+The waterfall model is a simple and convenient method for the software
+development. It
+envisions the optimal method
+as a linear sequence of phases, starting from requirement elicitation to system
+testing and product shipment~\cite{cusumano1995beyond} with the process flowing
+from the top to the bottom, like a cascading waterfall.
+
+In general, the phase sequence is as follows: analysis, design, implementation,
+verification and maintenance.
+\begin{enumerate}
+  \item Firstly, the project requirements are elicited, identifying the key
+    requirements and constraints the system being developed must meet from the
+    end-user perspective, captured in natural language in a product requirements document.
+  \item In the analysis phase, the developer should convert the application
+    level knowledge, enlisted as requirements, to the solution domain knowledge
+    resulting in analysis models, schema and business rules.
+  \item In the design phase, a thorough specification is written allowing the
+    transition to the implementation phase, yielding the decomposition in
+    subsystems and the software architecture of the system. 
+  \item In the implementation stage, the system is developed, following the
+    specification, resulting in the source code.
+  \item Next, after system assembly and integration, a verification phase occurs
+    and system tests are performed, with the systematic discovery and debugging
+    of defects.
+  \item Lastly, the system becomes a product and, after deployment, the
+    maintenance phase start, during the product life time.
+\end{enumerate}
+While this cycle occurs, several transitions between multiple phases might
+happen, since an incomplete specification or new knowledge about the system,
+might result in the need to rethink the document.
+
+\paragraph{Unified Modeling Language (UML)}
+The \glsxtrfull{uml} is a standard notation, widely used in the software industry,
+with high expressiveness, i.e., conveying complex ideas succinctly and precisely~\cite{bruegge2004object}.
+
+The goal of \gls{uml} is to provide a standard notation with 
+constructs for a broad range of systems and activities (e.g., distributed
+systems, analysis, system design, deployment). This means \gls{uml} is not
+restricted to the software's world, but can also be used to model processes in
+other areas. For example, \gls{uml} was used previously to develop the
+\gls{3dmmlpbf} methodology's models.
+
+System development focuses on
+three different models of the system
+%(fig.~\ref{fig:sw-devel-activities})
+~\cite{bruegge2004object}:
+\begin{enumerate}
+  \item \textbf{\emph{The functional model}}: represented in UML with use case
+    diagrams, describes the functionality of the system from the user's point of
+    view.
+  \item \textbf{\emph{The object model}}: represented in UML with class
+    diagrams, describes the structure of the system in terms of objects,
+    attributes, associations, and operations.  
+  \item \textbf{\emph{The dynamic model}}: represented in UML with interaction
+    diagrams, state-machine diagrams, and activity diagrams, describes the
+    internal behaviour of the system.
+  \end{enumerate}
+
+\paragraph{Development methodology of mechatronics' systems --- VDI 2206}
+  The \glsxtrfull{vdi} (''German Engineers
+Association'') 2206 guideline is a flexible procedural methodology for the
+development of mechatronics' systems. It aims to leverage the cross-domain
+synergy, characterised by two levels of design support~\cite{gausemeier2003new}:
+micro-level, with a general problem-solving cycle; macro-level with a V-model
+cycle.
+
+The V-model is useful for mechatronics' systems development, because it combines
+the top-down (system design) and bottom-up (system
+integration) approaches, 
+and it enforces the need of permanent verification/validation between the
+requirements and the actual (virtual and/or real) system~\cite{gausemeier2003new}.
+
+The V-model consists of the following stages:
+%(fig~\ref{fig:v-model-macro})
+~\cite{gausemeier2003new}:
+\begin{itemize}
+  \item \textbf{\emph{Requirements}}: Defined characteristics/features for the
+    individual design task, representing at the same time the starting point in
+    the design and the measure for the evaluation of the later product;
+  \item \textbf{\emph{System design}}: Definition of a cross-domain solution
+    concept describing the essential features of the future product. The overall
+    function of a system is divided into sub-functions with suitable working
+    principles and/or solution elements assigned to them and the performance of
+    the functions is evaluated in the overall system context.
+  \item \textbf{\emph{Domain-specific design}}: The solution concept --- developed
+    conjointly by the involved domains --- is now detailed separately in the those
+    domains, as specialised design and calculations are required to guarantee
+    the functional performance, especially with the critical functions. 
+  \item \textbf{\emph{System integration}}: The results from the specific domains
+    are integrated synergistically to form the overall system.
+  \item \textbf{\emph{Verification/Validation}}: The solution concept is
+    compared to the requirements to assure the actual system characteristics are
+    verified (the product matches the specifications) and validated (the
+    product is suitable for its intended use).
+  \item \textbf{\emph{Modelling and model analysis}}: The described phases are
+    flanked by the modelling and analysis of the system characteristics by
+    modelling and simulating its behaviour using computer-aided tools.
+  \item \textbf{\emph{Product}}: Result of a successful macro-cycle. This does
+    not mean its the final product, but the ongoing concretion of the future
+    product (product maturity).
+\end{itemize}
+
+A complex mechatronic product will typically not be finished within one
+macro-cycle, requiring several iterations.
+
+% 
+% \input{./tex/Chap/Devel/workflow.tex}	
+% \input{./tex/Chap/Devel/toolchain.tex}	
+% \input{./tex/Chap/Devel/mach-develop.tex}	
+% \section{Development of the 3DMMLPBF machine}
+% \subsection{Methodology}        : \input{./tex/Chap/4/md1-method.tex}	
+% \subsection{Mechanical project} : \input{./tex/Chap/4/md2-mech-proj.tex}	
+% \subsection{Electronics project}: \input{./tex/Chap/4/md3-elec-proj.tex}	
+% \subsubsection{Hardware}     : \input{./tex/Chap/4/md3-elec-proj-HW-1.tex}	
+% \subsubsection{Software}     : \input{./tex/Chap/4/md3-elec-proj-SW-2.tex}	
+%	
+% \section{Decisions}
+% \section{Implementation}
+% \section{Outcomes}
+% Main result(s) and their scientific evidence
+\section{Application of the methodology to multi-material 3DMMLPBF}
+The proposed methodology is complex and extensive, and therefore needs to be
+implemented by stages, where only the most essential features are considered in
+each development phase, being intensively tested before the integration in the
+framework. Furthermore, the manufacturing process chosen for the multi-material
+fabrication of tridimensional metallic and composite parts is the
+\gls{lpbf}. 
+
+Thus, a simplified workflow for this process is proposed (Fig.~\ref{fig:workflow}) as a means to: produce customised 3D multi-material parts
+with freedom of shape and process control; test the proposed methodology;
+increase the  process's knowledge; quickly iterate over the manufacturing chain
+with different part's design and different processing solutions, as will be
+detailed further ahead. This workflow, together with the methodology proposed,
+paved the way for the correct development and deployment of both software and
+hardware (mechanical/electronic) components.
+
+The workflow --- named \emph{\texttt{3DMMLPBF-C2P} (CAD to Process)} --- integrates the
+design model, pre-manufacturing model without the \gls{cae} and \gls{cam}
+optimisation steps, manufacturing model and post-manufacturing model,
+respectively.
+The workflow is divided in three phases:
+\begin{itemize}
+\item \textbf{Pre-manufacturing}: component design and manufacturing file's generation;
+\item \textbf{Manufacturing}: manufacturing file processing and process
+  monitoring and logging;
+\item \textbf{Post-manufacturing}: collection of pre-manufacturing,
+  manufacturing and post-manufacturing data, concerning the 3D and manufacturing
+  models, the process information, materials, and mechanical tests performed for
+  future analysis, process improvement, and bootstrapping.
+\end{itemize}
+
+% subfigures
+\begin{figure}[htb!]
+  \centering
+  %
+  \begin{subfigure}[t]{1.0\textwidth}
+  \includegraphics[width=1.0\textwidth]{./img/workflow-pre-notitle.pdf}
+  \caption{CAD to LCode}%
+  \label{fig:workflow-pre}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{1.0\textwidth}
+  \includegraphics[width=1.0\textwidth]{./img/workflow-manuf-notitle.pdf}
+  \caption{LCode to Part}%
+  \label{fig:workflow-manuf}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.5\textwidth}
+  \includegraphics[width=1.0\textwidth]{./img/workflow-post-notitle.pdf}
+  \caption{Part to Process}%
+  \label{fig:workflow-post}
+  \end{subfigure}
+  % 
+  \caption{Workflow \gls{3dmmlpbf}-C2P (CAD to Process)}%
+  \label{fig:workflow}
+\end{figure}
+%
+\subsection{Pre-manufacturing: CAD to LCode}%
+\label{subsec:cad-to-lcode}
+Fig.~\ref{fig:workflow-pre} illustrates the pre-manufacturing stage, whose goal
+is the generation of the file containing the manufacturing instructions.
+Each material of the 3D model is modelled individually, in a common 3D CAD
+modelling software (e.g. SolidWorks), and a tessellation file of the surface is
+produced, containing the geometric information.
+In this initial stage, the 3D model is considered to have no holes, porosity or
+discontinuities, as this would invalidate the usage of the surface tessellation,
+i.e., the multi-material modelled parts are considered to be completely filled in. 
+
+The next phases --- \emph{Slicing and Path Generation} --- consists in the
+cross-sectioning of the 3D model and the path generation (infilling) of each
+cross-section.
+The output of these phases is an \gls{svg} file; the choice of this file
+format is due to the use of markup language, namely \gls{xml}, for describing
+two-dimensional vector and mixed vector/raster graphics~\cite{svg_spec}.
+This
+allows the conveying of extra information besides the geometry, that can be
+packed in a structure node, for example line color attribute to represent
+different materials, addressing the multi-material representation
+ambiguity.
+This strategy is already applied to other types of 3D printers which
+require each layer to be represented as image, for example \gls{dlp} resin or
+powder-bed printers~\cite{Slic3r}.
+Additionally, because \gls{svg} is a vector format, any scaling
+transformation is simple.
+%
+Listing~\ref{lst:svg-syntax-ex} illustrates an
+example of the \texttt{.svg} syntax.
+
+Regarding the pre-manufacturing's logic, each material is sliced in layers and
+output as a \gls{svg} file. Then the files are combined for each layer and the
+scan paths are generated, yielding a complete \gls{svg} file of the part.
+
+\begin{lstlisting}[language=xml, basicstyle=\tiny, caption=SVG syntax example, label=lst:svg-syntax-ex]
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10 10"/>
+  <circle cx="10" cy="10" r="2" fill="red"/>
+  </svg>
+\end{lstlisting}
+
+This file, containing the geometry information pertaining to the scan paths,
+will be post-processed to add the process relevant parameters, like material and
+process parameters with the former being pulled from the material database and
+the latter being defined by the end-user. The result will be a file (.lcode) containing the manufacturing instructions for the 3DMMLPBF process with the
+geometrical data and process parameters.
+An extract sample is provided in~\ref{fig:workflow}, illustrating the tokens used:
+\begin{itemize}
+\item \texttt{P1}: Powder 1
+\item \texttt{Z50}: base height
+\item \texttt{G90 X12 Y20 L50,10}: absolute mode, go to X=12, Y=20, with
+  laser power at 50\% and scan speed at 10\%.
+\end{itemize}
+% 
+\subsection{Manufacturing: LCode to Part}%
+\label{subsec:lcode-to-part}
+Fig.~\ref{fig:workflow-manuf} illustrates the manufacturing stage, whose goal
+is the processing of the file containing the manufacturing instructions.
+This file will be read line-by-line, parsed and interpreted,
+issuing commands to the control board based on the \emph{lcode} instructions of
+the file. The remainder of the operation --- controlling and manufacturing ---
+is similar to the one described in the manufacturing model (Section~\ref{sec:post-manuf_model}), with the controlled part inducing an effect in the
+3DMMLPBF  process and the controlled variable that affects the manufactured part
+being measured and logged by the logger software component to a process log
+file, which is stored in the process trials database.
+When the \emph{End-of-File} is reached, the process terminates and the part is
+manufactured.
+
+This workflow represents the typical one for the 3DMMLPBF manufacturing
+process. However, due to the closed nature of the proprietary software of the
+available CO\textsubscript{2}, Nd-YAG and fiber lasers, the workflow cannot be
+directly implemented.
+In the future, the control software for the lasers will be implemented and
+integrated in the 3DMMLPBF machine, but for now a workaround was used. 
+
+This workaround consists
+in separating the geometric data from the process data at the post-processing
+stage and assigning it, respectively, to the laser and the 3DMMLPBF machine. The
+processing parameters of the laser are encoded in the \gls{svg} file as
+line attributes that the laser software is able to recognise and use for the
+scan paths marking.
+
+Fig.~\ref{fig:workaround_deploy_diag} illustrates the architecture of this
+solution with the representation of the data streams, the software components
+that use those streams, the hardware nodes where the software components are
+assigned and the protocols under which they communicate, namely serial
+communication for laser and 3DMMLPBF machine synchronisation. 
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.9\textwidth]{./img/workaround-deploy-diag.pdf}
+  \caption[Workflow for the proposed workflow]{Workaround for the proposed workflow: two separate data files ---
+    geometry and process --- are used by the laser software and LCODE
+    interpreter for scanning paths marking and process related tasks,
+    respectively}%
+  \label{fig:workaround_deploy_diag}
+\end{figure}%
+%
+
+\subsection{Post-Manufacturing: Part to Process}%
+\label{sec:post-manuf-part}
+Fig.~\ref{fig:workflow-post} illustrates the post-manufacturing stage, whose
+goal is the collection of all of the data relevant to the overall process, for
+future analysis, and process improvement and bootstrapping.
+
+The data collection is semi-automatic: several files can be imported by the
+\texttt{Post-Manufacturer} software; other data must be filled in by the
+\texttt{Manufacturer}, namely materials, laser information (manufacturer, power,
+etc.), and the mechanical tests performed. The process log file will add information to the \texttt{Parts} and
+\texttt{Process Params} databases, the CAD files to the \texttt{3D Models}
+database, and the manufacturing files to the \texttt{Manuf Files} database.
+
+The \texttt{Post-Manufacturer} contains a database manager, responsible for
+storage and retrieval of all the data. The \texttt{User} represents all of the
+manufacturing agents and should be able to export the database and analyse the
+desired data, whether it is a small part or all of it.
+%
+\section{Toolchain}%
+\label{sec:toolchain}
+The toolchain development comprises the following components from the
+\emph{3DMMLPBF-C2P} workflow:
+\begin{itemize}
+\item \textbf{Pre-Manufacturer}: Slicer + Path generator
+\item \textbf{Manufacturer}: Post-processor + Printer
+\item \textbf{Post-Manufacturer}
+\end{itemize}
+
+%For the former two, \emph{Slic3r} was used as a foundation for the development,
+%for the aforementioned reasons. As such, it is important to further understand
+%this tool and how
+%it proves its usefulness.
+
+\subsection{Pre-Manufacturer}%
+\label{sec:pre-manufacturer}
+%
+The \emph{Pre-Manufacturer} term is loosely used here as it doesn't contemplate
+the 3D modelling stage. Instead, it uses the 3D models for each
+material as inputs, yielding the geometric and topological data required for
+manufacturing, i.e., the scanning paths with custom annotations.
+
+\subsubsection{Requirements \& Constraints}%
+\label{sec:requ--constr-premanuf}
+The main requirements for the \emph{Pre-Manufacturer} software are:
+\begin{itemize}
+\item Loading and visualization of 3D models geometry of each material
+\item Configuration of the main slicing and path generation parameters, most
+  notably: layer height, path type, path width, path density, and path
+  angle. Also, the \texttt{User} should be able to configure
+different path attributes for each of the model being processed, or generically
+to all models.
+\item Slicing and path generation
+\item Visualization of slicing and path generation results
+\item Generation of the manufacturing file
+\end{itemize}
+
+On the hand, the main constraints are:
+\begin{itemize}
+\item Only \gls{stl} files are supported as input
+\item Only \gls{svg} files are supported as output
+\item Limited time: developing a slicer and path generator from scratch is a
+  labour-intensive task 
+\end{itemize}
+
+\subsubsection{Analysis}%
+\label{sec:analysis-premanuf}
+For the first iteration of the \emph{Pre-Manufacturer}, \emph{Slic3r}
+was be used as a starting point to bootstrap the development.
+\emph{Slic3r}~\cite{Slic3r} was created in 2011 within the RepRap community by
+Allessandro Ranellucci and consists mainly of an open-source toolpath generator
+for 3D printers with high configurability:
+it reads 3D models (\gls{stl}, OBJ, \gls{amf}, \gls{3mf}) and it converts them
+into G-Code instructions for 3D printers.
+It served as a platform for experimenting several new ideas that later became
+technology standards, such as multiple extruders, brim, variable-height layers,
+per-object settings, modifiers, post-processing scripts, G-code macros,
+etc.~\cite{slic3r2018repo}.
+
+One pivotal idea around the choice of \texttt{Slic3r} is that the slicing and
+path generation used for 3D printers should be simillar to the ones used for
+\gls{3dmmlpbf} manufacturing, with adequate tweaking of the processing parameters.
+
+Its main features are~\cite{slic3r2018repo}:
+\begin{itemize}
+\item G-code generation for \gls{fff}/\gls{fdm} printers;
+\item conversion between \gls{stl}, OBJ, \gls{amf}, \gls{3mf} and \gls{pov} formats;
+\item auto-repair of non-manifold meshes (and ability to re-export them);
+\item SVG export of slices;
+\item built-in \gls{usb}/serial host controller, supporting multiple simultaneous
+  printers each one with a spool queue;
+\item OctoPrint integration (send to printer);
+\item built-in projector and host for \gls{dlp} printers;
+\end{itemize}
+
+The core parts of \emph{Slic3r} are written in C++11, with multithreading
+with two main code base paths:
+\begin{itemize}
+\item \emph{C++11 + Perl}: includes the core (C++11) and a high-layer abstraction
+  to support the \gls{gui}, with \emph{WxWidgets} support. 
+\item \emph{C++11 only}: includes the core (C++11) and a Command Line Interface written in
+  C++11 also, with a fairly small subset of the functionalities.
+\end{itemize}
+
+Some notes are in place:
+\begin{itemize}
+\item The main features provided correspond to the \emph{C++ + Perl} path, with
+  most of these being available in the command line interface.
+\item \emph{Slic3r}, by default, only allows SVG export of slices, and not of
+  the toolpaths.
+\item Model merging and arrangement in the building plate is supported only in
+  the \emph{C++ + perl} path, which is strongly discouraged for new
+  developments.
+\end{itemize}
+
+Thus, the C++ path was chosen, but it requires the implementation of new
+functionalities, namely the \gls{svg} export of the toolpaths after slicing
+with model merging (corresponding to different materials), and the ability to
+generate custom tags as required by the workflow.
+
+Next, the \emph{Pre-Manufacturer}'s use cases were outlined to specify the
+required functionalities in more detail (Fig.~\ref{fig:premanuf-usecases}), and categorized:
+\begin{itemize}
+\item \textbf{Inputs}: The \emph{User} can add, remove or manipulate the
+  rendered \gls{stl} 3D model in the canvas. Additionally, the \emph{User}
+  should be able to check if the resulting 3D model is contained within the
+  machine-specific manufacturing bounding volume, i.e., if its dimensions do not
+  exceed the manufacturing capabilities.
+\item \textbf{Processing}: The \emph{User} can load and save the configuration
+  file, used to setup the slicer and path generation parameters, such as: layer
+  height, path type, path width, path angle, and path density. The \emph{User}
+  must be able to process the \glspl{stl} models, i.e., slice them, generate the
+  manufacturing paths, and merge them into a single manufacturing model.
+\item \textbf{Outputs}: The \emph{User} can generate the manufacturing model ---
+  \gls{svg} file --- and visualize it in the canvas to validate the processing.
+\item \textbf{Miscellaneous}: The \emph{User} can obtain help on the interface
+  usage, and on the slicer and path generation configuration.
+\end{itemize}
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/premanuf-UseCases.pdf}
+  %
+  \caption{Pre-Manufacturer analysis: use cases}\label{fig:premanuf-usecases}
+\end{figure}
+
+The slicing and path generation is critical for the pre-manufacturing stage,
+especially for multi-material fabrication,
+thus, it was analysed in more depth (see
+Fig.~\ref{fig:premanuf-slicing-explained}). The \gls{stl} models are loaded into
+canvas, retaining their relative positions, and processed in parallel. In this
+split phase, the slices coordinates are calculated individually for each model,
+and then the slices are checked to see if they intersect other models, which
+then appends them to the other models' slices.
+The slicing and the path
+generation utilise the \texttt{User} defined parameters for each model. In the
+slicing, the \gls{stl} model is cross-sectioned in a predefined direction
+(z-axis, in this case), yielding the intersection contours. This is possible
+because the \gls{stl} model contains the tesselation information as triplets of
+points and the facet normal which indicates the surface orientation (inwards or
+outwards). Then, the contours are filled according to a given rule which
+determines how points from the contours are connected between them, i.e., the
+tool path is generated. Lastly, the filled sections of each model are combined
+together, sorting them by z-coordinate to produce a complete multi-material
+manufacturing model.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/premanuf-slicing-explained.pdf}
+  %
+  \caption{Pre-Manufacturer analysis: Slicing and path generation overview}\label{fig:premanuf-slicing-explained}
+\end{figure}
+
+\subsubsection{Design}%
+\label{sec:design-premanuf}
+After refining the use cases and exploring the flow of events through them, the
+system architecture was devised, illustrated in Fig.~\ref{fig:premanuf-sysArch}:
+\begin{itemize}
+\item \textbf{User interface}: This outer layer constitutes the front-end of the
+  application and is responsible for handling all user interaction through the
+  \texttt{UI Engine}.
+\item \textbf{Inputs}: Two software components are required to handle the
+  inputs --- the \texttt{STL Reader} and the \texttt{STL Renderer}. The former
+  parses and loads the \gls{stl} model into the memory, and the latter renders
+  it on screen.
+\item \textbf{Processing}: In this layer the \emph{User} configures and runs the
+processing, which can be enabled at a specific-level (model-based) or
+generically (applied to all models). The slicing and path generation is provided by the core
+\texttt{Slic3r} which is then wrapped as a library (for runtime execution) or as
+a package (to add new functionalities, like a new path type). The configuration
+is managed by the \texttt{SP Config} component. After slicing and generating the
+paths, these are merged into a single model by the \texttt{Path Merger}
+component through tag annotation.
+\item \textbf{Outputs}: The \texttt{SVG Exporter} and \texttt{SVG Renderer},
+  respectively, export and render the manufacturing model into the screen.
+\end{itemize}
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/premanuf-SysArch.pdf}
+  %
+  \caption{Pre-Manufacturer design: system architecture}\label{fig:premanuf-sysArch}
+\end{figure}
+
+Following the devised system architecture, the sequence diagrams were designed to
+capture the flow of events throughout the software execution as a response to
+an use case triggering. Then, the class diagrams were devised, constituting the
+blueprints for implementation.
+
+\subsubsection{Implementation}%
+\label{sec:implementation-premanuf}
+The \emph{Pre-Manufacturer} was implemented in C++11 using the \texttt{Qt}
+framework for the \gls{ui} development.
+
+Firstly, a bug was fixed and patched in the slicing algorithm of
+\texttt{Slic3r}, namely \texttt{infill extrusion width}
+was ill-defined, causing the minimum filling spacing to be 0, yielding
+program crashes and floating-point exceptions thrown.
+A bug report, together with a pull-request for a fix, was issued to the upstream repository --- \texttt{Slic3r} --- and successfully merged. 
+
+The merging of the models was implemented by pushing them into a container after
+slicing and sorting the layers by \emph{z} value. Furthermore, the exporting was subdivided in header, footer and body,
+with the former being performed for the largest, and the latter all layers
+consecutively.
+
+The preservation of models' coordinates was accomplished in the similar manner,
+calculating the models' coordinates as relative to the one with the largest
+bounding box.
+
+For the toolpaths export and custom tagging, a new function was created, which builds the toolpaths from polylines
+tags, as a replacement for the previous implementation, which used \lstinline{<path d= M ... z>} and specific tokens to start and close the path,
+namely \texttt{M} and \texttt{z}\cite{svgpath2018}.
+
+Also, for custom tagging it were included the following tags to specify
+important informations both to \emph{EzCAD} software and for post-processor,
+namely:
+\begin{itemize}
+\item \lstinline{id}: based on the following naming structure --- \lstinline{l#_m#_h#},
+  where \lstinline{l}, \lstinline{m}, and \lstinline{h}, represent the layer's ID, material
+  and height, repectively;
+\item \lstinline{slic3r:z}: layer's \texttt{z}-value (absolute)
+\item \lstinline{slic3r:slice-z}: layer's slicing \texttt{z}-value --- height where
+  the slicing is performed.
+\item \lstinline{slic3r:mat}: material index
+\item \lstinline{slic3r:layer-height}: layer's height
+\item \lstinline{polyline points}: path trajectory points
+\item \lstinline{style}: contains the meta information about the path's filling,
+  such as color, width, and type.
+\end{itemize}
+
+An example of the syntax of the \emph{.svg} output file is presented in
+listing~\ref{lst:syntax-output}.
+%
+\begin{lstlisting}[language=xml, basicstyle=\tiny, caption=Custom syntax example, label=lst:syntax-output]
+  <g id="l0_m1_h350" slic3r:z="0.3500" slic3r:slice-z="0.1750" slic3r:layer-height="0.3500" slic3r:mat="1">
+  <polyline points= "..." style="fill: none; stroke: white; stroke-width: 0.1; fill-type: evenodd" slic3r:type="internal-infill" />
+\end{lstlisting}
+
+Fig.~\ref{fig:premanuf-ui-3D} through Fig.~\ref{fig:premanuf-ui-manuf}
+illustrate the \emph{Pre-Manufacturer} application's implementation outcome. The \glspl{stl} models are
+successfully added, loaded and rendered in the canvas, with the enclosing
+bounding volume represented in black (Fig.~\ref{fig:premanuf-ui-3D}). The
+slicing and path configuration can be used generically --- same parameters for
+all models --- or specifically --- different parameters for each model (Fig.~\ref{fig:premanuf-ui-config}). This is
+also an improvement over the \texttt{Slic3r}'s existing codebase. Lastly, it can be asserted
+that the manufacturing file is successfully generated and rendered in the canvas
+(Fig.~\ref{fig:premanuf-ui-manuf}). Additionally, the geometry and statistics of
+each layer can be visualised.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./img/premanuf-ui-3D.png}
+  \caption{Pre-Manufacturer implementation: 3D models loading and rendering}%
+  \label{fig:premanuf-ui-3D}
+\end{figure}
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./img/premanuf-ui-config.png}
+  \caption{Pre-Manufacturer implementation: Slicing and path generation configuration}%
+  \label{fig:premanuf-ui-config}
+\end{figure}
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./img/premanuf-ui-manuf.png}
+  \caption{Pre-Manufacturer implementation: Manufacturing model generation and visualization}%
+  \label{fig:premanuf-ui-manuf}
+\end{figure}
+
+Looking into the configuration modes in more depth, the \texttt{User} can select
+between a generic configuration (Fig.~\ref{fig:premanuf-ui-config}) ---
+provided by the configuration file --- or a specific configuration ---
+supporting different path attributes for each of the model being processed
+(Fig.~\ref{fig:premanuf-ui-cfg-specific-full}). Fig.~\ref{fig:premanuf-ui-cfg-specific}
+shows the slicing and path generation parameters for each of the models, namely,
+different fill angles, fill densities, fill patterns and infill extrusion
+widths. The results are shown in Fig.~\ref{fig:premanuf-ui-cfg-out-layer5}
+and Fig.~\ref{fig:premanuf-ui-cfg-out-layer6}, where it can be clearly seen that
+the different parameters were applied individually to each input model.
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{1.0\textwidth}
+  \centering
+  \includegraphics[width=0.5\textwidth]{./img/premanuf-test-torusDisk-cfg-specific.png}
+  \caption{Slicing and path generation configuration for each model}%
+  \label{fig:premanuf-ui-cfg-specific}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/premanuf-test-torusDisk-out-layer5.png}
+  \caption{Model 1}%
+  \label{fig:premanuf-ui-cfg-out-layer5}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/premanuf-test-torusDisk-out-layer6.png}
+  \caption{Model 2}%
+  \label{fig:premanuf-ui-cfg-out-layer6}
+  \end{subfigure}
+  % 
+  \caption{Pre-Manufacturer implementation: Slicing and path generation specific
+  configuration}%
+  \label{fig:premanuf-ui-cfg-specific-full}
+\end{figure}
+
+
+\subsubsection{Testing and Validation}%
+\label{sec:testing-premanuf}
+The required features were successfully implemented.
+However, further testing and analysis is required to validate the
+\texttt{Premanufacturer}'s \gls{sw} application, namely, regarding compatibility
+with the workflow, the suitability of the path topologies generated, its
+behaviour with different input models, and the computational resources used.
+
+\paragraph{Compatibility between manufacturing file and workflow}
+To
+validate the compatibility of the manufacturing file with the downstream
+workflow, the output file was imported to the EzCAD software --- the native software for
+laser engraving and marking (Fig.~\ref{fig:isohypse-ezcad}.
+It can be seen that now layers contain the toolpath information
+with preservation of coordinates and that this file can be successfully imported
+by \emph{EzCAD} preserving the layer naming scheme and geometrical data.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./img/isohypse-layers-ezcad.png}
+  \caption{Manufacturing file is successfully loaded by EzCAD software}%
+  \label{fig:isohypse-ezcad}
+\end{figure}
+
+\paragraph{Suitability of the path topologies}
+As aforementioned, the slicer and path generator library used is based on 3D
+printing. Thus, it is necessary to understand if the paths generated can be
+applied to the \gls{3dmmlpbf} process.
+
+The slicer supports different path topologies, namely:
+\begin{itemize}
+\item \textbf{Rectilinear}: rectilinear, aligned rectilinear, grid, triangles,
+  stars, and cubic;
+\item \textbf{Planar}: archimedean chords, Hilbert curve, and octagram spiral;
+\item \textbf{Honeycomb}: honeycomb, and 3D honeycomb;
+\item \textbf{Others}: concentric, and gyroid
+\end{itemize}
+
+The \texttt{.stl} input models used for the testing were: \texttt{mod1.stl} ---
+a torus, simply called a \emph{ring}; \texttt{mod2.stl} --- a disk (see fig.~\ref{fig:models-stl}). These models
+aim to represent two different materials and the simplest of the cases of
+multi-material processing: filled and unfilled regions without overlapping, but
+close enough that the bonding can occur via welding.
+\begin{figure}[!hbt]
+  \centering
+ \includegraphics[width=0.6\textwidth]{./img/models-stl.png} 
+  \caption[Input \emph{.stl} models]{Input \emph{.stl} models: mod1.stl (left);
+    mod2.stl (center); assembled (right)}%
+\label{fig:models-stl}
+\end{figure}
+
+As a common denominator between the tests, the following main parameters were
+fixed (see Table~\ref{tab:path-topologies-param}): fill angle, fill density and
+infill extrusion width. Fig.~\ref{fig:path-topologies-test} lists the different
+topologies, showcasing that the slicer + path generator is able to generate the
+different topologies for multi-material components.
+
+\begin{table}[!hbt]
+\centering
+\caption{Path topology main fixed parameters}%
+\label{tab:path-topologies-param}
+\resizebox{0.4\textwidth}{!}{%
+\begin{tabular}{lll}
+\hline
+fill angle & fill density & infill extrusion width \\ \hline
+45$^{\circ}$ & 15 \% & 0.1 mm \\ \hline
+\end{tabular}
+}
+\end{table}
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/pathTopologies.pdf}
+  \caption{Path topologies list and examples}%
+\label{fig:path-topologies-test}
+\end{figure}
+
+To test the path generation parameters the same 3D models were used and the path
+topology selected was the rectilinear one. Only one material is shown, as
+the slicing and path generation for multi material was previously validated.
+The following
+parameters were varied: fill angle, fill density, infill extrusion width.
+
+Fig.~\ref{fig:fill-angle-test} shows the successfull variation of the fill angle
+from 0 to 90 degrees, which can be used to target different thermal affected
+regions of the component. 
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/fill-angle-test.pdf}
+  \caption{Fill angle test: 0$^{\circ}$ to 90$^{\circ}$}%
+\label{fig:fill-angle-test}
+\end{figure}
+
+Fig.~\ref{fig:fill-density-test} illustrates the fill density's variation from
+1\% to 40\%. For very low fill densities,
+e.g. 1--5\%, the slice is only partially filled; increasing the fill density
+from 20 to 40\%, the slice is almost completely filled. These higher fill
+densities (40\% for the models in analysis) can be helpful in enabling the
+porting of the 3D printing path topologies to \gls{lpbf} ones, as the reduced
+distance between fillings (fill spacing) helps to promote powder melting in
+small gaps.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/fill-density-test.png}
+  \caption{Fill density test: 1\% to 40\%}%
+\label{fig:fill-density-test}
+\end{figure}
+
+Fig.~\ref{fig:infill-test} illustrates the variation of the infill extrusion
+width from 0.01 to 0.5 millimeters. 
+For very low extrusion widths,
+e.g. 0.01--0.02 mm, the slice is almost completely filled, which can be
+beneficial for \gls{lpbf} paths. For higher infill extrusions widths, e.g. 0.5
+mm, the part is only partially filled.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/infill-extrusion-width-test.png}
+  \caption{Infill extrusion width test: 0.01--0.5 mm}%
+\label{fig:infill-test}
+\end{figure}
+
+Although related, fill density and infill extrusion width are conceptually
+different: infill extrusion width is the filling width, which can be lowered to
+mimic the laser marking path width; fill density is the amount of filling paths
+per slice's area.
+
+After the assessment and analysis of the path topologies for 3D printing and its main
+parameters, one must address its shortcomings when applied to the \gls{lpbf}
+process:
+\begin{enumerate}
+\item The path generation with \gls{svg} export is based on the \gls{sla}
+  technology. Thus, the bottom and top layers are not filled --- only contours
+  show up (see Fig.~\ref{fig:test-3DPaths-layer1}). Also, intermediate layers only have filling --- they lack
+  perimeters (see Fig.~\ref{fig:test-3DPaths-layerMiddle}). Both these aspects are critical for \gls{lpbf} trajectories.
+\item The filling has bridges between endpoints, i.e., the trajectory is fully
+  connected (see Fig.~\ref{fig:test-3DPaths-layerMiddle}). However, common laser paths are not connected.
+\item Filling has width (internal extrusion width) (see Fig.~\ref{fig:test-3DPaths-layerMiddle}). This causes the laser paths
+  to be doubled, because it uses the external perimeters of the infill to set
+  the trajectory.
+\item 3D printing filling paths aim to minimize the travel distance of the
+  extruder, while the laser paths may require a different manufacturing order:
+  e.g., paths always starting from the leftmost intersection points and reaching
+  the rightmost ones.
+\end{enumerate}
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-3DPaths-layer1}
+  \caption{Top layer is not filled}%
+  \label{fig:test-3DPaths-layer1}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-3DPaths-layerMiddle}
+  \caption{Intermediate layers lack perimeters, they are fully connected and
+    have width}%
+  \label{fig:test-3DPaths-layerMiddle}
+  \end{subfigure}
+  % 
+  \caption{Shortcomings of 3D Printing paths}%
+  \label{fig:shortcomings-3DPrinting-paths}
+\end{figure}
+
+Some patches were applied to solve these issues (see Fig.~\ref{fig:patches-3D-lpbf}). A configuration option was added to allow the \texttt{User} to
+choose between connected and disjoint paths
+(Fig.~\ref{fig:test-connectPaths-config}). The results are yielded in
+Fig.~\ref{fig:test-connectPaths-notConn} and
+Fig.~\ref{fig:test-connectPaths-Conn}. It can be seen that the top layer is now
+filled with a disjoint path and for other material with a connected path and
+with perimeters. Furthermore, because the paths can be disjoint, they can be
+used with a specific orientation in mind, i.e., systematically starting from
+left and going to right. Finally, and although not optimal, the filling width can be reduced to match the
+manufacturing requirements.
+\underline{Hence, the modified path topologies can be applied to the \gls{3dmmlpbf}'s process}.
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{1.0\textwidth}
+  \centering
+  \includegraphics[width=0.4\textwidth]{./img/test-connectPaths-config.png}
+  \caption{Connect Paths configuration option added}%
+  \label{fig:test-connectPaths-config}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-connectPaths-notConn.png}
+  \caption{Top layer is filled with a disjoint path with exterior perimeters}%
+  \label{fig:test-connectPaths-notConn}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-connectPaths-Conn.png}
+  \caption{Intermediate layer is filled with a connected path with exterior perimeters}%
+  \label{fig:test-connectPaths-Conn}
+  \end{subfigure}
+  % 
+  \caption{Patches to make 3D printing paths comply with the \gls{lpbf} process}%
+  \label{fig:patches-3D-lpbf}
+\end{figure}
+
+\paragraph{Input models}
+It is important to assess the \emph{Pre-Manufacturer}'s behaviour when processing different input models:
+\begin{itemize}
+\item \emph{Cross and cube}: a bi-material component with an
+internal cavity belonging to one material and the external component to another;
+this is a good example of a multi-material component that is only feasible via
+additive manufacturing (Fig.~\ref{fig:cross-cube-model});
+\item \emph{3 cubes}: a three material component, with each cube being enclosed
+  by an outer one. Once again, this a typical example of a component only
+  feasible using \gls{am} (Fig.~\ref{fig:3cubes-model}).
+\end{itemize}
+
+Furthermore, the integrity of the \texttt{.stl} file format
+produced and the agnostic behaviour of the slicer and path generator in respect
+of the inputs was tested by using a different 3D CAD modelling tool --- FreeCAD
+--- an open source 3D parametric modeller~\cite{freecad}, as well as \texttt{Solidworks}.
+
+\subparagraph{Cross and Cube}
+Fig.~\ref{fig:cross-cube-model} illustrates the cross and cube 3D model.
+The component was exported as two \texttt{.stl} files
+corresponding to each material and loaded into the \texttt{Pre-Manufacturer},
+for slicing and path generation, using the default values (see Fig.~\ref{fig:cross-cube-cfg}).
+Fig.~\ref{fig:cross-cube-test} shows the results, with both sub-components being sliced and filled
+with the rectilinear pattern in consecutive layers and for different materials
+(Fig.~\ref{fig:cross-cube-mat1} and Fig.~\ref{fig:cross-cube-mat2}). Thus, the slicer and path generator performs well with a different
+input model and is agnostic about the origin of the \texttt{.stl} input files.
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{0.8\textwidth}
+  \centering
+  \includegraphics[width=0.4\textwidth]{./img/cross-cube.png}
+  \caption{Cross and Cube 3D model}%
+  \label{fig:cross-cube-model}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.8\textwidth]{./img/cross-cube-cfg.png}
+  \caption{Slicing and path generation setup}%
+  \label{fig:cross-cube-cfg}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.7\textwidth]{./img/cross-cube-main.png}
+  \caption{Output: main view}%
+  \label{fig:cross-cube-main}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cross-cube-mat1.png}
+  \caption{Output: material 1}%
+  \label{fig:cross-cube-mat1}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/cross-cube-mat2.png}
+  \caption{Output: material 2}%
+  \label{fig:cross-cube-mat2}
+\end{subfigure}
+%
+  % 
+  \caption{Pre-Manufacturer test: Cross and Cube input model}%
+  \label{fig:cross-cube-test}
+\end{figure}
+
+\subparagraph{3 Cubes}
+Fig.~\ref{fig:3cubes-model} illustrates the \emph{3 cubes} 3D model. The component was exported as
+three \texttt{.stl} files corresponding to each material and loaded into the
+\texttt{Pre-Manufacturer} for slicing and path
+generation (see Fig~\ref{fig:3cubes-cfg}). Fig.\ref{fig:3cubes-test} shows the results, with all sub-components being sliced and filled
+with the rectilinear pattern in consecutive layers corresponding to the three
+materials.
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.6\textwidth]{./img/3cubes.png}
+  \caption{3 cubes 3D model}%
+  \label{fig:3cubes-model}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{./img/3cubes-cfg.png}
+  \caption{Slicing and path generation setup}%
+  \label{fig:3cubes-cfg}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.7\textwidth]{./img/3cubes-main.png}
+  \caption{Output: main view}%
+  \label{fig:3cubes-main}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/3cubes-mat1.png}
+  \caption{Output: material 1}%
+  \label{fig:3cubes-mat1}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/3cubes-mat2.png}
+  \caption{Output: material 2}%
+  \label{fig:3cubes-mat2}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/3cubes-mat3.png}
+  \caption{Output: material 3}%
+  \label{fig:3cubes-mat3}
+\end{subfigure}
+%
+  % 
+  \caption{Pre-Manufacturer test: 3 cubes input model}%
+  \label{fig:3cubes-test}
+\end{figure}
+
+Listing~\ref{lst:3cubes} shows an excerpt of the generated \texttt{.svg} file, where it can be seen that the slicing and path
+generation occurred for all three materials.
+
+Once again, the slicer and path generator performs well with a different
+input model and is agnostic about the origin of the \texttt{.stl} input
+files. Furthermore, it is capable of handling models with more than two
+materials.
+
+%src: https://tex.stackexchange.com/a/468681
+\begin{lstlisting}[language=xml, basicstyle=\tiny, caption=3cubes.svg (excerpt), label=lst:3cubes]
+  <g id="L0_M1_H350" slic3r:z="0.3500" slic3r:slice-z="0.1750" slic3r:layer-height="0.3500" slic3r:mat="1">
+  <polyline points= "19.9854,0.115674 19.8843,0.014645 19.8136,0.085356 19.9146,0.186385 19.9854,0.115674 " style="fill: none; stroke: blue; stroke-width: 0.1; fill-type: evenodd" slic3r:type="internal-infill" />
+  <polyline points= "..." style="fill: none; stroke: blue; stroke-width: 0.1; fill-type: evenodd" slic3r:type="internal-infill" />
+  <polyline points= "20,0 0,0 0,20 20,20 20,0 " style="fill: none; stroke: blue; stroke-width: 0.1; fill-type: evenodd" slic3r:type="" />
+  </g>
+  <g id="L0_M2_H350" slic3r:z="0.3500" slic3r:slice-z="0.1750" slic3r:layer-height="0.3500" slic3r:mat="2">
+  <polyline points= "14.9854,5.77252 14.2275,5.01464 14.1568,5.08536 14.9146,5.84323 14.9854,5.77252 " style="fill: none; stroke: red; stroke-width: 0.1; fill-type: evenodd" slic3r:type="internal-infill" />
+  <polyline points= "... " style="fill: none; stroke: red; stroke-width: 0.1; fill-type: evenodd" slic3r:type="internal-infill" />
+  <polyline points= "15,5 0,5 0,20 15,20 15,5 " style="fill: none; stroke: red; stroke-width: 0.1; fill-type: evenodd" slic3r:type="" />
+  </g>
+  <g id="L0_M3_H350" slic3r:z="0.3500" slic3r:slice-z="0.1750" slic3r:layer-height="0.3500" slic3r:mat="3">
+  <polyline points= "9.98535,10.4866 9.51344,10.0146 9.44272,10.0854 9.91464,10.5573 9.98535,10.4866 " style="fill: none; stroke: orange; stroke-width: 0.1; fill-type: evenodd" slic3r:type="internal-infill" />
+  <polyline points= "... " style="fill: none; stroke: orange; stroke-width: 0.1; fill-type: evenodd" slic3r:type="internal-infill" />
+  <polyline points= "10,10 0,10 0,20 10,20 10,10 " style="fill: none; stroke: orange; stroke-width: 0.1; fill-type: evenodd" slic3r:type="" />
+  </g>
+\end{lstlisting}
+
+\paragraph{Models' coordinates and different slicing parameters}
+Models' merging uses the z-coordinate for sorting the slices to be filled, and
+must obey the absolute coordinates conveyed by each \gls{stl} model. This
+means the models' coordinates must be preserved relatively to each other, while
+placing the largest bounding volume model at the bed's level ($z = 0$).
+
+Moreover, different slicing parameters can be applied individually for each
+model, such as first layer height and layer height, which can result in
+additional slices for each model. The rule is simple: if a slice from one model
+has a different z-coordinate from the other models, and this slice intersects
+them, then, this slice z-coordinate is added to the set of slices of
+these models. However, the slice added to the other models must meet their layer
+height requirements, i.e., the slice is bounded between $ slice_z \leq z \leq
+slice_z + lh/2$, where $slice_z$ is the z-coordinate of the originating model's
+slice, and $lh$ is the layer height of the destiny model's slice.
+
+One might think that the slices are purely bidimensional, as they in fact are,
+but the thickness (z-coordinate) is required for the 3D printing paths, for
+example to calculate raft layers. They are maintained here for the \gls{lpbf}'s
+process, because they convey the layer height to be manufactured, which is expected to be different from
+model to model, as each model represent a distinct material, and different
+materials have different ``penetration'' heights, i.e., different wavelenght
+absorption rates.
+
+To test this, a cylinder and cross 3D model was sliced with different models
+coordinates and different slicing parameters. Fig.~\ref{fig:cyl-cross-model-stl}
+shows the cylinder and cross model, with the same minimum z-coordinate ($z =
+-2.50~mm$) across materials. 
+This model was then processed in the \texttt{Pre-Manufacturer} in accordance to
+the configuration shown in Fig.~\ref{fig:cyl-cross-cfg}, and the results are
+displayed in Fig.~\ref{fig:test-cyl-cross}. Thus, the referencing of the models
+to the same z-coordinate, and the same slicing parameters used across both
+materials, yielded $700$ layers (Fig.~\ref{fig:cyl-cross-main}), with
+layers combining both materials at the same z-coordinate ($z = 50 ~\mu m$), as
+illustrated by Fig.~\ref{fig:cyl-cross-layer0-mat1} and Fig.~\ref{fig:cyl-cross-layer0-mat2}.
+%
+% Figure
+%\begin{figure}[htbp!]
+%  \centering
+%  %
+%  \includegraphics[width=0.8\textwidth]{./img/test-cylCross-model-stl.png}
+%  \caption{Cylinder and Cross 3D model: FreeCAD preview}%
+%  \label{fig:cyl-cross-model-stl}
+%\end{figure}
+%
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{1.0\textwidth}
+  \centering
+  \includegraphics[width=0.8\textwidth]{./img/test-cylCross-model-stl.png}
+  \caption{FreeCAD preview}%
+  \label{fig:cyl-cross-model-stl}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{./img/test-cylCross-cfg.png}
+  \caption{Slicing and path generation setup}%
+  \label{fig:cyl-cross-cfg}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCross-svg-overview.png}
+  \caption{Output: main view}%
+  \label{fig:cyl-cross-main}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCross-layer0-mat1.png}
+  \caption{Output: Layer 0 --- material 1}%
+  \label{fig:cyl-cross-layer0-mat1}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCross-layer0-mat2.png}
+  \caption{Output: Layer 0 --- material 2}%
+  \label{fig:cyl-cross-layer0-mat2}
+\end{subfigure}
+%
+  % 
+  \caption{Pre-Manufacturer test: Cylinder and cross input model}%
+  \label{fig:test-cyl-cross}
+\end{figure}
+
+Next, the same multi-material 3D model was used, but with a slight offset in $Z$
+of $+20~\mu m$ in the cross model (Fig.~\ref{fig:cyl-crossOffset-model-stl}).
+This model was then processed in the \texttt{Pre-Manufacturer} using the same
+configuration (Fig.~\ref{fig:cyl-cross-cfg-2}), and the results are
+displayed in Fig.~\ref{fig:test-cyl-crossOffset}.
+Now, the manufacturing model contains almost 1300 layers (Fig.~\ref{fig:cyl-crossOffset-main}), nearly double. Layer
+$0$ is set at $z = 50~\mu m$ (Fig.~\ref{fig:cyl-crossOffset-layer0}) and layer
+$1$ at $z = 70~\mu m$, due to the $+20~\mu m$ offset, for both materials
+(Fig.~\ref{fig:cyl-crossOffset-layer1-mat1} and
+Fig.~\ref{fig:cyl-crossOffset-layer1-mat2}), even though the material 1 is not
+explicitly configured to be sliced at this z-coordinate.
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{0.6\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCrossOffset-model-stl.png}
+  \caption{FreeCAD preview}%
+  \label{fig:cyl-crossOffset-model-stl}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.38\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCross-cfg.png}
+  \caption{Slicing and path generation setup}%
+  \label{fig:cyl-cross-cfg-2}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCrossOffset-svg-overview.png}
+  \caption{Output: main view}%
+  \label{fig:cyl-crossOffset-main}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCrossOffset-layer0.png}
+  \caption{Output: Layer 0 --- material 1}%
+  \label{fig:cyl-crossOffset-layer0}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCrossOffset-layer1-mat1.png}
+  \caption{Output: Layer 1 --- material 1}%
+  \label{fig:cyl-crossOffset-layer1-mat1}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCrossOffset-layer1-mat2.png}
+  \caption{Output: Layer 1 --- material 2}%
+  \label{fig:cyl-crossOffset-layer1-mat2}
+\end{subfigure}
+%
+  % 
+  \caption{Pre-Manufacturer test: Cylinder and cross input model with z-offset}%
+  \label{fig:test-cyl-crossOffset}
+\end{figure}
+
+Lastly, the multi-material 3D model with a slight offset
+(Fig.~\ref{fig:cyl-crossOffset-model-stl}) was processed in the
+\texttt{Pre-Manufacturer} using different slicing parameters for each material
+(Fig.~\ref{fig:cyl-crossOffset-params-cfg}), and the results are
+displayed in Fig.~\ref{fig:test-cyl-crossOffset-params}.
+Now, the manufacturing model contains almost 1100 layers
+(Fig.~\ref{fig:cyl-crossOffset-params-main}).
+Layer
+$1$ is set at $z = 70~\mu m$ (Fig.~\ref{fig:cyl-crossOffset-params-layer1-mat1}
+and Fig.~\ref{fig:cyl-crossOffset-params-layer1-mat2}), but different layers
+heights, respectively $50$ and $100~\mu m$, because it is the second layer of
+material 1 (\emph{layer height} applies) and the first layer of material 2
+(\emph{first layer height} applies).
+%
+%The different \texttt{Z} values correspond
+%to the value the \gls{3dmmlpbf} equipment must return after producing the
+%current layer, and is also different for both cases.
+For layer 3, located at $z = 150~\mu m$, the layer height also differs, but it
+now corresponds to the layer height of each material, as illustrated in
+Fig.~\ref{fig:cyl-crossOffset-params-layer3-mat1} and
+Fig.~\ref{fig:cyl-crossOffset-params-layer3-mat2}.
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.86\textwidth]{./img/test-cylCrossOffset-params-cfg.png}
+  \caption{Slicing and path generation setup}%
+  \label{fig:cyl-crossOffset-params-cfg}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCrossOffset-params-main.png}
+  \caption{Output: main view}%
+  \label{fig:cyl-crossOffset-params-main}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCrossOffset-params-layer1-mat1.png}
+  \caption{Output: Layer 1 --- material 1}%
+  \label{fig:cyl-crossOffset-params-layer1-mat1}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCrossOffset-params-layer1-mat2.png}
+  \caption{Output: Layer 1 --- material 2}%
+  \label{fig:cyl-crossOffset-params-layer1-mat2}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCrossOffset-params-layer3-mat1.png}
+  \caption{Output: Layer 3 --- material 1}%
+  \label{fig:cyl-crossOffset-params-layer3-mat1}
+\end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/test-cylCrossOffset-params-layer3-mat2.png}
+  \caption{Output: Layer 3 --- material 2}%
+  \label{fig:cyl-crossOffset-params-layer3-mat2}
+\end{subfigure}
+%
+  % 
+  \caption[Cylinder and cross input model with z-offset and different slicing parameters]{Pre-Manufacturer test: Cylinder and cross input model with z-offset
+    and different slicing parameters}%
+  \label{fig:test-cyl-crossOffset-params}
+\end{figure}
+
+
+
+\paragraph{Computational resources}
+To analyse the slicer performance, the path generation parameters were
+maintained (see Table~\ref{tab:path-topologies-param}) and the layer height was varied from 0.025 to
+0.001 millimeters, and the number of layers, execution time, and file size were
+registered in table~\ref{tab:layer-height-test}. As can be seen, for 25
+micrometers, the number of layers is 120, taking 2.86 seconds to compute and
+yielding a file size of 1.3 MB. Decreasing the layer height, increases the
+number of layers as expected, as well as the computation time and file
+size. Even more interesting is that the slicer is capable of slicing layers with
+1 micrometer height within a reasonable amount of time (79.4 seconds), which
+excels the fabrication requirements. However, the file size is penalised as
+expected, yet, is still tolerable.
+
+\begin{table}[!hbt]
+\centering
+\caption{Layer height tests: 0.025--0.001 mm}%
+\resizebox{0.65\textwidth}{!}{%
+\label{tab:layer-height-test}
+\begin{tabular}{llll}
+\hline
+\textbf{Layer height} {[}mm{]} & \textbf{Nr. of layers} & \textbf{Computation time} {[}s{]} & \textbf{File Size} {[}kB{]} \\ \hline
+0.025 & 120 & 2.86 & 1300 \\ \hline
+0.020 & 150 & 3.84 & 1600 \\ \hline
+0.015 & 198 & 5.52 & 2100 \\ \hline
+0.010 & 298 & 7.12 & 3100 \\ \hline
+0.005 & 592 & 14.50 & 6200 \\ \hline
+0.001 & 1456 & 79.39 & 29400 \\ \hline
+\end{tabular}
+}
+\end{table}
+
+Also, it is important to understand the impact of using different path
+topologies in terms of computational resources, namely file size and execution
+time. For that purpose, the disk and torus model was processed with a layer
+height of $0.15$ mm and with the same remaining path topology parameters 
+(see Table~\ref{tab:path-topologies-param}). The fill pattern was also
+kept the same for all materials and with disjoint paths, except for \emph{3D
+  Honeycomb} and \emph{Gyroid}, where this is not possible. Furthermore, several trials were performed and
+the relevant parameters averaged.
+
+Table~\ref{tab:path-benchmark} shows the benchmarking results. The
+\underline{rectilinear} paths have roughly the same order of magnitude for
+execution time and file size, being the fastest and most compact paths.
+The \underline{planar} paths present a high disparity in execution time, with
+the \emph{Archimedean Chords} being the slowest of all paths. The file size also
+varies from low (4 MB) to medium (14 MB).
+The \underline{honeycomb} paths take roughly the same time to execute (medium)
+and have the highest file sizes (almost 30 MB for the \emph{3D Honeycomb}).
+Lastly, the \emph{Concentric} path is fast to execute but medium in size,
+whereas the \emph{Gyroid} has a medium execution time but a high file size.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{multirow}
+% \usepackage{graphicx}
+\begin{table}[!hbt]
+\centering
+\caption{Path benchmarking in terms of computational resources}%
+\label{tab:path-benchmark}
+\resizebox{0.7\textwidth}{!}{%
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\textbf{Path Class} & \textbf{Path Type} & \textbf{Time Avg {[}ms{]}} & \textbf{File Size Avg {[}MB{]}} & \textbf{Connected} \\ \midrule
+\multirow{6}{*}{\textbf{Rectilinear}} & Rectilinear         & 1011  & 2.5  & 0 \\ \cmidrule(l){2-5} 
+                                      & Aligned Rectilinear & 554   & 2.4  & 0 \\ \cmidrule(l){2-5} 
+                                      & Grid                & 569   & 2.5  & 0 \\ \cmidrule(l){2-5} 
+                                      & Triangles           & 1100  & 2.4  & 0 \\ \cmidrule(l){2-5} 
+                                      & Stars               & 1025  & 2.4  & 0 \\ \cmidrule(l){2-5} 
+                                      & Cubic               & 1194  & 2.4  & 0 \\ \midrule
+\multirow{3}{*}{\textbf{Planar}}      & Archimedean Chords  & 14158 & 14.4 & 0 \\ \cmidrule(l){2-5} 
+                                      & Hilbert Curve       & 5130  & 14.7 & 0 \\ \cmidrule(l){2-5} 
+                                      & Octagram Spiral     & 1714  & 4.0  & 0 \\ \midrule
+\multirow{2}{*}{\textbf{Honeycomb}}   & Honeycomb           & 7243  & 22.8 & 0 \\ \cmidrule(l){2-5} 
+                                      & 3D Honeycomb        & 8545  & 29.9 & 1 \\ \midrule
+\multirow{2}{*}{\textbf{Others}}      & Concentric          & 3283  & 9.4  & 0 \\ \cmidrule(l){2-5} 
+                                      & Gyroid              & 6897  & 22.5 & 1 \\ \bottomrule
+\end{tabular}%
+}
+\end{table}
+
+Since the processing is done offline, i.e., without connection to the actual
+manufacturing, the values displayed here are not critical. The execution time is
+fairly low, except for the \emph{Archimedean Chords}. The file size, on other
+hand, varies greatly (2 to 30 MB), and is a result of the output format used ---
+\gls{svg} is an \gls{xml}-based file, with focus on user readibility, rather
+than on compactness. This is a trade-off that must be assessed in the future to
+clarify if a new file format is required. Nonetheless, the impact of the file
+size is minimized, because it is an intermediate representation, i.e., it is
+not sent directly to the machine.
+
+\paragraph{Validation}
+Thus, from the implemented \underline{Pre-Manufacturer} software component is now possible to produce toolpaths from
+multiple 3D models (corresponding to multiple materials) into a single file,
+encoding geometrical and material info, that can be readily
+used from the laser software and the \emph{Manufacturer}'s software.
+The software is available online~\cite{repoPremanuf} (see Fig.~\ref{fig:repoPremanuf}) and released
+under the AGPL v3 licence.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.7\textwidth]{./img/repo-preManuf.png}
+  %
+    \caption{3DMMLPBF Pre-Manufacturer repository~\cite{repoPremanuf}}%
+    \label{fig:repoPremanuf}
+\end{figure}
+
+%TABLE WITH FEATURES
+
+\subsection{Manufacturer}%
+\label{sec:manufacturer}
+The \emph{Manufacturer} software is divided into the \textbf{Post-Processor} and
+\textbf{Printer} software packages.
+
+The \emph{Post-Processor}'s goal is the mapping of the relevant process parameters,
+like material and manufacturing ones, to the geometrical information pertaining
+to the scan paths, adding the process specifics into the manufacturing workflow
+to obtain produced parts with the required characteristics.
+The relevant manufacturing parameters should be pulled from the respective
+database, namely \emph{material} and \emph{process}. However, in the initial
+stage, their goal is to serve as a guideline with the end-user being the
+ultimate responsible for their assignment.
+
+The \emph{Printer} commands the \gls{3dmmlpbf} machine and manages the
+communications required to perform the actual manufacturing.
+
+Both packages are wrapped into a single \gls{ui}, thus, for the sake of
+simplicity, they will be addressed simultaneously, following the waterfall
+methodology.
+
+\subsubsection{Requirements \& constraints}%
+\label{sec:requ--constr-manuf}
+Table~\ref{tab:req-const-postProc-printer} lists the requirements and
+constraints for the \emph{Post-Processor} and the \emph{Printer}.
+
+The main
+requirements for the \emph{Post-Processor} are: loading the manufacturing model
+and render it; map the manufacturing paths to process parameters (e.g., through
+a pen) and provide the visual feedback (e.g., changing the color associated to
+the pen); and sort layers by
+different criteria, e.g., layer's ID, layer's number, material, and pen. On the other hand,
+process mapping is bounded by the \emph{EzCAD} \gls{sdk}.
+
+Regarding the \emph{Printer}, its main requirements are: commanding the
+\gls{3dmmlpbf} machine, supporting the calibration, powder filling, laser
+testing and marking, and the actual manufacturing; managing all communications
+required for manufacturing; ensuring safety mechanisms to protect the
+\emph{User}. As a constraint, laser control is also bounded by the \emph{EzCAD} \gls{sdk}.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[!hbt]
+\centering
+\caption{Requirements and constraints for the Post-Processor and Printer software packages}%
+\label{tab:req-const-postProc-printer}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lll@{}}
+\cmidrule(l){2-3}
+ &
+  \multicolumn{1}{c}{\textbf{Post-Processor}} &
+  \multicolumn{1}{c}{\textbf{Printer}} \\ \midrule
+\textbf{Requirements} &
+  \begin{tabular}[c]{@{}l@{}}- Load manufacturing model and render it\\ - Map the manufacturing paths to process parameters\\ - Provide visual feedback of the mapping\\ - Sort layers by different criteria: ID, number, \\   material, pen\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}- Command the 3DMMLPBF machine: calibration, \\   powder filling, laser testing and marking, printing\\ - Manage all communications required for \\   manufacturing\\ - Ensure safety mechanisms to protect the User\end{tabular} \\ \midrule
+\textbf{Constraints} &
+  \begin{tabular}[c]{@{}l@{}}- Process mapping is bounded to the EzCAD SDK\\ - Limited time\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}- Laser control is bounded to the EzCAD SDK\\ - Limited time\end{tabular} \\ \bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\subsubsection{Analysis}%
+\label{sec:analysis-manuf}
+Fig.~\ref{fig:manuf-usecases} illustrates the \emph{Manufacturer}'s use cases,
+specifying the required high-level functionalities for the two software packages
+--- \emph{Post-Processor} and \emph{Printer}. There are three actors interfacing
+the system: \emph{User}, \emph{\gls{3dmmlpbf} machine}, and \emph{Laser}.
+
+In the
+\emph{Post-Processor}, the \emph{User} can load and render the geometry file
+(manufacturing model), view the part's and layers' statistics, sort layers by
+criteria, setup the manufacturing parameters, and map the manufacturing
+parameters to the geometry.
+
+In the \emph{Printer}, the \emph{User} can manage the communications and the
+manufacturing. The communications management comprise the machine and lasers'
+network. The \emph{User} can select the communication port, connect or
+disconnect the machine. On the other hand, the \emph{User} can also add other
+lasers, besides the current one, to the network, enabling multi-material
+fabrication using multiple lasers. Regarding the manufacturing, the \emph{User}
+can: calibrate the machine, i.e., calibrate each axis individually and setup the
+machine parameters; manage the laser actuation --- configure the laser
+parameters, and preview, test, and stop marking; manage (run, pause, stop) the
+actual manufacturing. Additionally, the \emph{User} can export data for the
+subsequent analysis and import by the \texttt{Post-Manufacturer}, namely the
+manufacturing information and a log file with process's control information.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/manuf-UseCases.pdf}
+  %
+  \caption{Manufacturer analysis: use cases}\label{fig:manuf-usecases}
+\end{figure}
+
+Next, the interactions between objects were defined and use cases were mapped to
+objects with sequence diagrams to describe the internal behaviour of the system,
+for each use case.
+
+Fig.~\ref{fig:post-proc-seq-diag-loadGeomFile} illustrates, as an example, the
+sequence diagram for the \emph{LoadGeometryFile} use case.
+The \emph{User} presses the \emph{Geometry file button}, which is captured by
+its control, triggering the creation of the \emph{Select Geometry File Dialog}.
+A file list is presented to the \emph{User}, which selects a geometry file. The
+file is loaded and the dialog is \emph{destroyed}. Then, the filename is
+displayed in the \gls{gui}, indicating to the \emph{User} the success of the
+operation. Lastly, the relevant information are presented to the user namely:
+filename, layer count, material count and layers list and the graphical preview
+of the file is displayed.
+% 
+\begin{figure}[!hbt]
+  \centering \includegraphics[width=1.0\textwidth]{./img/post-proc-seq-diag-loadGeomFile.png}
+  \caption{Sequence diagram of the LoadGeometryFile use case}\label{fig:post-proc-seq-diag-loadGeomFile}
+\end{figure}
+%
+
+\subsubsection{Design}%
+\label{sec:design-manuf}
+Fig.~\ref{fig:manuf-SysArch} depicts the \emph{Manufacturer}'s system architecture:
+\begin{itemize}
+\item \textbf{User interface}: this outer layer constitutes the front-end of the
+  application and is responsible for handling all user interaction through the
+  \texttt{UI Engine}.
+\item \textbf{Inputs}: the inputs are handled by the \emph{Post-Processor} to
+  read and render the manufacturing geometry (\texttt{Geom Reader} and
+  \texttt{Geom Render}) and also to manipulate it (\texttt{Layer Manager}). The
+  \texttt{Pen Manager} manages the available pens, which are used as an
+  abstraction to map the process parameters to the geometry.
+\item \textbf{Manufacturing}: The \texttt{Laser Manager} handles the laser
+  configuration (\texttt{Param Manager}) and all laser
+  requests to preview (\texttt{Preview Entity}) and mark an entity
+  (\texttt{Mark Entity}) or multiple entities (\texttt{Mark Entity Queue
+    Manager}). The distinction between the marking components is required due to
+  the fact that these entities can be manufactured by different lasers, which
+  demands a parallelized architecture (multithreaded).
+  %
+  The \texttt{Calib Manager} handles the machine calibration and the
+  \texttt{Output Exporter} is responsible for logging the manufacturing
+  information for further analysis into a file.
+  %
+  The \texttt{Manuf Manager} handles the manufacturing procedure, issuing the
+  commands for the machine and laser actuation for each layer until the
+  end-of-file is reached or the procedure is halted (\emph{User} pauses/stops the process or an error occcurs).
+\item \textbf{Communication}: The \emph{Manufacturer} application communicates
+  with the machine (\texttt{Mach Comm Manager}) and the laser(s) (\texttt{Laser
+    Comm Manager}). The \emph{Manufacturer}--\emph{Machine} communication is
+  point-to-point, thus, a serial link was adopted using the RS232/RS485
+  protocol (\gls{uart}). The communication between the \emph{Manufacturer} and
+  the lasers is multi-point, thus, a client-server model was established using
+  the \gls{tcp-ip} protocol for delivery guarantees: the master laser, connected
+  to the machine and one laser, requests (client) entity marking from another
+  laser (server).
+  %
+  Additionally, a fixed-size message protocol was devised to guarantee
+  determinism and ease parsing, comprised of the command, arguments, payload and
+  a validation (\texttt{ACK}). This protocol is generic and was applied on top
+  of both communications (laser and machine).
+\end{itemize}
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/manuf-SysArch.pdf}
+  %
+  \caption{Manufacturer design: system architecture}\label{fig:manuf-SysArch}
+\end{figure}
+
+Next, the sequence diagrams and its flow of events were analysed, yielding a
+viable solution --- through algorithmic design --- and a static architecture ---
+a class diagram.
+
+For the algorithm design, two main tools were used: pseudocode and state machine
+diagrams for threads design.
+
+Algorithm~\ref{alg:chooseFile} depicts the pseudocode for the \emph{Choose File}
+use case. In short, a dialog is presented to the \emph{User} to select an
+\emph{EzCAD} file. If the file is successfully open, it is loaded. Then, the
+layers are \emph{filled in} and its relevant attributes retrieved. Lastly, the
+\gls{gui} refresh is done and the \emph{pens} are generated based on the layer's
+material.
+
+The design process --- i.e., the pseudocode elaboration --- was repeated to all
+of the aforementioned use cases. 
+% 
+\begin{algorithm}[!hbt]
+  \caption{Choose File}\label{alg:chooseFile}
+  \begin{algorithmic}[1] % The nr tells where the line numbering should start
+    \Require~User pressed the Choose File button
+    % \Variables%
+    % \State~$A$: string
+    % \EndVariables%
+    \Procedure{OnSelectFile}{\null}
+    % 
+    % ======== Local Variable definition
+    \Variables%
+    \State~$dlg$: FileDialog
+    \State~$fname$: string
+    \State~$err, layerCount$: integer
+    \State~$layer$: Layer%
+    \State~$layers$: vector of Layer%
+    \EndVariables%
+    % ==============================
+    % ============= Body
+    \State~$dlg \gets $ \Call{FileDialog}{`EzCAD File`}
+    % \Label~\texttt{Marker:}
+    \If{$dlg = NULL$}
+    % \State~PRINT(`Could not create dialog`)%
+    \State~$PRINT(`Could~not~create~dialog`)$%
+    \State~$exit$%
+    \EndIf%
+    \State~$fname \gets $\Call{dlg.getPathName}{\null}%
+    % Open File
+    \State~$err \gets $\Call{loadFile}{\null}%
+    \If{$err \not= SUCCESS$}
+    \State~$PRINT(`Unable~to~open~file`)$%
+    \State~$exit$%
+    \EndIf%
+    % Get layers
+    \State~$layerCount \gets $\Call{getLayerCount}{\null}%
+    \ForAll{$layer$ in $layers$}
+    \State~\Call{getLayerInfo}{layer}\Comment~{get layer's info:
+      name, dimensions}%
+    \State~$layers[] \gets layer$%
+    \EndFor%
+    % Paint canvas
+    \State~\Call{PaintCanvas}{$layers[0]$}\Comment~{Draw first layer to
+      screen}
+    % Fill UI elems
+    \State~\Call{FillTable}{\null}\Comment~{Fill Table with layers' info}
+    \State~\Call{FillCountBar}{\null}\Comment~{Fill Bar with layers and
+      material count}
+    \State~\Call{updatePosBar}{\null}\Comment~{Update Bar with first layer
+      position and dimensions}
+    \State~\Call{generatePens}{\null}\Comment~{generate pens based on layer's
+      material}
+    \EndProcedure%
+  \end{algorithmic}
+\end{algorithm}
+
+The state-machine diagrams are useful to represent deterministic behaviour in
+software, which is fundamental to increase its robustness. As aforementioned,
+the \texttt{Manufacturer} application is event-driven and multithreaded, mainly
+for the following reasons: communications's transactions are executed
+asynchronously, i.e., there is no prediction of when the next packet of data
+will arrive; the laser management relies on the \emph{EzCAD} \gls{api} which is
+implicitly asynchronous, e.g., if an entity is being currently marked, the
+\emph{User} must be able to stop it immediately if something goes wrong; the
+actual manufacturing consumes data from communication sources and produces new
+data to run the laser and the machine, and, as both are asynchronous, requires
+it to operate in the same manner.
+
+Fig.~\ref{fig:threadManuf-sm} illustrates the state-machine diagram for the
+\texttt{Manuf} thread. It consists of nine main states:
+\begin{itemize}
+\item \textbf{Init}: this is the initial state. The \emph{EzCAD} library handler
+  is configured, and if everything works well, it transits to the \texttt{Idle}
+  state, otherwise it goes to the \texttt{Error} state.
+\item \textbf{Idle}: this is default state where the thread waits for incoming
+  requests.
+\item \textbf{ManufLayer}: if a \texttt{newID} event is posted, then this state is
+  triggered. If the last layer ID was manufactured, then request the machine to
+  perform the cleanup (recover powders). Otherwise, the \gls{ui} is updated with
+  new layer ID's information. If the previous layer's ID material is the same as
+  the new one, then the bed does not need to descend, otherwise yes. Then, the
+  command for layer processing is issued for the machine (via the communications
+  layer).
+\item \textbf{RunLaserEntity}: After recoating is complete, a request is issued to
+  mark the current layer's ID, which will be handled by the
+  \texttt{Mark Entity Queue}'s thread and dispatched for marking by the
+  \texttt{Mark Entity} thread. When the current layer's ID is complete, the
+  \texttt{newID} event will be posted and \texttt{Manuf Layer} will take over and
+  continue to drive the manufacturing.
+\item \textbf{RequestStop}: If the \emph{User} pressed the \emph{Stop} button,
+  a request must be submitted to the \texttt{Mark Entity Queue}'s thread to stop
+  the laser, and another one must be submitted to the machine by issuing the
+  stop command, dispatched by the communications layer.
+\item \textbf{Stop}: After the machine and the laser acknowledged everything was
+  stopped, we wait for the \texttt{restarted} event to go to \texttt{Idle}.
+\item \textbf{Cleanup}: After completing the manufacturing of the last layer,
+  the cleanup procedure is triggering by issuing the command \texttt{Aspirate}
+  to the machine, containing the material number to collect. 
+\item \textbf{End}: After cleanup is performed, manufacturing is completed, so
+  we wait for the \texttt{restarted} event to start a new manufacturing
+  procedure.
+\item \textbf{Error}: If an error occcurs, this state is triggered, and the
+  message will be dispatched to the \texttt{UI}.
+\end{itemize}
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/threadManuf-sm.eps}
+  \caption{Manufacturer design: Manuf thread state-machine diagram}%
+  \label{fig:threadManuf-sm}
+\end{figure}
+
+The \texttt{Manufacturer} must talk a common language with the \gls{3dmmlpbf}'s
+machine and with the slave computers. Fig.~\ref{fig:firmware-dataFormat}
+specifies this common language --- the messaging protocol ---with the following structure:
+\begin{enumerate}
+\item \textbf{CMD}: command exchanged between the \texttt{Manufacturer} and the
+  machine or slave lasers. The commands highlighted in green represent the
+  commands exchanged solely with the slave lasers (the machine's messaging
+  protocol will be addressed later).
+  The several command types are listed, alongside with the command's
+  grammar. For example, the \texttt{LASER\_MARK\_ENTITY} command requires the
+  laser's ID, the entity's ID to mark, the corresponding pen's ID, and the
+  actuation's delay.
+\item \textbf{args}: represents the command's arguments. For example,
+  \texttt{LASER\_MARK\_ENTITY}'s laser ID, entityID, and penID goes into arguments
+  0, 1--2, and 3, respectively.
+\item \textbf{payload}: represents an additional command's attribute, such as,
+  laser's actuation delay,
+  distance, layer height or parameter's value. For example, the
+  \texttt{LASER\_MARK\_ENTITY}'s delay is defined here.
+\item \textbf{ACK}: represent's the acknowledgment signal, used to validate a message.
+\end{enumerate}
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.7\textwidth]{./img/manuf-dataFormat.eps}
+  %
+  \caption{Manufacturer design: Messaging protocol}\label{fig:manuf-dataFormat}
+\end{figure}
+
+The static architecture was then devised using class diagrams, which 
+allow to represent the interdependency
+between objects, using associations and attributes. An association represents a
+relation between two or more classes with several properties: name, role and
+multiplicity. An attribute is a property of an individual object with a name and
+a type.
+
+Fig.~\ref{fig:manuf-class-main} illustrates the \texttt{Manufacturer}'s class hierarchy and
+respective associations. Four dialog classes were created to interface the user ---
+\texttt{MainDialog}, \texttt{ManagePenDialog}, \texttt{InputDialog}, and
+\texttt{MessageBox} --- which inherit from an \emph{abstract class}
+\texttt{Dialog}. The \texttt{InputDialog} and \texttt{MessageBox} are simple
+\texttt{Dialog}s to validate user input and feedback relevant information to the
+user.
+\texttt{ManagePenDialog} is the user interface to pen management and is composed
+by a set of \texttt{Pen}s, which, in turn, contain an associated color. 
+
+\texttt{MainDialog} is the main user interface to the \texttt{Manufacturer}'s
+application and is composed by:
+\begin{itemize}
+\item \textbf{Pen}: a set of \texttt{Pen}s is used to map the manufacturing
+  parameters to the geometry.
+\item \textbf{Layer}: a set of \texttt{Layer}s combines the geometry and
+  process information required for the manufacturing.
+\item \textbf{Laser}: a set of \texttt{Laser} manages the laser's information in
+  the network and is strongly linked with the number of \texttt{TCPClient}s.
+\item \textbf{TCPClient}: a set of \texttt{TCPClients} is stored to manage the
+  available and ongoing connections to other lasers in the network.
+\item \textbf{TCPServer}: a \texttt{TCPServer} is binded to the
+  \texttt{Manufacturer}'s application to listen and serve requests incoming from
+  other lasers in the network.
+\item \textbf{SerialPort}: manages the serial communication with the machine.
+\item \textbf{InReader}: handles the loading of input files to the \emph{Post-Processor}.
+\item \textbf{OutWriter}: handles the export of output files containing the
+  manufacturing history.
+\item \textbf{Worker}: the \texttt{Worker} is the base class for thread
+  management from which derive the \texttt{PreviewLaser}, \texttt{MarkEntity},
+  \texttt{MarkEntityQueue}, and \texttt{Manuf} thread classes.
+\end{itemize}
+% 
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/manuf-class-main.eps}
+  \caption{Manufacturer design: High-level class diagram --- hierarchy and associations}%
+  \label{fig:manuf-class-main}
+\end{figure}
+
+\subsubsection{Implementation}%
+\label{sec:manuf-implem}
+Fig.~\ref{fig:manuf-deployment} illustrates the deployment diagram for the
+\texttt{Manufacturer}'s software, assigning software artifacts to the hardware
+nodes where they are executed. The \texttt{Manufacturer}'s application can be
+deployed in any computer connected to an laser that uses \emph{EzCAD}
+\gls{sdk}-compatible control boards, managed through a \gls{pci}
+interface. Lasers' computers can be connected together to form an array using the
+\gls{tcp-ip} protocol and any supporting interface (e.g., Ethernet).
+Only one
+laser's computer is connected to the \gls{3dmmlpbf} machine (via serial
+\gls{uart} interface), becoming the \texttt{Master} in the network. This
+computer exchanges transactions with the \texttt{Firmware} to control and obtain
+feedback about the manufacturing procedure. There is no limitation in the
+software to the amount of slave lasers, besides the \gls{tcp-ip} imposed one of
+65535 ports. However, there is a physical limitation of how to arrange those
+lasers over the building platform.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.9\textwidth]{./img/manuf-Deployment.pdf} 
+  \caption{Manufacturer implementation --- deployment diagram}%
+  \label{fig:manuf-deployment}
+\end{figure}%
+
+Next, the \emph{Manufacturer}'s application was implemented in C++11 using the 
+\texttt{Qt} framework for the \gls{ui} development, taking into
+account its class diagram, and the designed algorithms and state machines. It
+uses the \emph{EzCAD API} (see Appendix~\ref{ch:append-EzcadAPI}) to manage laser
+related operation. Fig.~\ref{fig:manuf-ui} through Fig.~\ref{fig:manuf-ui-help}
+illustrate the \texttt{Manufacturer}'s \gls{ui} implementation outcome.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/manuf-ui.png} 
+  \caption{Manufacturer implementation: Main window}%
+  \label{fig:manuf-ui}
+\end{figure}%
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.7\textwidth]{./img/manuf-ui-penManager.png} 
+  \caption{Manufacturer implementation: Manage Pen dialog}%
+  \label{fig:manuf-ui-penManager}
+\end{figure}%
+
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{.70\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/manuf-ui-layer3.png}
+  \caption{Layer ID = 3}%
+  \label{fig:manuf-ui-layerView-1}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{.70\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/manuf-ui-layer4.png}
+  \caption{Layer ID = 4}%
+  \label{fig:manuf-ui-layerView-2}
+  \end{subfigure}
+  % 
+  \caption{\gls{3dmmlpbf} Manufacturer: Layer visualization}%
+  \label{fig:manuf-ui-layerView}
+\end{figure}
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/manuf-ui-help.png} 
+  \caption{Manufacturer implementation: Help dialog}%
+  \label{fig:manuf-ui-help}
+\end{figure}%
+
+
+Fig.~\ref{fig:manuf-ui} displays the main window of the application. The
+\textbf{Communications} section handles the laser network and machine
+communications. In the \textbf{Configuration} section, the \emph{User} loads the
+geometry, with the bounding box view being rendered on canvas and the statistics
+displayed. Additionally, the \texttt{Layer}s' table is filled, where,
+besides the geometry data are also the process parameters (mapping to a
+\texttt{Pen}) and the laser marking information (lasers' list and delay between
+markings). The \textbf{Calibration} enables the \emph{User} to calibrate each
+machine axis and set the machine parameters. In the \textbf{Processing} section
+the \emph{User} selects the output file, and manages the laser actuation and
+manufacturing execution. Lastly, a console is added to provide user feedback.
+
+Fig.~\ref{fig:manuf-ui-penManager} shows the \emph{Pen Manager} dialog, where
+the \emph{User} manages the manufacturing pens.
+
+Fig.~\ref{fig:manuf-ui-layerView} illustrates the visualization of each layer with
+a different pen, signalled to the \emph{User} by a different color. Furthermore,
+it is possible to modify the lasers performing the marking and the delay between
+each of those (see Fig.~\ref{fig:manuf-ui-layerView-1}).
+
+Lastly, Fig.~\ref{fig:manuf-ui-help} shows the help dialog, providing relevant
+assistance to the \emph{User}.
+
+% In listing~\ref{lst:onBtnGetFile} is presented the implementation of the use
+% case \emph{chooseFile}. In Figs.~\ref{fig:post-process-implem-main}
+% and~\ref{fig:post-process-implem-manage-pen} are depicted the \gls{gui} dialogs
+% for the \emph{Post-processor}.
+%% 
+% \lstinputlisting[language=C++, caption={onBtnGetFile},label=lst:onBtnGetFile,
+% style=customc]{./listing/onBtnGetFile.cpp}%
+%
+
+\subsubsection{Testing and Validation}%
+\label{sec:testing-validation-manuf}
+In this section, the \texttt{Manufacturer}'s software is tested and validated,
+concerning the post-processor and printer components, as well as the laser
+connection.
+
+\paragraph{Post-Processor}
+For the
+post-processor, the \texttt{.svg} file parsing and rendering was tested, as well
+as the laser parameters mapping to each material.
+Fig.~\ref{fig:manuf-ui-layerView} shows that both expected behaviours are
+achieved.
+
+Fig.~\ref{fig:manuf-test-procParams-map} illustrates the mapping of the process
+parameters to the geometry, using a \emph{pen}. By default, the
+\emph{Post-Processor} assigns pens to each material (see
+Fig.~\ref{fig:postProc-mapping-layer2}, and
+Fig.~\ref{fig:postProc-mapping-layer3}), but the User can add news pens and
+associate them to any desired layer (see
+Fig.~\ref{fig:postProc-mapping-layer4}).
+Thus, layers can be mapped
+independently to different pens, corresponding to different processing
+parameters, without any correlation to a material or layer number.
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/postProc-mapping-setup.png}
+  \caption{Setup}%
+  \label{fig:postProc-mapping-setup}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/postProc-mapping-layer2.png}
+  \caption{Layer ID = 2}%
+  \label{fig:postProc-mapping-layer2}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/postProc-mapping-layer3.png}
+  \caption{Layer ID = 3}%
+  \label{fig:postProc-mapping-layer3}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/postProc-mapping-layer4.png}
+  \caption{Layer ID = 4}%
+  \label{fig:postProc-mapping-layer4}
+  \end{subfigure}
+  % 
+  \caption{Manufacturer test: process parameters mapping}%
+  \label{fig:manuf-test-procParams-map}
+\end{figure}
+
+Fig.~\ref{fig:manuf-test-materials-height} shows the outcome of out-of-range
+materials or height. Fig.~\ref{fig:manuf-max-mat-exceeded} illustrates the 3 cubes model
+loading, whereas Fig.~\ref{fig:manuf-max-height-exceeded} illustrates the cross
+and cube model loading. The loading fails, not due to the post-processor inability to process
+the manufacturing file, but due to printer restrictions: the \gls{3dmmlpbf} machine
+can only handle two materials at the
+moment, and within the available manufacturing volume.
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/max-mats-exceeded.png}
+  \caption{number of materials exceeded}%
+  \label{fig:manuf-max-mat-exceeded}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/max-height-exceeded.png}
+  \caption{maximum manufacturing height exceeded}%
+  \label{fig:manuf-max-height-exceeded}
+\end{subfigure}
+  % 
+  \caption{Manufacturer test: materials and height}%
+  \label{fig:manuf-test-materials-height}
+\end{figure}
+
+This is a result of the tight coupling between these two software components ---
+post-processor and printer --- in an attempt to aid the user from an early
+stage, as it becomes very frustrating to prepare the component for printing to
+then see it fail in the printing operation due to materials excess. However,
+nothing prevents the post-processor and the printer to accommodate more
+materials or more volumous components,
+if the \gls{3dmmlpbf} machine is extended.
+
+\paragraph{Printer}
+The \texttt{Printer} was tested by performing the dry-running of the
+machine execution in offline mode, i.e., without connecting the microcontroller
+to the plant (machine), and logging the outcome to file. Stepper motor movement
+and mechanical endstops triggering  are simulated by an appropriate estimated
+time and laser actuation is signalled to the log file directly.
+%
+This enabled the quick debug of several models printing, testing: communication
+protocol, message passing, thread execution and program's logic. An excerpt of
+a log file is presented in Fig.~\ref{fig:printer-log-file}.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.3\textwidth]{./img/printer-log-file.png}
+  \caption{Printer log file (excerpt)}%
+\label{fig:printer-log-file}
+\end{figure}
+
+\paragraph{Laser connection}
+The master --- slave connection was tested for one slave
+(Fig.~\ref{fig:laser-conn-init}) or multiple slaves simultaneously
+(Fig.~\ref{fig:laser-conn-multiple}). Fig.~\ref{fig:laser-conn-init} illustrates
+the connection procedure: first the network needs to be configured; then the
+\texttt{Master} tries to connect to the slave laser; if the connection is
+accepted by the slave, then both nodes print to the console informative
+messages. Additionally, the \texttt{Master} system reminds the \emph{User} that
+the same geometry file needs to be uploaded to the slave system and the pens
+need to be configured accordingly, although they don't need to match the
+\texttt{Master}'s system pens. In fact, if the laser type is different, it is
+usually recommended to modify its marking parameters (pens).
+
+Fig.~\ref{fig:laser-conn-multiple} shows that the \texttt{Master} system can
+connect to multiple slave lasers simultaneously. Thus, the technical obstacle is
+not from the software, but from the spatial arrangement of the lasers over the
+printing bed, which is specially true for the lasers with bulky scanning heads.
+
+% subfigures
+\begin{figure}[htb!]
+  \centering
+  %
+  \begin{subfigure}[t]{0.6\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/ip-config.png}
+  \caption{Network configuration}%
+  \label{fig:laser-conn-init-1}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.9\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/laser-conn-init.png}
+  \caption{Master tries to connect to slave}%
+  \label{fig:laser-conn-init-2}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.9\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/laser-conn-accept.png}
+  \caption{Slave accepts connection}%
+  \label{fig:laser-conn-init-3}
+  \end{subfigure}
+  % 
+  \caption{\gls{3dmmlpbf} Laser connection testing: Master/Slave connection}%
+  \label{fig:laser-conn-init}
+\end{figure}
+
+\begin{figure}[htb!]
+  \centering
+  %
+  \begin{subfigure}[t]{1.0\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/laser-conn-master-slaves.png}
+  \caption{Master can connect to multiple slaves simultaneously}%
+  \label{fig:laser-conn-multiple-1}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{1.0\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/laser-conn-slave3.png}
+  \caption{Slave accepts connection}%
+  \label{fig:laser-conn-multiple-2}
+  \end{subfigure}
+  % 
+  \caption{\gls{3dmmlpbf} Laser connection testing: simultaneous connection to
+    multiple slaves}%
+  \label{fig:laser-conn-multiple}
+\end{figure}
+
+\paragraph{Exporting Data}
+Fig.~\ref{fig:manuf-export-data} illustrates the \texttt{Manufacturer}'s data
+export options and an example. The \texttt{User} can export the layers, pens, or
+al manufacturing information (Fig.~\ref{fig:manuf-export-opts}). A text file will be generated containing the
+respective data (Fig.~\ref{fig:manuf-export-example}). Comments start with the
+$\%$ character and are used to provide additional context to the
+\texttt{User}. Fig.~\ref{fig:manuf-export-example} shows the manufacturing
+information's generated file, containing all the layers and pens used for
+manufacturing, which can be later imported by the \texttt{Post-Manufacturer}'s software.
+
+% subfigures
+\begin{figure}[htbp!]
+  \centering
+  %
+  \begin{subfigure}[t]{0.4\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/manuf-export-opts.png}
+  \caption{Export options}%
+  \label{fig:manuf-export-opts}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{0.58\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/manuf-export-example.png}
+  \caption{Manufacturing information export}%
+  \label{fig:manuf-export-example}
+\end{subfigure}
+  % 
+  \caption{Manufacturer test: Export data}%
+  \label{fig:manuf-export-data}
+\end{figure}
+
+\paragraph{Validation}
+The tests performed validated the \texttt{Manufacturer}'s application in
+compliance with the defined requirements. The \texttt{Post-Processor} maps the
+geometrical and topological data to process parameters using pens. The
+\texttt{Printer} handles the actual manufacturing: manages communications,
+drives the process, and allows the data export for posterior
+analysis. Furthermore, the multi-material concept is materialized at the
+processing level, via the \texttt{Post-Processor}, and at the manufacturing
+level by the equipment and the multiple lasers that can be coordinated by the
+\texttt{Printer}.
+%
+The software is available online~\cite{repoManuf} (see Fig.~\ref{fig:repoManuf}) and released
+under the AGPL v3 licence.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.7\textwidth]{./img/repo-manuf.png}
+  %
+    \caption{3DMMLPBF Manufacturer repository~\cite{repoManuf}}%
+    \label{fig:repoManuf}
+\end{figure}
+
+%TABLE WITH FEATURES
+
+\subsection{Post-manufacturer}%
+\label{sec:post-manufacturer}
+The post-manufacturer goal is to feedback the relevant information to all agents
+in the manufacturing field, such as, process, material, manufacturing paths,
+mechanical tests performed and mechanical properties, among others.
+
+As aforementioned, this information can be used to optimize the manufacturing
+chain, increasing the manufactured part quality through the test and analysis of process's
+behaviour using design of experiments, the formulation of heuristics and
+guidelines, and toolchain and equipment improvements.
+
+The post-manufacturer software development is described next.
+% 
+\subsubsection{Requirements \& Constraints}%
+\label{sec:post-manuf-require-elic}
+The main \textbf{requirements} identified for the post-manufacturer software and their
+priority are as follows:
+\begin{itemize}
+\item \emph{High priority}: Store and retrieve information about the relevant manufacturing chain
+  entities in the form of a process knowledge database.
+\item \emph{High priority}: Add, edit and remove the entities' related information.
+\item \emph{Medium priority}: Ease the information feedforward and feedback, providing import and export
+  options of process files and databases.
+\item \emph{Low priority}: Display models information in a straightforward way
+\end{itemize}
+
+The main \textbf{constraints} identified and their
+priority are as follows:
+\begin{itemize}
+\item \emph{High priority}: Open-source solution.
+\item \emph{High priority}: Ease of use through an \gls{gui} (not only power
+  users will use this).
+\item \emph{Medium priority}: Scalable solution.
+\item \emph{Medium priority}: Cross-platform.
+\end{itemize}
+
+\subsubsection{Analysis}%
+\label{sec:analysis}
+As established by the requirements, a manufacturing chain database
+must be implemented and managed. A \gls{dbms} is a software designed to assist in maintaining and utilizing
+large collections of data.
+A \gls{rdbms} is a subset of \gls{dbms} with relationship between tables (entities)
+and rows (entities' attributes). The tables are related to each other
+using primary and foreign keys. It is the most used database model widely used
+by enterprises and developers for storing complex and huge amounts of
+data~\cite{ramakrishnan2003database}. Some examples of \glspl{rdbms} are Oracle
+Database, MySQL, IBM DB2, SQLite, PostgreSQL, and MariaDB.
+
+\paragraph{Entity-Relationship model}
+The \glsxtrfull{er} data model enables the description of the data involved in a
+real-world enterprise in terms of entities and their relationships and is widely
+used to develop an initial database design. The
+key concepts for this database design modeling tool
+are~\cite{ramakrishnan2003database}: the entity --- an object in the real world;
+the entity set --- a collection of entitites; the attributes describing an
+entity; the domain --- the set of values for each attribute; the relationship
+--- association between two entities; and the key --- minimal set of attributes
+whose values uniquely identify an entity in a set. Keys can be further divided
+into primary --- if they identify an entity in the table they belong --- and
+foreign --- if they are used to identify entities in another table.
+
+The \glspl{erd} use a graphical conventional to quickly and clearly depict the
+entities involved and how they relate to each other. In a \gls{erd} entities are
+represented by rectangles, attributes by ellipses, and the relationships as
+lines between entities. In the rectangles and ellipses are placed the names of
+the different entities and attributes. The relationships have cardinalities --- \texttt{1:1}
+(one-to-one), \texttt{1:M} (one-to-many), and \texttt{M:N} (many-to-many) ---
+and may be mandatory or optional.
+
+\paragraph{Selection of the RDBMS}
+The most relevant \glspl{rdbms} are~\cite{modernDBChoice} Oracle Database,
+Microsoft SQL Server, MySQL, SQLite. The first two, although very advanced,
+are proprietary and costly solutions, and, thus were excluded. MySQL is a free,
+open-source RDBMS solution that Oracle owns and manages. Even though it's
+freeware, MySQL benefits from frequent security and features updates. Large
+enterprises can upgrade to paid versions of MySQL to benefit from additional
+features and user support. SQLite is a C-language library that implements a
+small, fast, self-contained SQL database engine ---  an embedded \gls{db} ---
+which means the \gls{db} engine runs as a part of the app. Despite all these
+advantages, SQLite is not easily scalable and cannot be customized, lacking user
+management and security features. Thus, MySQL became the obvious \gls{rdbms}'s
+solution.
+
+\paragraph{Structured Query Language (SQL)}
+Ideally, a database language allows the creation of a database and table
+structures, the execution of basic data management tasks (add, delete, and
+modify), and the execution of complex queries designed to transform the raw data
+into useful information. Moreover, it must provide a clear and easy syntax, it
+must be portable and conform to some basic standard. \gls{sql} complies well to
+these requirements~\cite{coronel2016database}.
+
+\gls{sql} functions fit into two broad categories~\cite{coronel2016database}:
+\begin{enumerate}
+\item \emph{\gls{ddl}}: it includes commands to create database objects
+  such as tables, indexes, and views, as well as commands to define access
+  rights to those database objects.
+  %(see Fig.~\ref{fig:sql-dll}).
+\item \emph{\gls{dml}}: it includes commands to insert, update, delete,
+  and retrieve data within the database tables
+  %(see Fig.~\ref{fig:sql-dml}).
+\end{enumerate}
+
+\paragraph{MySQL Interfaces}%
+%\label{sec:sql-interfaces}
+\texttt{MySQL} works under the client---server paradigm. It has several client
+interfaces that can interact with the server, through connectors and
+\glspl{api}, i.e., the drivers and libraries that one can use to connect
+applications in different programming languages to \texttt{MySQL} database
+servers.
+The application and database server can be on the same machine, or communicate
+across the network~\cite{MysqlConnAPIs}.
+The following interfaces are available: \texttt{Java}, \texttt{Python},
+\texttt{JavaScript}, \texttt{C++}, \texttt{C},
+\texttt{C\#},
+\texttt{PHP},
+\texttt{OBDC}, \texttt{NBD Cluster},
+\texttt{MySQL Shell}, and \texttt{X DevAPI}.
+
+%\subsubsection{C++ connector}%
+From the list of available interfaces, the most well suited to interface the
+\gls{rdbms} are the \texttt{C \gls{api}} and the \texttt{C++ connector}, as they
+are they provide better performance.
+The \texttt{C++ connector} was chosen for compatibility with the toolchain
+devised. It is licenced under the GPL with the FLOSS License Exception.
+
+
+\subsubsection{Design}%
+\label{sec:post-manuf-design}
+The first step of the databases' design is the identification of the database
+entities, following the relational database model and the entity-relationship
+design model.
+Fig.~\ref{fig:post-manuf-erd} shows the resulting \gls{erd},
+containing the most relevant entities and the relationships between them, namely: manufactured parts and models,
+the original 3D models, mechanical tests performed, mechanical properties of the
+manufactured part, process paths and parameters (pen), material, layers and
+laser information. For example, a \texttt{Part} can be manufactured by different
+lasers, it has only a \texttt{3DModel} (containing multiple \texttt{STL} files)
+and only a \texttt{ManufModel} (with only a \texttt{SVG} file), and can have
+multiple mechanical tests performed over it.
+%
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/post-manuf-erd.png}
+  \caption{\gls{3dmmlpbf} Post-Manufacturer design: \gls{erd}}%
+  \label{fig:post-manuf-erd}
+\end{figure}
+
+Then, following the analysis phase's considerations, the software architecture was devised. Fig.~\ref{fig:post-manuf-deploy-diag}
+illustrates the deployment diagram with the software components and the
+interactions between them, mapped to the target \gls{hw} node. The
+\texttt{User} interacts with \texttt{AppManager} through the \texttt{UI} which
+handles user requests and updates the \texttt{UI} accordingly. Database
+requests are managed through \texttt{DB Manager}, querying the \gls{rdbms}
+(\texttt{DB server}) and
+handling database responses. This follows a client-server architecture with the
+communications performed through the \gls{tcp-ip} protocol using a known
+socket, running on the same device (host device). Thanks to this distributed
+architecture, the server, which only handles database requests, can be
+implemented as a daemon, minimising resources usage. Furthermore, this enables
+quick deployment of local databases, without the hassle of setting up remote
+storage. As a drawback, it limits the scalability and availability of the
+database, although a centralised local database can be set up.
+%
+%\begin{figure}[!hbt]
+%  \centering
+%    \includegraphics[width=0.6\textwidth]{./img/post-manuf-component-diag.png}
+%  \caption{\gls{3dmmlpbf} Post-Manufacturer design: Component diagram}%
+%  \label{fig:post-manuf-component-diag}
+%\end{figure}
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.6\textwidth]{./img/post-manuf-deploy-diag.png}
+  \caption{\gls{3dmmlpbf} Post-Manufacturer design: Deployment diagram}%
+  \label{fig:post-manuf-deploy-diag}
+\end{figure}
+
+\subsubsection{Implementation}%
+\label{sec:post-manuf-implem}
+Following the deployment diagram (Fig.~\ref{fig:post-manuf-deploy-diag}), the
+post-manufacturer was implemented in a cross-platform framework with an
+open-source licence --- \texttt{Qt}, using the C++ connector interface
+aforementioned to manage database
+transactions.
+
+The database was created using a script. An excerpt of the database script
+initialisation is illustrated in Listing~\ref{lst:init-sql} for the
+\texttt{Part} entity.
+%
+\lstinputlisting[language=c++, basicstyle=\tiny, caption={Script to create the database: excerpt
+  with the \texttt{Part} entity},label=lst:init-sql,
+style=customc]{./listing/post-manuf-db-init.txt}%
+
+Fig.~\ref{fig:post-manuf-sw} illustrates the \texttt{Post-Manufacturer}
+\gls{gui} for the \texttt{Part} and \texttt{Manufacturing model} views.
+The top-level
+entities are shown as the top tabs, namely part, 3D model, manufacturing model,
+laser, and mechanical tests.
+In the
+former the \texttt{User} can visualise \texttt{Part} related information, manage
+database entries, update or export the database. The latter,
+comprises the model, the scan pattern, its layers and the associated materials
+and pens. The manufacturing model can be loaded and previewed, alongside with
+the manufacturing output file (the output from the equipment).
+All databases can be exported separately for appropriate handling by each process' agent.
+%
+% subfigures
+\begin{figure}[htb!]
+  \centering
+  %
+  \begin{subfigure}[t]{.70\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/post-manuf-part.png}
+  \caption{Part view}%
+  \label{fig:post-manuf-sw-1}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{.70\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/post-manuf-manuf-model.png}
+  \caption{Manufacturing model view}%
+  \label{fig:post-manuf-sw-2}
+  \end{subfigure}
+  % 
+  \caption{\gls{3dmmlpbf} Post-Manufacturer}%
+  \label{fig:post-manuf-sw}
+\end{figure}
+
+\subsubsection{Testing and validation}%
+\label{sec:testing-validation-postManuf}
+After each successful manufacturing run, the \texttt{Printer} writes the
+relevant process information to log files, namely layers and pens. These files
+can then be imported by the \texttt{Post-Manufacturer} for quick and error-prone
+database filling. Listing~\ref{lst:manuf-out-lay} and
+Listing~\ref{lst:manuf-out-pen} illustrate the manufacturing output files for
+layers and pens, respectively. The first line contains a comment, indicating the
+correspondence between tags and values. The remaining of the file consists of a
+comma-separated list of values, with each database entry belonging to an individual line. 
+%
+\lstinputlisting[language=c++, caption={Manufacturing output file: \texttt{Layers}},label=lst:manuf-out-lay,
+style=customc]{./listing/layers.txt}%
+
+%
+\lstinputlisting[language=c++, caption={Manufacturing output file: \texttt{Pens}},label=lst:manuf-out-pen,
+style=customc]{./listing/pens.txt}%
+
+Fig.~\ref{fig:post-manuf-load-out} showcases a manufacturing output file
+import, namely layers, although both could be loaded simultaneously. After
+selecting the file and acknowledging it, the file is successfully loaded and
+fills the \texttt{Layers} view, which can be saved to the database by the \texttt{User}.
+% subfigures
+\begin{figure}[htb!]
+  \centering
+  %
+  \begin{subfigure}[t]{.70\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/post-manuf-load-file.png}
+  \caption{Select files to load}%
+  \label{fig:post-manuf-load-out-1}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{.70\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/post-manuf-layers-loaded.png}
+  \caption{result example: layers loaded}%
+  \label{fig:post-manuf-load-out-2}
+  \end{subfigure}
+  % 
+  \caption{\gls{3dmmlpbf} Post-Manufacturer testing: load output file}%
+  \label{fig:post-manuf-load-out}
+\end{figure}
+
+The same principle applies for the 3D models (\texttt{.stl}) and manufacturing
+(\texttt{.svg}) files. However, for this case, the \texttt{User} must fill in
+the information manually. This software component is also capable of previewing
+models' geometry, as illustrated in Fig~\ref{fig:post-manuf-sw}, for the
+manufacturing model.
+
+Lastly, an \texttt{User} may wish to export the database for data mining,
+analysis, \gls{doe} or to share it other users. Thus, this functionality was
+tested by selecting the \texttt{Export DB} pushbutton
+(Fig.~\ref{fig:post-manuf-export-db}) with the result being shown in
+Listing~\ref{lst:manuf-model-db}. As expected, the database can be
+successfully exported.
+%
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.7\textwidth]{./img/post-manuf-export-db.png}
+  \caption{\gls{3dmmlpbf} Post-Manufacturer testing: Export database}%
+  \label{fig:post-manuf-export-db}
+\end{figure}
+%
+\lstinputlisting[language=c++, caption={Database export: Manufacturing model},label=lst:manuf-model-db,
+style=customc]{./listing/manuf-model.txt}%
+
+\paragraph{Validation}
+The \texttt{Post-Manufacturer} software is able to manage the different
+information flow stemming from the whole manufacturing chain in a convenient and
+efficient manner.
+%
+The software is available online~\cite{repoPostmanuf} (see Fig.~\ref{fig:repoPostmanuf}) and released
+under the AGPL v3 licence.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.7\textwidth]{./img/repo-postManuf.png}
+  %
+    \caption{3DMMLPBF Post-Manufacturer repository~\cite{repoPostmanuf}}%
+    \label{fig:repoPostmanuf}
+\end{figure}
+
+%TABLE WITH FEATURES
+
+
+\section{Development of the 3DMMLPBF machine}
+% \subsection{3DMMLPBF machine for multi-material processing}
+The development of the \gls{3dmmlpbf} machine is based on the VDI-2206 guideline, more specifically the V-model macro cycle,
+comprising the following phases: requirements elicitation, system design,
+domain-specific design, system integration, verification/validation and modeling
+and model analysis.
+% 
+% \input{./tex/Chap/Devel/mach-devel-require}
+% \input{./tex/Chap/Devel/mach-devel-sys-design}
+% \input{./tex/Chap/Devel/mach-devel-dom-spec-design}
+% \input{./tex/Chap/Devel/mach-devel-sw}
+
+\subsection{Requirements \& Constraints}
+
+Table~\ref{tab:req-const-mach} lists the overall system requirements and
+constraints for the \gls{3dmmlpbf} machine.
+The requirements are divided into functional ones --- directly related to the
+machine's functionalities --- and non-functional ones --- describing the
+properties of the system. On the other hand, the constraints are divided into
+technical and non-technical ones.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[!hbt]
+\centering
+\caption{Requirements and constraints for the \gls{3dmmlpbf} machine}%
+\label{tab:req-const-mach}
+\resizebox{0.8\textwidth}{!}{%
+\begin{tabular}{@{}lll@{}}
+\cmidrule(l){2-3}
+ &
+  \multicolumn{1}{c}{\textbf{Functional/Technical}} &
+  \multicolumn{1}{c}{\textbf{Non-Functional/Non-technical}} \\ \midrule
+\textbf{Requirements} &
+  \begin{tabular}[c]{@{}l@{}}- Production of 3D multi-material parts \\ according to the specifications\\ - Control of laser trajectories with \\ appropriate parameters\\ - Control of all machine's movements\\ - Material feeding and recovery management\\ - Temperature's control\\ - Atmosphere's control\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}- Robust structure \\ - Safe\\ - Friendly UI\end{tabular} \\ \midrule
+\textbf{Constraints} &
+  \begin{tabular}[c]{@{}l@{}}- The EzCAD API is required for laser control\\ - The Windows development platform is required \\ for compliance with the EzCAD API\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}- Limited budget\\ - Limited time\\ - Limited manpower\end{tabular} \\ \bottomrule
+\end{tabular}%
+}
+\end{table}
+
+The requirements are as follows:
+\begin{itemize}
+\item \textbf{\emph{Manufacturing of 3D multi-material parts according to the
+      specifications}}: the machine must correctly interpret the manufacturing
+  instructions and actuate accordingly;
+\item \textbf{\emph{Laser control}}: the laser motion must be
+  accurately managed to produce the indicated manufactured trajectories with the
+  designated process parameters;
+\item \textbf{\emph{Motion control}}: the positioning and motion of the moving
+  elements of the machine must be properly handled for accurate part
+  production and minimisation of induced efforts on mechanical components;
+\item \textbf{\emph{Material feeding and recovery management}}: the powder needs to be delivered in a
+  evenly and controlled way to the building area. Furthermore, the powder from
+  one material needs to be recovered and handled properly, before introducing powder from a new material;
+\item \textbf{\emph{Temperature control}}: the temperature of the materials'
+  powders in the reservoirs and in the building area must remain within
+  acceptable range;
+\item \textbf{\emph{Atmosphere control}}: The equipment must provide an
+  inert shielding to prevent oxidation reactions at the part's surface;
+\item \textbf{\emph{Robust structure}}: the machine should sustain the imposed
+  efforts and the surrounding environment;
+\item \textbf{\emph{Safety}}: in case of an equipment's failure, the manufacturing
+  process must stop immediately and communicate it to the user. Additionally,
+  protective enclosure for laser radiation should be installed;
+\item \textbf{\emph{Friendly user interface}}: the interface between the user
+  and the machine should provide meaningful information for machine operation
+  and guidance in case of errors.
+\end{itemize}%
+
+The constraints are as follows:
+\begin{itemize}
+\item \textbf{Laser control}: the proprietary software for laser control must be
+  used, through its \gls{api});
+\item \textbf{Software development platform}: for compliance with the
+  laser control \gls{api}, the \emph{Windows} platform was considered for
+  the development of machine's control and interface software components.
+\item \textbf{Limited resources}: budget, time, and manpower are very limited.
+\end{itemize}
+
+\subsection{System design}
+The \gls{3dmmlpbf} system was designed by identifying the overall
+function of the system and dividing it into sub-functions with suitable working
+principles. Thus, a working principle for the machine was defined, similar to the
+one of the typical \gls{lpbf} machines, but it includes some tweaks for
+multi-material processing, as supported by the proposed \gls{3dmmlpbf} methodology:
+\begin{enumerate}
+\item the printing bed lowers by layer height;
+\item the powder deposit goes up by layer height and the powder is spread by
+  the recoating system to the printing bed; the machine signals the laser that
+  it is ready for laser marking;
+\item each laser marks the scanning paths, and when it finishes, it stops and
+  signals to the \texttt{Master} system the current layer's ID has been
+  completed. When all lasers finished marking, the \texttt{Master} system
+  issues the next \texttt{lcode} instruction;
+\item the machine proceeds with the \texttt{lcode} instructions processing: if a
+  new material is needed, the powder is recovered via powder recovery system
+  and a new material is fetched from the respective reservoir and fed to the
+  printing bed; the machine signals the laser that is ready for marking;
+\item the process is repeated for each new layer and for each new material
+  in a layer until the \emph{End-of-File} is reached.
+\end{enumerate}
+Additionally, the temperature and the shielding must be controlled for adequate manufacturing.
+
+After defining the working principle, it is possible to identify the main
+subsystems responsible for the corresponding sub-functions:
+\begin{itemize}
+\item \textbf{\emph{Axis subsystem}}: responsible for controlling the
+  movement of the moving axes;
+\item \textbf{\emph{Heating subsystem}}: responsible for heating the
+  printing bed and the powder reservoirs;
+\item \textbf{\emph{Shielding control subsystem}}: responsible for
+  controlling the machine's internal shielding;
+\item \textbf{\emph{Powder recovery subsystem}}: responsible for proper
+  recovery of the materials' powders;
+\end{itemize}
+
+Likewise, although no hardware is necessary to be designed, as the laser is
+controlled directly by software, it is possible to identify the
+main laser subsystems to be controlled, namely:
+\begin{itemize}
+\item \textbf{\emph{Beam generator subsystem}}: responsible for laser beam
+  generation with the appropriate parameters;
+\item \textbf{\emph{Scanning subsystem}}: responsible the laser scanning
+  paths, by proper alignment and focusing of the laser beam in the provided
+  locations;
+\item \textbf{\emph{Wobble subsystem}}: responsible for the fast oscillation
+  of the laser beam for improved `welding' properties;
+\end{itemize}
+
+These subsystems can then be instantiated to form the global system as indicated
+in Fig.~\ref{fig:mmsls-global}. In fact, by identifying general
+functions/behaviour enclosed in general subsystems, it is possible to abstract
+these subsystems and model and simulate them independently, and then cascade the
+results to the instantiated subsystems. Peek~\cite{peek2016making} calls this an
+object-oriented approach to machine design, combining the similar approach
+available for software development to another one for hardware development,
+attaining the advantages of such approach on building better, faster, easier,
+and more flexible, modular machines.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/mmsls-design-global.pdf}
+  %
+  \caption{Overview of the \gls{3dmmlpbf} system}\label{fig:mmsls-global}
+\end{figure}
+
+% 
+%\ifdef{\comm}{\mbox{}\marginpar{Divide-and-conquer}}
+
+Fig.~\ref{fig:mmsls-global} illustrates a overview of the \gls{3dmmlpbf} system
+which can be mainly decomposed into the \gls{mmlpbf} subsystem (in blue) and the
+Lasers' subsystems (in green). The former is responsible for the multi-material processing in the
+z-axis, and the latter for the selective laser procedure in the x-y plane. As
+aforementioned, the lasers can form a network, and operate independently to
+handle different materials and achieve different mechanical properties of the
+produced part.
+
+Also, as previously illustrated in Fig.~\ref{fig:manuf-deployment}, the master
+system drives the manufacturing, reading the \texttt{.lcode} and issuing
+commands for its own laser and the \gls{3dmmlpbf} machine, as well as for all
+lasers in the network. The firmware, running on the microcontroller, will be
+responsible for handling the master system's requests and controlling the equipment.
+
+The \gls{mmlpbf} subsystem contains three main subsystems, corresponding to the
+deposits and the powder bed. All these subsystems have individual heating
+control. The deposits include also recoating and powder recovery subsystems. The
+powder bed includes also the atmosphere control subsystem.
+
+The Laser subsystem is comprised of a scanning subsystem (LSS), the
+laser beam generator (LBS) and the wobble subsystems (LWS).
+% 
+% To correctly add a marginpar, \mbox needs to be added and a blank line is also
+% needed
+%\ifdef{\comm}{\mbox{}\marginpar{Recoating axis specifics}}
+%
+%A small note is entitled to the recoating axis subsystem: as its primary
+%function is to spread out evenly the powder throughout the entire printing bed,
+%resulting in a back-and-forth motion, the feedback loop is restricted to the
+%limit-switch; that is, this specific axis subsystem does not require an encoder,
+%as one is only interested in switching the motor direction at the limit endstops.
+
+Based on the working principle and the overview of the global system, the
+machine was 3D modelled in a \gls{cad} software namely,
+Solidworks\textsuperscript{\textregistered} (see Fig.~\ref{fig:sls_machine_3Dmodel-2}).
+This allowed to test the design, by
+simulating the motions required for the machine to operate and the placement of
+all the components in an optimised way. 
+The equipment includes: the \emph{powder recoating system}
+(blue); the \emph{printing bed and powder reservoirs}(green); the \emph{heating
+  elements} (not visible) for bed and reservoirs heating; \emph{powder recovery
+  system} (not depicted) consisting of a vacuum suction system with granulometric
+sieve; \emph{atmosphere control system} (not depicted) consisting of a
+pressurised circulation system \emph{actuators}, like motors (in brown); and
+\emph{sensors} (not depicted) for positioning and temperature measurements.
+% SLS machine 3D model
+%	\begin{figure}
+%   \centering
+%   \includegraphics[width=0.5\textwidth]{./img/sls_machine_3Dmodel.png}
+%    %   \put(5,5){hello}
+%   \caption{3D model of the 3DMMLPBF equipment built}%
+%   \label{fig:sls_machine_3Dmodel}
+%	\end{figure}
+% 
+\begin{figure}[!htbp]
+  \centering
+  % \begin{overpic}[width=0.5\textwidth,grid,tics=10]{./img/sls_machine_3Dmodel.png}
+  \begin{overpic}[width=0.5\textwidth,tics=10]{./img/sls_machine_3Dmodel.png}
+    \put (65,45) {\color{white}1}%{\huge$\displaystyle\gamma$}
+    \put (15,43) {\color{white}2}
+    \put (35,55) {\color{white}3}
+    \put (33,7) {4}
+    % \tiny, \scriptsize, \footnotesize
+    \put (103,65) {\footnotesize{1 --- Printing bed}}
+    \put (103,60) {\footnotesize{2 --- Powder deposit}}
+    \put (103,55) {\footnotesize{3 --- Recoating system}}
+    \put (103,50) {\footnotesize{4 --- Motor}}
+  \end{overpic}
+  \caption{3D model of the 3DMMLPBF equipment}\label{fig:sls_machine_3Dmodel-2}
+\end{figure}
+% 
+\subsection{Domain specific design \textup\& Modelling}%
+\label{subsec:doma-spec-design}
+After finding a viable general solution to the problem, with the architecture of
+the global system in both mechanical and control terms, the solution concept ---
+developed conjointly in the involved domains --- is now detailed separately in
+those domains, as specialised design and calculations are required to
+guarantee the functional performance, especially with the critical functions.
+
+% 
+\subsubsection{Mechanical design}%
+\label{subsubsec:mechanical-design}
+The mechanical design was performed by another laboratory staff element, as part
+of a multidisciplinary project. Here are presented and described the main
+machine elements for comprehension purposes.
+
+\paragraph{Machine}
+The machine 3D model is illustrated in Fig.~\ref{fig:mech-mach-3D}, with
+the following dimensions (length x width x height): 560 x 450 x 280 millimeters.
+There are three deposits: bed --- where the part is built; deposits 1 and 2 for the
+respective materials. The bed default movement direction is down, while the
+deposits is up. The recoating promotes the powder spreading on the bed in
+an even and homogeneous fashion thanks to the swipers (see also
+Fig.~\ref{fig:mech-recoating-3D}). The deposit commutator is responsible for
+aligning the deposit with the bed for powder feeding from the two available
+materials. The axes use screws with a thread pitch of 1 millimeter and with anti backlash system to further improve resolution.
+% 
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=.8\textwidth]{./img/mech-machine-3D.png}
+  \caption{Mechanical design: machine 3D model (final version)}
+  \label{fig:mech-mach-3D}
+\end{figure}
+
+\paragraph{Deposit}
+The deposit 3D model is illustrated in Fig.~\ref{fig:mech-deposit-3D}. The
+stepper motor drives the transmission belt coupled to the axis, moving it in the
+defined direction. The powder platform is where the powder effectively
+lies. Thus, this corresponds to the initial position of the bed deposit and the
+ultimate final position on the deposits 1 and 2.
+
+\paragraph{Recoating}
+The recoating 3D model is illustrated in Fig.~\ref{fig:mech-recoating-3D}. It
+uses silicone swipers to spread the powder homogeneously in the bed. It also
+includes an extraction cyclone for proper connection to the extraction system,
+adequately removing the material being currently processed if a new one must be
+added.
+
+% subfigures
+\begin{figure}[htb!]
+  \centering
+  %
+\begin{subfigure}[t]{0.4\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/mech-deposit-3D.png}
+  \caption{Deposit 3D model}%
+  \label{fig:mech-deposit-3D}
+\end{subfigure}
+%
+\begin{subfigure}[t]{0.4\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/mech-recoating-3D.png}
+  \caption{Recoating 3D model}%
+  \label{fig:mech-recoating-3D}
+\end{subfigure}
+  % 
+  \caption{\gls{3dmmlpbf} mechanical design: deposit and recoating subsystems}%
+  \label{fig:mech-design-deposit-recoating}
+\end{figure}
+
+
+\paragraph{Final result}
+After designing, dimensioning and manufacturing the mechanical components
+indicated in the mechanical design, the subsystems were assembled and integrated
+in the main system.
+The final result is presented in Fig.~\ref{fig:mech-final}.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=.5\textwidth]{./img/mach-mech-view.jpg}
+  \caption{Mechanical design implementation: final result}
+  \label{fig:mech-final}
+\end{figure}
+
+\subsubsection{Control design}%
+\label{subsubsec:electr-contr-design}
+% 
+For the control design, the subsystems were further detailed, represented in
+terms of the control loop (open or closed-loop), for both main subsystems ---
+\gls{mmlpbf} and laser --- depicted respectively in
+figs.~\ref{fig:detailed-subsys-mms}~and~\ref{fig:detailed-subsys-laser}.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.7\textwidth]{./img/detailed-subsys-mmlpbf.pdf}
+  %
+  \caption{Detailed subsystems for MMLPBF subsystem: control loop}%
+  \label{fig:detailed-subsys-mms}
+\end{figure}
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.6\textwidth]{./img/detailed-subsys-laser.pdf}
+  %
+  \caption{Detailed subsystems for CO\textsubscript{2} Laser subsystem: control loop}\label{fig:detailed-subsys-laser}
+\end{figure}
+
+For the \gls{mmlpbf} subsystem, it can be seen that the axis, heating and
+shielding control subsystems work in closed loop (although the last one is
+implicit, i.e., it does not depend on the external signal applied) and the
+powder recovery system works in open loop, via timed control action. 
+\begin{itemize}
+\item In the axis subsystem, the microcontroller sends the desired position to
+  the control board, which compares it to the actual position and updates the
+  position based on the error, issuing a command signal to the stepper motor
+  driver which, in turn, commands the stepper motor that applies torque on the
+  respective axis. The position is monitored by an encoder, which feedbacks
+  the converted signal to the control board. The two micro-switches are both a
+  redundant safety measure --- to prevent motor overruns --- and a reference
+  position for the axis when machine is initialised.
+  % 
+\item In the powder heating subsystem, the operation is similar, but for a different
+  finality --- temperature control. The microcontroller sends the desired
+  temperature to the control board, which compares it to the actual
+  temperature and updates the `heating' based on the error, issuing a
+  \gls{pwm} signal to the \gls{ssr} which modulates the current passing
+  through the electrical resistor that dissipates heat by \emph{Joule effect},
+  heating the reservoir. The temperature is measured by a thermocouple, that
+  in conjunction with an \gls{ic} for cold-junction compensation, filtering,
+  amplification and digitisation, feeds-back the signal corresponding to the
+  actual temperature. A control status flag should be used to signal to the
+  microcontroller that the process is out-of-control (bit comes to 1), which
+  the latter should use to stop `immediately' and wait for the process to be
+  controlled again (bit comes to 0).
+  % 
+\item In the shielding control subsystem, the microcontroller simply
+  activates a power switch at machine's startup, to start the compressor which
+  pressurises the machine chamber with inert gas, namely Argon
+  (\emph{Ar}). The machine chamber's pressure is measured with a pressure
+  switch (with the desired pressure set manually) that the compressor uses for
+  controlling the pressure. The pressure switch should also set the
+  out-of-control flag to off (the process initialises out-of-control),
+  signalling to the microcontroller that the normal procedure can occur.
+  % 
+\item Lastly, for the powder recovery subsystem the conceived solution
+  comprises the extraction of powder from the printing bed and delivery to the
+  correct deposit via granulometric sieving. Thus, the microcontroller
+  activates the vacuum pump when required via an \gls{ssr}, shutting it down
+  after a designated amount of time.
+\end{itemize}
+
+Although the Laser subsystem is not object of hardware
+design, and the control is performed via software, it is
+still important to understand the general panorama of the laser control. 
+\begin{itemize}
+\item The laser scanning subsystem is similar to the axis one, but instead of
+  the stepper motor moving an axis, it actuates the galvanometric mirrors to
+  scan the building area and the controlling order comes from the computer, as
+  opposed to the microcontroller.
+\item In the laser beam and laser wobble subsystems the operation is basically
+  the same, changing the observed effect: generating the laser beam or
+  fast-oscillate it after its generation. For this purpose, the computer
+  issues the order and the hardware \gls{pwm} takes care of modulating the
+  signal according to the appropriate laser parameters.
+\end{itemize}
+
+% 
+%\ifdef{\comm}{\mbox{}\marginpar{Why use stepper + encoders}}
+
+It is important now to address some design decisions, namely the use of stepper
+motors in conjunction with encoders for feedback, and the type of controller
+used in the feedback loop. For the former, the main reason is related to
+availability and budget restrictions: there was a surplus of these type of motors
+available and, alongside with the servomotors' higher unit cost, it became the
+evident choice for the project.
+% 
+%\ifdef{\comm}{\mbox{}\marginpar{What is the algorithm for the closed loop controllers selected?}}
+
+For the latter, the type of controller chosen was the \gls{pid}, due to its high
+versatility and configuration easiness: the \gls{pid} controllers are
+agnostic about the characteristics of the plant (process) to control and as
+there are several different control loops to manage, it also became obvious what
+type to use, despite in the modelling phase some parameters can be null, yielding
+different versions of the general \gls{pid} controller (P, PI, PD).
+% 
+%\ifdef{\comm}{\mbox{}\marginpar{Subsystem behaviour's modelling}}
+
+% This leads to the next step, which is the modelling of the behaviour of the
+% subsystem when using the above mentioned control loops.
+% % 
+% \paragraph{ Subsystem behaviour modelling}
+% In this phase, the behaviour of each subsystem is modelled to determine the
+% suitability and performance of the control loops, as well as aid in the
+% determination of the optimal set of parameters of the controller. 
+% Now, it is important to understand the modelling process and its fundamental
+% purpose in the context of process's control, thus firstly some control's
+% terminology needs to be introduced.
+% % 
+% \ifdef{\comm}{\mbox{}\marginpar{Control objectives, SP, PV, Overshoot, Transfer Function, Plant, controller}}
+% 
+% Every control system is comprised by: a plant/process whose values of the
+% state variables one would like to keep between defined values; and a controller
+% to guarantee this. 
+% The way the controller achieves this depends on the characteristics of the
+% plant/process: a closed-loop control is used if the process has fast dynamics
+% and high precision control is required, otherwise an open-loop control is
+% used. Obviously this has substantial implications on the complexity and cost of
+% the control system. 
+% 
+% Additionally, it is important to note that controlled systems are, by
+% definition, dynamic systems, i.e.~systems that evolve in time, and, therefore,
+% are described by a set of differential equations.
+% To model the plant, several approaches can be used, but the most common is to
+% think of the system as a black-box, and observe the output of
+% the system in respect to the input, described in the frequency domain as a
+% transfer function.
+% %This approach is highly useful, especially because one is interested in the
+% %frequency of control events, and not so much in the exact time at which they
+% %occur.
+% After determining the transfer function of the plant, the controller can be
+% designed, namely its type and parameters' configuration, to achieve the desired
+% control goal.
+% This is done using the controller to provide excitation functions
+% to the plant (controlled variable) and measure the response (output) in terms
+% of rise time, steady state value, overshoot, and settling time, depending on the
+% control characteristics required.
+% %(Fig.~\ref{fig:control-response-charact}~\cite{nise2011control})
+% %: rise time
+% %--- time required for the response waveform to go from 0.1 of the final value to
+% %0.9 of the final value; steady state value; overshoot --- amount that the
+% %response waveform overshoots the steady-state value, expressed as a percentage
+% %of it; settling time --- time required for the transient's damped oscillation to
+% %reach and stay within $\pm$2\% of the steady-state value.
+% %% 
+% %\begin{figure}[!hbt]
+% %  \centering
+% %    \includegraphics[width=0.6\textwidth]{./img/control-response-charact.png}
+% %  %
+% %  \caption{Parameters of a possible response curve for a controlled
+% %    plant~\cite{nise2011control}}\label{fig:control-response-charact}
+% %\end{figure}
+% % 
+% Thus, a possible design procedure for control systems is~\cite{nise2011control}:
+% \begin{enumerate}
+% \item Obtain the block diagram of the system through the development of a
+%   mathematical model of the system;
+% \item If multiple blocks, reduce the block diagram to a single block or
+%   closed-loop system;
+% \item Analyse, design and test to see if the requirements and specifications
+%   are met;
+% \end{enumerate}
+% % 
+% However, the model of the plant is not known, and although, in some cases, it
+% could be found (but with a substantial amount of complexity), the
+% translation to real-world scenario could be inadequate. Thus, a more
+% pragmatical approach is to determine the model of the plant (transfer function)
+% experimentally providing excitation functions to the plant's input and analysing
+% its response, as above mentioned. Yet, this would require the mounting of the
+% system one is trying to model beforehand, which it obviously undesirable and
+% against the purpose of this development phase.
+% 
+% Therefore, an even more pragmatical approach is required. This brings back the
+% main advantage of the \gls{pid} controller: when the model of the plant
+% is not known, the \gls{pid} can, normally, still perform very well, as it is
+% agnostic about the characteristics of the plant --- it relies on a combination
+% of term effects and its adequate parameters to bring the plant to the desired
+% state even in the presence of disturbances and noise. Using this concept,
+% together with the robust mathematical nature of the \gls{pid} control and
+% automatic adjusting algorithms it is possible to determine the optimum set of
+% \gls{pid} parameters on-line and in real-time, as opposed to determining it only
+% for a specific set of `ideal' conditions.
+% This is called adaptative control, where the
+% controller adjusts its parameters continuously to accommodate change in process
+% dynamics and disturbances~\cite{aastrom2006advanced}.
+% 
+% %Although the adaptative
+% %control is, in theory, a desirable feature, it can be overwhelming.
+% %{\AA}str{\"o}m and H{\"a}gglund~\cite{aastrom2006advanced} proposes a guideline
+% %about when and what type of
+% %adaptative control is required:
+% %%(Fig.~\ref{fig:adaptative-control-flowchart}). As
+% %%observed in Fig.~\ref{fig:adaptative-control-flowchart},
+% %only if the process
+% %dynamics vary in an unpredictable manner is the use of an adaptative controller
+% %justifiable, which is not the case. Two options then emerge: constant or
+% %predictable process dynamics. The simplest case is assumed first and only if it
+% %does not suffice, one will use gain scheduling. 
+% 
+% Thus, automatic tuning of the \gls{pid} controller is used to
+% determine the optimum set of control parameters.
+% Although simple methods for auto-tuning could have been used
+% for the controller's tuning like classic Ziegler-Nichols rules, or improvements
+% of these rules, as used for instance in the Marlin firmware for 3D
+% printers~\cite{reprap2016pid}, {\AA}str{\"o}m and
+% H{\"a}gglund~\cite{aastrom2006advanced} report that they are limited to a
+% specific set of processes, and thus other auto-tuning methods should be used.
+% The method used for this purpose is the relay method~\cite{aastrom2006advanced}.
+% % (see Fig.~\ref{fig:relay-method.png}).
+% 
+% This method is a special frequency response method, where an appropriate
+% frequency of the input signal is generated automatically, which should be close
+% to the ultimate frequency of the open-loop system, and the steady-state
+% responses are measured.
+% When tuning is selected, the \gls{pid} function is disconnected and the system
+% is connected to the relay feedback control. The system then starts to oscillate
+% and the period and amplitude of the oscillation is determined when steady-state
+% is obtained, yielding the ultimate period and ultimate gain from which the
+% \gls{pid} parameters can be determined. The \gls{pid} controller is then
+% automatically switched on again, and the control is executed with the new
+% \gls{pid} parameters. The implementation details will be discussed in the
+% software section.
+
+%\begin{figure}[!hbt]
+%  \centering
+%  \includegraphics[width=0.4\textwidth]{./img/adaptative-control-flowchart.png}
+%  \caption{When to use different adaptative techniques~\cite{aastrom2006advanced}}
+%  \label{fig:adaptative-control-flowchart}
+%\end{figure}
+%% 
+%\begin{figure}[!hbt]
+%  \centering
+%  \includegraphics[width=.5\textwidth]{./img/relay-method.png}
+%  \caption{The relay auto-tuner: in the tuning mode the process is connected to
+%    relay feedback~\cite{reprap2016pid}}
+%  \label{fig:relay-method.png}
+%\end{figure}
+\subsubsection{Electronics design}%
+\label{sec:electronics-design}
+The subsystems are now analysed in respect of their electronic constituents,
+selecting and designing the necessary parts. Multisim was used to simulate the
+circuits behaviour and Autodesk Eagle to design the circuits towards the
+production of a \gls{pcb}. Additionally, Eagle enables hierarchical modelling,
+supporting modular and iterative design. The main wiring schematic is depicted below in
+Fig.~\ref{fig:main-wiring}, showing the wiring between all subsystems. In thick
+lines can be seen the logical buses, merely to group logical signals by subsystems.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/main-eagle.png}
+  \caption{Overall system schematic wiring}%
+  \label{fig:main-wiring}
+\end{figure}
+
+\paragraph{Axis subsystem}
+Fig.~\ref{fig:axis-wiring} illustrates the wiring diagram for the \emph{Axis}
+subsystem and is
+comprised of a stepper motor, a stepper motor driver, and microswitches. The
+encoder may be included in future versions if open-loop control is not accurate enough.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=.6\textwidth]{./img/axis-eagle.png}
+  \caption{Axis subsystem schematic wiring}%
+  \label{fig:axis-wiring}
+\end{figure}
+
+The stepper motor is responsible for producing the necessary torque to move the
+loads across the axis. The bipolar stepper motor NEMA 17 was selected with
+adjustable step resolution of up to 1/32. This stepper motor has a 1.8$^{\circ}$ step angle, corresponding to 200 steps
+per revolution, a step accuracy of 5\%, a rated current of 2.5~A, and a detent
+torque of 280 g$\cdot$cm.
+
+The stepper motor driver is required for
+adequate control and timing of the stepper motor. The desired requirements for
+the driver are: microstepping functionality up to 1/16 (minimum); selectable up to
+3 A of rated current; output voltage of 12~V (min) and 24~V (desired) as steppers
+motors perform better at higher voltages; high commutation frequency for higher
+operating speeds; passive cooling, if possible.
+For these reasons, the 31306-MS driver board
+% (Fig.~\ref{fig:31306-ms}) 
+was selected which uses the TOSHIBA IC TB6560AHQ, known for its performance at a low
+price.
+
+Endstops are used to detect and
+prevent motor overrun past limit positions. Mechanical endstops were chosen
+because they are inexpensive and simple to control, requiring only a pull-up
+resistor and watching out for induced noise from motors which can cause false
+triggering by using screened cable. 
+% In Fig.~\ref{fig:mech-endstop} is depicted the mechanical
+% endstop used and its wiring schematic with a pull-up resistor.
+% 
+% \begin{figure}[!hbt]
+%   \centering
+%   \includegraphics[width=.5\textwidth]{./img/mech-endstop.png}
+%   \caption{Mechanical endstop: component and wiring schematic}
+%   \label{fig:mech-endstop}
+% \end{figure}
+
+\paragraph{Temperature subsystem}
+As depicted in Fig.~\ref{fig:detailed-subsys-mms}, the \emph{Temperature}
+subsystem is comprised of: temperature controller; solid-state relay for output;
+heating element; and thermocouple. The wiring diagram is depicted in Fig.~\ref{fig:temp-wiring}. The
+temperature controller chosen includes output signal via solid-state relay. The
+RS485-TTL converter will be implemented in a future version, for data exchange
+between temperature controller and microcontroller, enabling temperature reading
+and parameter setting and monitoring on-the-fly.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=.9\textwidth]{./img/temp-eagle.png}
+  \caption{Temperature subsystem schematic wiring}%
+  \label{fig:temp-wiring}
+\end{figure}
+
+\paragraph{Shielding control subsystem}
+As depicted in Fig.~\ref{fig:detailed-subsys-mms}, the \emph{shielding}
+subsystem is comprised of: electronic switch (mosfet) and solenoid valve;
+pressure sensor. The wiring diagram is depicted in Fig.~\ref{fig:atmos-wiring}.
+
+An inert gas is used to prevent the oxidation of the metallic powders,
+phenomenon that is severely aggravated by the temperature increase. The selected
+gas was argon, due to its availability in the laboratory, despite its cost,
+when compared, for instance with nitrogen. The argon supply occurs in two
+stages: first a vacuum of about 100 Pa; and then filling to a pressure of 0.5
+bar which reduces the initial oxygen amount to 0.04\% as reported by Wang et al.~\cite{wang2002direct}.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=.9\textwidth]{./img/atmos-eagle.png}
+  \caption{Shielding subsystem schematic wiring}%
+  \label{fig:atmos-wiring}
+\end{figure}
+
+To control the proportional solenoid valve, the circuitry presented in~\ref{fig:atmos-wiring}
+is used. A MOSFET is used to drive the solenoid, via a control signal received
+from the microcontroller acting on the MOSFET's gate --- \texttt{AT\_CT}. By
+using a~\gls{pwm} technique on the gate of the MOSFET, the timing of the valve
+can be controlled, allowing more or less fluid to flow, actively controlling the
+pressure in the chamber. A note is entitled here: \gls{pwm} operation is only
+advisable in proportional solenoid valves, as they are specially made for this
+effect; otherwise, premature wear would occur and unstable oscillation behaviour
+associated.
+
+A pull-down resistor is used to prevent pin floating, which could false
+triggering of the solenoid valve.
+The fly-back diode is used to protect the output pin from
+the current peak occurring when the solenoid valve coil is powered off (inductive
+load).
+
+The pressure sensor is used to measure the pressure
+in the chamber for adequate control.
+
+\paragraph{Extraction subsystem}
+Fig.~\ref{fig:asp-wiring}
+illustrates the wiring diagram for the extraction subsystem comprised of an
+\gls{ssr} and a vacuum pump.
+When a high level signal (5V) is fed to
+the \gls{ssr}'s input (\texttt{AS\_CT}), the photo-diode will conduct and the
+optocoupler will be triggered, activating the vacuum pump; when a low signal is
+fed, the vacuum pump will be turned off.
+% 
+ \begin{figure}[!hbt]
+   \centering
+   \includegraphics[width=.4\textwidth]{./img/aspiration-eagle.png}
+   \caption{Extraction subsystem schematic wiring}%
+   \label{fig:asp-wiring}
+ \end{figure}
+ 
+% \begin{figure}[!hbt]
+%   \centering
+%   \includegraphics[width=.25\textwidth]{./img/ssr.png}
+%   \caption{Solid state relay --- FOTEK SSR-25A}
+%   \label{fig:ssr}
+% \end{figure}
+
+\subparagraph{Power supply}
+The power supply is responsible for supplying the DC current required by the
+stepper motors, which should be operated at 24 VDC, for improved performance. In
+fact, the higher the voltage, the better the performance; however, as the
+stepper motor driver voltage rating is 24 V, this was selected. Considering the worst case scenario, i.e., if all motors were driven simultaneously, the
+total current supplied is 12.5 A (2.5~A per motor).  Thus, the power
+supply minimum requirements are: 24 VDC / 12.5 A. The power supplied selected
+has an output current of 15 A at 24 V, yielding 360 W of power output. %
+% (Fig.~\ref{fig:ps}). 
+The power supply is switch regulated for increased
+performance. Table~\ref{tab:ps} lists
+the power supply's main specifications.
+% 
+% \begin{figure}[!hbt]
+%   \centering
+%   \includegraphics[width=.3\textwidth]{./img/ps.png}
+%   \caption{Power supply --- NewStyle 360 W}
+%   \label{fig:ps}
+% \end{figure}
+
+\begin{table}[!hbt]
+  \centering
+  \caption{Power supply NewStyle 360 W}%
+  \label{tab:ps}
+  \resizebox{0.65\textwidth}{!}{%
+  \begin{tabular}{lllll}
+    \hline
+    Input Voltage & Output Voltage & Power & Output current & Type \\ \hline
+    115/230 VAC & 24 VDC & 360 W & 0 $\sim$15 A & Switch regulated \\ \hline
+  \end{tabular}
+  }
+\end{table}
+
+\paragraph{Microcontroller}
+The microcontroller manages all system tasks, by monitoring the inputs and
+generating the outputs in the accurate timing, triggered by internal state
+changes (temperature, pressure, etc.) or external events (user
+requests/commands; gcode processing, etc.). The main requirements for the
+microcontroller unit are:
+\begin{itemize}
+\item widely available: for increased wide-spreading and adoption;
+\item high abstraction: programming microcontrollers can be intimidating,
+  especially if dealing with all the low-level details; an abstraction layer can
+  ease the learning curve, as suggested by the \texttt{3DMMLPBF-C2P} methodology.
+\item ease of use;
+\item cost-effective;
+\end{itemize}
+
+For the above mentioned reasons the Arduino platform was chosen, more
+specifically the Arduino Mega 2560, %
+% (Fig.~\ref{fig:ard-mega}), 
+due to the amount of \gls{io} pins required. Table~\ref{tab:ard-mega-specs}
+lists its main specifications.
+
+Table~\ref{tab:pin-map} lists the pin mapping, mapping the
+microcontroller pins to the functionality required as indicated in the main
+schematic wiring (Fig.~\ref{fig:main-wiring}).
+% 
+% \begin{figure}[!hbt]
+%   \centering
+%   \includegraphics[width=.35\textwidth]{./img/ard-mega.png}
+%   \caption{Arduino Mega 2560}
+%   \label{fig:ard-mega}
+% \end{figure}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[!hbt]
+\centering
+\caption{Arduino Mega 2560 main specifications}%
+\label{tab:ard-mega-specs}
+\resizebox{0.55\textwidth}{!}{%
+\begin{tabular}{ll}
+\hline
+\textbf{Operating voltage}      & 5 V                                      \\ \hline
+\textbf{Digital I/O pins}       & 54 (15 provide PWM output)               \\ \hline
+\textbf{Analog Input Pins}      & 16                                       \\ \hline
+\textbf{DC Current per I/O pin} & 20 mA                                    \\ \hline
+\textbf{Flash memory}           & 256 KB (8 KB are used by the bootloader) \\ \hline
+\textbf{SRAM}                   & 8 KB                                     \\ \hline
+\textbf{EEPROM}                 & 4 KB                                     \\ \hline
+\textbf{Clock speed}            & 16 MHz                                   \\ \hline
+\end{tabular}%
+}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[!hbt]
+  \centering
+  \caption{Microcontroller pin mapping}%
+  \label{tab:pin-map}
+\resizebox{0.7\textwidth}{!}{%
+  \begin{tabular}{cllll}
+    \hline
+    \textbf{Subsystem} & \textbf{Signal} & \textbf{Function} & \textbf{Pin} & \textbf{I/O} \\ \hline
+    \multirow{5}{*}{\textbf{Axis}} & EN+ & Enable & {[}32, 35, 38, 41, 44{]} & Output \\ \cline{2-5} 
+              & CW+ & Direction & {[}33, 36, 39, 42, 45{]} & Output \\ \cline{2-5} 
+              & CLK+ & Step & {[}34, 37, 40, 43, 46{]} & Output \\ \cline{2-5} 
+              & MS1 & Home microswitch & {[}2, 4, 5, 6, 7{]} & Input \\ \cline{2-5} 
+              & MS2 & Default microswitch & {[}3, - , -, -, 8{]} & Input \\ \hline
+    \multirow{2}{*}{\textbf{Comm}} & RX & Serial reception & 0 & Input \\ \cline{2-5} 
+              & TX & Serial transmission & 1 & Output \\ \hline
+    \multicolumn{1}{l}{\multirow{3}{*}{\textbf{Thermo}}} & RX485\_RX & RS485 reception & {[}19, 17, 15{]} & Input \\ \cline{2-5} 
+    \multicolumn{1}{l}{} & RX485\_TX & RS485 transmission & {[}18, 16, 14{]} & Output \\ \cline{2-5} 
+    \multicolumn{1}{l}{} & RX485\_CT & RS485 control & {[}47, 49, 51{]} & Output \\ \hline
+    \multicolumn{1}{l}{\multirow{2}{*}{\textbf{Shielding}}} & AT\_CT & Shielding control & 23 & Output (PWM) \\ \cline{2-5} 
+    \multicolumn{1}{l}{} & P\_OUT & Pressure sensing & 25 & Input \\ \hline
+    \multicolumn{1}{l}{\textbf{Extraction}} & AS\_CT & Extraction control & 27 & Output (PWM) \\ \hline
+  \end{tabular}
+  }
+\end{table}
+
+\paragraph{Final result}
+After designing, dimensioning and acquiring the electronic components indicated
+in the electronic design, the subsystems were assembled and integrated in the
+main system. The final result is illustrated in Fig.~\ref{fig:elect-final}: at the
+top the power supply; in the middle the microcontroller, the stepper-driver
+boards and mechanical endstops circuitry; at the bottom the temperature
+controllers for each powder deposit.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=.5\textwidth]{./img/mach-elect-view.jpg}
+  \caption{Electronics development: final result}%
+  \label{fig:elect-final}
+\end{figure}
+
+\subsubsection{Software}%
+\label{sec:mach-sw}
+The software specific design for the 3DMMLPBF machine regards the development of
+the \emph{lcode} interpreter (vide Section~\ref{subsec:lcode-to-part}) and
+related control components, constituting what is commonly known as the machine's
+firmware.
+% \input{./tex/Chap/Devel/sw-require-elic}
+% \input{./tex/Chap/Devel/sw-analysis}
+% \input{./tex/Chap/Devel/sw-firmware}
+
+\paragraph{Requirements and Constraints}
+Table~\ref{tab:firmware-req-constr} lists the requirements and constraints for
+the \gls{3dmmlpbf} machine's firmware.
+The main requirements are: provide support for the manufacturing tasks;
+communicate with the \texttt{Manufacturer} application to obtain the
+manufacturing instructions and to provide feedback; interpret \texttt{lcode}
+instructions to execute the manufacturing; and enforce safety mechanisms to
+protect the \emph{User}.
+
+On the other hand, the main constraints are technical: the target platform has
+low memory, so the firmware must have a low memory footprint; the firmware runs
+the system's most critical tasks and, thus, must have low latency and high responsiveness.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[!hbt]
+\centering
+\caption{Requirements and contraints for the 3DMMLPBF machine's firmware}
+\label{tab:firmware-req-constr}
+\resizebox{0.8\textwidth}{!}{%
+\begin{tabular}{ll}
+\hline
+\textbf{Requirements} &
+  \begin{tabular}[c]{@{}l@{}}- Provide support for the manufacturing tasks (axis motion, recoating, \\ powder recovery, temperature control, shielding control)\\ - Communicate with the Manufacturer application\\ - Interpret lcode to run the manufacturing\\ - Enforce safety mechanisms to protect the User\end{tabular} \\ \hline
+\textbf{Constraints} &
+  \begin{tabular}[c]{@{}l@{}}- Low memory footprint\\ - Low latency: soft real-time or real-time deadlines\end{tabular} \\ \hline
+\end{tabular}%
+}
+\end{table}
+
+%\paragraph{Analysis}
+%
+%%
+\paragraph{Design}
+Fig.~\ref{fig:firmware-design-arch} shows the firmware's architecture. In the
+lowest layer, we have the actual electronics hardware executing the
+manufacturing. Above that, we have the device-drivers that abstract the
+hardware's operation, providing the basic low-level services required to
+interface the hardware (\textbf{Hardware Abstraction Layer}). The \textbf{\gls{os} layer}
+provides services at the system level, abstracting and managing the system's
+resources and supporting the application's modules. For example, the \gls{os}
+layer is responsible for the scheduling and synchronisation of concurrent tasks
+in the system, like serial port management and axis controller management. The
+\textbf{Communications layer} manages the communications with the outside world,
+namely the \texttt{Manufacturer}, via the \texttt{Serial Port Manager}. As
+aforementioned, a fixed-size protocol built on top of RS232/RS485 protocol is
+used for transaction exchanging. Lastly, the \textbf{Application layer} provides
+the system's high-level functionalities, such as: communication handling, i.e.,
+assessing if a valid message has arrived; \texttt{lcode} interpretation of valid
+instructions; axis, temperature and shielding controlling. The Application
+layer's modules interact with the Communications layer and the \gls{os} layer
+to request their services or to get notified of a relevant event.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/firmware-design-arch.pdf}
+  %
+  \caption{Firmware design: system architecture}\label{fig:firmware-design-arch}
+\end{figure}
+
+Now, we turn our focus into each application's module/task.
+Fig.~\ref{fig:firmware-sm} illustrates the state machine diagram for the
+\texttt{LCode Interpreter}, the main system's task:
+\begin{enumerate}
+\item \textbf{Init}: after power on, the machine is initialised: loading
+  previous settings, configuring motors, starting other system's tasks (heating
+  and shielding control), initialising serial communication, and homing all
+  axes. If the homing procedure fails, an error event is triggered and the state
+  machine transits to the \texttt{Error} state.
+\item \textbf{Idle}: this is the default state and where the \texttt{LCode
+    Interpreter} state-machine really starts. It handles the event-loop of the
+  interpreter. On entry, it turns off the suction system and the motors. It also
+  checks if the other system's tasks, like the \texttt{TempController} or the
+  \texttt{Shielding Controller}, emitted any error. If so, the system's goes to
+  the \texttt{Error} state.
+  If a valid serial message has arrived, it is parsed, and dispatched to the
+  appropriate handler, triggering the transition to the corresponding state,
+  namely: \texttt{Calib}, \texttt{Fill}, \texttt{Manuf}, \texttt{Cleanup}, or \texttt{Stop}.
+\item \textbf{Stop}: eventually, during the material processing, the user may
+  issue an emergency stop. If this happens, the machine is halted, stopping all
+  motors and sending to the \emph{Master system} the \texttt{MSG\_STOP}
+  message.
+\item \textbf{Calib}: if a calibration message is received, we check its status,
+  and if it is done, we check the manufacturing height available and compare to
+  the part's height to enable the manufacturing. In either case, a message is
+  issued to the \texttt{Master} system with the calibration status. Otherwise,
+  if the calibration is ongoing, the motor, distance, and motion's direction are
+  retrieved and dispatched to the \texttt{MoveMotor} external thread (here
+  represented as a state for simplification purposes). Then, we wait for the
+  motor's motion to finish or for a timeout, signalling an error.
+\item \textbf{Fill}: in this state, we check for a valid material, and if so,
+  the recoating systems' are homed, and then the material's recoater is brought
+  to its center position, aligning itself with the deposit to allow the
+  deposit's filling with the powder. After successfull alignment, it transits to
+  \texttt{Idle} and waits for more commands.
+\item \textbf{Manuf}: this is the manufacturing handler state. The material, the
+  bed flag, and the layer's height are retrieved.
+  If a new material is to be added, the old one is removed. If a new layer is
+  issued, then the bed drops also by layer's height. Then, powder is inserted
+  and spread across the printing bed. The recoating procedure is repeated for
+  the number of recoating passages defined in the \texttt{Manufacturer}'s
+  application. If everything works well, the message \texttt{MSG\_NEW\_ID} is sent
+  back to the \texttt{Manufacturer}, signalling it is ready for further
+  processing.
+\item \textbf{Cleanup}: in this state, we check for a valid material, and if so,
+  the material's recoater is brought to its center position, aligning itself
+  with the deposit to allow the powder recovery. After the timer elapses, the
+  powder recovery system is turned off again, and the \texttt{MANUF\_DONE}
+  message is sent back to the \texttt{Manufacturer}, signalling the
+  manufacturing procedure is completed.
+\item \textbf{Error}: this a terminal state. The error is emitted back to the
+  \texttt{Manufacturer} and we wait for the \texttt{restarted} signal to be posted.
+\item \textbf{MoveMotor}: this state is actually an external thread, but as most
+  states request its services, it was added to the diagram to facilitate the
+  comprehension. The motor, distance, and motion's direction are retrieved and
+  used to move the motor. If a timeout occurs, an error happened. Otherwise, the
+  \texttt{motorDone} signal is emitted with the corresponding motor's index.
+\end{enumerate}
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/firmware-sm.eps}
+  %
+  \caption{Firmware design: LCode Interpreter State-machine diagram}\label{fig:firmware-sm}
+\end{figure}
+
+Lastly, Fig.~\ref{fig:firmware-dataFormat} specifies the messaging protocol as a
+subset of the Manufacturer's messaging protocol, with the following structure:
+\begin{enumerate}
+\item \textbf{CMD}: command exchanged between the \texttt{Manufacturer} and the
+  machine --- \texttt{MSG\_} represent commands sent back to the
+  \texttt{Manufacturer}, while the other ones are sent by the
+  \texttt{Manufacturer}. 
+  The several command types are listed, alongside with the command's
+  grammar. For example, the \texttt{MANUF} command requires the material, the
+  bed flag, and the height to be bundled in the message.
+\item \textbf{args}: represents the command's arguments. For example,
+  \texttt{MANUF}'s material and bed goes into arguments 0 and 1, respectively.
+\item \textbf{payload}: represents an additional command's attribute, such as,
+  laser's actuation delay,
+  distance, layer height or parameter's value. For example, the
+  \texttt{MANUF}'s height is defined here.
+\item \textbf{ACK}: represent's the acknowledgment signal, used to validate a message.
+\end{enumerate}
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.7\textwidth]{./img/firmware-dataFormat.eps}
+  %
+  \caption{Firmware design: Messaging protocol}\label{fig:firmware-dataFormat}
+\end{figure}
+
+
+% 
+\paragraph{Implementation}
+The firmware was implemented by stages using the C/C++ programming language for
+the Arduino platform. The hardware abstraction layer was firstly implemented and
+tested to guarantee the hardware's control was fully operational. Then, the
+\texttt{Serial Port Manager} was implemented, alongside with the fixed-size
+messaging protocol and tested to ensure data's integrity. Lastly, all
+applications modules/threads were implemented to support the message validation
+and dispatching, the \texttt{lcode} interpretation, and the control of the axes,
+temperature and shielding.
+
+\subsection{Implementation: Version 1}%
+\label{sec:version-1}
+The completion of the first full development cycle of
+the V-model methodology used yielded the
+version \texttt{1.0} of the \gls{3dmmlpbf} equipment.
+%\hfill \break%
+%\hfill \break%
+%
+Fig.~\ref{fig:mach-full-view-annotated} shows the first version of the \gls{3dmmlpbf} equipment
+comprised of three systems (see also Fig.~\ref{fig:manuf-deployment} and Fig.~\ref{fig:mmsls-global}): \gls{3dmmlpbf} system
+--- machine, control circuitry and microcontroller; laser system --- $CO_2$
+laser in this case; master system --- \texttt{Manufacturer}'s UI controlling the
+\gls{3dmmlpbf} and laser systems. It is important to note that the visible
+electronics are protected from user manipulation by an enclosing frame; for
+illustration purposes this cover was removed. Table~\ref{tab:mach-final-specs}
+lists the \gls{3dmmlpbf} machine \texttt{v1.0} specifications.
+%
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/mach-full-view-annotated-new.jpg}
+  \caption{3DMMLPBF equipment v1.0: Machine, Laser, and Post-Processor and Printer UI}%
+\label{fig:mach-full-view-annotated}
+\end{figure}
+%
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[!hbt]
+\centering
+\caption{\gls{3dmmlpbf} machine v1.0 specifications}%
+\label{tab:mach-final-specs}
+\resizebox{0.8\textwidth}{!}{%
+\begin{tabular}{ll}
+\hline
+\textbf{Dimensions} (l x w x h){[}mm{]} & 560 x 450 x 280 \\ \hline
+\multirow{2}{*}{\textbf{Power supply}} & Laser: 400 VAC, 10 A \\ \cline{2-2} 
+ & Machine: 24 V, 15 A \\ \hline
+\textbf{Build dimensions} {[}mm{]} & 50 x 50 x 50 \\ \hline
+\textbf{Nr. of materials} & 2 \\ \hline
+\textbf{Temperature} & Tested up to 250$^{\circ}$C (higher temperatures can be used) \\ \hline
+\multirow{3}{*}{\textbf{Laser}} & Type: $CO_2$ \\ \cline{2-2} 
+ & Power: 30 W \\ \cline{2-2} 
+ & Spot size: 50 $\mu$m \\ \hline
+  \multirow{2}{*}{\textbf{Resolution} {[}$\mu$m{]}} & Full-step (all axes, except bed): 5 $\pm$ 0.25 \\ \cline{2-2} 
+ & 1/16-step (bed): 0.32 $\pm$ 0.016 \\ \hline
+\multirow{3}{*}{\textbf{Estimated cost} {[}\texteuro{]}} & Laser: 7500 \\ \cline{2-2} 
+ & Machine: 1500 \\ \cline{2-2} 
+ & Total: 9000 \\ \hline
+\end{tabular}
+}
+\end{table}
+
+The equipment axes' have micrometric resolution, it can support up to
+250$^{\circ}$C (at least), but the feature that stands out the most is its low
+cost (circa 1500~\texteuro). Adding up to the laser cost, the total costs is
+under 10 k\texteuro, making it affordable which can act as starting point for
+greater adherence of people.
+
+However, the first version of the \gls{3dmmlpbf} equipment is bulky, resulting in
+higher resource consumption, namely powder and energy (heat dissipation), which,
+in its present form, can make the operational costs unfeasible. Also, the powder
+recoating system was not very effective, making room for improvements.
+
+Thus, this triggered another development cycle, leading to the second version
+of the \gls{3dmmlpbf} system.
+
+\subsection{Implementation: Version 2}%
+\label{sec:version-2}
+The \gls{3dmmlpbf} equipment \texttt{v2.0} is a more compact version of the
+previous one, optimizing powder consumption and recovery, and manufacturing
+efficiency, with relevant improvements in the powder delivery, heating, cooling,
+and powder removal systems.
+The major modifications were in the mechanical domain, as the electronics and
+the software suffered only minor ones.
+The development of this equipment's version is partially documented by
+Figueiredo~\cite{diogoTese}, when developing a better recoating system for the
+\gls{3dmmlpbf}.
+
+Fig.~\ref{fig:mach-v2-recoat} illustrates the new recoating system
+developed by Figueiredo as an improvement over the previous version. It consists
+of two carts moved by a belt and pulley system powered by a stepper motor. Each
+cart moves from the periphery to the bed dragging each material contained in the
+deposit, and back. Each cart contains a scraper made of high-temperature
+silicone to seal the cart opening and deliver a smooth and uniform layer of
+powder to the bed area.
+%
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.7\textwidth]{./img/mach-v2-recoating.png}
+  \caption[\gls{3dmmlpbf} machine v2.0: Recoating system]{\gls{3dmmlpbf} machine v2.0: Recoating system (adapted from~\cite{diogoTese})}%
+  \label{fig:mach-v2-recoat}
+\end{figure}
+
+Fig.~\ref{fig:mach-v2-asp} illustrates the powder recovery system consisting of
+two connecting tubes to the end of which are connected hoses leading to a vacuum
+system, responsible for the powder removal.
+The tubes sit on top of the powder deposits and are actuated by a stepper motor
+via an endless screw, ensuring the distance to the deposit is minimal for
+optimal powder removal. The vaccum systems are independent, minimising powder contamination.
+%
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.7\textwidth]{./img/mach-v2-aspiration.png}
+  %
+  \caption[\gls{3dmmlpbf} machine v2.0: Powder recovery system]{\gls{3dmmlpbf} machine v2.0: Powder recovery system (withdrawn from~\cite{diogoTese})}%
+  \label{fig:mach-v2-asp}
+\end{figure}
+
+Fig.~\ref{fig:mach-v2-heat} illustrates the heating system used to preheat the
+powders closer to the temperature of the focused laser beam over the powder
+bed. It aims to minimise thermal shocks which induces mechanical stress on the
+produced parts. It consists of an array of heating cartridge elements
+distributed over evenly along the deposits and bed areas.
+%
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.7\textwidth]{./img/mach-v2-heating.png}
+  %
+  \caption[\gls{3dmmlpbf} machine v2.0: Heating system]{\gls{3dmmlpbf} machine v2.0: Heating system (withdrawn from~\cite{diogoTese})}%
+  \label{fig:mach-v2-heat}
+\end{figure}
+
+Fig.~\ref{fig:mach-v2-water} illustrates the water cooling and atmosphere
+control systems, with inlet and outlet flows ensuring proper fluid circulation
+to ensure adequate temperature control and maintenance of reducing atmosphere.
+%
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.7\textwidth]{./img/mach-v2-water.png}
+  %
+  \caption[\gls{3dmmlpbf} machine v2.0: Water cooling and atmosphere control systems]{\gls{3dmmlpbf} machine v2.0: Water cooling and atmosphere control systems (adapted from~\cite{diogoTese})}%
+  \label{fig:mach-v2-water}
+\end{figure}
+
+Fig.~\ref{fig:equip-v2-annotated} illustrates the \gls{3dmmlpbf} equipment
+\texttt{v2.0} and the supporting framework --- Laser, Post-processor and
+Printer \gls{ui}. It is clearly visible the size reduction and the vacuum
+suction inclusion.
+%
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/equip-v2-annotated.png}
+  %
+  \caption{\gls{3dmmlpbf} machine v2.0 and supporting framework}%
+  \label{fig:equip-v2-annotated}
+\end{figure}
+
+Table~\ref{tab:mach-v2-specs} lists the \gls{3dmmlpbf} machine
+specifications. The specifications are roughly the same, except for the size
+reduction and associated cost reduction.
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[!hbt]
+\centering
+\caption{\gls{3dmmlpbf} machine \texttt{v2.0} specifications}
+\label{tab:mach-v2-specs}%
+\resizebox{0.8\textwidth}{!}{%
+\begin{tabular}{ll}
+\hline
+\textbf{Dimensions} (l x w x h){[}mm{]} & 320 x 100 x 400 \\ \hline
+\multirow{2}{*}{\textbf{Power supply}} & Laser: 400 VAC, 10 A \\ \cline{2-2} 
+ & Machine: 24 V, 15 A \\ \hline
+\textbf{Build dimensions} {[}mm{]} & 25$\diameter$ x 100 \\ \hline
+\textbf{Nr. of materials} & 2 \\ \hline
+\textbf{Temperature} & Tested up to 250$^{\circ}$C (higher temperatures can be used) \\ \hline
+\multirow{3}{*}{\textbf{Laser}} & Type: $CO_2$ \\ \cline{2-2} 
+ & Power: 30 W \\ \cline{2-2} 
+ & Spot size: 50 $\mu$m \\ \hline
+  \multirow{2}{*}{\textbf{Resolution} {[}$\mu$m{]}} & Full-step (all axes, except bed): 5 $\pm$ 0.25 \\ \cline{2-2} 
+ & 1/16-step (bed): 0.32 $\pm$ 0.016 \\ \hline
+\multirow{3}{*}{\textbf{Estimated cost} {[}\texteuro{]}} & Laser: 7500 \\ \cline{2-2} 
+ & Machine: 1200 \\ \cline{2-2} 
+ & Total: 8700 \\ \hline
+\end{tabular}
+}
+\end{table}
+
+\subsubsection{Testing and Validation}%
+\label{sec:testing-validation-equip}
+The equipment's tests were divided in the following categories: mechanical
+--- axes movements, movements precision; control --- temperature, mechanical
+endstop triggering, and machine reset; laser --- scanning and marking.
+
+\paragraph{Mechanics}
+For mechanical tests, two types of approaches were used: manual --- free
+(manually driven) or induced motion (external motors) to test the axes;
+automatic --- snippets of code to automatically test the axes movements and the
+movements precision. Only the latters will be discussed in detail.
+
+To test the axes movements a snippet of code was written to control all five
+machine axes, either by direction and distance, either between mechanical
+endstop limits.
+The direction and distance control aforementioned also enabled the movements
+precision tests. The command protocol is presented in
+Fig.~\ref{fig:mechanics-steppers-test}.
+
+The axes resolution were determined taking into consideration the screws thread
+pitch of 1 millimeter and the number of steps per revolution of the stepper
+motor, combined with the excitation scheme. For full-step motors --- all, except
+bed --- the resolution is 5 $\pm$ 0.02 $\mu$m; for the bed axis the resolution
+is 0.32 $\pm$ 0.016 $\mu$m.
+
+For the movements precision tests, the axes were driven to a mechanical endstop
+and then driven back to the other one. After determining the distance between
+the two mechanical endstops, the axes were placed at the home mechanical endstop
+and moved to the other one by the determined distance, checking if the
+mechanical endstop is triggered and at which distance. The motors presented good
+precision by consistently hitting the microswitch within a 1\% margin. This
+result was even better for the bed deposit, due to the microstepping added resolution.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.5\textwidth]{./img/mechanics-steppers-test.png}
+  \caption{Automatic mechanical tests: command protocol}%
+\label{fig:mechanics-steppers-test}
+\end{figure}
+
+\paragraph{Control}
+For \underline{temperature control testing}, the temperature setpoint was varied from room
+temperature (20 $^{\circ}$C) to operation temperature (250 $^{\circ}$C) in
+increments of 30 $^{\circ}$C. Then, the rise time and settling time were
+registered and the temperature variation range. Finally, a full operation was
+performed between room temperature and operation temperature. The controller
+performance was very satisfactory with a settling time of three minutes and
+temperature range of 4 $^{\circ}$C, especially considering that the radiation
+and conduction thermal losses are high. It should be noted that this could be
+achieved thanks to the auto-tuning function of the controller, which gains
+insight about the plant, despite its nature, and the robustness of the \gls{pid}
+control.
+
+The \underline{mechanical endstop testing} was performed automatically, by
+sampling all associated pins through software and manually pressing each one,
+checking the result.
+
+Finally, the \underline{machine reset operation} could now be tested: first a
+small shell script stimulated the firmware executing on the microcontroller to
+perform the desired actions and retrieve the resulting messages; then, the
+printer software took over this task and stimulated directly the firmware,
+testing also the user relevant feedback information.
+
+\paragraph{Laser}
+The scanning and marking were tested by using a dummy file with only one layer,
+as shown in Listing~\ref{lst:laser-scan-mark-test} and pressing the pushbuttons
+\emph{Red} and \emph{Test}, respectively. Furthermore, it also allowed to test
+different laser parameters by modifying the associated pen.
+
+\begin{lstlisting}[language=xml, basicstyle=\scriptsize, caption=One layer manufacturing file to test
+  the laser, label=lst:laser-scan-mark-test]
+  <g id="L0_M1_H25" slic3r:z="0.0250" slic3r:slice-z="0.0125" slic3r:layer-height="0.0250" slic3r:mat="1">
+  <polyline points= "20,0 0,0 0,20 20,20 20,0 " style="fill: none; stroke: white; stroke-width: 0.1; fill-type: evenodd" slic3r:type="" />
+  </g>
+\end{lstlisting}
+
+Fig.~\ref{fig:laser-mark-test} illustrates the laser marking testing
+procedure with multiple lasers. After the \emph{User} select an layer ID to mark and press the
+\texttt{Test} button, the \texttt{Master} system will request to the list of
+lasers defined in the table to mark the entity with the designated laser
+actuation delay.
+As such, the entity \texttt{ID = 4} is marked by laser 0
+(controlled by the \texttt{Master}), and by laser 1 (controlled by the slave)
+after the \texttt{Master} system sends it the appropriate command.
+
+% subfigures
+\begin{figure}[htb!]
+  \centering
+  %
+  \begin{subfigure}[t]{1.0\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/laser-test-master.png}
+  \caption{Master drives marking: it marks own laser and issues marking command to slave}%
+  \label{fig:laser-mark-test-1}
+  \end{subfigure}
+%
+  \begin{subfigure}[t]{1.0\textwidth}
+    \includegraphics[width=1.0\textwidth]{./img/laser-test-slave.png}
+  \caption{Slave extracts command and marks entity}%
+  \label{fig:laser-mark-test-2}
+  \end{subfigure}
+  % 
+  \caption{\gls{3dmmlpbf} Laser marking testing}%
+  \label{fig:laser-mark-test}
+\end{figure}
+
+\paragraph{Manufacturing}
+To fully test the machine operation, a dialog was added to the
+\texttt{Manufacturer}'s software (see
+Fig.~\ref{fig:manuf-test-mach-operation}). All protocol commands are available
+for selection with the accompanying documentation. The commands were then issued
+with the respective parameters to stimulate the equipment and track its
+progress. The desired and real behaviours were then compared to validate the
+machine's operation in compliance to the designed state-machines and the
+\emph{User}'s requirements. For example, the \texttt{Debug Comm} command was
+used to validate the serial communication link between the equipment and the
+\texttt{Manufacturer}'s \gls{sw}: the message sent to the equipment should be
+looped back to the software with the same contents.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.8\textwidth]{./img/manuf-test-mach-operation.png}
+  \caption{Manufacturing tests: machine's testing dialog}%
+\label{fig:manuf-test-mach-operation}
+\end{figure}
+
+This is also a useful feature for future users of the equipment, allowing for
+the quick testing of the machine via software in a straightforward and transparent manner.
+
+\paragraph{Validation}
+The equipment tests conducted allowed to assess the mechanics, control and laser operating conditions. They were performed mainly automatically
+through software, and in isolation and integration. The
+axes movements and their precision was tested and validated. The temperature
+control was highly insensitive to the high thermal losses mainly by conduction
+and radiation within satisfactory timing and temperature range. The machine
+reset was tested: first by static stimulus and then dynamically by the printer,
+also validating the user messages. The laser scanning and marking were
+successfully tested, on a single and on multiple lasers, alongside with the marking parameters through the
+modification of the associated pen. The machine operation was thoroughly tested
+by software in a straightforward way, using a specially designed \gls{ui}
+dialog.
+The equipment's firwmare is available online~\cite{repoPostmanuf} (see Fig.~\ref{fig:repoFirmware}) and released
+under the AGPL v3 licence.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.7\textwidth]{./img/repo-postManuf.png}
+  %
+    \caption{3DMMLPBF equipment's firmware repository~\cite{repoFirmware}}%
+    \label{fig:repoFirmware}
+\end{figure}
+
+\section{Summary}
+In this chapter a specialised workflow --- \emph{3DMMLPBF-C2P:~CAD to Process} --- was
+instantiated from the proposed methodology, integrating all the models from the
+manufacturing chain, but without the optimisation
+steps. The workflow is divided in three phases: manufacturing file
+generation, manufacturing file processing, and process knowledge feedback.
+
+A software toolchain was developed to materialise the workflow, yielding the
+following components: \texttt{Pre-Manufacturer} --- \emph{slicer + path generator};
+\texttt{Manufacturer} --- \emph{post-processor + printer}; and \texttt{Post-Manufacturer}.
+
+The \underline{Pre-Manufacturer} integrates a custom fork of the open-source
+software \emph{Slic3r} for the slicing and path generation. The following
+features were added: merging of
+tridimensional geometric models enabling multi-material processing; toolpath
+exporting to \gls{svg}; preservation of model coordinates; custom tagging in
+\emph{.svg} files to facilitate import by the post-processor.
+By using \emph{Slic3r}, one benefits from a vast set of toolpaths and that can
+be extended to suit the \gls{3dmmlpbf} needs.
+
+The \underline{Manufacturer} combines the \emph{Post-Processor} and \emph{Printer}
+to generate the manufacturing file from the 3D \gls{cad} models.
+The \emph{Post-Processor} maps the topological data to the laser parameters to ensure
+the desired properties of the 3D part; the \emph{Printer} controls the array of
+manufacturing lasers and the 3DMMLPBF
+machine operation, interfacing both hardware subsystems and providing feedback
+to the user.
+
+The \underline{Post-Manufacturer} provides a process knowledge database that can be
+used by all manufacturing agents for process improvement. It enables models and
+manufacturing files to be directly imported, easing this process. Furthermore,
+it can be used to bootstrap the process, as all information is readily available
+to use and test the equipment and the toolchain.
+
+The \gls{3dmmlpbf} machine was designed following the \emph{V-model} methodology in
+two iterations, yileding two versions of the equipment. The working principle of the machine was established and the
+main subsystems were defined --- axis; heating; shielding control; and
+powder-recovery --- and the \emph{global system} was assembled.
+Then, the subsystems were subject to an analysis, design and implementation
+loop for each domain area: mechanics, electronics and software.
+
+In the mechanical domain, the machine was designed to fulfil the desired
+function, attending to the axes motions, the loads interacting in the system
+and the controlled environment for the materials powders.
+
+In the electronics domain, the circuit drawings were performed in Autodesk
+Eagle for each subsystem and integrated for circuit assembly and future
+\gls{pcb} production.
+
+In the software domain, the system architecture was outlined comprised of
+three main systems: \emph{Master} --- controls the \gls{mmlpbf} machine and the 
+array of manufacturing lasers, and runs on the host computer; \emph{Laser} --- controls the path
+scanning driven by the \emph{Master}; \gls{mmlpbf} firmware --- controls the
+multi-material processing, and runs on a microcontroller, commanded via serial
+interface. The \texttt{Manufacturer}, comprising the \texttt{Post-processor} and \texttt{Printer} software components, was designed and implemented to interface the \gls{mmlpbf}
+and laser subsystems. Lastly, the firmware ---
+low-level code --- controlling the \gls{mmlpbf} subsystem was developed.
+
+The first version of the \gls{3dmmlpbf} equipment was bulky, resulting in
+higher resource consumption, namely powder and energy (heat dissipation), which,
+in its present form, can make the operational costs unfeasible. Also, the powder
+recoating system was not very effective, making room for improvements.
+Thus, a second and more compact version was designed and built, optimizing powder consumption and recovery, and manufacturing
+efficiency, with relevant improvements in the powder delivery, heating, cooling,
+and powder removal systems.
+
+Fig.~\ref{fig:devel-summary} shows a synopsis of the \gls{3dmmlpbf} ecosystem,
+illustrating the workflow, software toolchain and equipment interactions,
+alongside with the manufacturing agents, summarizing the development stage.
+%
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=1.0\textwidth]{./img/devel-summary.pdf}
+  \caption{\gls{3dmmlpbf} ecosystem synopsis: Workflow, toolchain and
+    equipment interactions}%
+  \label{fig:devel-summary}
+\end{figure}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../template"
+%%% End:
