@@ -18,6 +18,8 @@
 - [[#formatting][Formatting]]
   - [[#normas-para-a-formatação-gráfica][Normas para a formatação gráfica]]
   - [[#normas-para-o-depósito-no-repositorium][Normas para o depósito no RepositoriUM]]
+- [[#tools][Tools]]
+  - [[#notebooklm][Notebooklm]]
 - [[#writing][Writing]]
   - [[#-done-title][✔ DONE Title]]
   - [[#abstract][Abstract]]
@@ -433,6 +435,9 @@ Institucional da Universidade do Minho).
    Académico da Universidade do Minho.
    
 
+* Tools
+
+** Notebooklm
 * Writing
 ** ✔ DONE Title
 :LOGBOOK:
