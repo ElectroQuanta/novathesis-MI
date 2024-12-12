@@ -24,7 +24,8 @@ endif
 endif
 
 # Find out which versions of TeX live are available (works for macos)
-TEXVERSIONS=$(shell ls /usr/local/texlive/ | fgrep -v texmf-local)
+#TEXVERSIONS=$(shell ls /usr/local/texlive/ | grep -F -v texmf-local)
+TEXVERSIONS=$(shell ls /usr/share/texmf-dist/ | grep -F -v texmf-local)
 
 # Customize latex compilation
 B:=$(MF)
@@ -46,7 +47,7 @@ VERSION=$(shell head -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/
 DATE:=$(shell tail -1 NOVAthesisFiles/nt-version.sty | sed -e 's/.*{//' -e 's/\(.*\)./\1/' | tr '\n' '@'m| sed -e 's/\(.*\)./\1/')
 
 # aux files
-AUXFILES:=$(shell ls $(B)*.* | fgrep -v .tex | fgrep -v .pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
+AUXFILES:=$(shell ls $(B)*.* | grep -F -v .tex | grep -F -v .pdf | sed 's: :\\ :g' | sed 's:(:\\(:g' | sed 's:):\\):g')
 
 # schools requiring XeLaTeX or LuaLaTeX (incompatible with pdfLaTeX)
 LUA="uminho/eaad uminho/ec uminho/ed uminho/eeg uminho/eeng uminho/elach uminho/emed uminho/epsi uminho/ese uminho/i3bs uminho/ics uminho/ie other/esep"

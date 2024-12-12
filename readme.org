@@ -60,9 +60,9 @@
      - run =make xe=: *IMPORTANT*
        - UM template requires NewsGott fonts which require Xelatex to run
    - If you use a LaTeX text editor, please notice that the NOVAthesis template
-     uses biberand not bibtex to process the bibliography, which means that most
-     probably you have to open the Editor Preferences and somehwere (depends on
-     the Editor) chage bibtexto biber.
+     uses biber and not bibtex to process the bibliography, which means that most
+     probably you have to open the Editor Preferences and somewhere (depends on
+     the Editor) chage bibtex to biber.
    - If Murphy is elsewhere, LaTeX will create the file “template.pdf”.
 3) *Writing*: Edit the files in the “Config” folder [3/8]:
    1) [X] =0_memoir.tex=: Options specific for the memoir package. Don't touch
