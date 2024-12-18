@@ -129,7 +129,7 @@ components are compiled into a unikernel and run on top of hypervisor
 % \fnlicCCSA{foot:cc-lic}% CC licence
 
 Cinque et.~al~\cite{cinque2022virtualizing} identified the relationship between hypervisor and guest
-\gls{os} combinationsi, i.e.~the type of guest that run of a hypervisor, and the
+\gls{os} combinations, i.e.~the type of guest that runs on top of a hypervisor, and the
 associated applications (Fig.~\ref{fig:virt-combos}).
 On the left quadrants we have the guest \gls{os} running on top of a general
 purpose hypervisor, mainly used for server consolidation in cloud environments
@@ -300,7 +300,7 @@ and the availability of per-\gls{cpu} architectural timers directly managed by
 the guests. Spatial isolation is provided by the 2-stage \gls{hw} virtualization
 support for the logical address space isolation. The translation overhead, page
 table and \gls{tlb} pressure is minimized using superpages, whenever
-possible,faciliting speculative fetch for potential guest performance
+possible, faciliting speculative fetch for potential guest performance
 improvement. A page coloring mechanism was implemented to enable \gls{llc}
 cache partioning independently for each \gls{vm}, but at the expenses of memory
 waste and fragmentation, and increased boot time~\cite{martins_et_al:OASIcs:2020:11779}.
@@ -311,10 +311,11 @@ uses the existing memory mechanism and 2-stage translation provided by the
 virtualization support to implement this for free. A peripheric can be shared
 among guests, as exclusive assignment is not checked~\cite{martins_et_al:OASIcs:2020:11779}.
 
-The interrupt virtualization support is restricted to the Arm \gls{gic}v2, which
-does not support directly interrupt delivery to guest partitions. All interrupts
-are dispatched to the hypervisor, which must re-inject it in the \gls{vm} using
-a limited set of pending registers, leadinf to unavoidable increase in both
+The interrupt virtualization support is restricted to the Arm \gls{gic}v2 and
+Arm \gls{gic}v3, which does not support direct interrupt delivery to guest
+partitions. Instead, all interrupts
+are dispatched to the hypervisor, which then must re-inject them into the guest \gls{vm} using
+a limited set of pending registers, leading to unavoidable increase in both
 interrupt latency and the complexity of interrupt management code~\cite{martins_et_al:OASIcs:2020:11779}. This was
 fixed in the newest version of the specification~\gls{gic}v4 which bypasses the hypervisor for guest interrupt delivery~\cite{dall2018design}.
 
@@ -1086,8 +1087,8 @@ The commercial solutions can be classified into the following categories:
   The \texttt{Aerotenna OcPoC-Zynq Mini} is a \gls{fpga} + ARM \gls{soc} based
   flight control platform (Xilinx Zynq Z-7010),  which supports ArduPilot and PX4 \gls{sw}
   stacks~\cite{ocpoc} (see Fig.~\ref{fig:hw-ocpoc}).
-  The \gls{fpga} /gls{io}'s flexibility allows for rapid sensor integration and
-  customization of the flight controller \gls{hw}, allowing for capabilities
+  The \gls{fpga} \gls{io}'s flexibility allows for rapid sensor integration and
+  customization of the flight controller \gls{hw}, adding capabilities
   such as triple redundancy in \gls{gps}, magnetometers, and \glspl{imu}.
   The \gls{fpga} is an Artix-7 with 28k logic cells, and the ARM \gls{soc} is
   ARM A9 dual-core @ 667 MHz, including 512 MB \gls{ram} and 128 MB of flash

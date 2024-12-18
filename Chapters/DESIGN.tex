@@ -1,0 +1,121 @@
+\typeout{NT FILE DESIGN.tex}%
+\chapter{Design}%
+\label{ch:design}
+
+This chapter presents the design of a trustworthy flight software stack tailored
+for a typical UAV application --- video surveillance --- leveraging the Bao
+hypervisor. The system requirements and constraints are systematically
+identified, and the appropriate hardware components are selected.
+
+
+\section{Requirements and Constraints}
+\label{sec:req-sec}
+Video surveillance missions necessitate geolocation control to survey a
+designated target area and image acquisition to gather pertinent information
+about that region. Both objectives can be achieved through offline or online
+command methods, or a combination of the two.
+
+In the offline command approach, the target area and the specific information to
+be captured are well-defined and can be comprehensively specified \emph{a
+priori} to the \gls{uav}. For instance, in cartographic applications, the UAV
+systematically scans the target area to collect topographic data. Consequently,
+the UAV can operate in a fully autonomous mode, with data being directly stored
+in its onboard storage systems.
+
+Conversely, the online command approach is more suitable for dynamic and
+unpredictable environments, where the target area and relevant information are
+not fully predefined. For example, in rescue missions, the identification of
+targets is critical, necessitating active supervision by the \gls{gcs}. In this
+context, the \gls{gcs} must have the capability to remotely control the \gls{uav} and receive real-time feedback, such as telemetry data and live video streams.
+
+This example underscores the critical importance of the online command method,
+which involves more stringent operational requirements. As a result, the primary
+focus of this work will be on the online command approach.
+
+\subsection{Requirements}
+\label{sec:req}
+
+\textbf{Functional}
+  \begin{itemize}
+    \item The \gls{gcs} must be able to remotely command the \gls{uav} and
+obtain its geolocation in (soft) real-time 
+    \item The \gls{gcs} must be able to capture images in (soft) real-time
+    \item The \gls{uav} must have onboard control mechanisms to ensure stable
+flight in compliance with the previous requirements
+    \item The \gls{uav} must have flight autonomy (battery powered) 
+    \end{itemize}
+
+
+\textbf{Technical}
+  \begin{itemize}
+    \item The software stack must be fault-tolerant: if the video surveillance
+application is compromised, the control system must remain online 
+    \item The additional security and fault-tolerant mechanisms must not
+increase significantly the flight control stack latency.
+\item Merge the flight controller and companion computer into a single platform
+to minimize the footprint and reduce latency, while respecting its
+mixed-criticality characteristics
+    \end{itemize}
+
+\subsection{Constraints}
+\label{sec:constr}
+
+\textbf{Functional}
+\begin{itemize}
+    \item Minimize the \gls{uav}'s weight to enhance flight autonomy.
+    \item Video surveillance requires high bandwidth; however, the remote
+communication link of the \gls{uav} has a limited bitrate. The frame size must
+be adjusted to ensure sufficient image quality for the mission. 
+\end{itemize}
+
+
+\textbf{Technical}
+  \begin{itemize}
+    \item The flight software stack must be open-source (e.g., PX4)
+    \item Wireless communications are required for UAV's remote control and
+image acquisition
+\item The Bao hypervisor is used to provide additional security and
+fault-tolerance to the flight control stack
+    \end{itemize}
+
+\subsection{Analysis}
+\label{sec:design-analysis}
+Figure~\ref{fig:uav-sw-arch} illustrates the software architecture of the conventional solution, which employs a separation of concerns. In this approach, the flight controller hardware node manages flight-critical systems, while the companion computer hardware node handles secondary and computationally intensive tasks, such as collision avoidance and prevention, odometry, or, in this case, video streaming to the \gls{gcs}.
+
+An intermediate solution, referred to as the unsupervised Single-Platform \gls{sw} stack, diverges from the conventional approach by integrating the flight controller and companion computer into a single platform. This integration reduces the separation of concerns: the same platform is now responsible for both critical and non-critical tasks. However, this consolidation can adversely affect system performance, particularly for critical tasks, potentially compromising flight safety. Additionally, system security may be weakened, as an attacker only needs to exploit vulnerabilities in a single platform to compromise the entire system.
+
+On its own, the unsupervised solution may not represent an improvement over the conventional approach. While it reduces the system footprint and communication latency between components, these benefits may come at the cost of diminished performance and heightened safety and security risks. However, it is hypothesized that this solution serves as an intermediate step toward a unified platform capable of managing both critical and non-critical tasks through appropriate supervision. This hypothesis underpins the proposed solution, referred to as the Supervised Single-Platform \gls{sw} stack, which employs the Bao hypervisor.
+
+The PX4 flight controller stack was selected for this work due to its open-source nature, extensive platform support, modular architecture, and widespread adoption in the industry.
+
+Wireless communication is essential for the UAV's remote control and image
+acquisition. To enhance separation of concerns and improve throughput, dedicated
+communication links will be established for PX4 (e.g., telemetry radio) and the
+camera (Wi-Fi). To streamline the network configuration and eliminate the need
+for additional hardware, the \gls{gcs} and the \gls{uav} are integrated into the
+same \gls{lan}.
+
+On the receiving end of the video surveillance system (\gls{gcs}), occasional frame loss is tolerable and does not compromise situational awareness of the target area. Consequently, a communication protocol without delivery guarantees, such as \gls{udp}, is appropriate.
+
+PX4 encapsulates all data packets using the Mavlink protocol, which is
+transmitted via \gls{tcp} for commands and \gls{udp} for image frames. These
+packets are communicated over telemetry radio (433 MHz in Europe) or 802.11
+Wi-Fi (2.4/5 GHz), depending on the system requirements.
+
+
+
+\section{Unsupervised Single-Platform SW stack}
+\label{sec:unsuperv-stack}
+
+\section{Supervised Single-Platform SW stack}
+\label{sec:superv-stack}
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../template"
+%%% reftex-default-bibliography: ("../Bibliography/mieeic.bib")
+%%% ispell-local-dictionary: "american"
+%%% End:
