@@ -28,6 +28,12 @@
   - [[#-done-ask-for-permissions-for-figures-httpswwwresearchgatenetpostdo_i_need_a_permission_to_copy_any_figure_from_a_research_article_for_my_review_article5de8fdb7f0fb623dd7346896citationdownload][✔ DONE Ask for permissions for figures https://www.researchgate.net/post/Do_I_need_a_permission_to_copy_any_figure_from_a_research_article_for_my_review_article/5de8fdb7f0fb623dd7346896/citation/download]]
     - [[#licence-footnote][Licence footnote]]
   - [[#-done-chapter-style][✔ DONE Chapter style]]
+  - [[#outline][Outline]]
+    - [[#introduction][Introduction]]
+    - [[#background-and-related-work][Background and Related Work]]
+    - [[#design][Design]]
+    - [[#implementation][Implementation]]
+    - [[#evaluation][Evaluation]]
   - [[#intro-14][Intro]]
   - [[#state-of-the-art-16][State of the Art]]
     - [[#uav-intro][UAV Intro]]
@@ -35,6 +41,7 @@
     - [[#diagrams-uav][Diagrams UAV]]
     - [[#autopilot][Autopilot]]
     - [[#px4][PX4]]
+  - [[#design-05][Design]]
 
 * Preamble
 ** Git Workflow
@@ -588,9 +595,39 @@ This uses the same note\fnref{foot:cc-lic};
 
 
  I used the default: =bar=
-
-
-       
+** Outline
+*** Introduction
+  1) Goals (20)
+  2) Document structure (21)
+*** Background and Related Work
+   1) Mixed criticality systems (22)
+      - Virtualization (23)
+      - Hypervisors (25)
+   2) Unmanned Aerial Vehicles (29)
+      - Classification (31)
+      - System overview (34)
+      - Security and Safety (37)
+      - UAV Reference Hardware (40)
+      - UAV Reference Software (48)
+   3) Related work (54)
+   4) Summary/takeways
+*** Design
+1) Requirements and Constraints (56)
+   1) Requirements (56)
+   2) Constraints (57)
+2) Analysis (57)
+3) Unsupervised Single-Platform SW stack (USPSS) (58)
+4) Supervised Single-Platform SW stack (SSPSS) (58)
+5) Summary
+*** Implementation
+1) HW
+2) Unsupervised Single-Platform SW stack (58)
+3) Supervised Single-Platform SW stack (58)
+4) Summary/Takeways
+*** Evaluation
+1) Functional: compare USPSS and SSPSS
+2) Performance: compare USPSS and SSPSS
+3) Summary/Takeways
 ** Intro [1/4]
 - [ ] Context
 - [ ] Motivation
@@ -741,3 +778,18 @@ The flight controller runs the normal PX4 flight stack, while a companion comput
 PX4 systems typically run a Linux OS on the companion computer (because the PX4/PX4-Avoidance
 (opens new window) project delivers ROS-based avoidance libraries designed for Linux). Linux is a much better platform for "general" software development than NuttX; there are many more Linux developers and a lot of useful software has already been written (e.g. for computer vision, communications, cloud integrations, hardware drivers). Companion computers sometimes run Android for the same reason.
 
+** Design [0/5]
+1) [ ] Requirements and Constraints
+2) [ ] Analysis
+   1) Present conventional solution (multi-platform) and why we need to upgrade it
+   2) Apply the conventional solution for video surveillance
+	  1) MAVRouter + MAVLink Camera Manager (on CC)
+	  2) Fast serial between FMU and CC
+   3) Talk about Single-Platform with Docker (Auterion Skynode, VOX) and why
+      it is not enough
+   4) Establish the base for single-platform design for video surveillance applications
+	  1) UDP protocol
+	  2) Distinct comm links
+3) [ ] USPSS
+4) [ ] SSPSS
+5) [ ] Summary
