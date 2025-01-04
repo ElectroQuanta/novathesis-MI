@@ -184,7 +184,7 @@ unification.
 
 \subsection{Unsupervised Single-Platform Flight Stack}
 \label{sec:unsuperv-stack}
-To integrate the \gls{fmu} and companion computer platforms, we require a method to encapsulate their functionalities into standalone components within a unified platform. In the \acrfull{uspfs}, these components are abstracted as processes running on a \gls{gpos}.
+To integrate the \gls{fmu} and companion computer platforms, we require a method to encapsulate their functionalities into standalone components within a unified platform. In the \glsxtrfull{uspfs}, these components are abstracted as processes running on a \gls{gpos}.
 
 Fig.~\ref{fig:uav-design-unsup} illustrates the system architecture of the
 \gls{uspfs}. The software processes for the \gls{gcs} and \gls{uavic} are shown
@@ -209,7 +209,7 @@ However, this architecture lacks isolation between systems, meaning a failure in
 \subsection{Supervised Single-Platform Flight Stack}
 \label{sec:superv-stack}
 Fig.~\ref{fig:uav-design-unsup} presents the system architecture of the
-\acrfull{sspfs}. In this design, the functionalities of the \gls{fmu} and
+\glsxtrfull{sspfs}. In this design, the functionalities of the \gls{fmu} and
 companion computer are abstracted as guest \glspl{vm} running atop the Bao
 Hypervisor in the \gls{uavic} node. This approach ensures isolation between the two mixed-criticality
 systems, preventing faults in the non-critical system from impacting the
@@ -236,8 +236,323 @@ to adapt it to the selected hardware.
 
 \section{Hardware Selection}
 \label{sec:hardware-selection}
+In this section, the hardware for the \gls{uav}, \gls{uavic}, and
+extra addons are selected. The hardware is mapped to comply with PX4
+requirements and the \gls{uavic} restrictions imposed by Bao.
+
+\subsection{UAV}
+\label{sec:uav-hw-sel}
+We will start by defining the \gls{uav}'s main characteristics. The multirotor
+airframe was selected due to its low price and high availability, but especially
+due to its compactness and \gls{vtol} support. It will be used in the \gls{lap}
+altitude range (up to 3 to 9 kilometers). The \gls{uav} must be battery powered
+and the overall weight must be small to extend battery life. Lastly, but most
+importantly, it must be open-source to enable user's modification/customization. 
+
+Fig.~\ref{fig:hoverGames-drone} shows the selected \gls{uav} --- the
+\texttt{KIT-HGDRONEK66}, commonly referred to as the NXP HoverGames \gls{uav}
+kit~\cite{nxp-hoverGames-uav}. This \gls{diy} professional development kit, priced under
+500 USD, features the RDDRONE-FMUK66 as the \gls{fmu} unit (1).
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/pdf/hoverGames-drone.pdf} 
+  \caption[NXP HoverGames UAV kit]{NXP HoverGames UAV kit (adapted from~\cite{nxp-hoverGames-uav})\footnotemark}%
+  \label{fig:hoverGames-drone}
+\end{figure}
+%
+\fnlicNC{NXP Semiconductors}
+
+The kit is built on an S500 carbon fiber frame with four rotors (quadcopter) and has a 500-millimeter wheelbase (diagonal distance between opposing motors). It employs \gls{bldc} motors (5) to drive the propellers (4), which are controlled by individual \gls{esc} units (4).
+
+For autonomous flight capabilities, the kit includes a \gls{gps} module (3) and a payload mount (7) designed for accessories such as cameras. Power is supplied via a 3S \gls{lipo} battery (sold separately) with a capacity ranging from 3500 to 5000 mAh.
+
+Additionally, a telemetry radio (2), also sold separately, can be connected to
+the \gls{fmu} (1). This telemetry module operates in the 433 MHz frequency band
+in Europe, enabling remote communication and monitoring.
+%
+The kit also includes the \gls{gps} NEO-M8N module and the \gls{rc} remote
+controller GS-i6S transmitter and receiver modules.
+
+Fig.~\ref{fig:hoverGames-blkDiag} depicts the block diagram for the NXP
+HoverGames \gls{uav} kit.  It features the RDDRONE-FMUK66 \gls{fmu} using the
+Kinetis\textreg K66 \gls{mcu} based on the 32-bit Arm\textreg
+Cortex\textreg--M4 Core~\cite{nxp-hoverGames-fmu}, running at 180 MHz
+with up to 2 MB of flash and 256 KB of \gls{sram}. The \gls{fmu} runs the PX4
+autopilot stack.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/pdf/hoverGames-blkDiag.pdf} 
+  \caption[NXP HoverGames block diagram]{NXP HoverGames block diagram (withdrawn from~\cite{nxp-hoverGames-uav})\footnotemark}%
+  \label{fig:hoverGames-blkDiag}
+\end{figure}
+%
+\fnlicNC{NXP Semiconductors}
+
+It includes a power module and power distribution
+board with current and voltage sensing to assess the \gls{uav}'s \gls{lipo}
+battery autonomy. The power distribution board supplies the \gls{bldc} motors,
+controlled by the \gls{esc} unit using \gls{pwm}. A SEGGER J-Link EDU Mini \gls{swd} adapter can
+be used to debug the running flight stack or to upload it to the \gls{fmu}. 
+
+It supports common \gls{uav} sensors such as accelerometer, gyrometer,
+magnometer, compass, and barometer.
+The \gls{fmu} can communicate with a companion computer via \gls{uart}, or with
+the \gls{gcs} via the telemetry radio or \gls{rc} link. An optional \gls{sd}
+card can be used to support flight logging for offline analysis, debug, and
+replay in simulation tools.
+
+\subsection{UAV Integrated Controller}
+\label{sec:uav-integr-contr}
+The \glsxtrfull{uavic} merges the \gls{fmu} and companion computer functionalities
+into a single platform. To achieve this, we deploy the PX4 autopilot stack and
+the video surveillance application into a custom Linux-based OS. However, PX4 was
+typically designed to run atop of the NuttX \gls{rtos} and the support for Linux
+is fairly limited. The supported platforms include the BeagleBone Blue and the
+Raspberry Pi 2/3/4 with additional
+shields~\cite{px4-experimental-autopilot}. 
+
+Fig.~\ref{fig:pilotpi-annot} presents the chosen \gls{uavic}, the Raspberry Pi
+4 with the PilotPi shield, due to its detailed documentation and lower
+cost. The PilotPi shield is a fully functional and open-source solution to run
+the PX4 autopilot directly on the Raspberry Pi. No proprietary driver is
+required and \gls{pcb} and schematic are open source as well~\cite{px4-pilotpi}.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/png/pilotpi-annotated} 
+  \caption[UAVIC: Raspberry Pi 4 + PilotPi shield]{UAVIC: Raspberry Pi 4 +
+    PilotPi shield (adapted from~\cite{px4-pilotpi}\footnotemark}%
+  \label{fig:pilotpi-annot}
+\end{figure}
+%
+%\fnlicReq{Elsevier}{5457890117132}%
+\fnlicCCFour{foot:pilotpi-annotated}%
+
+The Raspberry Pi 4 Model B (1) runs a Linux-based \gls{os}
+from the \gls{sd} card and directly exposes the \gls{csi} camera and the
+\gls{usb} interface. The Raspberry Pi 4 Model B features the Broadcom BCM2711
+\gls{soc}, containing a 64-bit quad-core Arm\textreg Cortex\textreg--A72 \gls{cpu} running
+at up to 1.8 GHz and a VideoCore VI \gls{gpu} running at up to 500
+MHz~\cite{rpi4-specs,rpi4-bcm2711}, with 8 GB LPDDR4-3200 SDRAM. It provides 2.4
+and 5.0 GHz 802.11ac wireless, Bluetooth 5.0, Gigabit Ethernet, and two
+\gls{usb} 3.0 and two \gls{usb} 2.0 ports.
+
+On top of the Raspberry Pi we have the sensors board (2),
+providing \gls{gps}, telemetry and \gls{rc} external interfaces, mapped to
+\texttt{/dev/ttySC0}, \texttt{/dev/ttySC1}, and \texttt{/dev/ttyAMA0},
+respectively. Additionally, it provides onboard accelerometer/gyroscope
+(\texttt{ICM42688P}), magnetometer (\texttt{IST8310}), and barometer
+(\texttt{MS5611}) sensors required by PX4.
+
+Lastly, on the topmost
+plane we have the power board (3) handling power supply (8) and monitoring (11)
+and the motors actuation using \gls{pwm} (10) supported by the Linux's \texttt{PCA9685}
+device driver. Additionally, it contains a
+header exposing unused pins which can be used, for example, to establish a
+remote serial connection (UART5).
+
+\subsection{Hardware mapping}
+\label{sec:hardware-mapping}
+The \gls{uavic} platform must comply with PX4 requirements on the available
+sensors and actuators. Furthermore, due to the static partitioning nature of the
+Bao hypervisor it is important to assess in the \gls{sspfs} solution if the \gls{uavic} hardware is fully
+available to each one of the guests, or if an alternative must be
+provided. Thus, in this section, we will start by mapping the hardware required
+by PX4 to the Linux device tree for the \gls{uspfs} solution. Then, we will
+adapt it to comply with Bao constraints in the \gls{sspfs} solution.
 
 
+\subsubsection{USPFS}
+\label{sec:base-scenario}
+Fig.~\ref{fig:hw-map-1} depicts the full device tree for the \gls{uavic} system,
+representing the \gls{uspfs} solution (base scenario).
+The solid lines represent aggregation, i.e., a node that includes another one
+(e.g., the \texttt{root} node includes the \texttt{memory} node), and the
+dashed lines represent dependency, i.e., a node that depends on another one
+(e.g., the \texttt{power} and \texttt{firmware} nodes depend on the
+\texttt{mailbox}).
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/pdf/hw-map-1} 
+  \caption[Hardware mapping: USPFS device tree]{Hardware mapping: \gls{uspfs}
+  device tree}%
+  \label{fig:hw-map-1}
+\end{figure}
+
+% \hexcolor{FFE4C4}{Bisque}
+% \hexcolor{ADD8E6}{LightBlue}
+% \hexcolor{90EE90}{LightGreen}
+% \hexcolor{FFB6C1}{LightPink}
+% \hlighthex{FFE4C4}{000000}{Bisque}
+% \hlighthex{ADD8E6}{000000}{LightBlue}
+% \hlighthex{90EE90}{000000}{LightGreen}
+% \hlighthex{FFB6C1}{000000}{LightPink}
+
+In \hlighthex{ADD8E6}{000000}{blue} we have the generic nodes that must be included in every device tree
+version for the Raspberry Pi 4, e.g., \texttt{memory}, \texttt{cpus},
+\texttt{power-regulators}, etc.. 
+In \hlighthex{FFE4C4}{000000}{orange} we have the nodes required by
+PX4: \texttt{i2c1} for the motors actuation, \texttt{spi0} for the \gls{imu},
+barometer and magnometer, \texttt{spi1} for the \gls{gps} and the telemetry
+radio, and \glspl{uart} 0 and 5 for \gls{rc} link and debug console,
+respectively.
+In \hlighthex{90EE90}{000000}{green} we have the nodes required by the companion
+\gls{vm}, namely \texttt{i2c0} and \texttt{csi1} for the \gls{csi} camera, and
+\texttt{mmcnr} to utilize the onboard Wi-Fi.
+Lastly, in \hlighthex{FFB6C1}{000000}{pink} we have the firmware-related nodes,
+which are used by the Rasbperry Pi \gls{gpu} to communicate with the Arm
+\glspl{cpu} using the \texttt{mailbox}~\cite{rpi4-fw-mbox}.
+
+Analyzing the device tree we can observe multiple common dependencies for PX4
+and the Companion \gls{vm}: the clock manager \texttt{cprman}, the
+\gls{gpio} controller, and the \gls{dma} controller. However, Bao disallows the
+sharing of devices to ensure isolation between guests. As such, an alternative
+must be provided to support PX4 and the Companion \gls{vm} in Bao.
+
+One such alternative consists in maintaining PX4 as is, since it requires the
+on-board sensors and has a larger number of devices, and migrating the Companion
+\gls{vm}'s devices to the \gls{usb} interface. Following the
+\textcolor{red}{red line}, we can verify that the \texttt{usb} device,
+contained in the \texttt{pcie}, has only a common dependency with \texttt{PX4}
+--- the \texttt{firmware} node --- which in turn depends on the
+\texttt{mailbox}.
+
+This is the simplest and most straightforward method to provide support for the
+\gls{sspfs} solution. However, this still causes issues with Bao due to the
+common \texttt{mailbox} node required by the \texttt{firmware}. On the other
+hand, removing the \texttt{firmware} node from one of the \glspl{vm} is not an
+option: doing so will lead to \gls{vm} malfunction.
+
+Thus, the plan consists in migrating the Companion \gls{vm}'s devices to the
+\gls{usb} interface and providing support in Bao to manage the access to the
+shared mailbox in a supervised and secure form.
+
+\subsubsection{Supervised mailbox access}
+\label{sec:superv-mailb-access}
+Fig.~\ref{fig:design-mailbox} illustrates the mailbox access for the
+conventional case (left) and the supervised one (right).
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/pdf/uav-main-design-mailbox} 
+  \caption{Mailbox access: conventional (left); supervised (right)}%
+  \label{fig:design-mailbox}
+\end{figure}
+
+The solid lines
+indicate synchronous events, while the dashed ones
+indicate asynchronous events, with the \textcolor{red}{red} arrows for the
+outgoing path as seen by the mailbox driver and the \textcolor{blue}{blue} ones for the
+incoming path. The mailbox transactions are represented with white, violet and
+grey envelopes for the conventional, VM1 and VM2 interactions. The
+synchronization mechanism (lock) is drawn in brown for the mailbox and in blue
+for Bao. Hypercalls are represented with a green phone for \texttt{Start\_TX}
+hypercall and a red one the \texttt{End\_TX} hypercall. Lastly, the numbering
+indicates the sequence of events for both cases.
+
+In the \textbf{conventional case}, the mailbox device driver can initiate a transaction
+request if another transaction is not pending complete (1). The transaction must
+be completed (8) before a timeout occurs, freeing the mailbox for further
+requests. An interrupt is triggered (2) and the \gls{cpu} forwards the request
+to the mailbox (3) which requests data from the \gls{gpu} (4). The \gls{gpu}'s
+firmware handles the transaction and replies back to the mailbox with the
+result (5). The mailbox forwards the response to the mailbox (6, 7) completing
+the request and freeing the mailbox~\cite{rpi4-mbox-driver}. 
+
+In the \textbf{supervised case}, the VM1 mailbox driver tries to initiate a
+transaction request if another transaction is not pending complete (1). Now,
+before sending the transaction, the mailbox driver must signal to Bao it wants
+to start it by performing a \texttt{Start\_TX} hypercall (3). Bao acknowledges
+this request if another one is not pending complete, locking the mailbox manager
+(5). VM2 tries to do the same (2, 4), but, as VM1 acquired the lock, it must
+wait for VM1 transaction completion. The Mailbox Manager handles the hypercall,
+identifying the guest, the target device address (mailbox), and the interrupt
+ID, and injecting the interrupt in the appropriate \gls{cpu} (7). The mailbox
+device driver can now send the transaction to the mailbox (8, 9) which will
+dispatch it to the \gls{gpu} (10). The \gls{gpu} processes the transaction and
+the response it sent back to the device mailbox driver (11, 12, 13). When the
+transaction is completed the mailbox driver issues another hypercall ---
+\texttt{End\_TX} --- to signal Bao this event, and the mailbox lock is released,
+freeing the VM1's mailbox for further requests. Bao handles the hypercall
+\texttt{End\_TX} by releasing the mailbox manager's lock (15), which triggers
+the pending transaction request issued by VM2 (6) to be resumed by injecting the
+interrupt in the appropriate \gls{cpu} (16). Then, the VM2 mailbox's driver can
+send the firmware transaction and the process continues.
+
+\subsubsection{SSPFS}
+\label{sec:final-scenario}
+After addressing the shared device between \glspl{vm}, through the appropriate
+supervision of the firmware's mailbox, we can now assign the available hardware
+to each \gls{vm}.
+
+Fig.~\ref{fig:hw-map-2} and Fig.~\ref{fig:hw-map-3} illustrates the device trees
+for the PX4 \gls{vm} and Companion \gls{vm}, respectively.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/pdf/hw-map-2} 
+  \caption[Hardware mapping: SSPFS device tree --- PX4]{Hardware mapping:
+  \gls{sspfs} device tree --- PX4}%
+  \label{fig:hw-map-2}
+\end{figure}
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/pdf/hw-map-3} 
+  \caption[Hardware mapping: SSPFS device tree --- Companion VM]{Hardware
+    mapping: \gls{sspfs} device tree --- Companion VM}%
+  \label{fig:hw-map-3}
+\end{figure}
+
+The PX4 \gls{vm} includes only the required onboard
+sensors/actuators and debug console (optional). Two \gls{ram} regions were
+defined of 144 MB and 3 GB, respectively. From the first memory region we
+reserve a \gls{cma} region of 32 MB, because the \gls{spi} devices perform \gls{dma} transactions, which is only
+available in the first GB of memory~\cite{bcm2711peripherals}. Lastly, we assign one Arm
+A72 \gls{cpu} (core 0).
+
+The Companion \gls{vm} includes the \gls{usb} interface, where a \gls{usb} camera and a
+\gls{usb} Wi-Fi dongle will be connected. Two \gls{ram} regions were
+defined of 624 MB and 2 GB, respectively. From the first memory region we
+reserve a \gls{cma} region of 384 MB, required by the video pipeline, which is only
+available in the first GB of memory~\cite{bcm2711peripherals}. Lastly, we assign three Arm
+A72 \glspl{cpu} (core 1--3).
+
+\subsection{Addons}
+\label{sec:addons}
+The Companion \gls{vm} requires two \gls{usb} devices: a camera and Wi-Fi
+dongle. Fig~\ref{fig:usb-cam} presents the selected \gls{usb} camera --- the
+Creative Live! Cam Sync 1080p V2~\cite{creative-cam}.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./img/jpg/creative-cam} 
+  \caption{Addons: USB Creative Camera}%
+  \label{fig:usb-cam}
+\end{figure}
+
+It is an affordable \gls{usb} camera with full
+\gls{hd} video capture (1920x1080 @ 30 \gls{fps}) and dual built-in
+microphone. This camera is a plug-and-play device with built-in drivers for
+Linux available out of the box. Lastly, due to its long cable it can be
+positioned freely in the \gls{uav}. 
+
+Fig.~\ref{fig:usb-wifi} presents the selected \gls{usb} Wi-Fi dongle --- the
+EDUP AX3000Mbps. This dual high-gain antena device has tri-band support --- 2.4 GHz, 5, and 6
+GHz --- and it can achieve data transfer rates
+of up to 3000 \gls{mbps} on the \gls{usb} 3.0 interface~\cite{ax3000-specs}. It contains a Mediatek
+\texttt{mt7921au} chipset with a wide \gls{os} compatibility, supported
+in-kernel since Linux kernel 5.18~\cite{ax3000-linux}.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.4\textwidth]{./img/jpg/ax3000} 
+  \caption{Addons: USB Wi-Fi dongle --- EDUP AX3000}%
+  \label{fig:usb-wifi}
+\end{figure}
 
 
 %%% Local Variables:

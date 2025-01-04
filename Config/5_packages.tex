@@ -160,26 +160,37 @@ align=left, leftmargin=*} %,label=$\star$
 \usepackage{epstopdf} %converting to PDF
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%% Others %%%%%%%%%%%%%%%%%%%%%%%
+% the newcommand* disallows paragraph breaks, while the other version not
+\newcommand*{\textreg}{\textsuperscript{\textregistered}}
+\newcommand{\hexcolor}[2]{\textcolor[HTML]{#1}{#2}} % Macro with hex code
+\newcommand{\hlighthex}[3]{\colorbox[HTML]{#1}{\textcolor[HTML]{#2}{#3}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% ========== Footnotes
 % src: https://tex.stackexchange.com/a/16871
 \newcommand*{\fnref}[1]{\textsuperscript{\ref{#1}}}
-%\newcommand*{\fnlicA}{\footnotetext{Used under the terms of the Creative Commons BY-SA 3.0 licence.}}%
+%\newcommand*{\fnlicA}{\footnotetext{Used under the terms of the Creative Commons BY-SA 3.0 license.}}%
 \newcommand*{\fnlicCCSA}[1]{\footnotetext{\label{#1}Used under the terms of the
     \href{https://creativecommons.org/licenses/by-sa/3.0/}{Creative Commons
-      BY-SA 3.0 licence.}}}%
+      BY-SA 3.0 license.}}}%
 \newcommand*{\fnlicCC}[1]{\footnotetext{\label{#1}Used under the terms of the
     \href{https://creativecommons.org/licenses/by/3.0/}{Creative Commons BY 3.0
-      licence.}}}%
+      license.}}}%
 %
 \newcommand*{\fnlicCCNCa}[1]{\footnotetext{\label{#1}Used under the terms of the
     \href{https://creativecommons.org/licenses/by-nc-nd/4.0/}{Creative Commons
-      BY-NC-ND 4.0 licence.}}}%
+      BY-NC-ND 4.0 license.}}}%
 \newcommand*{\fnlicCCNC}[1]{\footnotetext{\label{#1}Used under the terms of the
     \href{https://creativecommons.org/licenses/by-nc/3.0/}{Creative Commons
-      BY-NC 3.0 licence.}}}%
-\newcommand*{\fnlicReq}[2]{\footnotetext{Used with permission from #1: licence
+      BY-NC 3.0 license.}}}%
+\newcommand*{\fnlicReq}[2]{\footnotetext{Used with permission from #1: license
     nr. #2}}%
+\newcommand*{\fnlicNC}[1]{\footnotetext{Copyright \textcopyright\ #1: Used with permission for non-commercial
+    purposes only}}%
+\newcommand*{\fnlicCCFour}[1]{\footnotetext{\label{#1}Used under the terms of the
+    \href{https://creativecommons.org/licenses/by/4.0/}{Creative Commons
+      BY 4.0 license.}}}%
 %\feetbelowfloat%
 % ==================
 
