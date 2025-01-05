@@ -541,7 +541,7 @@ Linux available out of the box. Lastly, due to its long cable it can be
 positioned freely in the \gls{uav}. 
 
 Fig.~\ref{fig:usb-wifi} presents the selected \gls{usb} Wi-Fi dongle --- the
-EDUP AX3000Mbps. This dual high-gain antena device has tri-band support --- 2.4 GHz, 5, and 6
+EDUP AX3000. This dual high-gain antena device has tri-band support --- 2.4 GHz, 5, and 6
 GHz --- and it can achieve data transfer rates
 of up to 3000 \gls{mbps} on the \gls{usb} 3.0 interface~\cite{ax3000-specs}. It contains a Mediatek
 \texttt{mt7921au} chipset with a wide \gls{os} compatibility, supported
@@ -553,6 +553,35 @@ in-kernel since Linux kernel 5.18~\cite{ax3000-linux}.
   \caption{Addons: USB Wi-Fi dongle --- EDUP AX3000}%
   \label{fig:usb-wifi}
 \end{figure}
+
+\section{Summary}
+\label{sec:summary}
+The conventional flight stack relies on multi-platform support to address
+mixed-criticality, which undesirably increases the weight and footprint of the
+\gls{uav}. Thus, platform integration is a design goal, but is not achievable
+without appropriate supervision.
+
+In this chapter we presented three solutions tailored for a video surveillance
+application based on the PX4 flight stack: conventional (unsupervised multi-platform), unsupervised
+single-platform (\gls{uspfs}) and supervised single-platform (\gls{sspfs}). The conventional one formed the
+base for platform integration. Then, the flight controller and companion
+computer were merged to form the \gls{uspfs} using a Raspberry Pi 4 with a Pilot
+Pi shield. However, the \gls{uspfs}
+architecture does not provide isolation between systems, meaning a failure in
+the non-critical system can propagate to the \gls{fmu}. As such, we provided
+platform consolidation and systems' isolation through the supervision of the Bao
+hypervisor, constituting the \gls{sspfs} solution.
+
+However, the Bao hypervisor requires a static partitioning of the hardware
+resources which can lead to collisions between \glspl{vm}. To address this we
+performed the \gls{uavic} hardware selection and mapping, yielding the device
+tree for each solution. Indeed, some collisions were detected, and they were
+handled by assigning \gls{usb} devices for the companion computer \gls{vm},
+namely the camera and the Wi-Fi dongle. Nonetheless, both \glspl{vm} shared one
+last device --- the firmware mailbox --- required for communication between the
+Arm \gls{cpu} and \gls{gpu}. Hence, we devised a mechanism for mailbox
+access supervision using Bao, enabling both \glspl{vm} to seamlessly communicate
+with the board's firmware.
 
 
 %%% Local Variables:
