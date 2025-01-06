@@ -41,7 +41,8 @@
     - [[#diagrams-uav][Diagrams UAV]]
     - [[#autopilot][Autopilot]]
     - [[#px4][PX4]]
-  - [[#design-05][Design]]
+  - [[#-done-design][✔ DONE Design]]
+  - [[#implementation-1][Implementation]]
 
 * Preamble
 ** Git Workflow
@@ -778,18 +779,31 @@ The flight controller runs the normal PX4 flight stack, while a companion comput
 PX4 systems typically run a Linux OS on the companion computer (because the PX4/PX4-Avoidance
 (opens new window) project delivers ROS-based avoidance libraries designed for Linux). Linux is a much better platform for "general" software development than NuttX; there are many more Linux developers and a lot of useful software has already been written (e.g. for computer vision, communications, cloud integrations, hardware drivers). Companion computers sometimes run Android for the same reason.
 
-** Design [0/5]
-1) [ ] Requirements and Constraints
-2) [ ] Analysis
-   1) Present conventional solution (multi-platform) and why we need to upgrade it
-   2) Apply the conventional solution for video surveillance
-	  1) MAVRouter + MAVLink Camera Manager (on CC)
-	  2) Fast serial between FMU and CC
-   3) Talk about Single-Platform with Docker (Auterion Skynode, VOX) and why
-      it is not enough
-   4) Establish the base for single-platform design for video surveillance applications
-	  1) UDP protocol
-	  2) Distinct comm links
-3) [ ] USPSS
-4) [ ] SSPSS
-5) [ ] Summary
+** ✔ DONE Design
+:LOGBOOK:
+- State "✔ DONE"     from              [2025-01-05 dom 00:10]
+:END:
+  3.1 Requirements and Constraints (58)
+    3.1.1 Requirements (58)
+    3.1.2 Constraints (59)
+  3.2 System Architecture (59)
+    3.2.1 Unsupervised Single-Platform Flight Stack (62)
+    3.2.2 Supervised Single-Platform Flight Stack (63)
+  3.3 Hardware Selection (64)
+    3.3.1 UAV (64)
+    3.3.2 UAV Integrated Controller (66)
+    3.3.3 Hardware mapping (67)
+    3.3.4 Addons (71)
+  3.4 Summary (73)
+
+** Implementation
+ 1) Workflow (75)
+ 2) USPFS (75)
+	1) UAV Assembly
+	2) Build
+	3) Deployment
+ 3) SSPFS (75)
+	1) Mailbox supervision (75)
+	2) Build
+	3) Deployment
+ 4) Summary (75)
