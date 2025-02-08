@@ -744,7 +744,7 @@ on UAVs. ([[file:~/Documents/Univ/MI_Electro/Tese/Papers/UAVs-ComprehensiveRevie
 - Usually performed through key loggers, viruses and malwares
 
 *Malicious HW attack* [118] ([[file:~/Documents/Univ/MI_Electro/Tese/Papers/UAVs-ComprehensiveReview-2022.pdf::%PDF-1.7][UAV-ComprehensiveReview]])
-- goal: steak confidential data or cause a failure in UAVs mission
+- goal: steal confidential data or cause a failure in UAVs mission
 - Any attack to interrupt UAVs flight control and comm links to modify mission
   parameters is known as *flight control computer attack*.
   - Can be mitigated through onboard SW and HW mechanisms, such as, RT
