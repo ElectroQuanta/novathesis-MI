@@ -64,6 +64,12 @@
 % \usepackage{algorithm2e}
 % \RestyleAlgo{ruled}
 
+%Caption formatting
+\usepackage[small]{caption}
+% src: https://tex.stackexchange.com/a/72981
+%\usepackage[skip=0cm,list=true,labelfont=it]{subcaption}
+\usepackage[list=true,labelfont=it,font=small]{subcaption}
+
 % \usepackage{minted}    % Fontification of source code listings
 
 % \usepackage{listings}    % Fontification of source code listingsConfig/5_packages.tex
@@ -71,13 +77,51 @@
 % recomended)
 % src: https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
 \usepackage{listings}
+\usepackage{minted}
+\usepackage{xcolor}
+\definecolor{lstbgcolor}{HTML}{fffcf2} % Define a custom background color
+\usemintedstyle{solarized-dark}
+\setminted{
+    % frame=single,
+    linenos,
+    numbersep=5pt,
+    breaklines=true,
+    breakanywhere=true,
+    bgcolor=lstbgcolor,
+    fontsize=\tiny,
+    tabsize=4
+}
 \input{./sty/listing.sty}
+% \definecolor{lstbgcolor}{HTML}{f7e9c3} % Define a custom background color
 
-%Caption formatting
-\usepackage[small]{caption}
-% src: https://tex.stackexchange.com/a/72981
-%\usepackage[skip=0cm,list=true,labelfont=it]{subcaption}
-\usepackage[list=true,labelfont=it,font=small]{subcaption}
+% \newminted{makefile}{
+%     frame=single,
+%     linenos,
+%     numbersep=5pt,
+%     breaklines,
+%     bgcolor=lightgray,
+%     fontsize=\scriptsize,
+%     tabsize=4,
+%     escapeinside=||, % Optional: for escaping LaTeX inside code
+%     style=manni, % Use a Pygments style
+%     % keywordstyle=\color{blue},
+%     % commentstyle=\color{green},
+%     % stringstyle=\color{red},
+%     numberstyle=\tiny\color{gray},
+% }
+
+% % Define a custom command for external Makefile files
+% \newcommand{\inputmakefile}[2][]{%
+%     \inputminted[#1]{makefile}{#2}%
+% }
+
+
+% Set up the listing counter to include the chapter number
+\counterwithin{listing}{chapter} % Reset listing counter with each chapter
+\renewcommand{\thelisting}{\thechapter.\arabic{listing}} % Format: chapter.listing
+
+% Define the longlisting environment
+\newenvironment{longlisting}{\captionsetup{type=listing}}{}
 
 % Date
 %\renewcommand{\today}{\ifcase \month \or January\or February\or March\or %
