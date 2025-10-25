@@ -10,8 +10,8 @@
 \end{flushright}
 \end{quote}
 
-In this chapter the main conclusions about the present work are outlined, as
-well as the prospects for future work.
+In this chapter we outline the main conclusions about the present work, as well
+as the prospects for future work.
 
 \section{Conclusions}
 The work presented focused on the development of a
@@ -21,12 +21,13 @@ addressing mixed-criticality at the hardware level, undesirably increase the
 \gls{uav}'s weight and footprint. Furthermore, such systems typically lack isolation
 guarantees, meaning that a compromise in a non-critical component, like video
 surveillance, could propagate to the critical flight controller, potentially
-leading to catastrophic failure.
+leading to a catastrophic failure.
 
 To overcome these limitations, the proposed \glsxtrfull{sspfs} integrates the flight controller and companion computer
 functionalities onto a single hardware platform, leveraging the Bao
-hypervisor. The unsupervised counterpart solution -- \glsxtrfull{uspfs} -- was devised and tested to
-assess the impact of the supervision layer. The \gls{uavic} platform selected
+hypervisor. The unsupervised counterpart solution -- \glsxtrfull{uspfs} -- was
+devised and tested to assess the impact of the supervision layer.
+The \gls{uavic} platform selected
 consisted of a Raspberry Pi 4 + PilotPi shield, supporting the open source
 PX4 autopilot flight stack. The hardware mapping revealed the need to support a
 supervised mailbox access to handle firmware's mailbox transactions in the
@@ -40,8 +41,8 @@ advantages:
   showed that the Bao hypervisor provides strong isolation guarantees between
   mixed-criticality systems. When a malicious kernel module or a resource
   exhaustion application was introduced into the non-critical Companion
-  \gls{vm}, it caused that VM to crash, but the critical PX4 \gls{fmu} \gls{vm}
-  remained operational and the UAV stayed airborne. In contrast, the
+  \gls{vm}, it caused that \gls{vm} to crash, but the critical PX4 \gls{fmu}
+  \gls{vm} remained operational and the UAV stayed airborne. In contrast, the
   unsupervised system suffered a total collapse under similar attacks.
 \item \textbf{Extensive benchmarking}: The supervised solution was benchmarked
   using the industrial standard MiBench suite, showing a very low performance
@@ -65,10 +66,10 @@ advantages:
   2\%. In some instances, the SSPFS even outperformed the unsupervised system
   due to the static partitioning of resources.
 \item \textbf{Real-Flight Validation}: The automated missions in real-flight scenarios confirmed that the
-  SSPFS system maintains accurate position tracking, unaffected by the
+  \gls{sspfs} system maintains accurate position tracking, unaffected by the
   supervision layer. The \gls{cpu} load increase was small (an average of 6\%),
   which is in line with the benchmarkings performed on the Bao hypervisor.
-  While an increase in RAM usage was observed (99 KB), it was
+  While an increase in \gls{ram} usage was observed (99 KB), it was
   considered negligible given the available memory for the FMU \gls{vm} (144
   MB).
 \end{itemize}
@@ -76,7 +77,9 @@ advantages:
 In summary, the \gls{sspfs} system, leveraging the Bao hypervisor, has been
 demonstrated as a superior solution for consolidating mixed-criticality software
 stacks in \glspl{uav}, offering robust isolation guarantees with low performance
-overhead.
+overhead. We therefore achieved the main objective of this thesis: the design,
+implementation, and validation of a trustworthy, open-source reference software
+stack for \gls{uav} applications.
 
 \section{Future Work}
 Based on the insights gained from this work, several
@@ -86,32 +89,52 @@ pursued:
 \item \textbf{Support for different \gls{uavic} platforms:} the consolidation of
   the mixed-criticality stacks relied on a Raspberry Pi with the Linux
   \gls{gpos}.
-  Ideally, the \gls{uavic} platform should support the NuttX \gls{rtos},
-  required by the PX4 autopilot, and have a smaller footprint.
+  Ideally, the \gls{uavic} platform should natively support the NuttX \gls{rtos},
+  required by the PX4 autopilot, and have a smaller footprint. One promising
+  heterogeous platform is the NXP i.MX 8M Nano~\cite{imx8mn} which integrates a
+  Arm Cortex-M7 (ideal to run NuttX) and a quad-core Arm Cortex-A53 (well suited
+  for Linux \gls{os}). However, we still need to port NuttX to run on this
+  platform.
+\item \textbf{A deeper system resources analysis and optimization:}
+  Additional data are needed to thoroughly assess resource usage and reduce the
+  influence of outliers; therefore, more tests should be performed under
+  real-flight conditions.
+  The observed increase
+  in \gls{ram} usage attributed to the firmware's mailbox supervision requires
+  deeper investigation. Exploring alternative mechanisms for securely sharing
+  devices across \glspl{vm}, such as VirtIO~\cite{peixoto-virtio-2024}, could provide further insights and
+  potentially lead to more memory-efficient solutions. Bao already provides
+  extensive support for
+  VirtIO~\cite{costa2022virtio,ribeiro2023virtio,peixoto-virtio-2024,baoRepo},
+  which facilitates this approach. Notwithstanding, the support for more
+  suitable \gls{uavic} platforms could eliminate the need to share devices
+  between guests.
+\item \textbf{Extended \gls{uav} benchmarking}
+  To benchmark the \gls{uav} under real-flight conditions, we analyzed a limited
+  set of PX4 tasks. This may not capture the full system behavior. We therefore
+  need to collect and analyze additional data from relevant PX4 topics to
+  support mission diagnostics and benchmarking. Furthermore, while initial functional
+  tests demonstrated isolation, future work should design and execute more
+  sophisticated, long-duration attack scenarios and stress tests, e.g., under
+  high guest interference. This would further validate the trustworthiness and
+  resilience of the \gls{sspfs} under adversarial conditions.
 \item \textbf{Advanced Shared Resource Management:}
   While cache coloring was explored, its effectiveness was limited in certain
   scenarios due to hardware constraints like \gls{dma} 
   transactions. Future work should investigate and implement more sophisticated
   state-of-the-art partitioning mechanisms, such as memory throttling, to
   further mitigate interference from shared hardware resources like \glspl{llc}
-  and interconnects, which can breach temporal isolation.
+  and interconnects, which can breach temporal isolation. This is already in the
+  Bao's development roadmap~\cite{martins_et_al:OASIcs:2020:11779}.
 \item \textbf{Optimized Interrupt Virtualization:} The current Bao hypervisor
-  implementation supports Arm GICv2 and GICv3, which necessitates the hypervisor
-  to re-inject interrupts into guest \glspl{vm}. Future work could focus on updating
-  Bao to fully leverage the GICv4 specification, which bypasses the hypervisor
-  for guest interrupt delivery, potentially leading to further reductions in
-  interrupt latency and overall complexity of interrupt management.
-\item \textbf{Detailed \gls{ram} Usage Analysis and Optimization:} The observed increase
-  in \gls{ram} usage attributed to the firmware's mailbox supervision warrants deeper
-  investigation. Exploring alternative mechanisms for securely sharing devices
-  across \glspl{vm} could provide further insights and potentially lead to more
-  memory-efficient solutions.
-\item \textbf{Extended Functional and Performance
-    Testing:} While initial functional tests demonstrate isolation, future work
-  could involve designing and executing more sophisticated and long-duration
-  attack scenarios and stress tests. This would further validate the
-  trustworthiness and resilience of the \gls{sspfs}  under diverse and sustained
-  malicious activities.
+  implementation supports Arm GICv2 and GICv3~\cite{baoRepo}, which requires the hypervisor
+  to re-inject interrupts into the guest \glspl{vm}. Future work could focus on
+  updating Bao to fully leverage the GICv4 specification\cite{arm-gicv4}, which bypasses the
+  hypervisor for guest interrupt delivery, potentially leading to further
+  reductions in interrupt latency and overall complexity of interrupt
+  management. To pursue this venue we must support another \gls{uavic} platform,
+  as Raspberry Pi 4 (GICv2~\cite{rpi4-datasheet,arm-gic400}), or even the NXP
+  i.MX 8M Nano (GICv3~\cite{imx8mn-rm}), do not support GICv4.
 \end{itemize}
 
 
