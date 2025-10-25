@@ -8,39 +8,132 @@
 
 \typeout{NT FILE abstract-en.tex}%
 
-Regardless of the language in which the dissertation is written, usually there are at least two abstracts: one abstract in the same language as the main text, and another abstract in some other language.
+% Regardless of the language in which the dissertation is written, usually there are at least two abstracts: one abstract in the same language as the main text, and another abstract in some other language.
 
-The abstracts' order varies with the school.  If your school has specific regulations concerning the abstracts' order, the \gls{novathesis} (\LaTeX) template will respect them.  Otherwise, the default rule in the \gls{novathesis} template is to have in first place the abstract in \emph{the same language as main text}, and then the abstract in \emph{the other language}. For example, if the dissertation is written in Portuguese, the abstracts' order will be first Portuguese and then English, followed by the main text in Portuguese. If the dissertation is written in English, the abstracts' order will be first English and then Portuguese, followed by the main text in English.
+% The abstracts' order varies with the school.  If your school has specific regulations concerning the abstracts' order, the \gls{novathesis} (\LaTeX) template will respect them.  Otherwise, the default rule in the \gls{novathesis} template is to have in first place the abstract in \emph{the same language as main text}, and then the abstract in \emph{the other language}. For example, if the dissertation is written in Portuguese, the abstracts' order will be first Portuguese and then English, followed by the main text in Portuguese. If the dissertation is written in English, the abstracts' order will be first English and then Portuguese, followed by the main text in English.
+% %
+% However, this order can be customized by adding one of the following to the file \verb+5_packages.tex+.
+
+% \begin{verbatim}
+%     \ntsetup{abstractorder={<LANG_1>,...,<LANG_N>}}
+%     \ntsetup{abstractorder={<MAIN_LANG>={<LANG_1>,...,<LANG_N>}}}
+% \end{verbatim}
+
+% %% For example, for a main document written in German with abstracts written in German, English and Italian (by this order) use:
+% %% \begin{verbatim}
+% %%     \ntsetup{abstractorder={de={de,en,it}}}
+% %% \end{verbatim}
+
+% Concerning its contents, the abstracts should not exceed one page and may answer the following questions (it is essential to adapt to the usual practices of your scientific area):
+
+% \begin{enumerate}
+%   \item What is the problem?
+%   \item Why is this problem interesting/challenging?
+%   \item What is the proposed approach/solution/contribution?
+%   \item What results (implications/consequences) from the solution?
+% \end{enumerate}
+
+% % Palavras-chave do resumo em Inglês
+% % \begin{keywords}
+% % Keyword 1, Keyword 2, Keyword 3, Keyword 4, Keyword 5, Keyword 6, Keyword 7, Keyword 8, Keyword 9
+% % \end{keywords}
+% \keywords{
+%   One keyword \and
+%   Another keyword \and
+%   Yet another keyword \and
+%   One keyword more \and
+%   The last keyword
+% }
+
+The booming market for \glspl{uav} brings forth significant challenges
+concerning security and safety, often overlooked in current system designs. \gls{uav}
+applications inherently possess real-time constraints with mixed-criticality
+levels, meaning the risk of failure varies in severity. For instance, a failure
+in video surveillance, a non-critical function, could propagate to the critical
+flight controller, leading to catastrophic consequences like a crash and harm to
+people or goods. Traditional multi-platform flight stacks for \glspl{uav}, while
+addressing mixed-criticality by separating functions onto different hardware
+nodes, undesirably increase the \gls{uav}'s weight and footprint and often lack
+isolation guarantees. Moreover, existing open-source solutions often fall short
+in meeting mixed-criticality and security requirements, while commercial
+alternatives frequently lack transparency.
 %
-However, this order can be customized by adding one of the following to the file \verb+5_packages.tex+.
+To address these critical issues, this work proposes the \glsxtrfull{sspfs}, an innovative approach that integrates the
+flight controller and companion computer functions on a single Raspberry Pi 4 +
+PilotPi shield platform under the Bao hypervisor. This consolidation is achieved by leveraging the Bao hypervisor, a
+lightweight, security, and safety-oriented bare-metal hypervisor designed for
+embedded real-time systems and mixed-criticality systems.
+Bao was extended with a custom mailbox supervisor to mediate firmware
+% transactions over the shared \glsxtrfull{pcie} bus.
+transactions over a shared bus.
+The PX4 autopilot was selected due to its open-source nature, extensive platform
+support, modular architecture, and widespread adoption in the industry.
+An \gls{uspfs} counterpart was also developed to quantify the benefits of the supervision layer.
+%
+Experimental results demonstrate that \gls{sspfs} provides strong isolation: injected
+faults in the non-critical Companion \gls{vm} lead to its failure, while the critical
+PX4 \gls{vm} maintains full functionality, keeping the \gls{uav}
+airborne. Benchmarking with MiBench shows a small performance degradation and
+improved cache partitioning reduces interference.
+The worst-case scheduling overhead for PX4 tasks was very low (2\%). The camera's frame rate in the Companion VM also
+showed no statistically significant overhead (worst-case of 2\%). In some
+instances, the \gls{sspfs} even outperformed the \gls{uspfs} system, attributed
+to the static partitioning of resources.
+Real-flight tests confirm accurate position tracking and a modest
+CPU overhead (≈6 \% average), validating
+that \gls{sspfs} meets real-time requirements without sacrificing safety. This
+study establishes a viable path toward trustworthy, consolidated
+mixed-criticality \gls{uav} systems with minimal performance impact.
+% by providing
+% a trustworthy open-source reference software stack.
 
-\begin{verbatim}
-    \ntsetup{abstractorder={<LANG_1>,...,<LANG_N>}}
-    \ntsetup{abstractorder={<MAIN_LANG>={<LANG_1>,...,<LANG_N>}}}
-\end{verbatim}
+Keywords: UAV, Mixed-Criticality Systems, Hypervisor, Bao, Security, PX4.
 
-%% For example, for a main document written in German with abstracts written in German, English and Italian (by this order) use:
-%% \begin{verbatim}
-%%     \ntsetup{abstractorder={de={de,en,it}}}
-%% \end{verbatim}
 
-Concerning its contents, the abstracts should not exceed one page and may answer the following questions (it is essential to adapt to the usual practices of your scientific area):
+% The primary goal is to
+% develop a trustworthy open-source software stack that closes the gap between
+% existing open-source and commercial solutions by contributing to the widespread
+% adoption of secure and safe features in \gls{uav} technology.
 
-\begin{enumerate}
-  \item What is the problem?
-  \item Why is this problem interesting/challenging?
-  \item What is the proposed approach/solution/contribution?
-  \item What results (implications/consequences) from the solution?
-\end{enumerate}
 
-% Palavras-chave do resumo em Inglês
-% \begin{keywords}
-% Keyword 1, Keyword 2, Keyword 3, Keyword 4, Keyword 5, Keyword 6, Keyword 7, Keyword 8, Keyword 9
-% \end{keywords}
-\keywords{
-  One keyword \and
-  Another keyword \and
-  Yet another keyword \and
-  One keyword more \and
-  The last keyword
-}
+% The evaluation of the SSPFS demonstrates several key
+% results: \begin{itemize} \item Robust Isolation Guarantees: Functional tests
+%   confirmed that the Bao hypervisor provides strong isolation between
+%   mixed-criticality systems. When malicious kernel modules (e.g., panic, memory
+%   corruption, memory exhaustion, kill init process) or resource exhaustion
+%   applications were introduced into the non-critical Companion Virtual Machine
+%   (VM), it resulted in the Companion VM's crash, yet the critical PX4 Flight
+%   Management Unit (FMU) VM remained operational, ensuring the \gls{uav} stayed
+%   airborne. In contrast, the unsupervised system suffered a total collapse under
+%   similar attacks. \item Minimal Performance Overhead: Benchmarking revealed
+%   negligible performance degradation imposed by the Bao hypervisor and the
+%   custom mailbox driver patch necessary for Raspberry Pi firmware
+%   interfacing. The worst-case scheduling overhead for PX4 tasks was very low,
+%   with an increase of only 2\%. The camera's frame rate in the Companion VM also
+%   showed no statistically significant overhead, with most runs exhibiting
+%   degradation close to 0\% and a maximum of less than 2\%. In some instances,
+%   the SSPFS even outperformed the unsupervised system, attributed to the static
+%   partitioning of resources. \item Effective Mailbox Supervision: A custom
+%   mechanism was successfully implemented and validated to manage shared access
+%   to the firmware mailbox under Bao's supervision, ensuring seamless
+%   communication while maintaining isolation. \item Successful Real-Flight
+%   Validation: Automated missions in real-flight scenarios verified that the
+%   SSPFS system maintains accurate position tracking, unaffected by the
+%   supervision layer. Although an increase in RAM usage (99 KB) was observed in
+%   the FMU VM, it was considered negligible relative to the available memory (144
+%   MB). \end{itemize} In conclusion, the SSPFS system, powered by the Bao
+% hypervisor, has been demonstrated as a superior solution for consolidating
+% mixed-criticality software stacks in \glspl{uav}, providing robust isolation guarantees
+% with low performance overhead.
+
+% \begin{abstract}
+% This work presents the design, implementation, and evaluation of a secure and
+% safe open-source software stack for unmanned aerial vehicles (UAVs), addressing
+% the shortcomings of existing multi-platform flight controllers. We propose the
+% Supervised Single-Platform Flight Stack (SSPFS), which consolidates flight
+% controller and companion computer functions on a single Raspberry Pi 4 + PilotPi
+% shield platform under the Bao hypervisor.
+% An unsupervised counterpart (USPFS) was also developed to quantify the benefits of the supervision layer. We extend Bao with a custom mailbox supervisor to mediate firmware transactions over the shared PCIe bus.
+
+% Experimental results demonstrate that SSPFS provides strong isolation: injected faults in the non-critical companion VM lead to its failure, while the critical PX4 Flight Management Unit VM maintains full functionality, keeping the UAV airborne. Benchmarking with MiBench shows negligible performance degradation (worst-case 2 %) and improved cache partitioning reduces interference. Real-flight tests confirm accurate position tracking and a modest CPU overhead (≈6 % average, 2 % worst-case) and RAM increase (99 KB), validating that SSPFS meets real-time requirements without sacrificing safety. This study establishes a viable path toward trustworthy, consolidated mixed-criticality UAV systems with minimal performance impact.
+% \end{abstract}

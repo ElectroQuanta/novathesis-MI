@@ -1,0 +1,121 @@
+\typeout{NT FILE CONCL.tex}%
+\chapter{Conclusions and Future Work}
+\label{cha:concl}
+%
+\begin{quote}
+\begin{flushright}
+``\emph{The only way of discovering the limits of the possible is}\\
+  \emph{to venture a little way past them into the impossible.}'' \\
+\textbf{-- Arthur C. Clarke}, science fiction writer and inventor
+\end{flushright}
+\end{quote}
+
+In this chapter the main conclusions about the present work are outlined, as
+well as the prospects for future work.
+
+\section{Conclusions}
+The work presented focused on the development of a
+trustworthy open-source software stack for \gls{uav} applications, with a paramount emphasis on security and safety. This effort aimed to bridge the gap between existing open-source and commercial solutions by contributing to the widespread adoption of secure and safe features in \gls{uav} technology.
+A key finding was that conventional multi-platform flight stacks, while
+addressing mixed-criticality at the hardware level, undesirably increase the
+\gls{uav}'s weight and footprint. Furthermore, such systems typically lack isolation
+guarantees, meaning that a compromise in a non-critical component, like video
+surveillance, could propagate to the critical flight controller, potentially
+leading to catastrophic failure.
+
+To overcome these limitations, the proposed \glsxtrfull{sspfs} integrates the flight controller and companion computer
+functionalities onto a single hardware platform, leveraging the Bao
+hypervisor. The unsupervised counterpart solution -- \glsxtrfull{uspfs} -- was devised and tested to
+assess the impact of the supervision layer. The \gls{uavic} platform selected
+consisted of a Raspberry Pi 4 + PilotPi shield, supporting the open source
+PX4 autopilot flight stack. The hardware mapping revealed the need to support a
+supervised mailbox access to handle firmware's mailbox transactions in the
+Raspberry Pi as a means to share some critical devices in the \gls{uavic}
+platform, such as the \gls{pcie} bus.
+
+The evaluation of the \gls{sspfs} demonstrated several critical
+advantages:
+\begin{itemize}
+\item \textbf{Enhanced Isolation}: The functional tests clearly
+  showed that the Bao hypervisor provides strong isolation guarantees between
+  mixed-criticality systems. When a malicious kernel module or a resource
+  exhaustion application was introduced into the non-critical Companion
+  \gls{vm}, it caused that VM to crash, but the critical PX4 \gls{fmu} \gls{vm}
+  remained operational and the UAV stayed airborne. In contrast, the
+  unsupervised system suffered a total collapse under similar attacks.
+\item \textbf{Extensive benchmarking}: The supervised solution was benchmarked
+  using the industrial standard MiBench suite, showing a very low performance
+  degradation compared to the unsupervised one. The performance degradation can
+  be significantly higher under interference, but cache partitioning via page
+  coloring consistently reduced the performance degradation for the \gls{fmu}
+  \gls{vm}, mitigating this effect.
+\item
+\textbf{Effective Mailbox Supervision}: A
+  customized mechanism was devised and validated to manage shared access to the
+  firmware mailbox between different guests under Bao's supervision. Although
+  not ideal and specific to the \gls{uavic} platform selected (Raspberry Pi 4),
+  this mechanism ensured seamless communication without compromising isolation.
+\item \textbf{Minimal Performance Overhead}: The benchmarking revealed negligible
+  performance degradation due to the introduction of the Bao hypervisor and the
+  custom mailbox driver patch required for Raspberry Pi firmware
+  interfacing. For PX4 tasks, the scheduling overhead was found to be very low,
+  with a worst-case increase of only 2\%. The camera's frame rate in the
+  Companion \gls{vm} also showed no statistically significant overhead, with
+  most runs exhibiting degradation close to 0\% and a maximum of less than
+  2\%. In some instances, the SSPFS even outperformed the unsupervised system
+  due to the static partitioning of resources.
+\item \textbf{Real-Flight Validation}: The automated missions in real-flight scenarios confirmed that the
+  SSPFS system maintains accurate position tracking, unaffected by the
+  supervision layer. The \gls{cpu} load increase was small (an average of 6\%),
+  which is in line with the benchmarkings performed on the Bao hypervisor.
+  While an increase in RAM usage was observed (99 KB), it was
+  considered negligible given the available memory for the FMU \gls{vm} (144
+  MB).
+\end{itemize}
+
+In summary, the \gls{sspfs} system, leveraging the Bao hypervisor, has been
+demonstrated as a superior solution for consolidating mixed-criticality software
+stacks in \glspl{uav}, offering robust isolation guarantees with low performance
+overhead.
+
+\section{Future Work}
+Based on the insights gained from this work, several
+avenues for future research and development can be
+pursued:
+\begin{itemize}
+\item \textbf{Support for different \gls{uavic} platforms:} the consolidation of
+  the mixed-criticality stacks relied on a Raspberry Pi with the Linux
+  \gls{gpos}.
+  Ideally, the \gls{uavic} platform should support the NuttX \gls{rtos},
+  required by the PX4 autopilot, and have a smaller footprint.
+\item \textbf{Advanced Shared Resource Management:}
+  While cache coloring was explored, its effectiveness was limited in certain
+  scenarios due to hardware constraints like \gls{dma} 
+  transactions. Future work should investigate and implement more sophisticated
+  state-of-the-art partitioning mechanisms, such as memory throttling, to
+  further mitigate interference from shared hardware resources like \glspl{llc}
+  and interconnects, which can breach temporal isolation.
+\item \textbf{Optimized Interrupt Virtualization:} The current Bao hypervisor
+  implementation supports Arm GICv2 and GICv3, which necessitates the hypervisor
+  to re-inject interrupts into guest \glspl{vm}. Future work could focus on updating
+  Bao to fully leverage the GICv4 specification, which bypasses the hypervisor
+  for guest interrupt delivery, potentially leading to further reductions in
+  interrupt latency and overall complexity of interrupt management.
+\item \textbf{Detailed \gls{ram} Usage Analysis and Optimization:} The observed increase
+  in \gls{ram} usage attributed to the firmware's mailbox supervision warrants deeper
+  investigation. Exploring alternative mechanisms for securely sharing devices
+  across \glspl{vm} could provide further insights and potentially lead to more
+  memory-efficient solutions.
+\item \textbf{Extended Functional and Performance
+    Testing:} While initial functional tests demonstrate isolation, future work
+  could involve designing and executing more sophisticated and long-duration
+  attack scenarios and stress tests. This would further validate the
+  trustworthiness and resilience of the \gls{sspfs}  under diverse and sustained
+  malicious activities.
+\end{itemize}
+
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "../template"
+%%% End:

@@ -1,38 +1,20 @@
 \typeout{NT FILE DESIGN.tex}%
 \chapter{Design}%
 \label{ch:design}
-%
-This chapter presents the design of a trustworthy flight software stack tailored
-for a typical UAV application --- video surveillance --- leveraging the Bao
-hypervisor. Firstly, the system requirements and constraints are systematically
-identified. Then, we analyze the conventional solution consisting of a
-\gls{umpfs}: the flight controller hardware node manages flight-critical
-systems, while the companion computer hardware node handles secondary and
-computationally intensive tasks, such as collision avoidance and prevention,
-odometry, or, in this case, video streaming to the \gls{gcs}. This solution
-handles mixed-criticality at the hardware level, undesirably increasing the
-footprint and weight of the \gls{uav}. Furthermore, it does not provide
-isolation guarantees, thus compromising the companion computer can lead to the
-flight controller's malfunctioning, and consequently, in the worst case scenario
-to the crash of the \gls{uav}.
+\begin{quote}
+\begin{flushright}
+``\emph{Simplicity is the ultimate sophistication.}'' \\
+\textbf{-- Leonardo Da Vinci}, polymath
+\end{flushright}
+\end{quote}
 
-To minimize the weight and footprint of the \gls{uav} we propose the merge of
-the flight controller and companion computer into a single platform. This
-integration reduces the separation of concerns: the same platform is now
-responsible for both critical and non-critical tasks. However, this
-consolidation can adversely affect system performance, particularly for critical
-tasks, potentially compromising flight safety. Additionally, system security may
-be weakened, as an attacker only needs to exploit vulnerabilities in a single
-platform to compromise the entire system.
+Addressing UAVs' conflicting demands for security, safety, and \gls{swap-c} efficiency necessitates rethinking conventional mixed-criticality architectures. This chapter presents the design of the \gls{sspfs}: a trustworthy flight stack leveraging the Bao hypervisor for video surveillance applications, where resource-intensive but non-critical streaming coexists with safety-critical flight control on consolidated hardware.
 
-On its own, the \gls{uspfs} may not represent an improvement over the
-conventional approach. While it reduces the system footprint and communication
-latency between components, these benefits may come at the cost of diminished
-performance and heightened safety and security risks. However, it is
-hypothesized that this solution serves as an intermediate step toward a unified
-platform capable of managing both critical and non-critical tasks through
-appropriate supervision. This hypothesis underpins the proposed solution,
-referred to as the \gls{sspfs}, which employs the Bao hypervisor.
+The conventional \gls{umpfs} approach employs separate hardware nodes—a flight controller for critical systems and a companion computer for tasks like collision avoidance or video streaming. While providing functional separation, this architecture increases weight and power consumption while offering no isolation guarantees, allowing compromises in the companion node to propagate to flight systems.
+
+Merging flight control and companion functions onto a single platform reduces weight, power requirements, and inter-component latency. However, unsupervised consolidation (\gls{uspfs}) introduces critical risks including performance interference (where non-critical tasks disrupt flight-critical operations) and security vulnerabilities (where a single compromise affects the entire system). Consequently, unsupervised consolidation alone cannot meet stringent safety and security requirements.
+
+The supervised approach hypothesizes that hypervisor oversight enables secure consolidation while preserving SWaP advantages. The \gls{sspfs} employs the Bao hypervisor to achieve hardware-enforced isolation between flight control and companion functions, certifiable separation with minimal performance overhead, and retention of single-board SWaP benefits. The following sections detail this architecture's requirements, components, and security model.
 
 \section{Requirements and Constraints}
 \label{sec:req-sec}
@@ -58,56 +40,104 @@ This example underscores the critical importance of the online command method,
 which involves more stringent operational requirements. As a result, the primary
 focus of this work will be on the online command approach.
 
-\subsection{Requirements}
-\label{sec:req}
+% \subsection{Requirements}
+% \label{sec:req}
 
-\textbf{Functional}
-  \begin{itemize}
-    \item The \gls{gcs} must be able to remotely command the \gls{uav} and
-obtain its geolocation in (soft) real-time 
-    \item The \gls{gcs} must be able to capture images in (soft) real-time
-    \item The \gls{uav} must have onboard control mechanisms to ensure stable
-flight in compliance with the previous requirements
-    \item The \gls{uav} must have flight autonomy (battery powered) 
-    \end{itemize}
-
-
-\textbf{Technical}
-  \begin{itemize}
-    \item The software stack must be fault-tolerant: if the video surveillance
-application is compromised, the control system must remain online 
-    \item The additional security and fault-tolerant mechanisms must not
-increase significantly the flight control stack latency.
-\item Merge the flight controller and companion computer into a single platform
-to minimize the footprint and reduce latency, while respecting its
-mixed-criticality characteristics
-    \end{itemize}
-
-\subsection{Constraints}
-\label{sec:constr}
-
-\textbf{Functional}
-\begin{itemize}
-    \item Minimize the \gls{uav}'s weight to enhance flight autonomy.
-    \item Video surveillance requires high bandwidth; however, the remote
-communication link of the \gls{uav} has a limited bitrate. The frame size must
-be adjusted to ensure sufficient image quality for the mission. 
-\end{itemize}
+% \textbf{Functional}
+%   \begin{itemize}[noitemsep,topsep=0pt]
+%     \item The \gls{gcs} must be able to remotely command the \gls{uav} and
+% obtain its geolocation in (soft) real-time 
+%     \item The \gls{gcs} must be able to capture images in (soft) real-time
+%     \item The \gls{uav} must have onboard control mechanisms to ensure stable
+% flight in compliance with the previous requirements
+%     \item The \gls{uav} must have flight autonomy (battery powered) 
+%     \end{itemize}
 
 
-\textbf{Technical}
-  \begin{itemize}
-    \item The flight software stack must be open-source (e.g., PX4)
-    \item Wireless communications are required for UAV's remote control and
-image acquisition
-\item The Bao hypervisor is used to provide additional security and
-fault-tolerance to the flight control stack
-    \end{itemize}
+% \textbf{Technical}
+%   \begin{itemize}[noitemsep,topsep=0pt]
+%     \item The software stack must be fault-tolerant: if the video surveillance
+% application is compromised, the control system must remain online 
+%     \item The additional security and fault-tolerant mechanisms must not
+% increase significantly the flight control stack latency.
+% \item Merge the flight controller and companion computer into a single platform
+% to minimize the footprint and reduce latency, while respecting its
+% mixed-criticality characteristics
+%     \end{itemize}
+
+% \subsection{Constraints}
+% \label{sec:constr}
+
+% \textbf{Functional}
+% \begin{itemize}[noitemsep,topsep=0pt]
+%     \item Minimize the \gls{uav}'s weight to enhance flight autonomy.
+%     \item Video surveillance requires high bandwidth; however, the remote
+% communication link of the \gls{uav} has a limited bitrate. The frame size must
+% be adjusted to ensure sufficient image quality for the mission. 
+% \end{itemize}
+
+
+% \textbf{Technical}
+%   \begin{itemize}[noitemsep,topsep=0pt]
+%     \item The flight software stack must be open-source (e.g., PX4)
+%     \item Wireless communications are required for UAV's remote control and
+% image acquisition
+% \item The Bao hypervisor is used to provide additional security and
+% fault-tolerance to the flight control stack
+% \end{itemize}
+Table~\ref{tab:requirements} lists the requirements and constraints for the
+\gls{uav} flight stack. Functional requirements include real-time telemetry and
+command capability, video surveillance, autonomous flight control, and battery
+operation. Technical requirements mandate fault-tolerant isolation between
+components, minimal security overhead, and hardware consolidation of flight
+control and companion functions. Functional constraints prioritize weight
+minimization and bandwidth-optimized video transmission, while technical
+constraints specify an open-source software stack, wireless communications,
+and the use of the Bao hypervisor for security enforcement.
+
+\begin{table}[h]
+\centering
+\caption{System requirements and constraints for the UAV flight stack}
+\label{tab:requirements}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{0.18\textwidth}p{0.37\textwidth}p{0.37\textwidth}}
+\hline
+\textbf{Categorization} & \textbf{Functional} & \textbf{Technical} \\
+% \hline
+\hline
+\multirow{4}{*}{\textbf{Requirements}} 
+& \begin{itemize}[leftmargin=*,noitemsep]
+    \item Remote UAV command/geolocation in soft real-time
+    \item Real-time image capture capability
+    \item Onboard flight stabilization mechanisms
+    \item Battery-powered flight autonomy
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,noitemsep]
+    \item Fault tolerance: Video compromise must not affect flight control
+    \item Minimal latency impact from security mechanisms
+    \item Consolidated flight/companion functions on single hardware
+  \end{itemize} \\
+\hline
+
+\multirow{3}{*}{\textbf{Constraints}} 
+& \begin{itemize}[leftmargin=*,noitemsep]
+    \item Minimal weight for flight autonomy
+    \item Bandwidth-optimized video transmission
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,noitemsep]
+    \item Open-source flight stack (e.g., PX4)
+    \item Wireless control/image transmission
+    \item Bao hypervisor for security/fault-tolerance
+  \end{itemize} \\
+\hline
+\end{tabular}%
+}
+\end{table}
 
 \section{System Architecture}
 \label{sec:design-sysArch}
 Fig.~\ref{fig:uav-design-conv-sol-1} illustrates the conventional solution ---
-\gls{umpfs} --- tailored for the video surveillance application, which employs a
+\glsxtrfull{umpfs} --- tailored for the video surveillance application, which employs a
 separation of concerns. In this approach, the flight controller hardware node
 manages flight-critical systems, while the companion computer hardware node
 handles secondary and computationally intensive tasks, such as collision
@@ -134,16 +164,16 @@ runs extra software to route the MAVLink traffic,
 e.g. \href{https://github.com/mavlink-router/mavlink-router}{MAVLink
   Router}~\cite{px4-routers}.
 
-The \texttt{User} interacts with the Ground Control \gls{sw}, namely
-\texttt{QGroundControl}. \texttt{QGroundControl} was selected due to its
+The \lstinline{User} interacts with the Ground Control \gls{sw}, namely
+\lstinline{QGroundControl}. \lstinline{QGroundControl} was selected due to its
 open-source nature and compatibility with the PX4 flight stack. Additionally,
 the User can interact with the Companion Computer via offboard
-\glspl{api}/\glspl{sdk}, e.g., \texttt{MAVSDK}. The \gls{rc} link was dropped,
+\glspl{api}/\glspl{sdk}, e.g., \lstinline{MAVSDK}. The \gls{rc} link was dropped,
 as it is only usable in manual mode, thus, it is not useful for the video
 surveillance application.
 
-In the vast majority of cases, we also need extra software running on the companion
-computer to interface the camera, e.g. the \href{https://github.com/mavlink/mavlink-camera-manager}{Mavlink Camera Manager}. This
+In the vast majority of cases, extra software, running on the companion
+computer, is required to interface the camera, e.g. the \href{https://github.com/mavlink/mavlink-camera-manager}{Mavlink Camera Manager}. This
 component acts as bridge between the \gls{fmu} and \gls{gcs} and a translator between the MAVLink Camera Protocol v2
 (used by PX4) and the native protocol of the camera~\cite{px4-cam-managers}.
 
@@ -166,7 +196,7 @@ client runs on port 5000 of the \gls{gcs} issuing command for the server running
 on the same port in the Companion Computer. The server handles commands and
 requests the sender to setup the video pipeline and transmit video frames back
 to the \gls{gcs}. The receiver sets up a video pipeline on the \gls{gcs} (not
-displayed) that processes the video frames and displays it to the \texttt{User}.
+displayed) that processes the video frames and displays it to the \lstinline{User}.
 
 \begin{figure}[!hbt]
   \centering
@@ -178,20 +208,15 @@ displayed) that processes the video frames and displays it to the \texttt{User}.
 \end{figure}
 
 On the receiving end of the video surveillance system (\gls{gcs}), occasional frame loss is tolerable and does not compromise situational awareness of the target area. Consequently, a communication protocol without delivery guarantees, such as \gls{udp}, is appropriate.
-
+%
 This simplified conventional solution forms the base design for the platform
 unification.
 
 \subsection{Unsupervised Single-Platform Flight Stack}
 \label{sec:unsuperv-stack}
-To integrate the \gls{fmu} and companion computer platforms, we require a method to encapsulate their functionalities into standalone components within a unified platform. In the \glsxtrfull{uspfs}, these components are abstracted as processes running on a \gls{gpos}.
+Integration of the \gls{fmu} and companion computer platforms requires encapsulation of their functionalities into standalone components within a unified platform. In the \glsxtrfull{uspfs}, these components are abstracted as processes running on a \gls{gpos}.
 
-Fig.~\ref{fig:uav-design-unsup} illustrates the system architecture of the
-\gls{uspfs}. The software processes for the \gls{gcs} and \gls{uavic} are shown
-in blue. The \gls{uavic} consolidates the \gls{fmu} and companion computer nodes
-into a single platform operating on a \gls{gpos}, specifically Linux. PX4
-executes on core 0, while the remaining cores are allocated for the video
-surveillance application.
+Fig.~\ref{fig:uav-design-unsup} illustrates the \gls{uspfs} system architecture. Software processes for the \gls{gcs} and \gls{uavic} appear in blue. The \gls{uavic} consolidates both \gls{fmu} and companion computer nodes onto a single platform operating on a \gls{gpos} (specifically Linux), with PX4 executing on core 0 and remaining cores allocated to the video surveillance application.
 
 \begin{figure}[!hbt]
   \centering
@@ -227,12 +252,11 @@ systems, preventing faults in the non-critical system from impacting the
 Each \gls{vm} operates a Linux-based \gls{os}, enabling further customization. For instance, the \gls{fmu} \gls{vm} can utilize a real-time kernel, providing additional guarantees that its assigned core remains fully dedicated to its execution. Meanwhile, the Companion \gls{vm} can operate with a standard Linux kernel. Bao's static partitioning mechanism guarantees that the hardware resources assigned to each \gls{vm} are strictly dedicated, ensuring isolation. Moreover, device drivers within each \gls{vm} are specific to that \gls{vm}, minimizing the impact of software bugs or failures.
 
 However, this approach requires each \gls{vm} to include a full \gls{os},
-leading to larger binary sizes. Additionally, the \texttt{User} must carefully
+leading to larger binary sizes. Additionally, the \lstinline{User} must carefully
 select and allocate hardware resources to avoid conflicts between \glspl{vm}
 while maintaining adequate performance in terms of \gls{ram}, available
 \glspl{cpu}, and other critical resources. This requires a deeper knowledge
-about the hardware used. As such, we will later revisit the system architecture
-to adapt it to the selected hardware.
+about the hardware used. As such, the system architecture requires later adaptation to the selected hardware.
 
 \section{Hardware Selection}
 \label{sec:hardware-selection}
@@ -242,15 +266,15 @@ requirements and the \gls{uavic} restrictions imposed by Bao.
 
 \subsection{UAV}
 \label{sec:uav-hw-sel}
-We will start by defining the \gls{uav}'s main characteristics. The multirotor
-airframe was selected due to its low price and high availability, but especially
-due to its compactness and \gls{vtol} support. It will be used in the \gls{lap}
-altitude range (up to 3 to 9 kilometers). The \gls{uav} must be battery powered
-and the overall weight must be small to extend battery life. Lastly, but most
-importantly, it must be open-source to enable user's modification/customization. 
+The \gls{uav}'s main characteristics are defined as follows. The multirotor
+airframe selection prioritizes low cost, high availability, compactness, and
+\gls{vtol} capability. Operation occurs within the \gls{lap} altitude range
+(3-9 kilometers). The design requires battery power with minimized weight to
+extend flight time. Crucially, an open-source architecture enables user
+modification and customization. 
 
 Fig.~\ref{fig:hoverGames-drone} shows the selected \gls{uav} --- the
-\texttt{KIT-HGDRONEK66}, commonly referred to as the NXP HoverGames \gls{uav}
+\lstinline{KIT-HGDRONEK66}, commonly referred to as the NXP HoverGames \gls{uav}
 kit~\cite{nxp-hoverGames-uav}. This \gls{diy} professional development kit, priced under
 500 USD, features the RDDRONE-FMUK66 as the \gls{fmu} unit (1).
 
@@ -306,62 +330,61 @@ replay in simulation tools.
 \subsection{UAV Integrated Controller}
 \label{sec:uav-integr-contr}
 The \glsxtrfull{uavic} merges the \gls{fmu} and companion computer functionalities
-into a single platform. To achieve this, we deploy the PX4 autopilot stack and
+into a single platform. This consolidation deploys the PX4 autopilot stack and
 the video surveillance application into a custom Linux-based OS. However, PX4 was
-typically designed to run atop of the NuttX \gls{rtos} and the support for Linux
-is fairly limited. The supported platforms include the BeagleBone Blue and the
-Raspberry Pi 2/3/4 with additional
-shields~\cite{px4-experimental-autopilot}. 
+typically designed to run atop the NuttX \gls{rtos}, with Linux support remaining
+limited. Supported platforms include the BeagleBone Blue and Raspberry Pi 2/3/4
+with additional shields~\cite{px4-experimental-autopilot}. 
 
-Fig.~\ref{fig:pilotpi-annot} presents the chosen \gls{uavic}, the Raspberry Pi
-4 with the PilotPi shield, due to its detailed documentation and lower
-cost. The PilotPi shield is a fully functional and open-source solution to run
-the PX4 autopilot directly on the Raspberry Pi. No proprietary driver is
-required and \gls{pcb} and schematic are open source as well~\cite{px4-pilotpi}.
+% Fig.~\ref{fig:pilotpi-annot} presents the selected \gls{uavic}: the Raspberry Pi
+% 4 with PilotPi shield. This combination was chosen for its detailed documentation
+% and cost efficiency.
 
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=1.0\textwidth]{./img/png/pilotpi-annotated} 
-  \caption[UAVIC: Raspberry Pi 4 + PilotPi shield]{UAVIC: Raspberry Pi 4 +
-    PilotPi shield (adapted from~\cite{px4-pilotpi}\footnotemark}%
-  \label{fig:pilotpi-annot}
-\end{figure}
-%
-%\fnlicReq{Elsevier}{5457890117132}%
-\fnlicCCFour{foot:pilotpi-annotated}%
+% The PilotPi shield provides a fully functional open-source
+% solution for running PX4 autopilot directly on Raspberry Pi, requiring no
+% proprietary drivers while offering open-source \gls{pcb} and
+% schematics~\cite{px4-pilotpi}.
 
-The Raspberry Pi 4 Model B (1) runs a Linux-based \gls{os}
-from the \gls{sd} card and directly exposes the \gls{csi} camera and the
-\gls{usb} interface. The Raspberry Pi 4 Model B features the Broadcom BCM2711
-\gls{soc}, containing a 64-bit quad-core Arm\textreg Cortex\textreg--A72 \gls{cpu} running
-at up to 1.8 GHz and a VideoCore VI \gls{gpu} running at up to 500
-MHz~\cite{rpi4-specs,rpi4-bcm2711}, with 8 GB LPDDR4-3200 SDRAM. It provides 2.4
-and 5.0 GHz 802.11ac wireless, Bluetooth 5.0, Gigabit Ethernet, and two
-\gls{usb} 3.0 and two \gls{usb} 2.0 ports.
+% \begin{figure}[!hbt]
+%   \centering
+%   \includegraphics[width=1.0\textwidth]{./img/png/pilotpi-annotated} 
+%   \caption[UAVIC: Raspberry Pi 4 + PilotPi shield]{UAVIC: Raspberry Pi 4 +
+%     PilotPi shield (adapted from~\cite{px4-pilotpi})\footnotemark}%
+%   \label{fig:pilotpi-annot}
+% \end{figure}
+% %
+% %\fnlicReq{Elsevier}{5457890117132}%
+% \fnlicCCFour{foot:pilotpi-annotated}%
 
-On top of the Raspberry Pi we have the sensors board (2),
-providing \gls{gps}, telemetry and \gls{rc} external interfaces, mapped to
-\texttt{/dev/ttySC0}, \texttt{/dev/ttySC1}, and \texttt{/dev/ttyAMA0},
-respectively. Additionally, it provides onboard accelerometer/gyroscope
-(\texttt{ICM42688P}), magnetometer (\texttt{IST8310}), and barometer
-(\texttt{MS5611}) sensors required by PX4.
+% The Raspberry Pi 4 Model B (1) operates a Linux-based \gls{os}
+% from the \gls{sd} card, directly exposing the \gls{csi} camera and
+% \gls{usb} interfaces. This model features the Broadcom BCM2711
+% \gls{soc}, containing a 64-bit quad-core Arm\textreg Cortex\textreg--A72 \gls{cpu} at
+% 1.8 GHz and VideoCore VI \gls{gpu} at 500 MHz~\cite{rpi4-specs,rpi4-bcm2711},
+% with 8 GB LPDDR4-3200 SDRAM. Connectivity includes dual-band 802.11ac wireless,
+% Bluetooth 5.0, Gigabit Ethernet, two \gls{usb} 3.0 ports, and two \gls{usb} 2.0 ports.
 
-Lastly, on the topmost
-plane we have the power board (3) handling power supply (8) and monitoring (11)
-and the motors actuation using \gls{pwm} (10) supported by the Linux's \texttt{PCA9685}
-device driver. Additionally, it contains a
-header exposing unused pins which can be used, for example, to establish a
-remote serial connection (UART5).
+% The sensor board (2) mounts atop the Raspberry Pi,
+% providing \gls{gps}, telemetry, and \gls{rc} external interfaces mapped to
+% \lstinline{/dev/ttySC0}, \lstinline{/dev/ttySC1}, and \lstinline{/dev/ttyAMA0},
+% respectively. Onboard sensors include an accelerometer/gyroscope
+% (\lstinline{ICM42688P}), magnetometer (\lstinline{IST8310}), and barometer
+% (\lstinline{MS5611}) required by PX4.
+
+% The topmost layer contains the power board (3), handling power supply (8),
+% monitoring (11), and motor actuation via \gls{pwm} (10) supported by the Linux
+% \lstinline{PCA9685} driver. A header exposes unused pins, enabling additional
+% connections such as a remote serial interface (UART5).
 
 \subsection{Hardware mapping}
 \label{sec:hardware-mapping}
-The \gls{uavic} platform must comply with PX4 requirements on the available
-sensors and actuators. Furthermore, due to the static partitioning nature of the
-Bao hypervisor it is important to assess in the \gls{sspfs} solution if the \gls{uavic} hardware is fully
-available to each one of the guests, or if an alternative must be
-provided. Thus, in this section, we will start by mapping the hardware required
-by PX4 to the Linux device tree for the \gls{uspfs} solution. Then, we will
-adapt it to comply with Bao constraints in the \gls{sspfs} solution.
+The \gls{uavic} platform must comply with PX4 requirements for available
+sensors and actuators. Furthermore, the static partitioning nature of the
+Bao hypervisor necessitates assessing whether the \gls{uavic} hardware is fully
+available to each guest in the \gls{sspfs} solution, or if alternatives are
+required. This section therefore proceeds by first mapping the hardware required
+by PX4 to the Linux device tree for the \gls{uspfs} solution, followed by
+adaptation to comply with Bao constraints in the \gls{sspfs} implementation.
 
 
 \subsubsection{USPFS}
@@ -369,10 +392,10 @@ adapt it to comply with Bao constraints in the \gls{sspfs} solution.
 Fig.~\ref{fig:hw-map-1} depicts the full device tree for the \gls{uavic} system,
 representing the \gls{uspfs} solution (base scenario).
 The solid lines represent aggregation, i.e., a node that includes another one
-(e.g., the \texttt{root} node includes the \texttt{memory} node), and the
+(e.g., the \lstinline{root} node includes the \lstinline{memory} node), and the
 dashed lines represent dependency, i.e., a node that depends on another one
-(e.g., the \texttt{power} and \texttt{firmware} nodes depend on the
-\texttt{mailbox}).
+(e.g., the \lstinline{power} and \lstinline{firmware} nodes depend on the
+\lstinline{mailbox}).
 
 \begin{figure}[!hbt]
   \centering
@@ -391,44 +414,33 @@ dashed lines represent dependency, i.e., a node that depends on another one
 % \hlighthex{90EE90}{000000}{LightGreen}
 % \hlighthex{FFB6C1}{000000}{LightPink}
 
-In \hlighthex{ADD8E6}{000000}{blue} we have the generic nodes that must be included in every device tree
-version for the Raspberry Pi 4, e.g., \texttt{memory}, \texttt{cpus},
-\texttt{power-regulators}, etc.. 
-In \hlighthex{FFE4C4}{000000}{orange} we have the nodes required by
-PX4: \texttt{i2c1} for the motors actuation, \texttt{spi0} for the \gls{imu},
-barometer and magnometer, \texttt{spi1} for the \gls{gps} and the telemetry
-radio, and \glspl{uart} 0 and 5 for \gls{rc} link and debug console,
-respectively.
-In \hlighthex{90EE90}{000000}{green} we have the nodes required by the companion
-\gls{vm}, namely \texttt{i2c0} and \texttt{csi1} for the \gls{csi} camera, and
-\texttt{mmcnr} to utilize the onboard Wi-Fi.
-Lastly, in \hlighthex{FFB6C1}{000000}{pink} we have the firmware-related nodes,
-which are used by the Rasbperry Pi \gls{gpu} to communicate with the Arm
-\glspl{cpu} using the \texttt{mailbox}~\cite{rpi4-fw-mbox}.
+The device tree coloring scheme highlights functional groupings:
+\begin{itemize}[noitemsep,topsep=0pt]
+%
+\item \hlighthex{ADD8E6}{000000}{Generic nodes}: essential for all Raspberry Pi
+  4 configurations: \lstinline{memory}, \lstinline{cpus},
+  \lstinline{power-regulators}, etc.
+%
+\item \hlighthex{FFE4C4}{000000}{PX4-required nodes}: \lstinline{i2c1} (motor
+  actuation), \lstinline{spi0} (\gls{imu}; barometer; magnetometer),
+  \lstinline{spi1} (\gls{gps}; telemetry radio), and \glspl{uart} 0/5 (\gls{rc}
+  link; debug console)
+%
+\item \hlighthex{90EE90}{000000}{Companion VM nodes}: \lstinline{i2c0} and
+  \lstinline{csi1} (camera interface), \lstinline{mmcnr} (Wi-Fi support)
+%
+\item \hlighthex{FFB6C1}{000000}{Firmware nodes}: Enable \gls{gpu}-\gls{cpu} communication via \lstinline{mailbox}~\cite{rpi4-fw-mbox}
+\end{itemize}
 
-Analyzing the device tree we can observe multiple common dependencies for PX4
-and the Companion \gls{vm}: the clock manager \texttt{cprman}, the
-\gls{gpio} controller, and the \gls{dma} controller. However, Bao disallows the
-sharing of devices to ensure isolation between guests. As such, an alternative
-must be provided to support PX4 and the Companion \gls{vm} in Bao.
+Device tree analysis reveals multiple shared dependencies between PX4 and Companion VM functions: the clock manager (\lstinline{cprman}), \gls{gpio} controller, and \gls{dma} controller. Bao's isolation requirements prohibit device sharing, necessitating architectural alternatives.
 
-One such alternative consists in maintaining PX4 as is, since it requires the
-on-board sensors and has a larger number of devices, and migrating the Companion
-\gls{vm}'s devices to the \gls{usb} interface. Following the
-\textcolor{red}{red line}, we can verify that the \texttt{usb} device,
-contained in the \texttt{pcie}, has only a common dependency with \texttt{PX4}
---- the \texttt{firmware} node --- which in turn depends on the
-\texttt{mailbox}.
+The proposed solution maintains PX4's native device requirements while migrating Companion VM devices to the \gls{usb} interface. As shown by the \textcolor{red}{dependency path}, the \lstinline{usb} device (within \lstinline{pcie}) shares only the \lstinline{firmware} node with PX4, which itself depends on the \lstinline{mailbox}.
 
-This is the simplest and most straightforward method to provide support for the
-\gls{sspfs} solution. However, this still causes issues with Bao due to the
-common \texttt{mailbox} node required by the \texttt{firmware}. On the other
-hand, removing the \texttt{firmware} node from one of the \glspl{vm} is not an
-option: doing so will lead to \gls{vm} malfunction.
+While this approach simplifies \gls{sspfs} implementation, Bao compatibility remains challenged by the shared \lstinline{mailbox} requirement. Removal of the \lstinline{firmware} node from either \gls{vm} would cause system failure, making this option infeasible.
 
-Thus, the plan consists in migrating the Companion \gls{vm}'s devices to the
-\gls{usb} interface and providing support in Bao to manage the access to the
-shared mailbox in a supervised and secure form.
+The adopted approach therefore combines the migration of Companion \gls{vm}
+devices to \gls{usb} and the development of supervised mailbox access management within Bao.
+This maintains hardware isolation while enabling secure shared resource utilization.
 
 \subsubsection{Supervised mailbox access}
 \label{sec:superv-mailb-access}
@@ -449,8 +461,8 @@ outgoing path as seen by the mailbox driver and the \textcolor{blue}{blue} ones 
 incoming path. The mailbox transactions are represented with white, violet and
 grey envelopes for the conventional, VM1 and VM2 interactions. The
 synchronization mechanism (lock) is drawn in brown for the mailbox and in blue
-for Bao. Hypercalls are represented with a green phone for \texttt{Start\_TX}
-hypercall and a red one the \texttt{End\_TX} hypercall. Lastly, the numbering
+for Bao. Hypercalls are represented with a green phone for \lstinline{Start_TX}
+hypercall and a red one the \lstinline{End_TX} hypercall. Lastly, the numbering
 indicates the sequence of events for both cases.
 
 In the \textbf{conventional case}, the mailbox device driver can initiate a transaction
@@ -465,7 +477,7 @@ the request and freeing the mailbox~\cite{rpi4-mbox-driver}.
 In the \textbf{supervised case}, the VM1 mailbox driver tries to initiate a
 transaction request if another transaction is not pending complete (1). Now,
 before sending the transaction, the mailbox driver must signal to Bao it wants
-to start it by performing a \texttt{Start\_TX} hypercall (3). Bao acknowledges
+to start it by performing a \lstinline{Start_TX} hypercall (3). Bao acknowledges
 this request if another one is not pending complete, locking the mailbox manager
 (5). VM2 tries to do the same (2, 4), but, as VM1 acquired the lock, it must
 wait for VM1 transaction completion. The Mailbox Manager handles the hypercall,
@@ -475,20 +487,18 @@ device driver can now send the transaction to the mailbox (8, 9) which will
 dispatch it to the \gls{gpu} (10). The \gls{gpu} processes the transaction and
 the response it sent back to the device mailbox driver (11, 12, 13). When the
 transaction is completed the mailbox driver issues another hypercall ---
-\texttt{End\_TX} --- to signal Bao this event, and the mailbox lock is released,
+\lstinline{End_TX} --- to signal Bao this event, and the mailbox lock is released,
 freeing the VM1's mailbox for further requests. Bao handles the hypercall
-\texttt{End\_TX} by releasing the mailbox manager's lock (15), which triggers
+\lstinline{End_TX} by releasing the mailbox manager's lock (15), which triggers
 the pending transaction request issued by VM2 (6) to be resumed by injecting the
 interrupt in the appropriate \gls{cpu} (16). Then, the VM2 mailbox's driver can
 send the firmware transaction and the process continues.
 
 \subsubsection{SSPFS}
 \label{sec:final-scenario}
-After addressing the shared device between \glspl{vm}, through the appropriate
-supervision of the firmware's mailbox, we can now assign the available hardware
-to each \gls{vm}.
+After addressing shared devices between \glspl{vm} through supervised mailbox management, hardware assignment proceeds as follows.
 
-Fig.~\ref{fig:hw-map-2} and Fig.~\ref{fig:hw-map-3} illustrates the device trees
+Fig.~\ref{fig:hw-map-2} and Fig.~\ref{fig:hw-map-3} illustrate the device trees
 for the PX4 \gls{vm} and Companion \gls{vm}, respectively.
 
 \begin{figure}[!hbt]
@@ -507,24 +517,25 @@ for the PX4 \gls{vm} and Companion \gls{vm}, respectively.
   \label{fig:hw-map-3}
 \end{figure}
 
-The PX4 \gls{vm} includes only the required onboard
-sensors/actuators and debug console (optional). Two \gls{ram} regions were
-defined of 144 MB and 3 GB, respectively. From the first memory region we
-reserve a \gls{cma} region of 32 MB, because the \gls{spi} devices perform \gls{dma} transactions, which is only
-available in the first GB of memory~\cite{bcm2711peripherals}. Lastly, we assign one Arm
-A72 \gls{cpu} (core 0).
+The PX4 \gls{vm} configuration incorporates only essential onboard
+sensors/actuators and an optional debug console. Memory allocation consists of
+two \gls{ram} regions: 144 MB and 3 GB. Within the first region, a 32 MB
+\gls{cma} region is reserved to support \gls{dma} transactions for \gls{spi}
+devices, which operate exclusively within the first GB of
+memory~\cite{bcm2711peripherals}. Processing resources include a single Arm A72
+\gls{cpu} (core 0).
 
-The Companion \gls{vm} includes the \gls{usb} interface, where a \gls{usb} camera and a
-\gls{usb} Wi-Fi dongle will be connected. Two \gls{ram} regions were
-defined of 624 MB and 2 GB, respectively. From the first memory region we
-reserve a \gls{cma} region of 384 MB, required by the video pipeline, which is only
-available in the first GB of memory~\cite{bcm2711peripherals}. Lastly, we assign three Arm
-A72 \glspl{cpu} (core 1--3).
+The Companion \gls{vm} configuration incorporates the \gls{usb} interface for
+connecting a \gls{usb} camera and Wi-Fi dongle. Memory allocation features two
+\gls{ram} regions: 624 MB and 2 GB. Within the first region, a 384 MB
+\gls{cma} region supports video pipeline operations, constrained to the first GB
+of memory~\cite{bcm2711peripherals}. Processing resources include three Arm A72
+\glspl{cpu} (cores 1--3).
 
 \subsection{Addons}
 \label{sec:addons}
 The Companion \gls{vm} requires two \gls{usb} devices: a camera and Wi-Fi
-dongle. Fig~\ref{fig:usb-cam} presents the selected \gls{usb} camera --- the
+dongle. Fig.~\ref{fig:usb-cam} presents the selected \gls{usb} camera -- the
 Creative Live! Cam Sync 1080p V2~\cite{creative-cam}.
 
 \begin{figure}[!hbt]
@@ -544,7 +555,7 @@ Fig.~\ref{fig:usb-wifi} presents the selected \gls{usb} Wi-Fi dongle --- the
 EDUP AX3000. This dual high-gain antena device has tri-band support --- 2.4 GHz, 5, and 6
 GHz --- and it can achieve data transfer rates
 of up to 3000 \gls{mbps} on the \gls{usb} 3.0 interface~\cite{ax3000-specs}. It contains a Mediatek
-\texttt{mt7921au} chipset with a wide \gls{os} compatibility, supported
+\lstinline{mt7921au} chipset with a wide \gls{os} compatibility, supported
 in-kernel since Linux kernel 5.18~\cite{ax3000-linux}.
 
 \begin{figure}[!hbt]
@@ -554,34 +565,13 @@ in-kernel since Linux kernel 5.18~\cite{ax3000-linux}.
   \label{fig:usb-wifi}
 \end{figure}
 
-\section{Summary}
-\label{sec:summary}
-The conventional flight stack relies on multi-platform support to address
-mixed-criticality, which undesirably increases the weight and footprint of the
-\gls{uav}. Thus, platform integration is a design goal, but is not achievable
-without appropriate supervision.
+% \section{Summary}
+% \label{sec:summary}
+% Conventional flight stacks address mixed-criticality through multi-platform designs, increasing UAV weight and footprint. Platform integration represents a key design objective, but requires appropriate supervision to be viable.
 
-In this chapter we presented three solutions tailored for a video surveillance
-application based on the PX4 flight stack: conventional (unsupervised multi-platform), unsupervised
-single-platform (\gls{uspfs}) and supervised single-platform (\gls{sspfs}). The conventional one formed the
-base for platform integration. Then, the flight controller and companion
-computer were merged to form the \gls{uspfs} using a Raspberry Pi 4 with a Pilot
-Pi shield. However, the \gls{uspfs}
-architecture does not provide isolation between systems, meaning a failure in
-the non-critical system can propagate to the \gls{fmu}. As such, we provided
-platform consolidation and systems' isolation through the supervision of the Bao
-hypervisor, constituting the \gls{sspfs} solution.
+% This chapter presented three solutions for PX4-based video surveillance applications: conventional (unsupervised multi-platform), unsupervised single-platform (\gls{uspfs}), and supervised single-platform (\gls{sspfs}). The conventional approach established the foundation for platform integration. Subsequent consolidation merged flight controller and companion computer functions into the \gls{uspfs} architecture using a Raspberry Pi 4 with Pilot Pi shield. However, the \gls{uspfs} provides no isolation between systems, allowing failures in non-critical components to propagate to the \gls{fmu}. Platform consolidation with system isolation was therefore achieved through Bao hypervisor supervision, forming the \gls{sspfs} solution.
 
-However, the Bao hypervisor requires a static partitioning of the hardware
-resources which can lead to collisions between \glspl{vm}. To address this we
-performed the \gls{uavic} hardware selection and mapping, yielding the device
-tree for each solution. Indeed, some collisions were detected, and they were
-handled by assigning \gls{usb} devices for the companion computer \gls{vm},
-namely the camera and the Wi-Fi dongle. Nonetheless, both \glspl{vm} shared one
-last device --- the firmware mailbox --- required for communication between the
-Arm \gls{cpu} and \gls{gpu}. Hence, we devised a mechanism for mailbox
-access supervision using Bao, enabling both \glspl{vm} to seamlessly communicate
-with the board's firmware.
+% Bao's static partitioning requirement creates potential hardware resource conflicts between \glspl{vm}. This challenge was addressed through \gls{uavic} hardware selection and mapping, producing solution-specific device trees. Identified conflicts were resolved by assigning \gls{usb} devices (camera and Wi-Fi dongle) to the companion computer \gls{vm}. One critical shared dependency remained—the firmware mailbox required for Arm \gls{cpu}-\gls{gpu} communication. A mailbox access supervision mechanism was consequently developed for Bao, enabling both \glspl{vm} to communicate securely with the board's firmware.
 
 
 %%% Local Variables:

@@ -118,7 +118,46 @@
 
 % Set up the listing counter to include the chapter number
 \counterwithin{listing}{chapter} % Reset listing counter with each chapter
-\renewcommand{\thelisting}{\thechapter.\arabic{listing}} % Format: chapter.listing
+\renewcommand{\thelisting}{\thechapter.\arabic{listing}} % Format:
+% chapter.listing
+
+% DOES NOT WORK    
+% \AtBeginDocument{
+%     \counterwithin{figure}{chapter} % Reset figure counter per chapter
+%     \renewcommand{\thefigure}{\thechapter.\arabic{figure}} % Format as "X.Y"
+%   }
+
+\AtEndPreamble{
+    % Set ALL code elements to magenta
+    \lstset{
+      basicstyle=\ttfamily\small\color{magenta}, % Default text
+        keywordstyle=\color{magenta},    % Keywords (e.g., "if", "for" in C)
+        commentstyle=\color{magenta},    % Comments
+        stringstyle=\color{magenta},     % Strings
+        identifierstyle=\color{magenta}, % Variables/functions
+        numberstyle=\color{magenta},     % Line numbers (if shown)
+        emphstyle=\color{magenta},       % Emphasized code
+        rulecolor=\color{magenta},       % Border color (for frames)
+        % Bash-specific fixes (for "=", "$", etc.)
+        literate=*                       % Treat all characters as normal text
+            {=}{{{\color{magenta}=}}}{1}
+            {\$}{{{\color{magenta}\$}}}{1}
+            {.}{{{\color{magenta}.}}}{1}
+    }
+    }
+
+% \AtEndPreamble{
+%     \IfFileExists{listings.sty}{\ClassInfo{novathesis}{listings is loaded}}{}
+%   }
+
+% DOES NOT WORK    
+% \AtEndPreamble{
+%     \makeatletter
+%     \show\lst@basicstyle % Check font
+%     \show\lst@keywordstyle % Check keyword color
+%     \show\lst@literate % Check symbol handling
+%     \makeatother
+% }
 
 % Define the longlisting environment
 \newenvironment{longlisting}{\captionsetup{type=listing}}{}
@@ -238,25 +277,25 @@ align=left, leftmargin=*} %,label=$\star$
 %\feetbelowfloat%
 % ==================
 
-% ================================ Algorithmic ===============================
-% algorithms and pseudocode
-\usepackage{algorithm}
-%\usepackage[noend]{algpseudocode}
-\usepackage[end]{algpseudocode}
-% src: https://tex.stackexchange.com/a/328067
-\algdef{SE}[VARIABLES]{Variables}{EndVariables}
-   {\algorithmicvariables}
-   {\algorithmicend\ \algorithmicvariables}
-   \algnewcommand{\algorithmicvariables}{\textbf{variables declaration}}
+% % ================================ Algorithmic ===============================
+% % algorithms and pseudocode
+% \usepackage{algorithm}
+% %\usepackage[noend]{algpseudocode}
+% \usepackage[end]{algpseudocode}
+% % src: https://tex.stackexchange.com/a/328067
+% \algdef{SE}[VARIABLES]{Variables}{EndVariables}
+%    {\algorithmicvariables}
+%    {\algorithmicend\ \algorithmicvariables}
+%    \algnewcommand{\algorithmicvariables}{\textbf{variables declaration}}
 
-   % src:
-\renewcommand{\algorithmicrequire}{\textbf{Input:}}
-\renewcommand{\algorithmicensure}{\textbf{Output:}}
+%    % src:
+% \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+% \renewcommand{\algorithmicensure}{\textbf{Output:}}
 
-% https://tex.stackexchange.com/a/33798 
-\algnewcommand{\algorithmicgoto}{\textbf{go to}}%
-\algnewcommand{\Goto}{\algorithmicgoto\xspace}%
-\algnewcommand{\Label}{\State\unskip}%
+% % https://tex.stackexchange.com/a/33798 
+% \algnewcommand{\algorithmicgoto}{\textbf{go to}}%
+% \algnewcommand{\Goto}{\algorithmicgoto\xspace}%
+% \algnewcommand{\Label}{\State\unskip}%
 % ============================================================================
 
 %\renewcommand{\cftpartleader}{\cftdotfill{\cftnodots}} % for parts

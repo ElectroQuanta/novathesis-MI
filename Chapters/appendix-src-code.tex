@@ -1,0 +1,141 @@
+\typeout{NT FILE appendix-src-code.tex}%
+
+\chapter{Source code listings}
+\label{app:src_code_listings}
+
+The following appendix presents the source code listings used in the
+implementation (Chapter~\ref{cha:implementation}) and evaluation
+(Chapter~\ref{cha:evaluation}) of the present work.
+
+\begin{longlisting}
+\centering
+\inputminted[]{bash}{./listing/buildPilotPi.sh}
+\caption{PX4 build script}
+\label{lst:build-pilotpi}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{bash}{./listing/gstreamerSender.sh}
+\caption{Video surveillance sender script}
+\label{lst:gstreamer-sender}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{bash}{./listing/gstreamerReceiver.sh}
+\caption{Video surveillance receiver script}
+\label{lst:gstreamer-receiver}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{makefile}{./listing/atf-patch.mk}
+\caption{USPFS: ATF patch}
+\label{lst:atf-patch}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{makefile}{./listing/uboot.mk}
+\caption{USPFS: U-Boot makefile}
+\label{lst:uboot-mk}
+\end{longlisting}
+
+%%  IMPLEM: SSPFS
+\begin{longlisting}
+\centering
+\inputminted[]{c}{./listing/rpi4_desc.c}
+\caption{SSPFS: Bao's Raspberry Pi 4 platform description patch}
+\label{lst:rpi4-desc}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{c}{./listing/platform.h}
+\caption{SSPFS: Bao's Raspberry Pi 4 platform header patch}
+\label{lst:rpi4-plat-header}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{c}{./listing/rpi_firmware.c}
+\caption{SSPFS: Mailbox manager added to Bao}
+\label{lst:bao-mailbox-manager}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{c}{./listing/init.c}
+\caption{SSPFS: Bao initialization -- Raspberry Pi platform initialization}
+\label{lst:bao-init}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{c}{./listing/hypercall.c}
+\caption{SSPFS: Bao hypercall manager -- Raspberry Pi firmware mailbox handling}
+\label{lst:bao-hypercall}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{c}{./listing/linux-rpi-fw.c}
+\caption{SSPFS: Linux's Raspberry Pi mailbox driver -- patch}
+\label{lst:linux-rpi-fw}
+\end{longlisting}
+
+%-----  EVAL
+
+\begin{longlisting}
+\centering
+\inputminted[]{c}{./listing/kmod_panic.c}
+\caption{Functional tests: implementation of the Panic kernel module}
+\label{lst:kmod-panic}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{c}{./listing/kmod_memcorrupt.c}
+\caption{Functional tests: implementation of the Memory Corruption kernel module}
+\label{lst:kmod-memcorrupt}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{c}{./listing/kmod_memhog.c}
+\caption{Functional tests: implementation of the Memory Exhaustion kernel module}
+\label{lst:kmod-memhog}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{c}{./listing/kmod_initkiller.c}
+\caption{Functional tests: implementation of the Kill Init Process kernel module}
+\label{lst:kmod-initkiller}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+% \inputminted[firstline=1, lastline=59]{c}{./listing/user_memhog.c}
+\inputminted[]{c}{./listing/user_memhog.c}
+\caption{Functional tests: implementation of the resource exhaustion
+  application}
+\label{lst:user-memhog}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{bash}{./listing/perfPX4.sh}
+\caption{PX4 benchmarking using perf}
+\label{lst:perf-px4}
+\end{longlisting}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../template"
+%%% reftex-default-bibliography: ("../Bibliography/mieeic.bib")
+%%% ispell-local-dictionary: "american"
+%%% End:
+

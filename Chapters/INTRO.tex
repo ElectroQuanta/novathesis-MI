@@ -31,9 +31,11 @@
 \chapter{Introduction}%
 \label{cha:introduction}
 
-
 % \begin{ntquote}[14cm][Galileo][Somewhere in a book or speach][Astronomer, physicist and engineer][en]
 %  You cannot teach a man anything; you can only help him discover it in himself.%
+% \end{ntquote}
+% \begin{ntquote}[20cm][Alan Kay][Computer scientist]
+% The best way to predict the future is to invent it.%
 % \end{ntquote}
 % Syntax - all arguments are optional and can be omitted from the last to the first
 % \begin{ntquote}
@@ -48,8 +50,8 @@
 %
 \begin{quote}
 \begin{flushright}
-    "Imagination is more important than knowledge." \\
-    \emph{Albert Einstein}
+``\emph{The best way to predict the future is to invent it.}'' \\
+\textbf{-- Alan Kay}, computer scientist
 \end{flushright}
 \end{quote}
   
@@ -57,7 +59,7 @@
 %     Imagination is more important than knowledge.
 % \end{alignedquote}
 
-\glsxtrfull{uav}s, \glsxtrfull{uas}s, or more commonly drones, are a class of
+\glsxtrfullpl{uav}, \glsxtrfullpl{uas}, or more commonly drones, are a class of
 unmanned robotic vehicles that can execute flying missions and carry payloads,
 guided either by remote control stations or in an autonomous
 way~\cite{alladi2022UAVBlockain,glossner2021overview}.
@@ -68,7 +70,7 @@ staggering 6.7 billion USD dollars, with strong contributions from the sectors
 of agriculture and farming, and security and law
 enforcement~\cite{mohsan2022towards}.
 
-The versatility and utility of \glspl{uav} are well displayed is by its wide
+The versatility and utility of \glspl{uav} is evident in its wide
 range of applications, performing tasks with high added value and that would be
 somewhat hard or impossible for a person to achieve: rescue operations and
 saving lifes, agriculture and farming, building structures, pipeline
@@ -86,42 +88,48 @@ it is critical to ensure the security of an \gls{uav} system.
 
 Furthermore, \gls{uav}'s applications have real-time constraints but with mixed
 criticality levels, i.e., the risk of failure is more severe in some case than others.
-For example, lets consider an automotive infotainment system that displays
-navigation and rear-view camera information. The navigation information is a
-commodity for the user, and if, for example, the radio volume suddenly
-increases, although uncomfortable, it poses no safety risk for the user. On the
-other hand, the rear-view camera information assists the user in parking
-maneuvers, and, if a failure occurs, the vehicle may collide causing damage or
-harming people.
+For example, flight control (safety-critical) and video streaming (non-critical)
+coexist. A compromise in video software could cascade to flight systems, causing
+catastrophic failure—yet strict hardware separation increases weight and reduces
+flight time.
 
-This is an example of a \gls{mcs}, i.e., a system comprised of computer
-\gls{hw} and \gls{sw} that executes several tasks/applications of different
-criticality (safety) levels. Furthermore, as this example illustrates, an increasingly relevant trend in the design of real-time and embedded systems
-is the integration of mixed-criticality components onto a common hardware
-platform while trying to meet the stringent \gls{swap-c} and safety requirements
-provided by safety-critical standards, such as those for automotive~\cite{iso26262}, avionics~\cite{rtca1992software},
+This exemplifies a \gls{mcs}: systems executing tasks of differing criticality (safety) levels on shared hardware.
+However, the integration of mixed-criticality components onto a common hardware
+platform is not an easy task: the designer needs to meet the stringent
+\gls{swap-c} metrics and safety requirements
+provided by safety-critical standards, such as those for automotive~\cite{iso26262}, avionics~\cite{johnson1998sw},
 and railway~\cite{cenelec201250128} industries.
+While \gls{mcs} challenges are well-studied in automotive/avionics, UAVs face unique
+constraints: extreme SWaP-C limitations and the need for fail-operational safety
+in uncontrolled environments. Current solutions either compromise isolation
+(single-board) or add weight/energy overhead (multi-board).
 
 As a result of this integration
 complexity increases, requiring higher computational power, and thus, these
-\gls{hw} platforms are migrating from single cores to multi-cores and in the
-future many-core architectures~\cite{burns2022mixed}. This leads to the
-fundamental question of how to reconcile the
-conflicting requirements of \emph{partitioning} for (safety) assurance and \emph{sharing} for
-efficient resource usage. Consequently, problems arise in the modelling, design,
-implementation, and verification of the required \gls{hw} and
-\gls{sw}~\cite{burns2022mixed}.
+hardware platforms are migrating from single cores to multi-cores and in the
+future many-core architectures~\cite{burns2022mixed}.
+This leads to the core challenge: reconciling \emph{partitioning} for safety
+assurance with \emph{sharing} for efficiency.
+Consequently, problems arise in the modelling, design, implementation, and
+verification of the required hardware and software~\cite{burns2022mixed}.
+Prior research diverges into theoretical (scheduling-focused) and practical (partitioning-focused) approaches, but their incompatibility leaves \gls{uav} consolidation unresolved~\cite{burns2022mixed}. 
 
-Two major areas of research stem from this dichotomy: a more theorethical one,
-largely focused on using criticality-specific \glspl{wcet} to schedule systems
-at each criticality level, but at the expenses of high processor utilization; a
-more practical one, focused on the safe partitioning of a system with the
-sharing of computational and communication resources, but with increased
-complexity.
-Unfortunately, the combination of both areas is not easy: flexible scheduling
-requires, at least, dynamic partitioning, whereas certified systems require
-complete separation or, at least, static partitioning. This mismatch needs to be
-addressed in future work~\cite{burns2022mixed}.
+% Two major areas of research stem from this dichotomy: a more theorethical one,
+% largely focused on using criticality-specific \glspl{wcet} to schedule systems
+% at each criticality level, but at the expenses of high processor utilization; a
+% more practical one, focused on the safe partitioning of a system with the
+% sharing of computational and communication resources, but with increased
+% complexity.
+% Unfortunately, the combination of both areas is not easy: flexible scheduling
+% requires, at least, dynamic partitioning, whereas certified systems require
+% complete separation or, at least, static partitioning. This mismatch needs to be
+% addressed in future work~\cite{burns2022mixed}.
+
+This thesis bridges this gap by proposing the \gls{sspfs}: a Bao
+hypervisor-based architecture consolidating mixed-criticality functions on a
+single UAV platform. This solutions demonstrated robust isolation (malicious non-critical
+crashes don't impact flight control), minimal overhead (<2\% in PX4 tasks's
+scheduling and camera's frame rate), and real-flight validation -- enabling secure, lightweight UAVs without safety compromises while meeting stringent \gls{swap-c} constraints.
 
 %\section{Motivation}
 %Mixed-criticality systems such as \gls{uav} applications have stringent
@@ -139,67 +147,90 @@ and contributing for the widespread adoption of secure and safe features.
 To this end several main objectives have been outlined:
 \begin{enumerate}
 \item Identify the \gls{uav} application requirements and select the target
-  \gls{hw} platform with several security primitives
+  \gls{hw} platform with several security primitives essential for
+  hypervisor-based isolation
   (e.g, virtual memory, memory protection, TrustZone, criptographic
   accelerators, etc.).
-\item Design an open-source \gls{sw} software stack using as reference a
-  \gls{sph}, namely Bao.
+\item Design an open-source software stack for \gls{uav} applications leveraging
+  the Bao hypervisor.
 \item Provide support for autonomous mode (autopilot).
-\item Implement the device drivers for UAV's control.
-\item Perform the remote update of the system, through an \gls{ota} mechanism.
-\item Assess and demonstrate the security advantages of the UAV's prototype over
-  others open-source competitors.
-%\item Utilize a platform with several \gls{hw} primitives focused on security
-%  (e.g, virtual memory, memory protection, TrustZone, criptographic
-%  accelerators, etc.).
+\item Quantify performance overhead across benchmark scenarios
+\item Demonstrate provable security advantages over alternatives
+\item Validate the devised solution in real-flight conditions meeting
+    SWaP-C constraints
+  
 \end{enumerate}
 
-\section{Document structure}
-This thesis is organised as follows:
-In Chapter~\ref{ch:state-art}, some background is provided concerning mixed criticality
-systems, its relevance and the challenges it poses, alongside with the current
-approach to address its complexity.
-Next, \glspl{uav} are discussed,
-namely the reference hardware and software, both as open-source and commercial
-solutions. Lastly, the related work is
-presented, showing the current research directions and topics.%
-%% the additive
-%% manufacturing technology, \gls{lpbf}, and \gls{mmam} is presented, with special
-%% focus on the last, namely on \gls{fgm} structures. Lastly, a brief overview of
-%% the available methodologies in these fields are presented.
+\section{Document Structure}
+\label{sec:doc-structure}
+This thesis is organized into six chapters that systematically address the
+design, implementation, and validation of a trustworthy \gls{uav} software
+stack:
 
-%% Chapter~\ref{ch:theor-found} lays out the theoretical foundations for this work,
-%% namely the project development methodologies and associated tools,
-%% markup languages, and database management systems.
-%% %the \gls{lpbf} process in detail.
-%% %This chapter can be skipped without 
-%% 
-%% Chapter~\ref{ch:prob-challenge} presents the multi-material design and production
-%% problem and its challenges using the \gls{lpbf} technology. The methodology
-%% devised for multi-material production via \gls{lpbf} technology is presented to tackle the high complexity of the process
-%% and the lack of a supporting methodology, taking into account the key agents of
-%% the process and leveraging the process information.
-%% 
-%% Chapter~\ref{ch:development} shows all the development phase of the
-%% project. A specific workflow was instantiated from
-%% the methodology, attending to the specific requirements and constraints of the
-%% project. Based on this workflow, a toolchain was assembled, designing the
-%% required software components. Finally, based on the requirements and constraints
-%% of the process itself, the mechanical and electronic infrastructures were
-%% designed, and on top of the last, the control software was designed.
-%% 
-%% In Chapter~\ref{ch:application}, the workflow, and the equipment were put to the test
-%% to verify their suitability to the process and their performance for
-%% multi-material component production. Additionally, production manufacturing
-%% tests were also performed. Tests were used to validate the workflow and
-%% equipment, pointing out also straightforward ways to adapt and implement custom
-%% paths for the multi-material \gls{lpbf} process.
-%% 
-%% The Chapter~\ref{ch:conclusion} gives a summary of this thesis as well as
-%% prospect for future work.
-%% 
-%% Lastly, the appendices contain detailed information about the toolchain, wiring schematics, use cases, EzCAD \gls{api}, and sequence
-%% diagrams, and the annexes contain the paper submitted, stemming out of this work.
+\begin{itemize}
+\item
+  Chapter \ref{ch:state-art} -- \textbf{Background and Related Work}:
+Presents foundational concepts of mixed-criticality systems and virtualization,
+with a special focus in the hypervisor technology, more specifically the Bao
+hypervisor. Current
+\gls{uav} hardware/software solutions are analyzed in depth in both the
+open-source and commercial sphere. The critical gaps in security,
+safety, and hardware efficiency are identified through comparative assessment of
+open-source and commercial platforms. Lastly, the related work is presented, showing the current research directions and topics.
+
+\item 
+Chapter \ref{ch:design} -- \textbf{Design}:
+Proposes the \glsxtrfull{sspfs} architecture leveraging the Bao hypervisor to
+consolidate flight control and companion functions on a single hardware
+platform. Contrasts this with unsupervised multi-platform (\gls{umpfs}) and
+single-platform (\gls{uspfs}) approaches, analyzing trade-offs in weight
+reduction, isolation guarantees, and security risks. The system architecture was
+tailored for a video surveillance application based on the PX4 flight stack. Due
+to the static partitioning nature of the Bao hypervisor, the hardware needed to
+be selected and mapped across guests. However, as some collisions occurred, a
+mechanism for mailbox access supervision in the Bao hypervisor was devised. This
+mechanism enables both \glspl{vm} to seamlessly communicate with the
+\gls{uavic}'s firmware.
+
+\item 
+Chapter \ref{cha:implementation} -- \textbf{Implementation}:
+Details the realization of both \gls{uspfs} (unsupervised) and \gls{sspfs}
+(supervised) solutions on the \gls{uavic} platform (Raspberry Pi 4 +
+PilotPi). Covers hardware validation, PX4/video surveillance stack integration,
+and Bao hypervisor deployment with VM separation. Includes the custom mailbox
+supervision mechanism for shared device access.
+
+\item 
+Chapter \ref{cha:evaluation} --  \textbf{Evaluation}:
+Conducts comprehensive functional tests, performance benchmarking (using MiBench
+\gls{aics}), and real-flight validation. The behavior of the \gls{uspfs} and
+\gls{sspfs} systems is analyzed when the system is compromised, assessing the
+isolation effectiveness under malicious attacks.
+The baseline performance of the \gls{uspfs} system is
+established and the performance degradation of the \gls{sspfs} system as a
+consequence of the introduction of the Bao's hypervisor is assessed using the
+MiBench \glsxtrfull{aics}.
+Furthermore, the impact of the interference between guests is analyzed, as well
+as the impact of the mailbox driver patch. The guests are also benchmarked in
+single- and dual-\gls{vm} configuration, considering guest-specific metrics, as
+the PX4 tasks' scheduling overhead and the camera frame rate.
+Lastly, both systems are evaluated in a real flight scenario, using an automated
+mission to compare the position tracking and system resource usage across
+systems. The functional tests are also repeated, but now in real flight.
+    
+\item 
+Chapter \ref{cha:concl} -- \textbf{Conclusions and Future Work}:
+Synthesizes findings on the \gls{sspfs}'s ability to consolidate the \gls{uav}'s
+mixed-criticality stacks into a single hardware platform, while providing robust isolation and minimal overhead. Discusses prospects
+for future work, including the support for different \gls{uavic} platforms,
+advanced shared resource management, and more extensive and detailed testing,
+especially in long-duration flights and attack scenarios.
+
+\item
+\textbf{Appendices}: Contain supplementary material including: \gls{uav}'s taxonomy, source code
+listings, configuration details, and log files.
+\end{itemize}
+
 
 %%% Local Variables:
 %%% mode: latex

@@ -8,44 +8,31 @@
 
 \typeout{NT FILE abstract-pt.tex}%
 
-Independentemente da língua em que a dissertação está escrita, geralmente esta contém pelo menos dois resumos: um resumo na mesma língua do texto principal e outro resumo numa outra língua.
-
-A ordem dos resumos varia de acordo com a escola. Se a sua escola tiver regulamentos específicos sobre a ordem dos resumos, o template (\LaTeX) \gls{novathesis} irá respeitá-los. Caso contrário, a regra padrão no template \gls{novathesis} é ter em primeiro lugar o resumo \emph{no mesmo idioma do texto principal} e depois o resumo \emph{no outro idioma}. Por exemplo, se a dissertação for escrita em português, a ordem dos resumos será primeiro o português e depois o inglês, seguido do texto principal em português. Se a dissertação for escrita em inglês, a ordem dos resumos será primeiro em inglês e depois em português, seguida do texto principal em inglês.
+O crescente mercado de \glspl{uav} apresenta desafios significativos em termos de segurança operacional e contra ameaças, frequentemente negligenciados nos projetos atuais de sistemas. As aplicações de \glspl{uav} possuem inerentemente restrições de tempo real com níveis mistos de criticidade, significando que o risco de falha varia em severidade. Por exemplo, uma falha na vigilância por vídeo, função não crítica, poderia propagar-se para o controlador de voo crítico, levando a consequências catastróficas como uma queda e danos a pessoas ou bens. As pilhas de voo tradicionais multiplataforma para \glspl{uav}, embora abordem a criticidade mista ao separar funções em diferentes nós de hardware, aumentam indesejavelmente o peso e a dimensão do \gls{uav} e frequentemente carecem de garantias de isolamento. Adicionalmente, as soluções open-source existentes geralmente não atendem plenamente aos requisitos de criticidade mista e segurança, enquanto as alternativas comerciais frequentemente carecem de transparência.
 %
-No entanto, esse pedido pode ser personalizado adicionando um dos seguintes ao arquivo \verb+5_packages.tex+.
-
-\begin{verbatim}
-    \abstractorder(<MAIN_LANG>):={<LANG_1>,...,<LANG_N>}
-\end{verbatim}
-
-Por exemplo, para um documento escrito em Alemão com resumos em Alemão, Inglês e Italiano (por esta ordem), pode usar-se:
-\begin{verbatim}
-    \ntsetup{abstractorder={de={de,en,it}}}
-\end{verbatim}
-
-Relativamente ao seu conteúdo, os resumos não devem ultrapassar uma página e frequentemente tentam responder às seguintes questões (é imprescindível a adaptação às práticas habituais da sua área científica):
-
-\begin{enumerate}
-  \item Qual é o problema?
-  \item Porque é que é um problema interessante/desafiante?
-  \item Qual é a proposta de abordagem/solução?
-  \item Quais são as consequências/resultados da solução proposta?
-\end{enumerate}
-
-% E agora vamos fazer um teste com uma quebra de linha no hífen a ver se a \LaTeX\ duplica o hífen na linha seguinte se usarmos \verb+"-+… em vez de \verb+-+.
+Para enfrentar estas questões críticas, este trabalho propõe o \glsxtrfull{sspfs}, uma abordagem inovadora que integra as funções do controlador de voo e do computador companheiro numa única plataforma Raspberry Pi 4 + PilotPi shield sob o hipervisor Bao. Esta consolidação é alcançada mediante o hipervisor Bao, um hipervisor bare-metal leve, orientado para segurança operacional e contra ameaças, projetado para sistemas embebidos de tempo real e de criticidade mista. O Bao foi estendido com um supervisor de mailbox personalizado para mediar transações de firmware através de um barramento partilhado.
+O piloto automático PX4 foi selecionado devido à sua natureza open-source, amplo suporte a plataformas, arquitetura modular e ampla adoção na indústria. Uma contraparte \gls{uspfs} também foi desenvolvida para quantificar os benefícios da camada de supervisão.
 %
-% zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz comentar"-lhe zzz zzzz zzz zzzz
-%
-% Sim!  Funciona! :)
+Resultados experimentais demonstram que o \gls{sspfs} fornece forte isolamento:
+falhas injetadas na \gls{vm} não crítica (Companion) levam à sua falha, enquanto
+a \gls{vm} crítica (PX4) mantém funcionalidade total, mantendo o \gls{uav} no
+ar. Benchmarking com o MiBench mostra uma pequena degradação de desempenho, e o
+particionamento melhorado da cache reduz interferências. A sobrecarga de
+escalonamento em worst-case para tarefas do PX4 foi muito baixa (2\%). A taxa de
+captura da câmara na Companion VM também não apresentou sobrecarga estatisticamente significativa (worst-case de 2\%). Em alguns casos, o \gls{sspfs} até superou o sistema \gls{uspfs}, atribuído ao particionamento estático de recursos. Testes de voo real confirmam acompanhamento preciso de posição e uma modesta sobrecarga de CPU (≈6\% média), validando que o \gls{sspfs} atende aos requisitos de tempo real sem sacrificar segurança. Este estudo estabelece um caminho viável para sistemas consolidados de criticidade mista para \glspl{uav} confiáveis, com impacto mínimo no desempenho.
 
 % Palavras-chave do resumo em Português
 % \begin{keywords}
 % Palavra-chave 1, Palavra-chave 2, Palavra-chave 3, Palavra-chave 4
 % \end{keywords}
 \keywords{
-  Primeira palavra-chave \and
-  Outra palavra-chave \and
-  Mais uma palavra-chave \and
-  A última palavra-chave
+  UAV \and
+  Sistemas de Criticidade mista \and
+  Hipervisor \and
+  Bao \and
+  Segurança \and
+  PX4
 }
+
+%Keywords: UAV, Mixed-Criticality Systems, Hypervisor, Bao, Security, PX4.
 % to add an extra black line

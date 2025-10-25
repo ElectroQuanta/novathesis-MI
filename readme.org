@@ -35,14 +35,19 @@
     - [[#implementation][Implementation]]
     - [[#evaluation][Evaluation]]
   - [[#intro-14][Intro]]
+    - [[#motivation][Motivation]]
   - [[#state-of-the-art-16][State of the Art]]
     - [[#uav-intro][UAV Intro]]
     - [[#security-concerns][Security concerns]]
+    - [[#security-and-privacy-survey][Security and privacy survey]]
     - [[#diagrams-uav][Diagrams UAV]]
     - [[#autopilot][Autopilot]]
     - [[#px4][PX4]]
+    - [[#auterion][Auterion]]
+    - [[#related-work][Related work]]
   - [[#-done-design][✔ DONE Design]]
-  - [[#implementation-1][Implementation]]
+  - [[#-done-implementation][✔ DONE Implementation]]
+  - [[#literature-review-systematic][Literature review systematic]]
 
 * Preamble
 ** Git Workflow
@@ -634,6 +639,24 @@ This uses the same note\fnref{foot:cc-lic};
 - [ ] Motivation
 - [X] Goals
 - [ ] Document structure
+*** Motivation
+The estimated value of the commercial UAVs’ market was $20.8
+billion in 2021 and it is expected to increase to $ 501.4 billion by the
+end of 2026 (Anon, 2021). UAVs are becoming more popular due to
+their application in a variety of fields and their use will further increase
+in future. This has also posed serious privacy and security threats to
+UAVs also there exist many vulnerabilities in UAVs. In last few decades,
+many research surveys have been conducted about security and privacy
+concerns of UAVs but none of these has thoroughly expressed security
+and privacy issues related to UAVs. Most of the existing surveys have
+just discussed common security risks and concerns related to UAVs.
+Hence, there is a need to conduct a survey that provides high cover-
+age of this issue. Thus, we are motivated to thoroughly explore the
+vulnerabilities and threats present in UAVs, as well as related security
+and privacy concerns. Moreover, we are determined to discuss solution
+architecture (like blockchain, IDS, MLIDS) to mitigate these threats and
+vulnerabilities. ([[file:~/OneDrive_UM/Documents/Univ/MI_Electro/Tese/Papers/Security/Comprehensive-Survey-Securyity-Privacy-emerging-defence-technologies-UAV-2023.pdf][src]])
+
 ** State of the Art [1/6]
 1) [X] Mixed criticality
    - [X] Virtualizacao como tecnologia
@@ -750,18 +773,16 @@ on UAVs. ([[file:~/Documents/Univ/MI_Electro/Tese/Papers/UAVs-ComprehensiveRevie
   - Can be mitigated through onboard SW and HW mechanisms, such as, RT
     monitoring, instantaneous estimation of the controller, alert warning and
     immediate action on any alteration from the intended controller model.
-
-
-
+*** Security and privacy survey
 *** Diagrams UAV
-1) uav.pu: Concept, History, Market, Applications, Characteristics, Regulations,
+1) [[file:~/OneDrive_UM/Documents/Univ/MI_Electro/Tese/diags/pu/mindmap/uav.pu][uav.pu]]: Concept, History, Market, Applications, Characteristics, Regulations,
    Classifications
-2) uav2.pu: UAV System Overview - Tasks, Components, Functional Hierarchy, Sys
+2) [[file:~/OneDrive_UM/Documents/Univ/MI_Electro/Tese/diags/pu/mindmap/uav2.pu][uav2.pu]]: UAV System Overview - Tasks, Components, Functional Hierarchy, Sys
    Arch, HW, SW, Network Comm
-3) uav2-1.pu: UAV Sys Overview - Tasks, Components
-4) uav2-2.pu: UAV Sys Overview - Functional Hierarchy
-5) uav2-3.pu: UAV Sys Overview - FCS Arch, HW, SW, Network Comm
-6) uav3.pu: UAV Security and Safety
+3) [[file:~/OneDrive_UM/Documents/Univ/MI_Electro/Tese/diags/pu/mindmap/uav2-1.pu][uav2-1.pu]]: UAV Sys Overview - Tasks, Components
+4) [[file:~/OneDrive_UM/Documents/Univ/MI_Electro/Tese/diags/pu/mindmap/uav2-2.pu][uav2-2.pu]]: UAV Sys Overview - Functional Hierarchy
+5) [[file:~/OneDrive_UM/Documents/Univ/MI_Electro/Tese/diags/pu/mindmap/uav2-3.pu][uav2-3.pu]]: UAV Sys Overview - FCS Arch, HW, SW, Network Comm
+6) [[file:~/OneDrive_UM/Documents/Univ/MI_Electro/Tese/diags/pu/mindmap/uav3.pu][uav3.pu]]: UAV Security and Safety
 
 *** Autopilot
 *Autopilot shortcomings*:
@@ -770,7 +791,7 @@ on UAVs. ([[file:~/Documents/Univ/MI_Electro/Tese/Papers/UAVs-ComprehensiveRevie
   - landing accuracy (can be improved through CV techniques, but needs resources
     and protocols that are not available for commercial drones)
   - limited mission time and distance
-
+    
 *** PX4
 The flight controller runs the normal PX4 flight stack, while a companion computer provides advanced features like object avoidance and collision prevention. The two systems are connected using a fast serial or IP link, and typically communicate using the MAVLink protocol (opens new window). Communications with the ground stations and the cloud are usually routed via the companion computer (e.g. using the MAVLink Router
 
@@ -778,6 +799,212 @@ The flight controller runs the normal PX4 flight stack, while a companion comput
 
 PX4 systems typically run a Linux OS on the companion computer (because the PX4/PX4-Avoidance
 (opens new window) project delivers ROS-based avoidance libraries designed for Linux). Linux is a much better platform for "general" software development than NuttX; there are many more Linux developers and a lot of useful software has already been written (e.g. for computer vision, communications, cloud integrations, hardware drivers). Companion computers sometimes run Android for the same reason.
+
+*** Auterion
+
+**** Auterion OS & Arch
+An AuterionOS app is a collection of docker containers, in general spawned by
+docker compose. The docker compose file is automatically created from the
+auterion-app.yml during installation of the app on the Skynode.
+
+https://docs.auterion.com/app-development/app-framework/compose-override
+
+Linux kernel: 5.10 
+- Upgraded Linux kernel from 4.14 to 5.10
+- [[https://docs.auterion.com/release-notes/auterionos/aos-for-skynode/aos-3.2/aos-3.2.9#what-improved.1][src]]
+
+[[https://docs.px4.io/main/en/companion_computer/auterion_skynode.html][src]]
+#+begin_quote
+The onboard software is Auterion OS, consisting of an enterprise-hardened version of PX4 running on the flight controller, and an operating system with advanced management software running on the mission computer. The OS is managed by Auterion in production, with customer applications running as "add ons" in a safe sandbox within the mission computer.
+
+Auterion OS and Skynode allow seamless integration with Auterion's other software and fleet management products.
+#+end_quote
+
+[[https://auterion.com/product/skynode-x/][src]]
+#+begin_quote
+Skynode X combines a flight controller, a mission computer and LTE connectivity
+all in one product. It provides seamless integration among components in one
+single module, that can easily fit into your hardware product, allowing faster
+go-to-market.
+
+Its compact form factor enhances ease of integration and optimises size, weight
+and power without compromising on capability. The latest FMU generation, FMUv6x,
+ensures access to the most mature technology in terms of performance,
+reliability and precision.
+
+#+end_quote
+
+[[https://docs.auterion.com/app-development/app-framework/structuring-applications-with-multiple-services][src]]
+#+begin_quote
+Structuring Applications with Multiple Services
+Best practices guide on how to structure larger applications consisting of multiple services efficiently and optimize storage requirements
+
+Below are a few tips on how to efficiently structure applications consisting of multiple containers, which are described in more detail down below:
+
+Package your services that are docker images into a single application. This ensures that the user only needs to handle a single .auterionos file.
+
+Write a common base Dockerfile for a shared environment used by your services. This ensures that the resulting .auterionos file, as well as the storage space requirements after installation are as low as possible.
+#+end_quote
+
+SkynodeX datasheet
+#+begin_quote
+Skynode has been carefully engineered to de-conflict the objective of adding state-of-the-art
+high-speed interfaces including ethernet, USB and MIPI-CSI while keeping the EMI impact to a minimum.
++These design considerations include avoiding USB 3.0 frequencies+ (which overlap
+with GPS frequencies) *by using USB 2.0*.
+
+Note that emissions from high speed signals like USB or Ethernet interfere with the GPS. It is
+therefore recommended to route high speed cables as far as possible from the GPS and the GPS
+wire
+#+end_quote
+
+
+
+
+
+**** Auterion HW
+
+*** Related work
+As aforementioned, the UAV attack surface is vast and complex. Furthermore,
+a completely secure system is utopical: cyber security is a multi-layered beast;
+each extra layer of security makes the system harder to penetrate, but not impossible.
+
+Thus, in the present work, the focus resides in the improvement of the security
+of the flight control software stack, mitigating some of the potentials threats
+caused by unsupervised software.
+
+
+
+
+**** ChatGPT remarks
+Below is an example of a "Related Work" section structured with logical flow and academic phrasing, tailored to your thesis topic. The example demonstrates how to synthesize existing research, identify gaps, and position your contribution:
+
+---
+
+### **Related Work**  
+The security of UAV flight control systems and the role of virtualization in embedded systems have been explored in prior research. This section synthesizes key advancements, limitations, and opportunities in the field.  
+
+#### **1. UAV Security Vulnerabilities**  
+UAVs are increasingly targeted due to their reliance on complex, interconnected software stacks. Studies by Smith et al. (2020) identified common attack vectors, including GPS spoofing, insecure communication channels, and sensor tampering. For instance, Park et al. (2019) demonstrated how unsecured MAVLink protocols in open-source flight controllers like PX4 could enable command injection attacks. Similarly, Chen and Patel (2021) highlighted the risks of privilege escalation in monolithic flight stacks, where a single compromised component (e.g., a sensor driver) can jeopardize the entire system. These works underscore the need for hardware-enforced isolation to mitigate systemic risks.  
+
+#### **2. Traditional Security Approaches and Limitations**  
+Existing solutions often focus on cryptographic or reactive measures. For example, Kumar et al. (2018) proposed lightweight encryption for UAV-ground station communications, while Zhang et al. (2020) designed an intrusion detection system (IDS) for PX4-based drones. However, such methods primarily address external threats and do not prevent lateral movement once a component is breached. As noted by Alves et al. (2022), cryptographic techniques also introduce latency incompatible with real-time UAV operations. Furthermore, secure boot mechanisms (e.g., Santos et al., 2021) protect firmware integrity but fail to isolate runtime faults between software modules.  
+
+#### **3. Hypervisors in Safety-Critical Systems**  
+Static partitioning hypervisors (SPHs) have gained traction in domains requiring predictable resource allocation. The ARINC 653 standard for avionics, as analyzed by Johnson and Lee (2019), employs spatial partitioning to isolate avionics applications, ensuring fault containment. Similarly, automotive systems leverage SPHs like Jailhouse (Möller et al., 2020) to separate infotainment and braking subsystems under ISO 26262. These implementations demonstrate SPHs’ ability to enforce strict hardware access control while maintaining real-time performance. However, prior work has not explored SPHs in UAV contexts, where dynamic environments demand lightweight, low-latency solutions.  
+
+#### **4. Open-Source UAV Software: Trust and Challenges**  
+Open-source flight stacks like PX4 and ArduPilot are widely adopted for their transparency and community-driven development. Yet, studies reveal persistent security gaps. A 2022 audit by the DroneSec Initiative found that 34% of PX4’s codebase lacked formal verification, leaving critical modules (e.g., attitude estimation) vulnerable to memory corruption (DroneSec, 2022). While projects like Dronecode have introduced permission-based access controls (Vargas et al., 2021), these remain software-based and rely on developers’ adherence to best practices. This exposes a critical gap: open-source UAV stacks lack hardware-backed isolation to enforce trust boundaries.  
+
+#### **5. Virtualization in UAVs: Early Efforts**  
+Recent work has begun integrating hypervisors into UAVs, though with mixed results. For example, Gupta et al. (2021) ported the Xen hypervisor to a Raspberry Pi-based quadcopter, isolating flight control from payload processing. While their framework reduced attack surfaces, Xen’s dynamic scheduling introduced jitter (up to 15 ms), violating real-time constraints. In contrast, SPHs like PikeOS (Schmerl et al., 2020) achieved deterministic timing in industrial drones but required proprietary licenses, conflicting with open-source UAV ecosystems. These efforts highlight the unmet need for an open-source SPH tailored to UAVs’ unique performance and transparency requirements.  
+
+#### **6. Synthesis and Research Gap**  
+Prior research establishes three key insights:  
+1. Current UAV security measures inadequately address hardware-level isolation.  
+2. SPHs excel in safety-critical systems but remain untested in open-source UAV stacks.  
+3. Proprietary hypervisors conflict with the transparency ethos of platforms like PX4.  
+
+To date, no work has bridged SPHs with open-source UAV software to create a *trustworthy*, community-auditable stack. This thesis addresses this gap by proposing an SPH-based architecture that enforces hardware partitioning while retaining compatibility with open-source flight controllers like PX4.  
+
+---
+
+### **Key Features of This Example**  
+1. **Logical Flow**: Moves from problem (UAV vulnerabilities) → existing solutions → hypervisor advancements → open-source gaps → prior attempts → synthesis/gap.  
+2. **Critical Analysis**: Highlights limitations (e.g., "Xen’s dynamic scheduling introduced jitter") rather than merely listing papers.  
+3. **Positioning**: Concludes with a clear link between the gap and the thesis’s contribution.  
+4. **Phrasing**:  
+   - Connective phrases: *"However, such methods..."*, *"Similarly..."*, *"In contrast..."*.  
+   - Gap identification: *"To date, no work has bridged..."*.  
+   - Authority: Cites specific studies, frameworks, and metrics (e.g., "34% of PX4’s codebase").  
+
+### **Tips for Adaptation**  
+- Replace hypothetical references (e.g., "Smith et al. 2020") with actual papers from your review.  
+- Use metrics (e.g., latency figures, audit results) to strengthen claims.  
+- Emphasize open-source SPH solutions (e.g., Jailhouse) if relevant to your implementation.  
+
+This structure ensures your "Related Work" section not only surveys prior research but also builds a compelling case for your thesis’s novelty.
+
+**** Deepseek update
+Here’s a revised version of your "Related Work" section, tailored to emphasize the vast UAV attack surface, the limitations of virtualization as a *partial* mitigation, and your focus on hardening the flight control stack through hypervisor-based isolation:
+
+---
+
+### **Related Work**  
+The expanding use of UAVs has exposed critical security gaps in their software ecosystems. While UAVs face a broad attack surface—spanning flight control systems (FCS), ground control stations (GCS), communication channels, and cloud services [4, 5, 56]—achieving comprehensive security remains elusive. This section reviews efforts to address these challenges, focusing on how virtualization can mitigate *specific* threats to the flight control stack while acknowledging its role as one layer in a defense-in-depth strategy.  
+
+#### **1. UAV Attack Surface: Beyond Flight Control**  
+UAV security vulnerabilities stem from their complexity and connectivity. For example, He et al. [4] demonstrated GPS spoofing attacks on commercial drones, bypassing encrypted telemetry by exploiting unsecured sensor inputs. Similarly, Kwon et al. [5] showed how compromised GCS software could inject malicious waypoints into otherwise secure FCS firmware. These studies underscore that attacks can originate from *any* layer of the UAV stack, necessitating multi-layered defenses. While virtualization alone cannot address all vectors (e.g., physical tampering or compromised cloud APIs), it provides a critical barrier against software-level exploits within the FCS.  
+
+#### **2. Commercial Solutions: Reactive and Opaque**  
+Proprietary software often prioritizes functionality over security. Buquerin [86] revealed that even certified systems like VxWorks 7 RTOS remain vulnerable to basic memory corruption attacks, with performance degradation under exploitation. Although commercial vendors implement encryption and privilege separation, these measures are reactive and fail to isolate faults at the hardware level. For instance, command injection via a compromised sensor driver could propagate across the system without virtualization-enforced boundaries.  
+
+#### **3. Open-Source Flight Stacks: Transparency with Risks**  
+Open-source FCS platforms like ArduPilot and PX4 enable community scrutiny but struggle with mixed-criticality isolation. Zhang et al. [87] compared RTOSs for drones, finding ChibiOS superior to NuttX in avoiding priority inversion—a critical flaw in safety-critical systems. However, even ChibiOS lacks mechanisms to prevent lateral movement of exploits between modules (e.g., a corrupted navigation subsystem compromising motor control). This highlights a key gap: open-source stacks rely on software-based isolation, which adversaries can bypass through privilege escalation.  
+
+#### **4. Alternative Approaches: Scope and Limitations**  
+Researchers have proposed unconventional methods to harden UAVs. Alladi et al. [2] advocated blockchain for decentralized trust in swarm coordination, but its latency and energy overheads render it impractical for real-time FCS operations. Others have explored machine learning-based intrusion detection [56], yet such models incur false positives and require constant retraining. These approaches address *specific* threats but ignore the foundational need for hardware-level fault containment in the FCS.  
+
+#### **5. Virtualization: A Targeted Defense for the Flight Stack**  
+Hypervisors offer a pragmatic middle ground between security and practicality. Faultrel et al. [88] demonstrated dynamic partitioning for UAVs, but its non-deterministic scheduling risks deadline violations in time-critical tasks. In contrast, **static partitioning hypervisors (SPHs)** enforce fixed resource allocation, preventing untrusted components (e.g., third-party payload software) from interfering with core flight controllers. For example, ARINC 653-compliant SPHs in avionics [86] isolate navigation and communication modules spatially and temporally, ensuring fault containment. While SPHs cannot mitigate attacks on peripheral subsystems (e.g., FPV video feeds), they significantly raise the bar for compromising the FCS itself.  
+
+#### **6. Synthesis: Virtualization as a Security Layer**  
+Existing work leaves three unresolved challenges:  
+1. **Scope**: Most solutions address narrow threats (e.g., encrypted comms) but neglect systemic FCS vulnerabilities.  
+2. **Determinism**: Dynamic hypervisors trade security for real-time performance.  
+3. **Open-Source Integration**: Proprietary SPHs conflict with community-driven UAV ecosystems.  
+
+This thesis focuses on mitigating *software-driven FCS exploits* through an open-source SPH. By isolating flight control modules (e.g., attitude estimation, motor control) into discrete partitions with hardware-enforced access controls, our approach prevents lateral exploit propagation—complementing, but not replacing, broader safeguards like cryptography or secure boot.  
+
+---
+
+### **Key Adjustments**  
+1. **Attack Surface Emphasis**: Explicitly calls out non-FCS threats (e.g., cloud APIs) to clarify the scope of your work.  
+2. **Balanced Claims**: Acknowledges virtualization’s limits (e.g., "cannot mitigate attacks on FPV feeds") while arguing its value for FCS hardening.  
+3. **Layered Security Narrative**: Positions SPHs as one *component* of defense-in-depth, aligning with your thesis’s pragmatic focus.  
+4. **Flow**: Moves from broad threats → commercial/open-source flaws → alternative approaches → virtualization’s niche role.  
+
+This structure ensures readers understand that your work *targets a subset* of UAV security challenges while contributing a critical layer to a larger defense strategy.
+
+**** Hypervisor Approach for Mixed Criticality UAVs
+Based on the provided sources, the paper "An hypervisor approach for mixed critical real-time UAV applications" by Fautrel, George, Fauberteau, and Grandpierre focuses on addressing the challenges of running multiple applications with different criticality levels on Unmanned Aerial Vehicles (UAVs).
+Here is a summary of the paper:
+•
+Problem: Existing professional UAVs run applications of varying criticalities, such as high-criticality control command and lower-criticality video or communication applications. When these run without isolation, the high criticality of the control command application propagates to less critical ones, forcing them to be certified at the highest level. This leads to potentially over-dimensioned computing resources, impacting the drone's cost, weight, and autonomy. Certifying systems like Linux with real-time extensions for high-criticality applications is also challenging. Furthermore, integrating software components developed by different teams with heterogeneous runtime requirements is complex.
+•
+Solution: The paper proposes using virtualization techniques, specifically a hypervisor, to achieve spatial and temporal isolation between applications of different criticalities running on the same hardware. Each application is executed within a dedicated Virtual Machine (VM). This approach allows the certification cost of an application to be adapted to its specific criticality level. The use of a hypervisor results in a two-level hierarchical system.
+◦
+At the first level, a set of VMs is scheduled by the hypervisor.
+◦
+At the second level, each VM hosts an application whose tasks are scheduled by a specific Operating System (OS) within the time slots allocated to the VM by the hypervisor.
+•
+Hypervisor Type: The paper considers a type 1 hypervisor approach, where the hypervisor is implemented directly on the hardware (bare metal). This is preferred for embedded applications compared to type 2 hypervisors (running on a host OS), as it adds less overhead and is more suitable for certification. A certified type 1 hypervisor provides temporal and logical isolation. The PikeOS hypervisor, certifiable for flying systems (DO 178B/C), is mentioned as an example used in the CEOS project.
+•
+Model and Notations: The system consists of a set of sporadic tasks (τ), each characterized by its Worst Case Execution Time (WCET), minimum inter-arrival time, and relative deadline. These task parameters are known a priori. The VMs (ρ) are characterized by their slot duration (Cs), period (Ts), and worst-case context switch time (Cso). VM parameters are not known a priori. Each VM hosts a disjoint subset of tasks, and all tasks within a VM have the same criticality level, while VMs can have different criticalities. VMs are sorted by decreasing criticality.
+•
+Problem Addressed: Given the known task parameters, the main contribution of the paper is a sizing method for the VMs. This method computes the period and slot duration for each VM such that its assigned tasks are schedulable (meet their deadlines). The paper considers tasks within VMs are scheduled by a Fixed-Task-Priority (FTP) preemptive scheduling policy.
+•
+VM Sizing Methodology: The approach is iterative, starting with the most critical VM (ρ1) and proceeding to the least critical.
+◦
+Most Critical VM (ρ1): The method first computes an interval for the period of ρ1, bounded by a minimum (T1min) and maximum (T1max) period based on necessary schedulability conditions from Section III.
+▪
+The minimum period (T1min) is derived using equations (6), (7), and (8), considering task utilization and context switch overhead, including a ratio (α) between overhead and VM period to ensure feasibility with integer parameters.
+▪
+The maximum period (T1max) is derived using equation (10), based on the condition that every task's deadline must be greater than or equal to the VM period minus its slot duration plus the task's WCET. These bounds are calculated using floor and ceil functions to obtain integer values. If Tmin ≥ Tmax, the problem is unschedulable.
+▪
+Algorithm 1 uses a binary search approach within the [T1min, T1max] interval to find the smallest T1 and corresponding slot duration (C1) for ρ1 such that its tasks are schedulable. Schedulability is tested using a Worst Case Response Time (WCRT) analysis adapted for sporadic harmonic periods (equation 11).
+◦
+Other VMs (ρs, s>1): A heuristic approach is used to compute the parameters of the remaining VMs, aiming for harmonic VM periods (where periods are multiples of each other) to increase the chance of a feasible schedule.
+▪
+Algorithm 2 takes the parameters of ρ1 as input and iterates through the remaining VMs by decreasing criticality. For each VM, it determines its maximum period using equation (10) [30, L3]. It proposes a test period (Tstest) by doubling the period of the previously dimensioned VM (starting with ρ1) to maintain harmonicity [30, L4]. If Tstest is within the maximum allowed period for the current VM, it computes a test slot duration (Cstest) [30, L5, L6]. It then checks if Cstest satisfies the necessary and sufficient condition for schedulability from equation (4) (Us × Ts + Cso ≤ T1 − C1) [18, 29, 30, L7]. If satisfied, these parameters are assigned to the VM [30, L8]. If not, the algorithm stops [30, L10]. Task schedulability within these VMs is not tested at this step.
+•
+Harmonic VM Scheduling: Once the parameters for a subset of harmonic VMs are found that satisfy condition (4), their scheduling is defined by Algorithm 3 and Algorithm 4 (findFirstFree). These algorithms guarantee a solution for VMs with parameters satisfying condition (4). They schedule VMs by placing them after the executions of the first (most critical) VM, which has the smallest period and thus the most frequent activations in the hyper-period (equal to the largest VM period for harmonic sets). Algorithm 4 finds the first available slot after an activation of the first VM for scheduling other VMs.
+•
+Use Case Example: The paper illustrates the approach using the CEOS project, an industrial project developing inspection drones. The example features three applications/VMs: high-criticality control-command (VM1), medium-criticality communication (VM2), and low-criticality video processing (VM3). VM1 is bare-metal, VM2 uses OpenWRT, and VM3 uses Linux Debian. The PikeOS hypervisor is used. The paper walks through the calculation of min/max periods for VM1 (Table I), the use of Algorithm 1 to find its parameters (C1=2, T1=10), the calculation of maximum periods for tasks in VM2 and VM3 (Table II), and the use of Algorithm 2 to find parameters for VM2 (C2=5, T2=20) and VM3 (C3=8, T3=40), resulting in harmonic periods. Task schedulability within these dimensioned VMs is then checked (WCRT values are listed). Finally, the scheduling of these three harmonic VMs using Algorithms 3 and 4 is demonstrated.
+•
+Conclusion: The paper presents an iterative approach and algorithms to dimension VMs (compute period and slot duration) for mixed-criticality real-time UAV applications based on known task parameters, ensuring task schedulability and resulting in harmonic VM periods.
+•
+Future Work: Future plans include exploring a linear programming approach to assign remaining slots to non-schedulable VMs, potentially leading to non-strictly periodic schedules, and experimenting the solution further with the CEOS project
 
 ** ✔ DONE Design
 :LOGBOOK:
@@ -796,7 +1023,10 @@ PX4 systems typically run a Linux OS on the companion computer (because the PX4/
     3.3.4 Addons (71)
   3.4 Summary (73)
 
-** Implementation
+** ✔ DONE Implementation
+:LOGBOOK:
+- State "✔ DONE"     from              [2025-05-08 qui 13:10]
+:END:
  1) Workflow (75)
  2) USPFS (75)
 	1) UAV Assembly
@@ -807,3 +1037,11 @@ PX4 systems typically run a Linux OS on the companion computer (because the PX4/
 	2) Build
 	3) Deployment
  4) Summary (75)
+
+    
+** Literature review systematic
+(TITLE-ABS-KEY( uav OR uas OR drone* OR quadcopter* )
+ AND TITLE-ABS-KEY( "software stack" OR "flight stack" OR middleware OR "software architecture"
+                    OR "autopilot" OR rtos OR "operating system" OR firmware OR "reference architecture" )
+)
+AND ( PUBYEAR > 2009 )

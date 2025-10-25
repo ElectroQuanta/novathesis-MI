@@ -1,0 +1,67 @@
+\typeout{NT FILE appendix-cfg.tex}%
+
+\chapter{Configuration files}
+\label{app:cfg_files}
+
+The following appendix lists the configuration files used in the
+implementation (Chapter~\ref{cha:implementation}) and evaluation
+(Chapter~\ref{cha:evaluation}) of the present work.
+
+\begin{longlisting}
+\centering
+\inputminted[]{kconfig}{./listing/px4.config}
+\caption{PX4 configuration file (excerpt)}
+\label{lst:cfg-pilotpi}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{bash}{./listing/pilotpi-mc.config}
+\caption{PX4 boot script}
+\label{lst:pilotpi-mc}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{kconfig}{./listing/kernel-uspfs.config}
+\caption{USPFS: kernel configuration file (excerpt)}
+\label{lst:kernel-uspfs}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{kconfig}{./listing/br-uspfs.config}
+\caption{USPFS: buildroot configuration file (excerpt)}
+\label{lst:br-uspfs}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{kconfig}{./listing/config.txt}
+\caption{USPFS: Deployment -- config.txt}
+\label{lst:uspfs-cfg-txt}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{c}{./listing/bao-sspfs-cfg.c}
+\caption{SSPFS: Bao's configuration}
+\label{lst:bao-sspfs-cfg}
+\end{longlisting}
+
+%-----  EVAL
+
+\begin{longlisting}
+\centering
+\inputminted[]{c}{./listing/placePhys.c}
+\caption{Bao configuration: cache coloring and physical memory mapping (excerpt)}
+\label{lst:place-phys}
+\end{longlisting}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../template"
+%%% reftex-default-bibliography: ("../Bibliography/mieeic.bib")
+%%% ispell-local-dictionary: "american"
+%%% End:

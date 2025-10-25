@@ -1,0 +1,72 @@
+\typeout{NT FILE appendix-taxonomy.tex}%
+
+\chapter{Taxonomy}
+\label{app:tax}
+
+The following appendix contains the taxonomies for the virtualization and \gls{uav} concepts.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/eps/virt-mindmap.eps} 
+%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
+  %\caption[Virtualization mind map]{Virtualization mind map}%
+  \caption{Virtualization mind map}%
+  \label{fig:virt-mindmap}
+\end{figure}
+
+% UAV MINDMAP: generic overview
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/eps/uav-mindmap.eps} 
+%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
+  %\caption[Virtualization mind map]{Virtualization mind map}%
+  \caption{UAV mind map: generic overview}%
+  \label{fig:uav-mindmap}
+\end{figure}
+
+% UAV SysOverview Mindmap --- Tasks and components  
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/eps/uav2-1-mindmap.eps} 
+%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
+  %\caption[Virtualization mind map]{Virtualization mind map}%
+  \caption{UAV mind map: System overview --- Tasks and components}%
+  \label{fig:uav-sysOverv-tasks-mindmap}
+\end{figure}
+
+% UAV SysOverview Mindmap --- Functional hierarchy
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/eps/uav2-2-mindmap.eps} 
+%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
+  %\caption[Virtualization mind map]{Virtualization mind map}%
+  \caption{UAV mind map: System overview --- Functional Hierarchy}%
+  \label{fig:uav-sysOverv-hierarc-mindmap}
+\end{figure}
+
+% UAV SysOverview Mindmap --- Security and safety
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/eps/uav3-mindmap.eps} 
+%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
+  %\caption[Virtualization mind map]{Virtualization mind map}%
+  \caption{UAV mind map: security and safety}%
+  \label{fig:uav-security-mindmap}
+\end{figure}
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/eps/uav2-3-mindmap.eps} 
+%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
+  %\caption[Virtualization mind map]{Virtualization mind map}%
+  \caption{UAV mind map: System overview --- Architecture, HW, SW and communications}%
+  \label{fig:uav-sysOverv-arch-mindmap}
+\end{figure}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../template"
+%%% reftex-default-bibliography: ("../Bibliography/mieeic.bib")
+%%% ispell-local-dictionary: "american"
+%%% End:

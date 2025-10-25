@@ -1,48 +1,114 @@
 \typeout{NT FILE STATE-ART.tex}%
 \chapter{Background and Related Work}%
 \label{ch:state-art}
+%
+\begin{quote}
+\begin{flushright}
+``\emph{We stand on the shoulders of giants.}'' \\
+\textbf{-- Isaac Newton}, mathematician, physicist, astronomer
+\end{flushright}
+\end{quote}
+
 In this chapter some background is provided concerning mixed criticality
 systems, its relevance and the challenges it poses, alongside with the current
 approach to address its complexity. Next, \glsxtrfull{uav} are discussed,
 namely the reference hardware and software, both as open-source and commercial
-solutions, and a gap analysis is performed. Lastly, the related work is
+solutions. Lastly, the related work is
 presented, showing the current research directions and topics.
 
-\section{Mixed criticality systems}%
+% \section{Mixed criticality systems}%
+% \label{sec:mixed-crit-syst}
+% Embedded systems have stringent requirements both on timing and criticality of
+% the tasks it performs. The former concerns the task's timing deadlines
+% requirement (firm, soft, hard), whereas the latter is a
+% designation of the level of assurance against failure needed for a system
+% component~\cite{burns2022mixed}. Typical names for the criticality levels are
+% \glspl{asil}, \glspl{dal}, and \glspl{sil}~\cite{burns2022mixed}.
+
+% This is the case for \gls{uav}'s applications with real-time constraints but
+% with mixed
+% criticality levels, i.e., the risk of failure is more severe in some case than others.
+% For example, flight control (safety-critical) and video streaming (non-critical)
+% coexist. A compromise in video software could cascade to flight systems, causing
+% catastrophic failure—yet strict hardware separation increases weight and reduces
+% flight time.
+
+% This exemplifies a \gls{mcs}, i.e., a system comprised of computer hardware and
+% software that executes several tasks/applications of distinct criticality (safety) levels.
+% However, the integration of mixed-criticality components onto a common hardware
+% platform is not an easy task: the designer needs to meet the stringent
+% \gls{swap-c} metrics and safety requirements
+% provided by safety-critical standards, such as those for automotive~\cite{iso26262}, avionics~\cite{rtca1992software},
+% and railway~\cite{cenelec201250128} industries.
+% While \gls{mcs} challenges are well-studied in automotive/avionics, UAVs face unique
+% constraints: extreme SWaP-C limitations and the need for fail-operational safety
+% in uncontrolled environments. Current solutions either compromise isolation
+% (single-board) or add weight/energy overhead (multi-board).
+
+% As a result of this integration
+% complexity increases, requiring higher computational power, and thus, these
+% hardware platforms are migrating from single cores to multi-cores and in the
+% future many-core architectures~\cite{burns2022mixed}. This leads to the
+% fundamental question of how to reconcile the
+% conflicting requirements of \emph{partitioning} for (safety) assurance and \emph{sharing} for
+% efficient resource usage. Consequently, problems arise in the modelling, design,
+% implementation, and verification of the required \gls{hw} and
+% \gls{sw}~\cite{burns2022mixed}.
+
+% Two major areas of research stem from this dichotomy: a more theorethical one,
+% largely focused on using criticality-specific \glspl{wcet} to schedule systems
+% at each criticality level, but at the expenses of high processor utilization; a
+% more practical one, focused on the safe partitioning of a system with the
+% sharing of computational and communication resources, but with increased
+% complexity.
+% Unfortunately, the combination of both areas is not easy: flexible scheduling
+% requires, at least, dynamic partitioning, whereas certified systems require
+% complete separation or, at least, static partitioning. This mismatch needs to be
+% addressed in future work~\cite{burns2022mixed}.
+
+% Another important topic in the \gls{mcs} field is the the incorporation of other
+% shared resources, e.g.~communication, particulary on multi-core or many-core
+% platforms: can a shared bus provide the required separation, or is a
+% Network-on-Chip protocol required? These issues are only now beginning to be
+% addressed~\cite{burns2022mixed}.
+
+\section{Mixed Criticality Systems}%
 \label{sec:mixed-crit-syst}
 Embedded systems have stringent requirements both on timing and criticality of
-the tasks it performs. The former concerns the task's timing deadlines
-requirement (firm, soft, hard), whereas the latter is a
-designation of the level of assurance against failure needed for a system
-component~\cite{burns2022mixed}. Typical names for the criticality levels are
-\glspl{asil}, \glspl{dal}, and \glspl{sil}~\cite{burns2022mixed}.
+the tasks it performs.
+Criticality designations (e.g.~\glspl{asil}, \glspl{dal}, and \glspl{sil}) define the rigor needed to prevent failures, while timing constraints dictate deadline enforcement (hard/soft/firm)~\cite{burns2022mixed}. 
 
-For example, lets consider an automotive infotainment system that displays
-navigation and rear-view camera information. The navigation information is a
-commodity for the user, and if, for example, the radio volume suddenly
-increases, although uncomfortable, it poses no safety risk for the user. On the
-other hand, the rear-view camera information assists the user in parking
-maneuvers, and, if a failure occurs, the vehicle may collide causing damage or
-harming people.
+%\subsection{UAVs as MCS Exemplars}
+\glspl{uav} epitomize this challenge: \textbf{flight control (safety-critical)}
+and \textbf{auxiliary functions (e.g.~video streaming)} coexist on shared
+hardware. Without robust isolation a compromise in a non-critical component
+(.e.g.~video malware) can cascade to flight systems. On the other hand, hardware separation increases weight/power, reducing flight time.
+This necessitates \glspl{mcs} -- systems executing mixed-criticality tasks on
+consolidated platforms while simultaneously meeting the safety standards (e.g.,
+ISO 26262~\cite{iso26262} or DO-178C~\cite{johnson1998sw}) and the stringent \gls{swap-c} constraints.
 
-This is an example of a \gls{mcs}, i.e., a system comprised of computer
-\gls{hw} and \gls{sw} that executes several tasks/applications of different
-criticality (safety) levels. Furthermore, as this example illustrates, an increasingly relevant trend in the design of real-time and embedded systems
-is the integration of mixed-criticality components onto a common hardware
-platform while trying to meet the stringent \gls{swap-c} and safety requirements
-provided by safety-critical standards, such as those for automotive~\cite{iso26262}, avionics~\cite{rtca1992software},
-and railway~\cite{cenelec201250128} industries.
+% \subsection{UAV-Specific Integration Challenges}
+While \gls{mcs} principles apply across domains, \glspl{uav} face unique hurdles. They
+must meet
+\textbf{extreme SWaP-C limits}, where every gram needs to be justified,
+especially in the lower weight classes. \glspl{uav} fly in \textbf{uncontrolled
+  environments} with fast changing dynamics. As it impossible to account for
+every erroneous occurrence, it must present fail-operational behavior , i.e. maintaining critical functions during faults. The
+migration to the mainstream multi-core architectures increases the complexity in
+resource sharing~\cite{burns2022mixed}.
+Current approaches force trade-offs: on one hand, multi-board provides high
+isolation but poor \gls{swap-c} metrics; on the other hand, single-board
+provides poor isolation but better \gls{swap-c}.
 
-As a result of this integration
-complexity increases, requiring higher computational power, and thus, these
-\gls{hw} platforms are migrating from single cores to multi-cores and in the
-future many-core architectures~\cite{burns2022mixed}. This leads to the
-fundamental question of how to reconcile the
-conflicting requirements of \emph{partitioning} for (safety) assurance and \emph{sharing} for
-efficient resource usage. Consequently, problems arise in the modelling, design,
-implementation, and verification of the required \gls{hw} and
-\gls{sw}~\cite{burns2022mixed}.
+% As a result of this integration
+% complexity increases, requiring higher computational power, and thus, these
+% hardware platforms are migrating from single cores to multi-cores and in the
+% future many-core architectures~\cite{burns2022mixed}. This leads to the
 
+%     \item \textbf{Multi-core transition}: Increased complexity in resource sharing
+% \end{itemize}
+
+% \subsection{Core Research Dichotomy}
 Two major areas of research stem from this dichotomy: a more theorethical one,
 largely focused on using criticality-specific \glspl{wcet} to schedule systems
 at each criticality level, but at the expenses of high processor utilization; a
@@ -51,13 +117,13 @@ sharing of computational and communication resources, but with increased
 complexity.
 Unfortunately, the combination of both areas is not easy: flexible scheduling
 requires, at least, dynamic partitioning, whereas certified systems require
-complete separation or, at least, static partitioning. This mismatch needs to be
-addressed in future work~\cite{burns2022mixed}.
+complete separation or, at least, static partitioning~\cite{burns2022mixed}.
+% The tension arises from conflicting needs: \textit{dynamic} scheduling
+% vs. \textit{static} partitioning for certification~\cite{burns2022mixed}.
+This gap is acute in \glspl{uav} where both efficiency and assurance are non-negotiable.
 
-Another important topic in the \gls{mcs} field is the the incorporation of other
-shared resources, e.g.~communication, particulary on multi-core or many-core
-platforms: can a shared bus provide the required separation, or is a
-Network-on-Chip protocol required? These issues are only now beginning to be addressed~\cite{burns2022mixed}.
+% \subsection{Virtualization as Enabling Technology}
+% \label{sec:virtualization}
 
 \subsection{Virtualization}%
 \label{sec:virtualization}
@@ -70,16 +136,7 @@ hypervisors, \gls{os}-level virtualization or unikernels~\cite{cinque2022virtual
 
 Fig.~\ref{fig:virt-mindmap} depicts a map of concepts related to the
 virtualization topic, which can be used as reference through this section.
-
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=1.0\textwidth]{./img/eps/virt-mindmap.eps} 
-%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
-  %\caption[Virtualization mind map]{Virtualization mind map}%
-  \caption{Virtualization mind map}%
-  \label{fig:virt-mindmap}
-\end{figure}
-
+%
 The major distinction between \gls{os}- and hypervisor-level virtualization is
 the former does not provide emulation of the physical \gls{hw}, where the
 virtual domain, called container, has its own virtual \gls{hw} resources
@@ -131,13 +188,13 @@ components are compiled into a unikernel and run on top of hypervisor
 Cinque et.~al~\cite{cinque2022virtualizing} identified the relationship between hypervisor and guest
 \gls{os} combinations, i.e.~the type of guest that runs on top of a hypervisor, and the
 associated applications (Fig.~\ref{fig:virt-combos}).
-On the left quadrants we have the guest \gls{os} running on top of a general
-purpose hypervisor, mainly used for server consolidation in cloud environments
-(lower-left), and functional testing and prototyping (upper-left).
-On the right quadrants we have a guest \gls{os} on top of a \gls{rt} hypervisor,
-mainly used for \gls{qos} and performance analysis (lower-right), and
-safety-critical applications (upper-right). The region of interest --- the
-\gls{mcs} --- is located in the intersection of these right quadrants,
+On the left quadrants are represented the guest \glspl{os} running on top of a
+general purpose hypervisor, mainly used for server consolidation in cloud
+environments (bottom left), and functional testing and prototyping (top left).
+On the right quadrants are represented the guest \glspl{os} on top of a \gls{rt}
+hypervisor, mainly used for \gls{qos} and performance analysis (bottom right), and
+safety-critical applications (top right). The region of interest -- the
+\gls{mcs} -- is located in the intersection of these right quadrants,
 emphasizing the need of a \gls{rt} hypervisor. Thus, the hypervisors will be
 discussed in more detail in the next section.
 
@@ -513,7 +570,7 @@ An \gls{uav} can be classified in multiple ways:
 \begin{itemize}
 \item \textbf{Thrust forces \& Flight principles}: \glspl{uav} can be lighter
   than air, e.g., a balloon or a blimp if it uses a motorized propulsion
-  system. On the other hand, if they are heavier than air, we have
+  system. On the other hand, if they are heavier than air, they are named
   gliders, rotor-crafts, and birds~\cite{mohsan2022towards}.
  % 
 \item \textbf{Airframe}: probably the most noticeable external feature of a
@@ -566,35 +623,19 @@ An \gls{uav} can be classified in multiple ways:
   adoption due to higher transparency, extensability and usage from the end-user
   perspective, and due to bootstrapping opportunity since the developers can
   leverage from the ecosystem, e.g., using the flight control algorithms which
-  are hard and costly to develop. On the side of the spectrum, we have
-  proprietary drones (e.g., Dji) with the highest market share. Transparency is
+  are hard and costly to develop.
+  At the other end of the spectrum lie proprietary drones (e.g., Dji), which hold the highest market share.
+  Transparency is
   compromised and extensibility is typically provided using a \gls{sdk}~\cite{djiSDK}.
 \end{itemize}
 
 Fig.~\ref{fig:uav-types} illustrates the several types of \glspl{uav}, focusing
-on airframe and power source.
-
+on airframe and power source. 
 The most prominent \gls{uav}'s characteristics are speed, autonomy, payload,
 range, and altitude. The speed depends mainly on the propulsion system,
 aerodynamics, weather conditions and power usage. Typically, a small
 \gls{uav} can reach speeds up to 50 km/h, while a large one can reach speeds up
 to 360 km/h\cite{mohsan2022towards}.
-The autonomy or endurance, refers to the maximum flight time with a
-single charge (battery, fuel, or both), varying from a 20--30 minutes (small \glspl{uav}) to several
-hourse (large \glspl{uav}). Size, weight and weather conditions have a strong
-impact on the autonomy. Some technologies are currently being develop to support
-in-flight recharging through renewalable sources (\gls{pv} cells) or wireless
-power techniques (e.g., laser emission)\cite{mohsan2022towards}.
-The payload refers to the lifting capability of the \gls{uav} for load carrying,
-varying from few grams (small \glspl{uav}) to hundreds of kilograms (large
-\glspl{uav}). Most common payloads are sensors and video cameras~\cite{mohsan2022towards}.
-The range defines the distance from where the \gls{uav} can be controlled
-remotely and depends on the communication technology and network, and the
-weather conditions\cite{mohsan2022towards}. The altitude is the height a drone can fly, weather by
-technological constraints or by legal ones~\cite{mohsan2022towards}.
-
-Fig.~\ref{fig:uav-mindmap} depicts the \gls{uav}'s
-generic overview, summarizing its main concepts.
 
 % UAV TYPES
 \begin{figure}[htb!]
@@ -647,23 +688,42 @@ generic overview, summarizing its main concepts.
 \end{figure}
 %
 
-% UAV MINDMAP: generic overview
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=1.0\textwidth]{./img/eps/uav-mindmap.eps} 
-%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
-  %\caption[Virtualization mind map]{Virtualization mind map}%
-  \caption{UAV mind map: generic overview}%
-  \label{fig:uav-mindmap}
-\end{figure}
+The autonomy or endurance, refers to the maximum flight time with a
+single charge (battery, fuel, or both), varying from a 20--30 minutes (small \glspl{uav}) to several
+hourse (large \glspl{uav}). Size, weight and weather conditions have a strong
+impact on the autonomy. Some technologies are currently being develop to support
+in-flight recharging through renewalable sources (\gls{pv} cells) or wireless
+power techniques (e.g., laser emission)\cite{mohsan2022towards}.
+The payload refers to the lifting capability of the \gls{uav} for load carrying,
+varying from few grams (small \glspl{uav}) to hundreds of kilograms (large
+\glspl{uav}). Most common payloads are sensors and video cameras~\cite{mohsan2022towards}.
+The range defines the distance from where the \gls{uav} can be controlled
+remotely and depends on the communication technology and network, and the
+weather conditions\cite{mohsan2022towards}. The altitude is the height a drone can fly, weather by
+technological constraints or by legal ones~\cite{mohsan2022towards}.
+%
+Fig.~\ref{fig:uav-mindmap} depicts the \gls{uav}'s
+generic overview, summarizing its main concepts.
 %
 %
 \subsection{System overview}%
 \label{sec:system-overview}
 Fig.~\ref{fig:uav-sysOverv} shows an overview of the \gls{uav} system and its
-ecosystem. At the center \emph{(1)} we have the \gls{uav} and its flight control
-\gls{hw} and \gls{sw}. Its main tasks are path planning, communication
-management, data acquisition, and mission~\cite{aggarwal2020UAVPathPlanning}. The path planning works in
+ecosystem.
+Positioned at the center of the figure (1) are the \gls{uav} and its associated flight control \gls{hw} and \gls{sw}.
+Its main tasks are path planning, communication
+management, data acquisition, and mission~\cite{aggarwal2020UAVPathPlanning}.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.7\textwidth]{./img/pdf/uav-sys-overv.pdf} 
+%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
+  %\caption[Virtualization mind map]{Virtualization mind map}%
+  \caption[UAV system overview]{UAV system overview (adapted from~\cite{mohsan2022towards,aggarwal2020UAVPathPlanning})}%
+  \label{fig:uav-sysOverv}
+\end{figure}
+
+The path planning works in
 combination with the \gls{gcs} to assist in the navigation, finding the optimal
 path, while providing environmental awareness through weather and climate
 monitoring, and controlling the motion and speed for obstacle avoidance. To
@@ -673,29 +733,22 @@ on-board \underline{flight controller} collects data from multiple sensors
 \gls{imu}, barometer, \gls{gnss}/\gls{gps} module, etc.) and,
 together with the commands received from the \gls{gcs}, implements attitude
 estimation and the control law (e.g., Kalman filter) to drive the propulsion
-system (motors) (2). The flight controller also manages the communications
-between three types of links~\cite{aggarwal2020UAVPathPlanning}: \underline{\gls{uav} to \gls{gcs}} (5) --- radio
+system (motors) (2).
+
+The flight controller also manages the communications
+between three types of links~\cite{aggarwal2020UAVPathPlanning}: \underline{\gls{uav} to \gls{gcs}} (5) -- radio
 communication used for transmitting instrument readings such as audio or video
 and for human remote control (7) (8); \underline{\gls{uav}
-  to Satellite} (4) --- carries weather, climate, and \gls{gps} information
+  to Satellite} (4) -- carries weather, climate, and \gls{gps} information
   required for accurate \gls{uav} navigation; \underline{\gls{uav} to \gls{uav}}
-  (6) --- can be used for cooperative missions or to provide environmental
+  (6) -- can be used for cooperative missions or to provide environmental
   awareness (e.g., signal danger). The mission refers to the flight's goal,
   e.g., video capturing, topographic mapping, etc., and is directly related to
-  the payload (3) (e.g., camera, LIDAR, etc.).
-
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=0.7\textwidth]{./img/pdf/uav-sys-overv.pdf} 
-%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
-  %\caption[Virtualization mind map]{Virtualization mind map}%
-  \caption{UAV system overview}%
-  \label{fig:uav-sysOverv}
-\end{figure}
+  the payload (3) (e.g., camera, \gls{lidar}, etc.).
 
 Sensors can be typically categorized into obstacle avoidance, payload, and
 navigation~\cite{VogeltanzFreeSWUAVSurvey2016}. Ultrasonic and infrared sensors are generally used to avoid
-collisions with obstacle, but \gls{tof} sensors like LIDAR can also be used,
+collisions with obstacle, but \gls{tof} sensors like \gls{lidar} can also be used,
 although more expensive and more complex. The navigational sensors include the
 \gls{imu} --- used to estimate orientation and heading of the vehicle, the
 barometer --- used to estimate of the \gls{uav} with a precision of few
@@ -705,23 +758,13 @@ to 5 meters, thus requiring the \gls{imu} and barometer to improve accuracy~\cit
 
 The actuators depend on the propulsion system, although electronic drives are
 always used. For a typical multi-rotor \gls{uav}, \glspl{bldc} motors are used
-for rotors, with an \gls{esc} --- an gls{ac}/\gls{dc} power converter and
+for rotors, with an \gls{esc} --- an \gls{ac}/\gls{dc} power converter and
 high-frequency variable motor speed controller. Fixed-wing hybrids include also
 servomotors for flaps~\cite{gabrielBLDCFixedWingUAV2011}.
-
+%
 Fig.~\ref{fig:uav-sysOverv-tasks-mindmap} depicts the concept map of \gls{uav}'s
 tasks and components.
-
-% UAV SysOverview Mindmap --- Tasks and components  
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=1.0\textwidth]{./img/eps/uav2-1-mindmap.eps} 
-%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
-  %\caption[Virtualization mind map]{Virtualization mind map}%
-  \caption{UAV mind map: System overview --- Tasks and components}%
-  \label{fig:uav-sysOverv-tasks-mindmap}
-\end{figure}
-
+%
 \glspl{uav} can be organized into a top-down hierarchy of layers~\cite{glossner2021overview}, as follows
 (see Fig.~\ref{fig:uav-sysOverv-hierarc-mindmap}):
 \begin{enumerate}
@@ -731,7 +774,7 @@ tasks and components.
   transmission of commands from the \gls{gcs} to the \gls{uav}'s \gls{fcs}. The \gls{gcs} is
   software running on ground-control devices, and they typically provide path
   planning, mapping and real-time flight statistics superimposed on a map. The
-  most notable example is probably \texttt{QGroundControl}, which provides full
+  most notable example is probably \lstinline{QGroundControl}, which provides full
   flight control and setup for \gls{uav} vehicles, cross-platform, and with a
   mobile-styled \gls{ui}. It supports actions to be triggered in case of
   failures (fail-safe features), such as geofencing (limits the permissible fly
@@ -742,8 +785,8 @@ tasks and components.
   \gls{uav}. As such, it must enforce the use of failsafe actions, like in the
   case of low battery, loss of \gls{rc} signal, data link failures, or geofence
   violations, and request authorization to fly if legally demanded. For example,
-  pilots can use \texttt{LAANC} \glspl{api} or \texttt{Google Wing OpenSky} to
-  receive \gls{faa} authorization for entering controlled airspace. On the other
+  pilots can use \lstinline{LAANC} \glspl{api} or
+  \lstinline{Google Wing OpenSky} to receive \gls{faa} authorization for entering controlled airspace. On the other
   hand these softwares provides the air traffic professionals drones operations'
   visibility.
   \underline{Remote identification} will be required for all \glspl{uav}
@@ -756,7 +799,7 @@ tasks and components.
   \gls{uav} via proprietary protocols or open \glspl{api} (e.g., MAVLink
   \gls{sdk} or Parrot \gls{sdk}). The autopilot consists in \gls{sw} stack
   running on the \gls{fcs}. Noticeable open-source autopilots are
-  \texttt{PX4}, \texttt{ArduPilot}, and \texttt{{Paparazzi}}.
+  \lstinline{PX4}, \lstinline{ArduPilot}, and \lstinline{Paparazzi}.
 \item \textbf{System Simulation}: \gls{uav} behavior is analyzed in respect to
   different environment and conditions, mainly through \underline{flight
     modeling},
@@ -766,20 +809,10 @@ tasks and components.
 \item \textbf{Operating Systems}: \glspl{os} are used to interface the
   electronic \gls{hw} that controls \gls{uav} operation through a tractable
   abstraction. \glspl{uav} can a myriad of \glspl{os}, both open-source --- such as
-  \gls{ros}, \texttt{Linux}, \texttt{FreeRtos}, \texttt{NuttX}, \texttt{ChibiOS} --- or proprietary, like \texttt{VxWorks}. 
+  \gls{ros}, \lstinline{Linux}, \lstinline{FreeRtos}, \lstinline{NuttX}, \lstinline{ChibiOS} --- or proprietary, like \lstinline{VxWorks}. 
 \item \textbf{Physical \gls{hw}}: comprises the actual electronic \gls{hw} of
   the \gls{uav}, such as sensors, motors, communications, etc.
 \end{enumerate}
-
-% UAV SysOverview Mindmap --- Functional hierarchy
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=1.0\textwidth]{./img/eps/uav2-2-mindmap.eps} 
-%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
-  %\caption[Virtualization mind map]{Virtualization mind map}%
-  \caption{UAV mind map: System overview --- Functional Hierarchy}%
-  \label{fig:uav-sysOverv-hierarc-mindmap}
-\end{figure}
 
 
 \subsection{Security and Safety}%
@@ -798,7 +831,7 @@ another major concern, exposing sensitive information and control of the
 \gls{uav}. In fact, several incidents have been reported in the media where
 drones were weaponized~\cite{spiegelUAVAccident2015,nytimesUAVAccident2018,theDriveUAVAccident2019}, and the volume and risk of such incidents are
 likely to increase significantly with the expected drone market growth in the
-foreseable future~\cite{mohsan2022towards}and the new regulations adopted by many countries which allow
+foreseable future~\cite{mohsan2022towards} and the new regulations adopted by many countries which allow
 drones to fly over populated areas~\cite{stocker2017UAVRegulationsReview}.
 
 The most common attacks to the  \gls{uav} are \gls{dos} and \gls{ddos}, causing
@@ -852,7 +885,7 @@ divided the security attacks on two categories:
   individual, organization or nation base. The countermeasures include
   \underline{detection and tracking}, \underline{assessment}, and
   \underline{interdiction}. Several detection methods exist, such as radars,
-  video and infrared cameras, LIDAR, acoustics, acoustics and optics,
+  video and infrared cameras, \gls{lidar}, acoustics, acoustics and optics,
   etc. However, it is important to note that none of these methods are
   fail-proof. For example, specific radars have to be used with very specialized
   operators, since common radars are designed for large aircraft detection and
@@ -901,61 +934,22 @@ both aspects, as they strongly influence each
 other~\cite{ferrao2020stuart}. Fig.~\ref{fig:uav-security-mindmap} illustrates the
 \gls{uav}'s security and safety taxonomy.
 
-% UAV SysOverview Mindmap --- Security and safety
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=1.0\textwidth]{./img/eps/uav3-mindmap.eps} 
-%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
-  %\caption[Virtualization mind map]{Virtualization mind map}%
-  \caption{UAV mind map: security and safety}%
-  \label{fig:uav-security-mindmap}
-\end{figure}
-
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=1.0\textwidth]{./img/eps/uav2-3-mindmap.eps} 
-%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
-  %\caption[Virtualization mind map]{Virtualization mind map}%
-  \caption{UAV mind map: System overview --- Architecture, HW, SW and communications}%
-  \label{fig:uav-sysOverv-arch-mindmap}
-\end{figure}
-
 \subsection{UAV Reference Hardware}%
 \label{sec:uav-ref-hw}
-In this section the reference hardware for \glspl{uav} is discussed. An overview
-and the \gls{hw} architecture is presented. Then, the open-source and
-commercial solutions are discussed, and compared in the gap-analysis.
+In this section we discuss the reference hardware for \glspl{uav}.
+Firstly, we present an overview over the \gls{hw} architecture. Then, we analyze
+in more depth the open-source and commercial hardware solutions for \glspl{uav}.
 
 \subsubsection{Overview and Architecture}%
 \label{sec:overv-arch-hw}
 Fig.~\ref{fig:uav-hw-arch} illustrates the high-level abstraction of the
-\gls{uav} \gls{hw} architecture~\cite{leccadito2018survey,px4-sysArch}. In orange, we have the main computing
-platforms: the flight controller (\gls{fcs}), e.g., Pixhawk, and, optionally,
-the companion computer, which provides extra functionalities like navigation ---
-avoidance and collision prevention, mission-related features --- associated to
-the payload, e.g., camera surveillance, topographic mapping, etc. --- or
-telemetry data processing, off-loading the \gls{fcs}.
-
-The \gls{fcs} is typically composed of a main processor, for \gls{uav} control,
-and a optionally fall-safe coprocessor, dedicated to fail-safe features, i.e., the actions that
-must be triggered in case of a failure, e.g., returning to base when the
-battery reaches the low threshold. The main processor handles the communications
---- commands arriving from the manual \gls{rc} controller or between the
-companion computer, the control of the aircraft --- typically using \gls{pid}
-models and/or estimation methods (e.g., Kalman filter), and the \gls{io} --- to
-interface the critical sensors, such as \gls{imu}, barometer, gyroscope, and
-compass, or the actuators, such as \gls{bldc} motors and servomotors. The power
-system supplies the required energy for computing and \gls{io}.
-
-As aforementioned, the flight controller does not explicitly require the
-companion computer, since the commands sent manually by the pilot
-through the \gls{rc} controller are sufficient to control the aircraft flight
-(\gls{los} navigation). However, for autonomous missions --- autopilot --- the non-critical
-sensors like the \gls{gps}, and obstacle avoidance sensors, are required. In
-this mode, the companion computer sends telemetry data to the \gls{gcs}, which
-are typically superimposed on a map for straightforward navigation and receives
-the navigational and mission-related commands, processing them and dispatching
-the lower level commands to the flight controller or \gls{io} system.
+\gls{uav} \gls{hw} architecture~\cite{leccadito2018survey,px4-sysArch}. The main
+computing platforms are depicted in orange: (1) the flight controller or
+\gls{fmu} (e.g., Pixhawk); (2) and, optionally,
+the companion computer, which provides extra functionalities, off-loading the \gls{fcs}. More specifically, the companion computer can assist in the
+navigation, preventing collisions and avoiding obstacles, support
+mission-related tasks like camera surveillance or topographic mapping, and
+process telemetry data.
 
 \begin{figure}[!hbt]
   \centering
@@ -965,10 +959,31 @@ the lower level commands to the flight controller or \gls{io} system.
   \label{fig:uav-hw-arch}
 \end{figure}
 
+The \gls{fcs} is typically composed of a main processor, for \gls{uav} control,
+and a optionally fail-safe coprocessor, dedicated to respond to failure events,
+e.g., returning to base when the battery reaches the low threshold.
+The main processor handles: (1) communications: processing commands arriving
+from the manual \gls{rc} controller or between the companion computer; (2)
+aircraft's control: typically using \gls{pid} models and/or estimation methods
+(e.g., Kalman filter): (3) \gls{io}: to
+interface the critical sensors, such as \gls{imu}, barometer, gyroscope, and
+compass, or the actuators, such as \gls{bldc} motors and servomotors.
+The power system supplies the required energy for computing and \gls{io}.
+
+As aforementioned, the flight controller does not explicitly require the
+companion computer, since the commands sent manually by the pilot
+through the \gls{rc} controller are sufficient to control the aircraft flight
+(\gls{los} navigation). However, for autonomous missions, the non-critical
+sensors such as the \gls{gps} and obstacle avoidance sensors are mandatory. In
+this mode, the companion computer sends telemetry data to the \gls{gcs}, which
+are typically superimposed on a map for straightforward navigation and receives
+the navigational and mission-related commands, processing them and dispatching
+the lower level commands to the flight controller or \gls{io} system.
+
 \subsubsection{Open-source solutions}%
 \label{sec:open-source-solut-hw}
 \glsxtrfull{osh} solutions have been developed to provide more transparency,
-extensibility, flexibility, maintenability, while trying to be
+extensibility, flexibility, maintainability, while trying to be
 cost-effective. \gls{osh} means that the \gls{hw} design (i.e., mechanical
 drawings, schematics, \gls{bom},\gls{pcb} layout data, \gls{hdl} source code),
 and the \gls{sw} that drives the \gls{hw}, are all released under free/libre
@@ -976,208 +991,265 @@ terms~\cite{freeGNU}.
 The user can purchase or manufacture the \gls{hw} components
 individually or in \gls{cots} kits.
 
-The \gls{osh} solutions fall into three main categories: ARM-based platforms,
-Atmel-based platforms, and RaspberryPi-based
-platforms~\cite{ebeidUAVPlatformsSurvey2017}. However, the currently active
-\gls{osh} projects are based only in ARM platforms, such as, \texttt{Pixhawk 4},
-\texttt{Paparazzi Chimera}, \texttt{CC3D}, and \texttt{CUAV v5 Plus}, among
-others.
+The \gls{osh} solutions fall into three main categories: Atmel-based,
+ARM-based, and Companion Computer-based
+platforms~\cite{ebeidUAVPlatformsSurvey2017}. The first two target the
+\gls{fmu}, while the last provides a \gls{fmu} + companion-computer solution in
+one package. Until recently, the Atmel-based platforms, such as the HobbyKing
+KK.2.1.5, were still being produced. This product featured an Atmel Mega644PA
+8-bit AVR with 64 KB of memory, a MPU-6050 \gls{imu} sensor, and a \gls{lcd} and
+push buttons for user interaction~\cite{hobbykingKK2}. It came pre-installed
+with the KK2 firmware, but it could also run the ArduPilot software
+stack. Another notable example was the ArduPilot Mega (APM), based on the
+8-bit ATmega 2560 \gls{mcu}, which includes an \gls{imu} and, optionally, q
+compass and a \gls{gps}~\cite{ardupilotMega}. Its biggest advantage is that it could be programmed using the
+Arduino \gls{ide}, enabling easy customization of the ArduPilot firmware's
+features by hobbyists. The complexity level of modern autopilots require more
+powerful \gls{mcu}, dictating the deprecation of the 8-bit ones~\cite{fmu8BitDeprecation}.  
 
-  Pixhawk is a company that develops open standards for drone
-  hardware, providing readily available \gls{hw} specifications and guidelines
-  for drone development. \texttt{Pixhawk 4} is an advanced autopilot designed in
-  collaboration with Holybro {\gls{hw} manufacturer} and the PX4 (open-source
-  autopilot \gls{sw}) teams~\cite{pixhawk4}, released under the \gls{bsd} license (see Fig.~\ref{fig:osh-pixhawk4}). It is optimized to run PX4 v1.7 and
-  laterm and is suitable for academic and commercial developers. It runs PX4 on
-  the NuttX \gls{os}~\cite{pixhawk4}. It consists of two 32-bit ARM processors
-  for the \gls{fcs} (\gls{fmu}, 32-bit Arm Cortex M7 @ 216 MHz, 2 MB memory, 512
-  KB \gls{ram}) and \gls{io} (32 bit Arm Cortex-M3 @ 24 MHz, 8 KB \gls{sram}),
-  respectively~\cite{pixhawk4}. It comes with on-board sensors
-  (accelerometers/gyroscopes, magnetometer, and barometer) and a \gls{gps}
-  module. It has \gls{pwm}, \gls{can} \gls{i2c}, \gls{uart}, \gls{spi}, and
-  telemetry interfaces (radio and companion computer)~\cite{pixhawk4}.
-
-  The \texttt{Paparazzi Chimera} is an \gls{osh} flight controller released
-  under the \gls{gpl} license~\cite{paparazziChimera} (see Fig.~\ref{fig:osh-paparazzi-chimera}).
-  This flight controller integrates all \gls{io} in the same board, and it uses the ARM Cortex-M7 STM32F767 @ 216 MHz (2 MB Flash,
-  512 Kb \gls{sram}) \gls{mcu}. It comes with on-board sensors
-  (\gls{imu}, barometer, and pressure sensure), an XBEE modem holder for
-  communications, and a dedicated serial link and power supply for the companion
-  computer (e.g., Beaglone, RaspberryPi, etc.). It has \gls{pwm}, \gls{can}
-  \gls{i2c}, \gls{uart}, \gls{spi}, and servomotors interfaces~\cite{pixhawk4}.
+Currently, the vast majority of \gls{osh} projects are based on 32-bit ARM platforms
+(\lstinline{Pixhawk 4}, \lstinline{CC3D}, \lstinline{Paparazzi Chimera},
+\lstinline{CUAV v5 Plus}, etc.) and supported by initiatives
+like the Pixhawk \gls{hw} standardization. Pixhawk is a company that develops open
+standards for drone hardware, providing readily available \gls{hw}
+mechanical and electrical specifications and guidelines for drone development~\cite{pixhawk}.
+%
+The \lstinline{Pixhawk 4} (see Fig.~\ref{fig:osh-pixhawk4}) is a flight
+controller developed in collaboration by the Holybro manufacturer and the PX4
+\gls{sw} teams, and suitable for academic and commercial developers~\cite{pixhawk4}.
+It was released under the \gls{bsd} license, comprising two 32-bit ARM
+processors: an Cortex-M7 STM32F765 as the main \gls{fmu} processor and a
+Cortex-M3 STM32F100 as an \gls{io} coprocessor. The Pixhawk 4 comes with
+on-board sensors (accelerometers/gyroscopes, magnetometer, and barometer) and a
+\gls{gps} module, and supports the \gls{pwm}, \gls{can} \gls{i2c}, \gls{uart},
+\gls{spi}, for sensors and actuators operation. The \gls{uart} and telemetry
+interfaces are also available for communication with an off-board
+computer~\cite{pixhawk4} and remote controller. The Pixhawk 4 runs the PX4
+autopilot on top of the NuttX \gls{rtos}.
+%
+The \lstinline{CUAV v5 Plus} is another flight controller that uses the dual Arm
+Cortex-M7 architecture for \gls{fmu} and \gls{io}~\cite{arduPilot-cuavV5}. It
+was released under the \gls{bsd} license and runs the ArduPilot
+firmware. On the other hand, the \lstinline{Paparazzi Chimera} is an \gls{osh}
+flight controller that integrates all \gls{io} in the same same board, based on
+a ARM Cortex-M7 STM32F767 \gls{mcu}~\cite{paparazziChimera}. It was released
+under the \gls{gpl} license and runs the Paparazzi
+autopilot~\cite{paparazzi-github}. All the ARM-based platforms feature small
+on-board memory, typically up to 2 MB of Flash memory and 512 KB of \gls{sram} memory.
   
-  The \texttt{CC3D} is an \gls{osh} flight controller released
-  under the \gls{gpl} license~\cite{cc3d} (see
-  Fig.~\ref{fig:osh-cc3d}), running the \texttt{OpenPilot} firmware. It uses a STM 32-bit \gls{mcu} @ 90
-  MHz (128 kB Flash and 20 kB \gls{sram}). It comes with on-board gyroscope and
-  accelerometers, support to serial and \gls{usb} telemetry, up to ten motors,
-  and provides camera stabilization.
-  
-  \texttt{CUAV v5 Plus} is an advanced autopilot supporting the
-  \texttt{ArduPilot} firmware~\cite{arduPilot-cuavV5}, released under the \gls{bsd} license (see Fig.~\ref{fig:osh-pixhawk4}). It consists of a 32-bit ARM processor
-  for the \gls{fcs} (\gls{fmu}, 32-bit Arm Cortex M7 @ 216 MHz, 2 MB Flash, 512
-  KB \gls{ram}) and a 32-bit IOMCU coprocessor. It comes with on-board sensors
-  (accelerometers/gyroscopes, magnetometer, and barometer) and a \gls{gps}
-  module. It has \gls{pwm}, \gls{can} \gls{i2c}, \gls{uart}, \gls{spi} interfaces~\cite{arduPilot-cuavV5}.
-
 % Pixhawk 4
 \begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.7\textwidth]{./img/jpg/osh-pixhawk4.jpg} 
-  \caption{Pixhawk 4 flight controller~\cite{pixhawk4}}%
+  \caption[Pixhawk4 flight controller]{Pixhawk 4 flight controller~\cite{pixhawk4}\footnotemark}%
   \label{fig:osh-pixhawk4}
 \end{figure}
+\fnlicCCFour{foot:cc-lic}% CC licence
 
-% Paparazzi Chimera
+The companion computer-based platforms expands \gls{io} functionality through a daughter
+board, like the Erle-Brain 3 or PXFmini~\cite{ebeidUAVPlatformsSurvey2017}, while using the Arm Cortex-A to run a
+custom Linux \gls{gpos} with a preemptive kernel option that hosts the flight
+control stack~\cite{erle-brain}. The PXFMini, for example, weighs only fifteen
+grams and was assembled on top of a single-core Raspberry Pi Zero, providing
+on-board barometer and \gls{imu} sensors, expansion ports, and a triple
+redundant power supply~\cite{pxfmini}. Unfortunately, the Erle-Brain 3 and PXFmini were
+deprecated after the Erle Robotics company was bought out~\cite{pxfmini-deprec}.
+The PilotPi shield is another RaspberryPi-based platform, but targetted for hobbyists. The PilotPi shield provides a fully functional open-source
+solution for running PX4 autopilot directly on Raspberry Pi, requiring no
+proprietary drivers while offering open-source \gls{pcb} and
+schematics~\cite{px4-pilotpi}.
+
 \begin{figure}[!hbt]
   \centering
-  \includegraphics[width=0.6\textwidth]{./img/png/osh-paparazzi-chimera.png} 
-  \caption{Paparazzi Chimera flight controller~\cite{paparazziChimera}}%
-  \label{fig:osh-paparazzi-chimera}
-\end{figure}
-
-% CC3D
-\begin{figure}[htb!]
-  \centering
-  %
-  \begin{subfigure}[t]{0.8\textwidth}
-  \includegraphics[width=1.0\textwidth]{./img/png/osh-cc3d-conn.png}
-  \caption{Connection diagram}%
-  \label{fig:osh-cc3d-conn}
-  \end{subfigure}
-%
-  \begin{subfigure}[t]{0.35\textwidth}
-  \includegraphics[width=1.0\textwidth]{./img/png/osh-cc3d-board.png}
-  \caption{flight controller board}%
-  \label{fig:osh-cc3d-board}
-\end{subfigure}
-%
-  \caption{CC3D flight controller~\cite{cc3d}}%
-  \label{fig:osh-cc3d}
+  \includegraphics[width=0.8\textwidth]{./img/png/pilotpi-annotated} 
+  \caption[UAVIC: Raspberry Pi 4 + PilotPi shield]{UAVIC: Raspberry Pi 4 +
+    PilotPi shield (adapted from~\cite{px4-pilotpi})\footnotemark}%
+  \label{fig:pilotpi-annot}
 \end{figure}
 %
+%\fnlicReq{Elsevier}{5457890117132}%
+\fnlicCCFour{foot:pilotpi-annotated}%
 
+Fig.~\ref{fig:pilotpi-annot} illustrates the PilotPi shield.
+The Raspberry Pi 4 Model B (1) operates a Linux-based \gls{os}
+from the \gls{sd} card, directly exposing the \gls{csi} camera and
+\gls{usb} interfaces. This model features the Broadcom BCM2711
+\gls{soc}, containing a 64-bit quad-core Arm\textreg Cortex\textreg--A72 \gls{cpu} at
+1.8 GHz and VideoCore VI \gls{gpu} at 500 MHz~\cite{rpi4-specs,rpi4-bcm2711},
+with 8 GB LPDDR4-3200 SDRAM. Connectivity includes dual-band 802.11ac wireless,
+Bluetooth 5.0, Gigabit Ethernet, two \gls{usb} 3.0 ports, and two \gls{usb} 2.0 ports.
+%
+The sensor board (2) mounts atop the Raspberry Pi,
+providing \gls{gps}, telemetry, and \gls{rc} external interfaces mapped to
+\lstinline{/dev/ttySC0}, \lstinline{/dev/ttySC1}, and \lstinline{/dev/ttyAMA0},
+respectively. Onboard sensors include an accelerometer/gyroscope
+(\lstinline{ICM42688P}), magnetometer (\lstinline{IST8310}), and barometer
+(\lstinline{MS5611}) required by PX4.
+%
+The topmost layer contains the power board (3), handling power supply (8),
+monitoring (11), and motor actuation via \gls{pwm} (10) supported by the Linux
+\lstinline{PCA9685} driver. A header exposes unused pins, enabling additional
+connections such as a remote serial interface (UART5).
+
+
+  % This flight controller integrates all \gls{io} in the same board, and it uses the  @ 216 MHz (2 MB Flash,
+  % 512 Kb \gls{sram}) \gls{mcu}. It comes with on-board sensors
+  % (\gls{imu}, barometer, and pressure sensure), an XBEE modem holder for
+  % communications, and a dedicated serial link and power supply for the companion
+  % computer (e.g., Beaglebone, RaspberryPi, etc.).
+
+%   It has \gls{pwm}, \gls{can}
+%   \gls{i2c}, \gls{uart}, \gls{spi}, and servomotors interfaces~\cite{pixhawk4}.
+  
+% % Paparazzi Chimera
+% \begin{figure}[!hbt]
+%   \centering
+%   \includegraphics[width=0.6\textwidth]{./img/png/osh-paparazzi-chimera.png} 
+%   \caption{Paparazzi Chimera flight controller~\cite{paparazziChimera}}%
+%   \label{fig:osh-paparazzi-chimera}
+% \end{figure}
+  
+%   The \lstinline{CC3D} is an \gls{osh} flight controller released
+%   under the \gls{gpl} license~\cite{cc3d} (see
+%   Fig.~\ref{fig:osh-cc3d}), running the \lstinline{OpenPilot} firmware. It uses a STM 32-bit \gls{mcu} @ 90
+%   MHz (128 kB Flash and 20 kB \gls{sram}). It comes with on-board gyroscope and
+%   accelerometers, support to serial and \gls{usb} telemetry, up to ten motors,
+%   and provides camera stabilization.
+  
+% % CC3D
+% \begin{figure}[htb!]
+%   \centering
+%   %
+%   \begin{subfigure}[t]{0.8\textwidth}
+%   \includegraphics[width=1.0\textwidth]{./img/png/osh-cc3d-conn.png}
+%   \caption{Connection diagram}%
+%   \label{fig:osh-cc3d-conn}
+%   \end{subfigure}
+% %
+%   \begin{subfigure}[t]{0.35\textwidth}
+%   \includegraphics[width=1.0\textwidth]{./img/png/osh-cc3d-board.png}
+%   \caption{flight controller board}%
+%   \label{fig:osh-cc3d-board}
+% \end{subfigure}
+% %
+%   \caption{CC3D flight controller~\cite{cc3d}}%
+%   \label{fig:osh-cc3d}
+% \end{figure}
+% %
+  
 % CUAV V5 Plus
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=0.6\textwidth]{./img/png/osh-cuav-v5.png} 
-  \caption{CUAV v5 Plus flight controller~\cite{arduPilot-cuavV5}}%
-  \label{fig:osh-cuav-v5}
-\end{figure}
+% \begin{figure}[!hbt]
+%   \centering
+%   \includegraphics[width=0.6\textwidth]{./img/png/osh-cuav-v5.png} 
+%   \caption{CUAV v5 Plus flight controller~\cite{arduPilot-cuavV5}}%
+%   \label{fig:osh-cuav-v5}
+% \end{figure}
 
 \subsubsection{Commercial solutions}%
 \label{sec:commercial-solutions-hw}
-The commercial term here refers to the proprietary nature of the \gls{hw},
-opaque to the end-user. The
+The commercial solutions are generally proprietary in nature, and thus closed-source. The
 lack of transparency can be an issue, raising suspicions, like the on-going ban
 of the U.S. Army to the Dji
 drones~\cite{suasNewsDjiDronesBanned2017,djiBan2022}. Nonetheless, proprietary
 solutions represent 70\% of the market share, with Dji being the biggest
 manufacturer~\cite{droneAnalyst2021}.
+%
+The commercial solutions can be classified into three main categories: microcontroller-based, \gls{fpga}-based, and Companion Computer-based
+platforms.
+The \lstinline{SPRacing H7 Extreme} is a low-end flight controller featuring the
+Arm STM32H750 \gls{mcu}~\cite{spRacing}
+with an external 128 MB flash
+memory and all the common onboard sensors and interfaces. Targetted for the \gls{uav} racing market, it supports \gls{fpv} video
+streaming through the available camera interfaces~\cite{spRacing}. The
+Betaflight or Cleanflight \gls{sw} stack is commonly used in the racing
+\glspl{uav} such as this one, although it is compatible also with the \lstinline{ArduPilot} stack~\cite{arduPilot-SPRacing}.
 
-The commercial solutions can be classified into the following categories:
-\begin{enumerate}
-\item \textbf{ARM-based platorms}: The \texttt{SPRacing H7 Extreme} is a low-end
-  flight controller running \texttt{ArduPilot} \gls{sw} stack (see Fig.~\ref{fig:hw-SPRacing}). It features 
-  an STM32F750 ARM 32-bit \gls{mcu} @ 400 MHz, and comes with on-board sensors
-  (dual \gls{imu}, barometer). It supports \gls{i2c}, \gls{uart}, \gls{spi},
-  micro \gls{usb}, and camera interfaces~\cite{arduPilot-SPRacing}.
+% \paragraph{Microcontroller-based platforms}
 %  
-\item \textbf{\gls{fpga}-based solutions}:
-  The \texttt{Aerotenna OcPoC-Zynq Mini} is a \gls{fpga} + ARM \gls{soc} based
-  flight control platform (Xilinx Zynq Z-7010),  which supports ArduPilot and PX4 \gls{sw}
-  stacks~\cite{ocpoc} (see Fig.~\ref{fig:hw-ocpoc}).
-  The \gls{fpga} \gls{io}'s flexibility allows for rapid sensor integration and
-  customization of the flight controller \gls{hw}, adding capabilities
-  such as triple redundancy in \gls{gps}, magnetometers, and \glspl{imu}.
-  The \gls{fpga} is an Artix-7 with 28k logic cells, and the ARM \gls{soc} is
-  ARM A9 dual-core @ 667 MHz, including 512 MB \gls{ram} and 128 MB of flash
-  memory. It requires an \gls{sd} card of 16 GB for Linux booting and Data
-  logging.
-  Includes also on-board
-  sensors (dual \gls{imu}, barometer), 16 programmable tri-pin \gls{io} and 
-  10 programmable \glspl{io} supporting the \gls{i2c}, \gls{usb}, \gls{spi},
-  \gls{can}, \gls{csi}, and \gls{gsi} interfaces.
-%  
-\item \textbf{Companion computer-based platforms}: The Navio2 is a RaspberryPi-based
-  autopilot, which supports ArduPilot and PX4 \gls{sw}
-  stacks~\cite{arduPilot-Navio2} (see Fig.~\ref{fig:osh-NAVIO2}). Basically, it is an \gls{uav} extension board
-  (shield) for the RaspberryPi 2 or later, a quad-core 1 GHz computer running a
-  real-time Linux and ArduPilot flight stack. The shield includes on-board
-  sensors (dual \gls{imu}, barometer), a \gls{gnss} receiver, an \gls{rc}
-  \gls{io} coprocessor, extension ports exposing \gls{adc}, \gls{i2c}, and
-  \gls{uart} interfaces for sensors and radios, 14 \gls{pwm} servomotors
-  outputs, and a triple redundant power supply.
-
-  The PixC4-Jetson (Fig.~\ref{fig:hw-horizonJetson}) is a high-end \gls{fmu}, powerful single board computer and
-  peripheral support system (USB, MIPI, Ethernet, M.2 slot, etc.) in a small
-  form factor, designed to be integrated into end-user
-  platforms~\cite{arduPilot-horizonJetson}. It supports the ArduPilot and PX4
-  \gls{sw} stacks. The term
-  ``PixC4'' is derived from the Pixhawk, on which the \gls{fmu} design is based
-  (FMUv5) and C4, representing Command, Control, Compute and Communication. It
-  is available as a turnkey solution including software pre-flashed on the
-  Nvidia Jetson companion~\cite{arduPilot-horizonJetson}, enabling the following
-  features: \gls{udp} telemetry (MAVLink); \gls{lte} connection management with
-  Layer-2 peer to peer \gls{vpn}; multiple-endpoint video encoding pipelines, web
-  interface for configuration and remote terminal access; scalable and secure
-  cloud connectivity to Horizon31's U.S. servers and optional access to their
-  cloud \gls{gcs} and low-latency web\gls{rtc} video distribution system. It
-  feaures the STM32H743 processor with STM IO coprocessor, integrated Nvidia
-  Jetson companion computer, ethernet switch (3 port), \gls{usb} 2.0 Hub (7
-  port), cellular/\gls{lte} Modem support, and on-board sensors (\gls{imu},
-  barometer, and compass). It supports the \gls{pwm}, \gls{i2c}, \gls{uart},
-  \gls{spi}, \gls{can}, and \gls{csi}. It is important to note that the
-  \gls{fmu} derives from the Pixhawk FMUv5, but can be sold commercially as
-  a proprietary solution because it is released under the \gls{bsd} license,
-  which does not obligate to make the modifications to the design open to the
-  public. Obviously, this is very attractive for companies who want to
-  commercialize drones, but do not want to invest the time and money to
-  developed an end-to-end solution.
-\end{enumerate}
 
 % SPRacing H7 extreme
-\begin{figure}[htb!]
-  \centering
-  %
-  \begin{subfigure}[t]{0.25\textwidth}
-  \includegraphics[width=1.0\textwidth]{./img/png/hw-SPracing-H7-extreme.png} 
-%  \caption{Connection diagram}%
-%  \label{fig:osh-cc3d-conn}
-  \end{subfigure}
+% \begin{figure}[htb!]
+%   \centering
+%   %
+%   \begin{subfigure}[t]{0.25\textwidth}
+%   \includegraphics[width=1.0\textwidth]{./img/png/hw-SPracing-H7-extreme.png} 
+% %  \caption{Connection diagram}%
+% %  \label{fig:osh-cc3d-conn}
+%   \end{subfigure}
+% %
+%   \begin{subfigure}[t]{0.25\textwidth}
+%   \includegraphics[width=1.0\textwidth]{./img/png/hw-SPracing-H7-extreme2.png} 
+%  % \caption{flight controller board}%
+%  % \label{fig:osh-cc3d-board}
+% \end{subfigure}
+% %
+%   \caption{SPRacing H7 extreme flight controller~\cite{arduPilot-SPRacing}}%
+%   \label{fig:hw-SPRacing}
+% \end{figure}
 %
-  \begin{subfigure}[t]{0.25\textwidth}
-  \includegraphics[width=1.0\textwidth]{./img/png/hw-SPracing-H7-extreme2.png} 
- % \caption{flight controller board}%
- % \label{fig:osh-cc3d-board}
-\end{subfigure}
-%
-  \caption{SPRacing H7 extreme flight controller~\cite{arduPilot-SPRacing}}%
-  \label{fig:hw-SPRacing}
-\end{figure}
-%
+
+% \paragraph{FPGA-based platforms}
+The \lstinline{Aerotenna OcPoC-Zynq Mini} is a \gls{fpga} + ARM \gls{soc} based
+  flight control platform,  which supports the ArduPilot and PX4 \gls{sw}
+  stacks~\cite{ocpoc} (see Fig.~\ref{fig:hw-ocpoc}). Released back in 2017, it
+  is currently discontinued~\cite{ocpoc-discontinued}.
+  The Artix-7 \gls{fpga}, with 28 thousand logic cells, provided \gls{ai}
+  capabilities and \gls{io}'s flexibility, crucial for rapid sensor integration
+  and customization of the flight controller \gls{hw}. The ARM Cortex-A9
+  dual-core runs Linux for data logging and processing, and includes 512 MB
+  \gls{ram} and 128 MB of flash memory. The OcPoc-Zynq Mini supported
+  triple-redundancy in the \gls{gps}, magnetometers, and \glspl{imu} on top of
+  the conventional on-board sensors, programmable in the
+  \gls{fpga}~\cite{ocpoc}.
 
 % Ocpoc
 \begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.5\textwidth]{./img/png/hw-ocpoc-zynq-mini.png} 
-  \caption{Aerotenna OcPoc-Zynq Mini flight controller~\cite{ocpoc}}%
+  \caption[Aerotenna OcPoc-Zynq Mini flight controller]{Aerotenna OcPoc-Zynq Mini flight controller~\cite{ocpoc}\footnotemark}%
   \label{fig:hw-ocpoc}
 \end{figure}
+%
+\fnlicCCFour{foot:ocpoc}%
+
+%\paragraph{Companion Computer-based platforms}
+The most notable companion computer-based platforms are the Navio2,
+the PixC4-Jetson, and the Auterion Skynode X/S.  
+Similarly to PilotPi, the \lstinline{Navio2} flight controller consists of a
+Raspberry Pi shield, but the hardware design is closed-source.
+Navio2 runs a custom version of the Raspberry Pi OS (debian-based)~\cite{navio2-sw}, which supports ArduPilot and PX4 \gls{sw}
+stacks~\cite{arduPilot-Navio2,navio2-px4}.
+  The shield includes on-board
+  sensors (dual \gls{imu}, barometer), a \gls{gnss} receiver, an \gls{rc}
+  \gls{io} coprocessor, \gls{i2c}, and
+  \gls{uart} interfaces for sensors and radios, 14 \gls{pwm} servomotors
+  outputs, and a triple redundant power supply~\cite{arduPilot-Navio2}.
 
 % NAVIO2
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=1.0\textwidth]{./img/png/osh-NAVIO2.png} 
-  \caption{NAVIO2 flight controller~\cite{arduPilot-Navio2}}%
-  \label{fig:osh-NAVIO2}
-\end{figure}
+% \begin{figure}[!hbt]
+%   \centering
+%   \includegraphics[width=1.0\textwidth]{./img/png/osh-NAVIO2} 
+%   \caption{NAVIO2 flight controller~\cite{arduPilot-Navio2}}%
+%   \label{fig:osh-NAVIO2}
+% \end{figure}
+
+  The \lstinline{PixC4-Jetson} (Fig.~\ref{fig:hw-horizonJetson}) is a
+  professional high-end flight controller that integrates an dual-ARM
+  \gls{fmu} and \gls{io} processors, and the Nvidia Jetson companion
+  computer~\cite{arduPilot-horizonJetson}. This flight controller supports the
+  ArduPilot and PX4 \gls{sw} stacks and can be remotely configured through a
+  remote terminal~\cite{arduPilot-horizonJetson}. Thus, extra security measures are required, with the
+  PixC4-Jetson providing a \gls{lte} connection management with a Layer-2 peer
+  to peer \gls{vpn} and a secure cloud connection to Horizon31's
+  U.S. servers~\cite{arduPilot-horizonJetson}. The live video streaming is
+  assured by multiple-endpoint encoding pipelines and optional access to
+  Horizon's cloud low-latency web\gls{rtc} video distribution system.
+  %
+  The Nvidia Jetson companion computer is well-suited fo computer vision,
+  machine learning, and \gls{ai} tasks, further enhancing the capabilities of
+  the \gls{uav}~\cite{jetson-docs}.
 
 % Horizon Jetson
-\begin{figure}[!hbt]
-  \centering
-\end{figure}
-
 \begin{figure}[htb!]
   \centering
   %
@@ -1193,37 +1265,147 @@ The commercial solutions can be classified into the following categories:
   \label{fig:hw-horizonJetson-arch}
 \end{subfigure}
 %
-  \caption{Horizon31 PixC4-Jetson flight controller~\cite{arduPilot-horizonJetson}}%
+  \caption[Horizon31 PixC4-Jetson flight controller]{Horizon31 PixC4-Jetson flight controller~\cite{arduPilot-horizonJetson}\footnotemark}%
   \label{fig:hw-horizonJetson}
 \end{figure}
 %
+\fnlicCCFour{foot:jetson-hw-sw}%
 
-%\subsubsection{Gap analysis}%
-\label{sec:gap-analysis-hw}
-Comparison between the open-source and commercial solutions
+% Skynode X
+Another relevant option in the commercial market is the \lstinline{Auterion Skynode X},
+combining a flight controller, a mission computer and \gls{lte} connectivity all
+in on product~\cite{skynodeXWebsite} in a compact form factor.
+%
+The \gls{fmu}, based on the Pixhawk FMUv6 architecture, comprises the 
+a STM32H753 microcontroller and the STM32F103 \gls{io} coprocessor, and a
+triple-redundant inertial sensor to minimize failure risk~\cite{skynodeXDatasheet}.
+It supports up to 8 \gls{uart}, a dual redundant \gls{can},
+100Base-TX Ethernet, 16 \gls{pwm} outputs, 2 \gls{i2c} and 1 \gls{spi}
+connections. The \gls{fmu} runs an enterprise-hardened version of PX4, labelled
+as Auterion PX4 (APX4)\cite{skynodeXDatasheet}.
+%
+% \begin{figure}[!hbt]
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{./img/pdf/skynodeX-datasheet-hw.pdf} 
+% %  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
+%   %\caption[Virtualization mind map]{Virtualization mind map}%
+%   \caption{Auterion Skynode X}%
+%   \label{fig:skynode-x-hw}
+% \end{figure}
+%
+The mission computer comprises a ARM Cortex-A53 Quad core \gls{cpu} running at
+1.8 GHz and two embedded \glspl{gpu} -- GCNanoUltra for 3D acceleration and GC320 for
+2D acceleration -- with 4 GB \gls{ram} and 16 GB (\gls{emmc}) + 128 GB (internal
+\gls{sd} card) of storage~\cite{skynodeXDatasheet}. Wi-Fi and Bluetooth 5 can be used for low range
+wireless communications and a 4G \gls{lte} module for long range ones. It
+contains Ethernet and \gls{usb} 2.0 high-speed interfaces only, as \gls{usb} 3.0 usage is discouraged
+due to \gls{gps} interference~\cite{skynodeXDatasheet}.
+The mission computer runs Auterion
+\gls{os} (Linux-based), which communicates with the Autopilot via a proprietary
+\gls{sdk} (Auterion \gls{sdk})~\cite{skynodeX-px4}.
+%
+It supports multicopter, \gls{vtol} airplane and airplane vehicles with a
+takeoff weight of up to 500 kilograms. The price tag is circa 1900 USD
+dollars\cite{skynodePrice}.
 
-Table with multiple dimensions
+Auterion also announced in June 2024, a compact, low-cost version -- the
+Auterion Skynode S -- integrating the \gls{fmu} and mission computer in a 49 x
+37 millimeters footprint~\cite{skynodeS-pressRelease}. It features the FMUv6x
+flight management unit from the current Skynode X family and a powerful mission
+computer with a dedicated 2.3 \gls{tops} \gls{npu} for \gls{ai} and computer
+vision applications~\cite{skynodeS-pressRelease}.
+%
+% \begin{figure}[!hbt]
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{./img/pdf/skynodeS-hw.pdf} 
+% %  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
+%   %\caption[Virtualization mind map]{Virtualization mind map}%
+%   \caption{Auterion Skynode S}%
+%   \label{fig:skynode-s-hw}
+% \end{figure}
+%
+The \gls{ai} capabilities of the Skynode S enabled the deployment of a
+autonomous target tracking system, even for moving targets, which has proven its resilience against
+\gls{gps} jamming or denial of service~\cite{skynodeS-noJamming}. This enabled
+Ukraine to face the Russian electronic warfare, and increasing the probability
+of mission's success from 20\% to 90\%~\cite{skynodeS-noJamming-2}.
+
+% %\subsubsection{Gap analysis}%
+% \label{sec:gap-analysis-hw}
+% Comparison between the open-source and commercial solutions
+
+% \begin{table}[h]
+% \centering
+% \small
+% \caption{UAV Hardware Gap Analysis}
+% \label{tab:hw-gap-analysis}
+% \begin{tabularx}{\textwidth}{|l|X|X|X|}
+% \hline
+% \textbf{Dimension} & \textbf{Open-Source Solutions} & \textbf{Commercial Solutions} & \textbf{Gap} \\
+% \hline
+% Transparency & Full hardware design disclosure (schematics, BOM, PCB layouts) & Proprietary designs with limited disclosure & Open-source provides full auditability; commercial lacks transparency \\
+% \hline
+% Processor Architecture & ARM-based MCUs (Cortex-M7/M3 @ 216-400MHz) & Mixed: MCUs, FPGA+ARM SoCs, or integrated mission computers (Quad-core A53 + NPU) & Commercial offers higher compute diversity (FPGA/NPU) \\
+% \hline
+% Memory & Limited (2MB Flash/512KB RAM max) & Expanded resources (4GB RAM + 128GB storage in Skynode) & Commercial solutions offer >100× memory capacity \\
+% \hline
+% Sensors & Basic IMU/barometer/magnetometer & Advanced redundancy (triple IMU/GPS) and AI-capable sensors & Commercial enables fault tolerance and AI processing \\
+% \hline
+% Connectivity & UART/SPI/I²C/CAN & Enterprise features: LTE, VPN, Ethernet switches & Commercial provides industrial-grade networking \\
+% \hline
+% AI Capabilities & None & Dedicated NPUs (2.3 TOPS) for computer vision & Commercial enables edge AI for GPS-denied navigation \\
+% \hline
+% Power Management & Not specified & Triple-redundant power systems & Commercial prioritizes fail-safe power \\
+% \hline
+% Price & Low-cost (COTS components) & Premium pricing (\$1,900 for Skynode X) & 10-100× cost difference \\
+% \hline
+% License & Permissive (BSD) or restrictive (GPL) & Proprietary or OSS-based proprietary extensions & Commercial leverages permissive licenses for closed ecosystems \\
+% \hline
+% Target Market & Academic/hobbyist & Enterprise/military & Commercial focuses on mission-critical applications \\
+% \hline
+% \end{tabularx}
+% \end{table}
 
 \subsection{UAV Reference Software}%
 \label{sec:uav-ref-sw}
-In this section the reference software for \glspl{uav} is discussed. An overview
-and the \gls{sw} architecture is presented. Then, the open-source and
-commercial solutions are discussed, and compared in the gap-analysis.
+In this section we discuss the reference software for \glspl{uav}.
+Firstly, we present an overview over the \gls{sw} architecture. Then, we analyze
+in more depth the open-source and commercial software solutions for \glspl{uav}.
 
 \subsubsection{Overview and Architecture}%
 \label{sec:overv-arch-sw}
 Fig.~\ref{fig:uav-sw-arch} illustrates the high-level abstraction of the
-most common structure of \gls{uav} \gls{sw} architecture~\cite{leccadito2018survey,px4-sysArch}. In orange, we have the main computing
-platforms --- the flight controller (\gls{fcs}), e.g., Pixhawk, the \gls{gcs}
-(e.g., a desktop/laptop computer), and,
-optionally, the companion computer, e.g., a RaspberryPi --- in purple the
-physical \gls{hw} --- sensors, actuators, and payload --- in green the
-layers of the \gls{sw} stack, and the arrows indicate the communication link and
+most common structure of \gls{uav} \gls{sw}
+architecture~\cite{leccadito2018survey,px4-sysArch}.
+%
+The main computing platforms are depicted in orange: (1) the flight controller
+or \gls{fmu} (e.g., Pixhawk); (2) the \gls{gcs} (e.g., a desktop/laptop computer);
+(3) and, optionally, the companion computer (e.g., a Raspberry Pi).
+The companion computer provides additional features, but crucial for autonomous
+flights, such as collision avoidance and prevention, odometry or payload control
+(camera, \gls{lidar}, etc.). Furthermore, the companion computer can assist in
+the \gls{uav}'s navigation in \gls{gps}-denied and/or communications-denied
+environments, using \gls{ai}-based software components (e.g., Auterion
+Skynode~\cite{skynodeS-noJamming}).
+%
+The physical \gls{hw} is depicted in purple (sensors, actuators, and payload),
+while the layers of the \gls{sw} stack are shown in green. The arrows indicate the communication link and
 associated protocols.
 
-The \gls{sw} stack structure is the same for the
-flight controller and the companion computer:
-\begin{itemize}
+% UAV SW Arch
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/pdf/uav-sw-arch.pdf} 
+%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
+  %\caption[Virtualization mind map]{Virtualization mind map}%
+  \caption{UAV SW architecture: most common structure}%
+  \label{fig:uav-sw-arch}
+\end{figure}
+
+The flight controller and companion computer \gls{sw} stack structure is
+similar, and is comprised of four layers:
+
+\begin{enumerate}
 \item \textbf{Application Layer}: this layer is where the applications/tasks
   reside, providing the high-level functionalities of the system. In the flight
   controller we have the critical tasks, namely,
@@ -1236,14 +1418,17 @@ flight controller and the companion computer:
 \item \textbf{Middleware Layer}: the middleware is an intermediate layer,
   responsible for abstracting the interface with the \gls{os} and the
   communications through message passing --- using real-time and or asynchronous
-  protocols, such as \gls{rtps}, MAVLink, or \texttt{uORB} --- and for providing
-  an extra layer of security enforcing \gls{csp} mechanisms.
+  protocols, such as \gls{rtps}, MAVLink, or \gls{uorb} --- and for providing
+  an extra layer of security enforcing \gls{csp} mechanisms. The flight
+  controller communicates with the \gls{gcs} through a Wi-Fi connection and
+  optionally with the Companion Computer through a fast serial/Ethernet
+  connection.
 %
 \item \textbf{\gls{os} Layer}: the \gls{os} provides the basic services for
   system's operation and a straightforward environment for application's
   development. The flight controller hosts a \gls{rtos} to meet the stringent
   requirements and deadlines of the \gls{uav}'s control, such as,
-  \texttt{NuttX}, \texttt{FreeRTOS}, \texttt{VxWorks}, and \texttt{ChibiOS}. On
+  \lstinline{NuttX}, \lstinline{FreeRTOS}, \lstinline{VxWorks}, and \lstinline{ChibiOS}. On
   the other hand, the companion computer hosts a \gls{gpos}, as the applications
   on top have soft real-time requirements. Furthermore, it provides a much
   better bootstrapping environment for ``general'' software development than a
@@ -1252,113 +1437,103 @@ flight controller and the companion computer:
 \item \textbf{Device Driver Layer (\gls{hal})}: this layer abstracts the
   underlying \gls{hw}, providing a tractable interface for the \gls{os} for data
   acquisition and motors' actuation.
-\end{itemize}
+\end{enumerate}
 
 The \gls{gcs} \gls{sw} (e.g., \emph{QGroundControl}) typically runs on a desktop/laptop computer or mobile
 device providing real-time monitoring of the flight superimposed on a map and
-\gls{uav}'s control functionalities via companion computer communication. The
+\gls{uav}'s control functionalities, communicating directly with the flight
+controller or indirectly via companion computer. The
 \gls{sw} interface between both systems is achieved through the use of off-board
 \glspl{api} or \glspl{sdk}, like \gls{ros} or MAVSDK~\cite{px4-sysArch}. 
-
-% UAV SW Arch
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=1.0\textwidth]{./img/pdf/uav-sw-arch.pdf} 
-%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
-  %\caption[Virtualization mind map]{Virtualization mind map}%
-  \caption{UAV SW architecture: most common structure}%
-  \label{fig:uav-sw-arch}
-\end{figure}
 
 \subsubsection{Open-source solutions}%
 \label{sec:open-source-solut-sw}
 \glsxtrfull{oss} solutions, like their \gls{hw} counterparts, have been
-developed to provide more transparency, extensibility, flexibility,
-maintenability, while trying to be cost-effective. \gls{oss} means that the
+developed to provide more transparency, flexibility, and
+maintainability, while trying to be cost-effective. \gls{oss} means that the
 \gls{sw}'s source code is released under free/libre
-terms~\cite{freeGNU}.
-
-The three most prominent \gls{oss} solutions at the moment are \texttt{PX4},
-\texttt{ArduPilot}, and \texttt{Paparazzi UAS}.
-
-\paragraph{PX4}
+terms~\cite{freeGNU}. The most prominent \gls{oss} autopilots at the moment are
+\lstinline{PX4}~\cite{px4-github},
+\lstinline{ArduPilot}~\cite{arduPilot-github}, and
+\lstinline{Paparazzi UAS}~\cite{paparazzi-github}.
+Other flight-control software, such as
+\lstinline{Betaflight}~\cite{betaflight-github},
+\lstinline{Cleanflight}~\cite{cleanflight-github}, and
+\lstinline{Crazyflie}~\cite{crazyflie-home}, targets the \gls{fpv} racing
+market and assumes expert manual piloting skills. In this context, manual
+control is the priority, so autopilot features are generally unnecessary and not
+supported.
 %
-PX4 is an autopilot flight stack for drones, started in 2012, released under the
-permissible \gls{bsd}-2 license, supporting different \gls{uav}'s airframes and
-even others \glspl{uv}. The source code core is on C/C++ and it is available on
-Github~\cite{px4-github}. Several commercially available drones have adopted
-\texttt{PX4}, and a wider range supports it~\cite{px4-home}.
-It supports NuttX and \gls{ros} operating systems~\cite{jargalsaikhan2022architectural}.
-
+%
+% \paragraph{PX4}
+%
+\lstinline{PX4} is an autopilot flight stack for \glspl{uv}, with a strong focus on the
+\glspl{uav}. Started in 2012 and released under
+a permissive \gls{bsd}-2 license~\cite{px4-github}, it is widely used in
+industrial and commercial domains
+\lstinline{PX4}~\cite{skynodeX-px4,spRacing-px4}. Like ArduPilot, it supports a
+broad range of \gls{uav} airframes and other \glspl{uv}.
+%
 PX4 is loaded onto
 the flight controller \gls{hw} using the \emph{QGroundControl}
-application. \emph{QGroundControl} is also used to configure PX4 and interface
-the flight controller. A \gls{rc} unit can be used to manually control the
-drone.
-
-PX4 uses the MAVLink protocol to communicate with the flight controller, but
-also supports the \gls{rtps} protocol. It uses its message \gls{api} ---
-\texttt{uORB} --- for data transfer between its internal modules. It is
-automatically started on bootup, and messages are defines as separate
-\texttt{.msg} files in the \texttt{msg/} folder~\cite{jargalsaikhan2022architectural}. PX4 uses
-several sensors for \gls{uav}'s control or autonomous operation. The minimum set
-of sensors are the accelerometers/gyroscopes, magnetometer and barometer, with a
-\gls{gps} being required for automatic modes. PX4 produces logs durint flights, which can be analyzed using \emph{Flight
-  Review}, or \emph{Px4Tools}~\cite{glossner2021overview}. 
-
-\paragraph{ArduPilot}
+application and runs atop of the NuttX OS, although ROS support is also
+available~\cite{jargalsaikhan2022architectural}. \emph{QGroundControl} is also
+used to configure PX4 and interface the flight controller, and an \gls{rc} unit
+can be used to manually control the drone.
 %
-ArduPilot is an autopilot flight stack for drones, started in 2009,
-released under the more restrictable \gls{gpl}v3 license, supporting different \gls{uav}'s airframes and
-even others \glspl{uv}. The source code core is on C/C++ and it is available on
-Github~\cite{arduPilot-github}.
-It supports \emph{Linux} and \emph{ChibiOS} operating systems~\cite{jargalsaikhan2022architectural}.
+PX4 uses the MAVLink protocol to communicate with the flight controller and the
+\gls{uorb} message \gls{api} for data transfer between its internal
+modules~\cite{px4-sysArch,jargalsaikhan2022architectural}. It requires an
+\gls{imu}, magnetometer and barometer for manual modes, but for autonomous
+missions a \gls{gps} must be used. Flight logs are generated upon takeoff and
+can be analyzed to assess the flight behavior using \emph{Flight Review}, or
+\emph{Px4Tools}~\cite{glossner2021overview}. 
 
-It is installed on more than a million vehicles and runs on a large number of
-\gls{osh} platforms such as \emph{Pixhawk}. \emph{ArduPilot} features include:
+%\paragraph{ArduPilot}
+%
+\lstinline{ArduPilot} is another autopilot flight stack for \glspl{uv}, also with a strong focus
+on \glspl{uav}. Started in 2009, it was released under the more restrictable
+\gls{gpl}v3 license~\cite{arduPilotHistory}. It supports the \emph{Linux} and
+\emph{ChibiOS} operating
+systems~\cite{arduPilot-github,jargalsaikhan2022architectural} and runs on a large number of
+\gls{osh} platforms such as \emph{Pixhawk}.
+%
+ArduPilot features, like PX4~\cite{px4-features}, include:
 multiple flight modes (manual, semi- and full-autonomous) with multiple
-stabilization options; progammable missions with 3D waypoints and optional
+stabilization options; programmable missions with 3D waypoints and optional
 geofencing; support for multiple sensors and buses; fail-safe actions and
 support for navigation in \gls{gps} denied environments~\cite{arduPilot-home}.
-
-\emph{ArduPilot} supports the MAVLink protocol for communication with
+%
+ArduPilot supports the MAVLink protocol for communication with
 \glspl{gcs} and companion computers~\cite{arduPilot-home}. Mission commands are
 stored in \gls{eeprom} and executed one-by-one when the vehicle is switched into
-\emph{Auto} mode.
+\emph{Auto} mode~\cite{ardupilot-mavlink}.
 
-
-\paragraph{Paparazzi UAS}
+% \paragraph{Paparazzi UAS}
 %
-\emph{Paparazzi UAS} is an autopilot flight stack for drones, started in 2003,
-released under the \gls{gpl}v2 license, supporting different \gls{uav}'s airframes \glspl{uv}~\cite{paparazzi-home}. The source code core is on C (and a little C++) and it
-is available on Github~\cite{paparazzi-github}.
-It supports the \emph{ChibiOS} operating system~\cite{jargalsaikhan2022architectural}.
+\lstinline{Paparazzi UAS} is the oldest autopilot flight stack for drones
+currently active. Started in 2003, it was released under the \gls{gpl}v2
+license, supporting different \gls{uav}'s airframes~\cite{paparazzi-home}.
+It runs atop of the \emph{ChibiOS} operating
+system~\cite{paparazzi-sysOverv} and uses its own \emph{PPRZLINK} protocol for communication
+with \glspl{gcs} and companion computers~\cite{paparazzi-sysOverv}, transferring
+data between the modules via the proprietary middleware \emph{AirBorne Ivy} \gls{abi}~\cite{jargalsaikhan2022architectural}.
 
-It was designed mainly for autopilot applications, for portability, and
-flexibility, with the ability to control multiple aircraft systems within the
-same system~\cite{paparazzi-home}.
+% \paragraph{}
+Jargalsaikhan et al.~\cite{jargalsaikhan2022architectural} surveyed
+flight-control software portability at the module level. They examined the
+overall structure, messaging mechanisms and supported \gls{os} in academic and \gls{oss} solutions and compared them against portability requirements:
+simplicity, modularity, centralized messaging, standard interfaces, \gls{hal}
+implementation, and documentation. The authors concluded the following: (1) only
+\emph{ArduPilot} and \emph{PX4} implement a \gls{hal}; (2) \emph{ArduPilot}
+lacks a message-centralization mechanism; (3) despite being open source, all
+surveyed systems use proprietary messaging interfaces, which hinders
+portability; (4) and documentation, while generally available, is sometimes hard
+to understand or partially outdated. Fig.~\ref{fig:uav-sw-arch-oss-compar} shows the \gls{sw}
+stack layers and modules for the aforementioned \gls{oss} solutions and for
+\emph{mpFCS}, the portable \gls{fcs} developed by Jargalsaikhan et
+al.~\cite{jargalsaikhan2022architectural}.
 
-\emph{Paparazzi UAS} uses its own \emph{PPRZLINK} protocol for communication
-with \glspl{gcs} and companion computers~\cite{jargalsaikhan2022architectural}. It uses a proprietary middleware \gls{abi} ---
-\emph{AirBorne Ivy} --- to transfer data between modules in a straightforward
-way. Messages are defined in a \gls{xml} file with an unique name and \emph{id}.
-\emph{Auto} mode.
-
-\paragraph{}
-Jargalsaikhan et al.~\cite{jargalsaikhan2022architectural} conducted a survey on the flight control software
-portability, more specifically at a module-level basis, analyzing several
-academia and \gls{oss} solutions features --- general structure, messaging
-mechanisms, and supported \glspl{os} --- and comparing them with the portability
-requirements --- simplicity, moduarity, centralized messages, standard
-interfaces, \gls{hal}'s implementation, and documentation. It found out that,
-from the aforementioned \gls{oss} solutions: only \emph{ArduPilot} and
-\emph{PX4} implement a \gls{hal}; \emph{ArduPilot} does not implement a message
-centralization mechanism; although open-source, all use proprietary messaging
-interfaces, which hinders portability; and that although well documented,
-sometimes is hard to understand and/or is partially
-outdated. Fig.~\ref{fig:uav-sw-arch-oss-compar} illustrates the \gls{sw} stack
-layers and modules for the abovementioned \gls{oss} solutions and the
-\emph{mpFCS} --- the portable \gls{fcs} developed by Jargalsaikhan et al.~\cite{jargalsaikhan2022architectural}.
 
 % UAV SW Arch OSS Comparison
 \begin{figure}[!hbt]
@@ -1377,51 +1552,97 @@ layers and modules for the abovementioned \gls{oss} solutions and the
 \label{sec:commercial-solutions-sw}
 Typically, the commercial proprietary solutions do not disclose information
 about the product. They provide extensibility through the use of
-\glspl{sdk}, like the Dji drones~\cite{djiSDK}, enabling the end-user to use
+\glspl{sdk}, like the Dji~\cite{djiSDK} or the Parrot drones\cite{parrot-sdk}, enabling the end-user to use
 extra features, but requires specialized knowledge.
-
-On the other hand, and as aforementioned, some commercial solutions can explore
+%
+On the other hand, some commercial solutions can explore
 more permissible \gls{oss} licenses, like the \gls{bsd} license provided by PX4,
-to add extra functionalities and bundle it as a closed, commercial, product.
+to add extra functionalities and bundle it as a closed, commercial,
+product. This is exactly the case for the Auterion PX4 (PX4) autopilot, a
+enterprise-hardened autopilot that runs on the Auterion \glspl{fmu}.
+Fig.~\ref{fig:uav-sw-arch-auterion} illustrates the Auterion software stack.
+
+% UAV SW Arch
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=1.0\textwidth]{./img/pdf/uav-main-sw-arch-auterion.pdf} 
+%  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
+  %\caption[Virtualization mind map]{Virtualization mind map}%
+  \caption{UAV SW architecture: Auterion software stack}%
+  \label{fig:uav-sw-arch-auterion}
+\end{figure}
+
+The \lstinline{Auterion Skynode} combines the an FMUv6X-based Pixhawk
+\gls{fmu} and the companion/mission computer into a single board~\cite{auterion-sw}. The flight
+controller runs the autopilot stack (APX4) on top of the NuttX \gls{rtos}
+licensed under the Apache 2.0 license which allows for proprietary reuse. The
+mission computer runs the Auterion \gls{os} (AOS), a customized embedded Linux
+\gls{os}, to support additional features, like collision avoidance and
+prevention, odometry, or camera control~\cite{auterion-sw}. These additional features or services,
+are containerized in a Docker image to increase isolation and enable easy and
+fast system update, minimizing the dependencies. However, to optimize storage
+requirements, developers are instructed to: (1) package these services into a
+single application (e.g., \lstinline{Companion App}), ensuring the user only needs to handle a single
+\lstinline{.auterionos} file; (2) write a common base \lstinline{Dockerfile} for
+a shared environment for the deployed services~\cite{auterion-sw-services}. Thus, AOS software development
+follows the microservices architecture based on the Docker technology.
+The AOS' applications can query the autopilot or issue commands to it using the
+provided \glspl{api} in the \lstinline{Auterion SDK}.
+%
+The \lstinline{Auterion Skynode} can be controlled using a \gls{rc} transmitter
+or software running on the \gls{gcs}. The \lstinline{Auterion Mission Control}~\cite{auterion-missionControl}
+is a ground control software specialized for Auterion vehicles, very similar to
+\lstinline{QGroundControl}, enabling the UAV's remote control.
+The \lstinline{Auterion Suite}~\cite{auterion-suite} is a fleet management \gls{sw}, providing
+real-time information about the UAV, predictive maintenance actions, flight
+analysis, and \gls{ota} updates.
 
 If, however, we expand the search to include any proprietary
-software component, such as the \texttt{VxWorks} \gls{rtos} then the results'
+software component, such as the \lstinline{VxWorks} \gls{rtos} then the results'
 list becomes significantly larger, namely, the Northrot Grumman X-47B
 \gls{uav}~\cite{vxWorks-uav-northrop}, the Airbus
 Helionix~\cite{vxWorks-uav-aribus-helionic}, and the Airbus
 Atlante~\cite{vxWorks-uav-aribus-atlante}.
-
-On academia, \emph{VxWorks} was also used as \gls{rtos} for \gls{uav}
-applications. Chong and Li~\cite{vxworksFCS} designed a \gls{fcs} for small
-\glspl{uav} using \emph{VxWorks} as an \gls{rtos} to support tasks partitioning
-meeting the real-time requirements. Fig.~\ref{fig:vxworks-sw-arch} illustrates
-the software framework designed considering three main layers: functional layer
-(application + middleware), \gls{os} layer, and device driver layer. The authors
-claimed remarkable improvements in the reliability and real-time capability of
-the \gls{fcs} using \texttt{VxWorks}, due to its multitasking capabilities, but did not provide direct comparison with
-other \glspl{rtos}.
-
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=0.8\textwidth]{./img/png/vxworks-sw-arch.png} 
-  \caption[SW framework for an UAV application based on the VxWorks
-    RTOS~]{SW framework for an UAV application based on the VxWorks
-    RTOS~\cite{vxworksFCS}\footnotemark}%
-  \label{fig:vxworks-sw-arch}
-\end{figure}
 %
-\fnlicReq{IEEE}{5457890117132}%
 
-%\subsubsection{Gap analysis}%
-\label{sec:gap-analysis-sw}
-Comparison between the open-source and commercial solutions
+% \subsubsection{Gap analysis}%
+% \label{sec:gap-analysis-sw}
+% Comparison between the open-source and commercial solutions
 
-Table with multiple dimensions
+% \begin{table}[h]
+% \centering
+% \small
+% \caption{UAV Software Gap Analysis}
+% \label{tab:sw-gap-analysis}
+% \begin{tabularx}{\textwidth}{|l|X|X|X|}
+% \hline
+% \textbf{Dimension} & \textbf{Open-Source Solutions} & \textbf{Commercial Solutions} & \textbf{Gap} \\
+% \hline
+% License & GPL/BSD licenses with source access & Proprietary SDKs or OSS-based closed products & Commercial restricts modification rights \\
+% \hline
+% Middleware & Custom protocols (uORB, PPRZLINK) & Standardized microservices with Docker containers & Commercial offers modern containerization \\
+% % \hline
+% % Portability & Limited HAL implementation & Enterprise-hardened portability & Commercial provides production-grade abstraction \\
+% \hline
+% API Extensibility & ROS/MAVSDK support & Proprietary SDKs with cloud integration & Commercial enables tighter ecosystem control \\
+% \hline
+% Real-Time Performance & RTOS-based (NuttX, ChibiOS) & Military-grade RTOS (VxWorks) & Commercial offers certified real-time guarantees \\
+% \hline
+% Update Mechanism & via USB or radio in offline mode & via USB, radio or Wi-Fi; updates with fleet management & Commercial enables remote maintenance \\
+% \hline
+% Security Features & Basic CSP mechanisms & Container isolation + hardware-enforced security & Commercial provides defense-grade protection \\
+% \hline
+% AI/ML Integration & Limited (ROS-based libraries) & Native AI stack for target tracking & Commercial enables advanced autonomous behaviors \\
+% \hline
+% Ecosystem Tools & QGroundControl + Flight Review & Integrated mission control + cloud suites & Commercial offers end-to-end mission lifecycle support \\
+% \hline
+% Documentation & Partially outdated & Professional technical support & Commercial ensures reliability for critical ops \\
+% \hline
+% \end{tabularx}
+% \end{table}
 
 \section{Related work}%
 \label{sec:related-work}
-Papers de UAVs/drones no contexto de solucoes, arquiteturas, security, etc...
-
 \glspl{uav}'s market is booming, but the security and safety is often overlooked
 in the design~\cite{ferrao2020stuart}. Several vulnerabilities have been
 identified~\cite{kishnaCyberVulnerUAVReview2017,nassi2021sok,mohsan2022towards},
@@ -1439,6 +1660,17 @@ decrease in the system. Moreover, no security mechanism protects the system
 from malware or command injection vulnerabilities. This poses a major threat on
 the system if no supervising technology, like virtualization, is used. On the other hand, good security practices are used in
 areas such as cryptography and privilege management.
+To mitigate this issue, Auterion employs in the mission computer a microservices architecture based on
+application containerization using the Docker
+technology~\cite{auterion-sw-services}. However, as all applications share the
+same host \gls{os} kernel, a misconfigured or ill-behaving application can
+compromise the mission computer, and inject erroneous commands into the
+autopilot, compromising the whole system. Furthermore, the autopilot runs
+unsupervised on the flight controller, i.e., it typically has full access to all
+of the hardware resources, increasing the attack surface area. Executing the
+autopilot in supervised mode, namely with static partioning of resources, can
+mitigate this issue by enforcing the User to carefully select the appropriate
+hardware for each mission, but also by trapping, and thus preventing, any ill-intentioned access to unavailable hardware resources.
 
 With the open-source solutions, comes transparency, but, nonetheless, it is
 insufficient to meet the mixed-criticality and security requirements.
@@ -1462,28 +1694,140 @@ cooperative environments. Blockchain features such as smart contracts and
 consensus mechanisms and the inherent cryptographic foundations, enabling
 automation and providing security, according to the authors. Overall, the
 blockchain technology helps in overcoming many problems such as coordination,
-security, collision avoidance, privacy, decision marking, and signal
+security, collision avoidance, privacy, decision making, and signal
 jamming. Although it presents great potential, the real-life implementation
 seems a little distant.
 
-Virtualization emerges as a viable solution to handle the \gls{uav}'s
+On the other hand, virtualization is a well-proven and mature technology,
+emerging as a viable solution to handle the \gls{uav}'s
 mixed-criticality requirements and security, through spatial, temporal, and
 fault isolation. Nonetheless, the number of works in these field is still scarce.
 Faultrel et al~\cite{fautrel2019hypervisor} proposed an hypervisor based
 approach for mixed critical real-time \gls{uav} applications to meet its
 stringent timing and criticality requirements and allow \gls{fcs}
 certification. The authors used an iterative approach for the construction of
-scheduling tables for the \gls{vm}, as they use dynamic partioning. 
+scheduling tables at the hypervisor level. This approach was then applied to the
+use case of an industrial project of inspection drone systems comprising three
+\glspl{vm} of different criticality levels: (1) high -- autopilot, running on baremetal; (2) medium --
+communication application between the \gls{gcs} and the \gls{uav}, running on OpenWRT; (3) low --
+video application that stores, analyzes, and compresses images, running on a
+Linux Debian \gls{os}. The authors used the PikeOS level 1 hypervisor as it can
+be certified DO 178B/C for flying systems. However, PikeOS is closed source,
+hindering the widespread adoption to small and inexpensive \gls{uav} systems.
 
-However, dynamic partioning increases the latency and undeterminism of the
-system, hampering the mixed-criticality requirements. Thus, a static partioning
-approach appears to be the best-compromise solution for \glspl{mcs} in
-\glspl{uav}' applications.
+It is important to note that virtualization is also broadly used in the literature to encompass the usage of
+\gls{uav} in larger, adaptable networks, where each \gls{uav} can provide
+different services depending on a dynamic configuration. This is also referred
+to as softwarization of \gls{uav} networks~\cite{oubbati2020softwarization}. For
+example, Nogales et.~al~\cite{nogales2018adaptable} proposed the deployment of
+small \glspl{uav} capable of executing virtual functions and services for rapid
+adaptation to different missions with heterogeneous objectives. The authors
+implemented an \gls{ip} telephony service as a set of virtualized network
+functions, tested with real voice-over-IP terminals.
 
-%\section{Final remarks}%
-%\label{sec:summary-state}
-%This chapter outlined the state of the art for
+On academia, \emph{VxWorks} was also used as \gls{rtos} for \gls{uav}
+applications. Chong and Li~\cite{vxworksFCS} designed a \gls{fcs} for small
+\glspl{uav} using \emph{VxWorks} as an \gls{rtos} to support tasks partitioning
+meeting the real-time requirements. Fig.~\ref{fig:vxworks-sw-arch} illustrates
+the software framework designed considering three main layers: functional layer
+(application + middleware), \gls{os} layer, and device driver layer. The authors
+claimed remarkable improvements in the reliability and real-time capability of
+the \gls{fcs} using \lstinline{VxWorks}, due to its multitasking capabilities, but did not provide direct comparison with
+other \glspl{rtos}.
 
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./img/png/vxworks-sw-arch.png} 
+  \caption[SW framework for an UAV application based on the VxWorks
+    RTOS~]{SW framework for an UAV application based on the VxWorks
+    RTOS~\cite{vxworksFCS}\footnotemark}%
+  \label{fig:vxworks-sw-arch}
+\end{figure}
+%
+\fnlicReq{IEEE}{5457890117132}%
+
+
+% \section{Summary}%
+% \label{sec:summary-state}
+% \gls{uav} are being extensively deployed in a myriad of applications, such as:
+% search and rescue missions, agriculture and farming, military missions,
+% delivering goods and medical supplies, video capturing and filming, providing
+% telecommunications in remote areas, among others. Nonetheless, vehicle's
+% security and safety is often overlooked, with several documented vulnerabilities
+% and an extensive attack surface area.
+
+% The \gls{uav} architecture is typically heterogeneous by nature and with
+% different criticality levels, i.e., a \glsxtrfull{mcs}, comprising a
+% critical and a non-critical system. The critical system runs the autopilot
+% software stack in the flight controller to control the \gls{uav}, sampling the critical sensors (\gls{imu}, gyroscope,
+% compass, and barometer) and computing the required actuator values to maintain
+% the navigation heading according to the specified parameters.
+% The non-critical system provides additional features such as collision detection
+% and avoidance or payload control. It uses a so called companion or mission
+% computer for this purpose. Although optional, the companion computer is crucial
+% for autonomous flights, and can be enhanced to provide \gls{ai}-assisted
+% navigation in \gls{gps}-denied or communications-denied environments. A \gls{rc}
+% transmitter can be used to manually operate the \gls{uav}, while the companion
+% computer can command the flight controller to follow several waypoints in
+% mission mode, typically using a fast serial link. The ground station runs the
+% \glsxtrfull{gcs} to assist in the mission planning, but also for configuring the
+% \gls{uav} and to obtain real-time flight data via telemetry radio or \gls{lte}
+% link. Typically, the \gls{uav} is battery-powered, but fuel or hybrid systems
+% are also common. The most notable open-source flight controllers are the
+% Pixhawk (microcontroller-based) platforms, while the commercial alternatives
+% range from the microcontroller-, \gls{fpga}-, or companion-based
+% platforms. Perhaps, the most notable of the commercial solutions is the Auterion
+% Skynode X based on the Pixhawk \gls{fmu}v6 architecture (\gls{bsd} license). It
+% combines a flight controller, a mission computer and \gls{lte} connectivity in a
+% compact form factor.
+
+% Regarding the software stack, the flight controller and companion computer are
+% structured similarly in four layers: application, middleware, \gls{os}, and
+% \gls{hal}. The application layer provides the high-level functionality of the
+% system, the middleware abstracts the interface with the \gls{os} and the
+% communications through message passing, the \gls{os} provides the basic services
+% for system's operation, and the \gls{hal} abstracts the underlying \gls{hw}. The
+% flight controller runs the autopilot (application + middleware) (e.g., PX4 or
+% Ardupilot) on top of a \gls{rtos} (e.g., NuttX, ChibiOS, VXWorks). The mission
+% computer runs a \gls{gpos}, typically Linux-based. On the commercial side,
+% Auterion runs an enterprise-hardened version of PX4 (APX4) on the \gls{fmu}, and
+% a customized version of an embedded Linux \gls{os} (AOS). It provides an
+% \gls{sdk} with the relevant \glspl{api} to enable the AOS to query and command
+% the APX4. It provides a microservices architecture based on the Docker
+% technology to deploy applications on top of AOS.
+
+% The commercial \gls{sw} solutions lack security mechanisms, rendering it
+% susceptible to basic attacks such as buffer overflows or strings
+% vulnerabilities, or more advanced ones such as malware or command injection.
+% To mitigate this issue, Auterion employs application containerization in the
+% mission computer. However, as all applications share the
+% same host \gls{os} kernel, a misconfigured or ill-behaving application can
+% compromise the mission computer, and inject erroneous commands into the
+% autopilot, compromising the whole system. Furthermore, the autopilot runs
+% unsupervised on the flight controller, i.e., it typically has full access to all
+% of the hardware resources, increasing the attack surface area. Executing the
+% autopilot in supervised mode, namely with static partioning of resources, can
+% mitigate this issue by enforcing the User to carefully select the appropriate
+% hardware for each mission, but also by trapping, and thus preventing, any ill-intentioned access to unavailable hardware resources.
+
+% Due to the wide and varied attack surface, some research focuses on changing the
+% paradigm, e.g., using a blockchain decentralized architecture to mitigate many
+% \gls{uav} problems such as coordination, security, collision avoidance, privacy,
+% decision making, and signal jamming. 
+% Although it presents great potential, the real-life implementation
+% seems a little distant.
+
+% On the other hand, virtualization is a well-proven and mature technology,
+% emerging as a viable solution to handle the \gls{uav}'s
+% mixed-criticality requirements and security, through spatial, temporal, and
+% fault isolation. Nonetheless, the number of works in these field is still scarce
+% and are based on closed source hypervisors, such as PikeOS.
+
+% Thus, the research demonstrates the \gls{uav} software stack can benefit from
+% the usage of virtualization to handle mixed-criticality requirements in a secure
+% way. This is especially true for the open-source software stack. Virtualization
+% provides isolation and can assist in the consolidation of the computing
+% platforms, minimizing the \gls{swap-c} metrics.
 
 %%% Local Variables:
 %%% mode: latex

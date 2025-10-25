@@ -1,7 +1,6 @@
 #define RPI_MAILBOX_IRQ_ID 65
 #define RPI_HYP_ARG_START  1
 #define RPI_HYP_ARG_END    2
-
 spinlock_t rpi_firmware_lock = SPINLOCK_INITVAL;
 
 static void rpi_mailbox_irq_handler(irqid_t irq_id) {
@@ -20,15 +19,12 @@ long rpi_mailbox_hypercall(unsigned long arg0, unsigned long arg1, unsigned long
 	spin_lock(&rpi_firmware_lock);
 	interrupts_cpu_enable(RPI_MAILBOX_IRQ_ID, true);
 	break;
-
   case RPI_HYP_ARG_END:
 	interrupts_cpu_enable(RPI_MAILBOX_IRQ_ID, false);
 	spin_unlock(&rpi_firmware_lock);
 	break;
-
   default:
     ERROR("func %s, unknown arg0 = %lu", __func__, arg0);
   }
-
   return 0;
 }

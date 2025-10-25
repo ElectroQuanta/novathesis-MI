@@ -1,0 +1,52 @@
+\typeout{NT FILE appendix-logs.tex}%
+
+\chapter{Log files}
+\label{app:log_files}
+
+The following appendix lists log files generated in the
+implementation (Chapter~\ref{cha:implementation}) and evaluation
+(Chapter~\ref{cha:evaluation}) of the present work.
+
+\begin{longlisting}
+\centering
+\inputminted[]{kconfig}{./listing/boot-uspfs.txt}
+\caption{USPFS: Boot log (excerpt)}
+\label{lst:uspfs-boot}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{kconfig}{./listing/rpi-fw-validation-1.txt}
+\caption{SSPFS: Mailbox supervisor validation -- PX4 VM boot log (excerpt)}
+\label{lst:rpi-fw-validation-1}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{kconfig}{./listing/rpi-fw-validation-2.txt}
+\caption{SSPFS: Mailbox supervisor validation -- Video VM boot log (excerpt)}
+\label{lst:rpi-fw-validation-2}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{kconfig}{./listing/sspfs-boot-px4.txt}
+\caption{SSPFS: PX4 VM boot log (excerpt)}
+\label{lst:sspfs-boot-px4}
+\end{longlisting}
+
+\begin{longlisting}
+\centering
+\inputminted[]{kconfig}{./listing/sspfs-boot-cam.txt}
+\caption{SSPFS: Video surveillance VM boot log (excerpt)}
+\label{lst:sspfs-boot-cam}
+\end{longlisting}
+
+%-----  EVAL
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../template"
+%%% reftex-default-bibliography: ("../Bibliography/mieeic.bib")
+%%% ispell-local-dictionary: "american"
+%%% End:
