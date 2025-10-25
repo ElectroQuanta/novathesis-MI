@@ -86,19 +86,19 @@ Based on the insights gained from this work, several
 avenues for future research and development can be
 pursued:
 \begin{itemize}
-\item \textbf{Support for different \gls{uavic} platforms:} the consolidation of
-  the mixed-criticality stacks relied on a Raspberry Pi with the Linux
-  \gls{gpos}.
-  Ideally, the \gls{uavic} platform should natively support the NuttX \gls{rtos},
-  required by the PX4 autopilot, and have a smaller footprint. One promising
-  heterogeous platform is the NXP i.MX 8M Nano~\cite{imx8mn} which integrates a
-  Arm Cortex-M7 (ideal to run NuttX) and a quad-core Arm Cortex-A53 (well suited
-  for Linux \gls{os}). However, we still need to port NuttX to run on this
-  platform.
+\item \textbf{Support for different \gls{uavic} platforms:}
+Our consolidation of mixed-criticality stacks relied on a Raspberry~Pi running a
+Linux \gls{gpos}. However, Linux does not provide hard real-time guarantees;
+therefore, the \gls{uavic} platform should natively support the NuttX \gls{rtos}
+required by the PX4 autopilot and should also have a smaller footprint. A
+promising heterogeneous platform is the NXP i.MX~8M Nano~\cite{imx8mn}, which
+integrates an Arm Cortex-M7 (well suited to NuttX) and a quad-core Arm
+Cortex-A53 (well suited to a Linux \gls{os}). Porting NuttX to this platform
+remains future work.
 \item \textbf{A deeper system resources analysis and optimization:}
   Additional data are needed to thoroughly assess resource usage and reduce the
-  influence of outliers; therefore, more tests should be performed under
-  real-flight conditions.
+  influence of outliers in the current \gls{uavic}; therefore, more tests should
+  be performed under real-flight conditions.
   The observed increase
   in \gls{ram} usage attributed to the firmware's mailbox supervision requires
   deeper investigation. Exploring alternative mechanisms for securely sharing
@@ -106,18 +106,21 @@ pursued:
   potentially lead to more memory-efficient solutions. Bao already provides
   extensive support for
   VirtIO~\cite{costa2022virtio,ribeiro2023virtio,peixoto-virtio-2024,baoRepo},
-  which facilitates this approach. Notwithstanding, the support for more
-  suitable \gls{uavic} platforms could eliminate the need to share devices
-  between guests.
+  which facilitates this approach. Nevertheless, adopting more suitable
+  \gls{uavic} platforms could remove the need for inter-guest device sharing and
+  provide better resource management by default, e.g., by deploying PX4
+  on the NuttX \gls{rtos}.
 \item \textbf{Extended \gls{uav} benchmarking}
-  To benchmark the \gls{uav} under real-flight conditions, we analyzed a limited
-  set of PX4 tasks. This may not capture the full system behavior. We therefore
-  need to collect and analyze additional data from relevant PX4 topics to
-  support mission diagnostics and benchmarking. Furthermore, while initial functional
-  tests demonstrated isolation, future work should design and execute more
-  sophisticated, long-duration attack scenarios and stress tests, e.g., under
-  high guest interference. This would further validate the trustworthiness and
-  resilience of the \gls{sspfs} under adversarial conditions.
+To evaluate the \gls{uav} under real-flight conditions, we analyzed a limited
+set of PX4 tasks, which may not capture full-system behavior. We therefore need
+to collect and analyze additional data from relevant PX4 topics to support
+mission diagnostics and benchmarking, and to repeat these tests after deployment
+on a more suitable \gls{uavic} platform.
+Furthermore, while initial functional
+tests demonstrated isolation, future work should design and execute more
+sophisticated, long-duration attack scenarios and stress tests (e.g., under high
+guest interference), to further validate the trustworthiness and resilience of
+the \gls{sspfs} under adversarial conditions.
 \item \textbf{Advanced Shared Resource Management:}
   While cache coloring was explored, its effectiveness was limited in certain
   scenarios due to hardware constraints like \gls{dma} 
