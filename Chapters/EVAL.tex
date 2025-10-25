@@ -9,24 +9,21 @@
 \end{flushright}
 \end{quote}
 
-This chapter presents comprehensive validation of the unsupervised (\gls{uspfs}) and supervised (\gls{sspfs}) flight stack solutions through three complementary assessment domains. 
+This chapter presents a comprehensive evaluation of the unsupervised
+(\gls{uspfs}) and supervised (\gls{sspfs}) systems. First, we validate the
+implementation of the mailbox supervisor and the overall operation of the
+\gls{sspfs} system. Then, we analyze the behavior of each system when a malicious
+actor tries to compromise it. Next, we extensively benchmark the impact of
+adding Bao's supervision to the systems. We evaluate the performance degradation
+of the supervised system, with and without mailbox patching, relative to the
+baseline native execution using the MiBench \gls{aics} suite. We also analyze
+the effect of cache coloring on the mitigation of interference between
+guests. Next, we benchmarch each guest separately using application-specific
+metrics and  use these metrics to compare the \gls{uspfs} and \gls{sspfs} solutions.
+Finally, we evaluate both flight stacks in real-flight conditions and analyze
+its behavior when the system is compromised.
 
-\textbf{Security Analysis} comparatively evaluates system behavior under malicious compromise scenarios, focusing on isolation effectiveness between critical and non-critical components. 
-
-\textbf{Performance Benchmarking} conducts quantitative assessment using the
-MiBench \glsxtrfull{aics} to establish baseline performance of the \gls{uspfs}
-system, quantify hypervisor-induced overhead in \gls{sspfs}, measure
-interference impact between virtualized guests, and evaluate mailbox driver
-patch consequences. Guest-specific metrics are also evaluated including PX4 task scheduling overhead and camera frame rates.
-
-\textbf{Operational Validation} performs real-flight evaluation via automated missions to compare position tracking accuracy and system resource utilization patterns.
-
-This multi-faceted methodology provides empirical evidence for security
-guarantees, performance characteristics, and operational viability across both
-architectural approaches.
-
-
-\subsection{Functional validation}
+\section{Functional validation}
 In this section we present the results of the functional validation of the
 mailbox supervisor and the \gls{sspfs} system as a whole. To validate the first,
 we introduced some logging messages upon each mailbox transaction, which should
