@@ -28,10 +28,10 @@ In this section we present the results of the functional validation of the
 mailbox supervisor and the \gls{sspfs} system as a whole. To validate the first,
 we introduced some logging messages upon each mailbox transaction, which should
 be visible at boot time from both \glspl{vm}. The logs were inspected using the
-serial debug port (PX4 \gls{vm}) and \gls{ssh} connection over Wi-Fi (Cam \gls{vm}).
+serial debug port (PX4 \gls{vm}) and \gls{ssh} connection over Wi-Fi (Companion \gls{vm}).
 %
 Listings~\ref{lst:rpi-fw-validation-1} and~\ref{lst:rpi-fw-validation-2} show
-the logs excerpts for the PX4 \gls{vm} and Cam \gls{vm}, respectively. We can
+the logs excerpts for the PX4 \gls{vm} and Companion \gls{vm}, respectively. We can
 clearly observe that both systems complete the transactions successfully, which
 means the hypercalls are correctly issued and trapped by the hypervisor. Thus,
 we can now access the mailbox from both \glspl{vm}, and from that, initialize
@@ -48,21 +48,21 @@ the required \gls{pcie} devices.
 \begin{longlisting}
 \centering
 \inputminted[]{kconfig}{./listing/rpi-fw-validation-2.txt}
-\caption[SSPFS: mailbox supervisor validation -- Cam VM boot log
-(excerpt)]{SSPFS: mailbox supervisor validation -- Cam VM boot log excerpt (see logs/rpi-fw-validation-2.txt~\cite{thesis-sw-github})}
+\caption[SSPFS: mailbox supervisor validation -- Companion VM boot log
+(excerpt)]{SSPFS: mailbox supervisor validation -- Companion VM boot log excerpt (see logs/rpi-fw-validation-2.txt~\cite{thesis-sw-github})}
 \label{lst:rpi-fw-validation-2}
 \end{longlisting}
 
 To validate the \gls{sspfs} system, we loaded and executed \lstinline{bao.bin}
 on the \gls{uavic} platform from the U-boot console.
-We then inspected the boot logs for the PX4 \gls{vm} and the Cam \gls{vm},
+We then inspected the boot logs for the PX4 \gls{vm} and the Companion \gls{vm},
 available in \lstinline{logs/sspfs-boot-px4.txt} and
 \lstinline{logs/sspfs-boot-px4.txt}, respectively~\cite{thesis-sw-github}.
 The PX4 \gls{vm} boot log confirms Bao initialized correctly (line 2), as they
 share the serial console. We can further observe: (1) correct memory
 configuration; (2) setup of the UART5 console operation; (3) access to the
 firmware's mailbox; (4) SPI device initialization; (5) and, finally, the Buildroot
-welcome message. Inspecting the Cam \gls{vm} boot log we can observe: (1)
+welcome message. Inspecting the Companion \gls{vm} boot log we can observe: (1)
 correct memory configuration; (2) wake-up of all 3 cores; (3) access to the
 shared firmware's mailbox; (4) USB device enumeration for both camera and Wi-Fi
 dongle; (5) automatic Wi-Fi authentication; (6) and network configuration
@@ -81,7 +81,7 @@ as navigation, communications, and sensor tasks, are running,
 thereby validating both telemetry functionality and PX4 execution integrity.
 %
 Next, we started the video receiver pipeline on the \gls{gcs} and the video
-sender one on the Cam \gls{vm} (see Fig.~\ref{fig:sspfs-app-validation-2}). We can
+sender one on the Companion \gls{vm} (see Fig.~\ref{fig:sspfs-app-validation-2}). We can
 observe the live stream feed in the \gls{gcs}, which validates the video
 surveillance pipelines.
 % \begin{figure}[h]

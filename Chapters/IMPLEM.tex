@@ -397,13 +397,13 @@ We then allocated the platform resources to each guest within Bao (see
 has a primary memory region of 144 MB and a secondary one of 3 GB. The memory
 separation happens because the \gls{dma} transactions are mapped in the first 1
 GB of \gls{ram}. We assign one core to this \gls{vm} and 9 devices
-(Fig.~\ref{fig:hw-map-2}). For the video \gls{vm} we reserve 624 MB of \gls{ram}
+(Fig.~\ref{fig:hw-map-2}). For the Companion \gls{vm} we reserve 624 MB of \gls{ram}
 to run the memory-intensive video pipeline and an optional 2 GB memory
 region. We assign the remaning 3 cores to this VM and 4 devices
 (Fig.~\ref{fig:hw-map-3}).
 Shared devices, such as the architectural timer and mailbox, require special
 handling. The first is managed automatically by Bao, while we must implement the
-second to enable access to \gls{pcie} devices in the video \gls{vm}.
+second to enable access to \gls{pcie} devices in the Companion \gls{vm}.
 
 \subsection{Mailbox Supervisor}
 The mailbox supervision mechanism (Fig.~\ref{fig:design-mailbox}) implementation
