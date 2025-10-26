@@ -52,8 +52,8 @@ presented, showing the current research directions and topics.
 % fundamental question of how to reconcile the
 % conflicting requirements of \emph{partitioning} for (safety) assurance and \emph{sharing} for
 % efficient resource usage. Consequently, problems arise in the modelling, design,
-% implementation, and verification of the required \gls{hw} and
-% \gls{sw}~\cite{burns2022mixed}.
+% implementation, and verification of the required hardware and
+% software~\cite{burns2022mixed}.
 
 % Two major areas of research stem from this dichotomy: a more theorethical one,
 % largely focused on using criticality-specific \glspl{wcet} to schedule systems
@@ -128,24 +128,24 @@ This gap is acute in \glspl{uav} where both efficiency and assurance are non-neg
 \subsection{Virtualization}%
 \label{sec:virtualization}
 Mixed critical systems require the integration of software components with
-disparate criticality levels on a shared \gls{hw} platform. As aforementioned,
+disparate criticality levels on a shared hardware platform. As aforementioned,
 the most promising approach is the safe partitioning of the system with shared
 computation resources. This leads to concept of virtualization, a logic
-abstraction of \gls{hw} resources with isolation guarantees, using different approaches such as
+abstraction of hardware resources with isolation guarantees, using different approaches such as
 hypervisors, \gls{os}-level virtualization or unikernels~\cite{cinque2022virtualizing}.
 
 Fig.~\ref{fig:virt-mindmap} depicts a map of concepts related to the
 virtualization topic, which can be used as reference through this section.
 %
 The major distinction between \gls{os}- and hypervisor-level virtualization is
-the former does not provide emulation of the physical \gls{hw}, where the
-virtual domain, called container, has its own virtual \gls{hw} resources
+the former does not provide emulation of the physical hardware, where the
+virtual domain, called container, has its own virtual hardware resources
 (\gls{cpu}, memory, filesystem, network), and process and user management. This
 virtual domain acts as an traditional process of an \gls{os}, with its own
 independent resources. OS-level virtualization, or containerization, is mostly
 used in cloud environments to avoid the replication of the OS stack, further
 improving application consolidation on the same
-hardware~\cite{cinque2022virtualizing}. Although lacking the \gls{hw} emulation, this
+hardware~\cite{cinque2022virtualizing}. Although lacking the hardware emulation, this
 type of virtualization is gaining momentum also in the \gls{rt} systems~\cite{xilinxRunX,struhar2020real} due to
 some desirable features like tenant isolation, high-availability,
 fault-tolerance, software migration, and recovery techiques. However, these
@@ -214,10 +214,10 @@ discussed in more detail in the next section.
 \subsection{Hypervisors}%
 \label{sec:superv--hyperv}
 In simple terms a hypervisor is a \glsxtrfull{vmm}, a software layer that
-abstracts the \gls{hw} resources in order to run distinct and isolated
+abstracts the hardware resources in order to run distinct and isolated
 application environments, called \glspl{vm} or guests, on the same physical
 machine (see Fig.~\ref{fig:virt-approaches-exs}). A \gls{vm} is the execution environment typically comprised of an
-\gls{os}, or guest \gls{os}, and the application \gls{sw}.
+\gls{os}, or guest \gls{os}, and the application software.
 
 A hypervisor must guarantee isolation in the following domains~\cite{cinque2022virtualizing}:
 \begin{itemize}
@@ -229,7 +229,7 @@ A hypervisor must guarantee isolation in the following domains~\cite{cinque2022v
 \item \textbf{Spatial} (memory-isolation): ability to isolate code and data
   between virtual domains and between virtual domains and hosts. Thus, a task
   must not be able to modify private data from other tasks, including devices
-  assigned to a specific task. It is usually implementated using \gls{hw} memory
+  assigned to a specific task. It is usually implementated using hardware memory
   protection mechanisms (e.g., \gls{mmu}, \gls{iommu}).
 \item \textbf{Fault}: prevents the propagation of faults from one virtual domain
   to another that could cause blockages or stop the whole system.
@@ -240,12 +240,12 @@ Fig.~\ref{fig:virt-mindmap}), as follows:
 \begin{enumerate}
 \item \textbf{Host presence}: If the hypervisor is executed on top of an
   existing \emph{host} \gls{os} --- \underline{hosted} --- is classified as type II,
-  otherwise as type I --- \underline{bare-metal} ---, running directly on the \gls{hw},
+  otherwise as type I --- \underline{bare-metal} ---, running directly on the hardware,
   acting as a classic \gls{os}. The bare-metal hypervisor controls directly the
   hardware resources (e.g.~Jailhouse~\cite{jailhouse}, Bao~\cite{martins_et_al:OASIcs:2020:11779}), whereas the hosted manages it
   indirectly (e.g.~KVM~\cite{kivity2007kvm}, Xen).
 \item \textbf{Guest awareness of the hypervisor}: A \underline{fully virtualized} hypervisor
-  abstracts completely the \gls{hw} resources to the guest, emulating privileged
+  abstracts completely the hardware resources to the guest, emulating privileged
   instructions and \gls{io} operations. Thus, it allows a guest OS or an
   application to run unmodified, as they were running directly on the physical
   machine. Typical examples are KVM~\cite{kivity2007kvm} and Microsoft Hyper-V~\cite{microsoftHyperV}. Conversely, in a
@@ -278,7 +278,7 @@ Solutions based on hypervisors can be grouped in four categories~\cite{cinque202
 \item \textbf{General-purpose}: enhancement of general-purpose hypervisors
   (e.g.~KVM~\cite{kivity2007kvm}, Xen~\cite{barham2003xen}) to
   support real-time features.
-\item \textbf{Security \gls{cpu} \gls{hw} extensions}: leverage the isolation
+\item \textbf{Security \gls{cpu} hardware extensions}: leverage the isolation
   support provided by these hardware extensions (ARM TrustZone, Intel SGX) to attain stricter isolation
   guarantees. For example, ARM TrustZone eanbles virtual virtualization thanks
   to dual world execution model. However, these solutions are strictly linked to the specific
@@ -290,7 +290,7 @@ Solutions based on hypervisors can be grouped in four categories~\cite{cinque202
 
 The selection factors for a hypervisor with industrial standards are its footprint, the compliance with
 industry safety-related standard, the software license, the explicit support to
-high availability, fault tolerance and security, and the supported \gls{hw}
+high availability, fault tolerance and security, and the supported hardware
 platform~\cite{cinque2022virtualizing}. Cinque et.~al provides an extensive list
 of these solutions applied to the \gls{mcs} in order to meet the industrial standards~\cite{cinque2022virtualizing}.
 
@@ -310,7 +310,7 @@ mechanisms~\cite{martins_et_al:OASIcs:2020:11779}. The \glspl{mcs} certification
 process is also hindered by the size of and monolithic architecture of such \glspl{os}.
 
 \emph{Jailhouse}'s breakthrough consists in a minimal software layer that
-leverages \gls{hw}-assisted virtualization technology to
+leverages hardware-assisted virtualization technology to
 statically partition all platform resources and assign each one exclusively to a
 single \gls{vm} instance at instantiation time. The scheduler can then be
 discarded as each virtual core is statically associated to a single physical
@@ -320,7 +320,7 @@ guarantees but at the expense of efficient resource usage requirement. However,
 the Linux dependency is a liability for safety/security and performance too.
 
 Furthermore, the static partioning approach is not enough \emph{per se}, due to
-\gls{hw} resources sharing across partitions such as \glspl{llc}, interconnects,
+hardware resources sharing across partitions such as \glspl{llc}, interconnects,
 and memory controllers, which breach temporal isolation, hurting performance and
 determinism~\cite{bansal2018evaluating,barham2003xen}. A malicious \gls{vm} can exploit this by increasing their
 usage of a share resource (\gls{dos} attack) or by indirectly accessing other
@@ -330,12 +330,12 @@ as cache partioning (via locking or coloring), and memory bandwidth
 reservations~\cite{martins_et_al:OASIcs:2020:11779}.
 
 Taking this into account Bao was implemented as clean-slate
-hypervisor (see Fig.~\ref{fig:bao-arch}), comprising only a minimal thin layer of privileged \gls{sw}
+hypervisor (see Fig.~\ref{fig:bao-arch}), comprising only a minimal thin layer of privileged software
 leveraging \gls{isa} virtualization support to implement static partioning of
-\gls{hw} resources. Its most relevant features are: memory is statically
+hardware resources. Its most relevant features are: memory is statically
 assigned using 2-stage translation; \gls{io} is pass-through only; 1:1 mapping
 of virtual to physical \glspl{cpu} (no scheduler required); no external
-dependencies (except for standard platform management \gls{sw}); provides a
+dependencies (except for standard platform management software); provides a
 basic mecanism for inter-\gls{vm} communication; \gls{tee} support for increased
 security~\cite{martins_et_al:OASIcs:2020:11779,baoEmbeddedWorld2020}.
 
@@ -354,7 +354,7 @@ security~\cite{martins_et_al:OASIcs:2020:11779,baoEmbeddedWorld2020}.
 Guest isolation is critical for a \gls{mcs}. Bao achieves complete logical
 temporal isolation due to the exclusive CPU mapping, discarding the scheduler,
 and the availability of per-\gls{cpu} architectural timers directly managed by
-the guests. Spatial isolation is provided by the 2-stage \gls{hw} virtualization
+the guests. Spatial isolation is provided by the 2-stage hardware virtualization
 support for the logical address space isolation. The translation overhead, page
 table and \gls{tlb} pressure is minimized using superpages, whenever
 possible, faciliting speculative fetch for potential guest performance
@@ -710,7 +710,7 @@ generic overview, summarizing its main concepts.
 \label{sec:system-overview}
 Fig.~\ref{fig:uav-sysOverv} shows an overview of the \gls{uav} system and its
 ecosystem.
-Positioned at the center of the figure (1) are the \gls{uav} and its associated flight control \gls{hw} and \gls{sw}.
+Positioned at the center of the figure (1) are the \gls{uav} and its associated flight control hardware and software.
 Its main tasks are path planning, communication
 management, data acquisition, and mission~\cite{aggarwal2020UAVPathPlanning}.
 
@@ -797,7 +797,7 @@ tasks and components.
   safely, through the transmission of commands to the \gls{uav}, yielded by an
   human operator of computer-generated via autopilot. The command is sent to the
   \gls{uav} via proprietary protocols or open \glspl{api} (e.g., MAVLink
-  \gls{sdk} or Parrot \gls{sdk}). The autopilot consists in \gls{sw} stack
+  \gls{sdk} or Parrot \gls{sdk}). The autopilot consists in software stack
   running on the \gls{fcs}. Noticeable open-source autopilots are
   \lstinline{PX4}, \lstinline{ArduPilot}, and \lstinline{Paparazzi}.
 \item \textbf{System Simulation}: \gls{uav} behavior is analyzed in respect to
@@ -807,10 +807,10 @@ tasks and components.
   (land and air) --- and
   \underline{network communication modelling}. 
 \item \textbf{Operating Systems}: \glspl{os} are used to interface the
-  electronic \gls{hw} that controls \gls{uav} operation through a tractable
+  electronic hardware that controls \gls{uav} operation through a tractable
   abstraction. \glspl{uav} can a myriad of \glspl{os}, both open-source --- such as
   \gls{ros}, \lstinline{Linux}, \lstinline{FreeRtos}, \lstinline{NuttX}, \lstinline{ChibiOS} --- or proprietary, like \lstinline{VxWorks}. 
-\item \textbf{Physical \gls{hw}}: comprises the actual electronic \gls{hw} of
+\item \textbf{Physical hardware}: comprises the actual electronic hardware of
   the \gls{uav}, such as sensors, motors, communications, etc.
 \end{enumerate}
 
@@ -852,20 +852,20 @@ divided the security attacks on two categories:
 \item \textbf{Targetting \glspl{uav}}: corresponds to an attack an
   ill-intentioned civilian performs on an \gls{uav} using, e.g., an \gls{sdr}, a
   computer or a commercial laser. Six targets were identified --- the \gls{uav}
-  electronic \gls{hw}, the \gls{uav} chassis and package (e.g., propelers and
+  electronic hardware, the \gls{uav} chassis and package (e.g., propelers and
   cargo), the \gls{gcs}, the \gls{fpv} channel, the pilot and cloud
-  services/servers. Attacks on the \gls{uav} \gls{hw} include installation of
+  services/servers. Attacks on the \gls{uav} hardware include installation of
   fake firmware, instrument spoofing and \gls{gps} jamming. Countermeasures vary
   with each attack, but, for example, the installation of fake firmware on the
   device can be opposed by requiring the digital signature of the firmware
   before installing. Direct attacks to interrupt \gls{uav}'s flight control and
   commiunications links to modify mission parameters can be mitigated through
-  onboard \gls{sw} and \gls{hw} mechanisms, such as real-time monitoring,
+  onboard software and hardware mechanisms, such as real-time monitoring,
   instantaneous estimation of the controller, alert warning and immediate action
   on any alteration from the intended controller model~\cite{mohsan2022towards}.
   Attacks on the chassis and package include fake \gls{cad}
   files to undermine its fabrication and deployment, especially critical for
-  open-source \gls{hw}, nets, and bullets. They can be opposed by requiring
+  open-source hardware, nets, and bullets. They can be opposed by requiring
   digital signature and by using parachutes, respectively.
   The \gls{fpv} channel is the radio communication channel between the \gls{uav}
   and the \gls{gcs}, which enables the pilot to fly as if it was on board and
@@ -922,7 +922,7 @@ people and goods. They can be categorized as follows~\cite{ferrao2020stuart}:
   commonly targets.
 \item \textbf{Accidental damage}: can occur when a \gls{uav} gets out of
   control, due to legitimate loss of control by the owner, cyber attack, or
-  \gls{sw} or \gls{hw} malfunction. Indepently of the cause, the extent of the
+  software or hardware malfunction. Indepently of the cause, the extent of the
   damage on people as goods can be severe, due to crash of \gls{uav} falling
   from the sky.
 \end{itemize}
@@ -937,13 +937,13 @@ other~\cite{ferrao2020stuart}. Fig.~\ref{fig:uav-security-mindmap} illustrates t
 \subsection{UAV Reference Hardware}%
 \label{sec:uav-ref-hw}
 In this section we discuss the reference hardware for \glspl{uav}.
-Firstly, we present an overview over the \gls{hw} architecture. Then, we analyze
+Firstly, we present an overview over the hardware architecture. Then, we analyze
 in more depth the open-source and commercial hardware solutions for \glspl{uav}.
 
 \subsubsection{Overview and Architecture}%
 \label{sec:overv-arch-hw}
 Fig.~\ref{fig:uav-hw-arch} illustrates the high-level abstraction of the
-\gls{uav} \gls{hw} architecture~\cite{leccadito2018survey,px4-sysArch}. The main
+\gls{uav} hardware architecture~\cite{leccadito2018survey,px4-sysArch}. The main
 computing platforms are depicted in orange: (1) the flight controller or
 \gls{fmu} (e.g., Pixhawk); (2) and, optionally,
 the companion computer, which provides extra functionalities, off-loading the \gls{fcs}. More specifically, the companion computer can assist in the
@@ -984,11 +984,11 @@ the lower level commands to the flight controller or \gls{io} system.
 \label{sec:open-source-solut-hw}
 \glsxtrfull{osh} solutions have been developed to provide more transparency,
 extensibility, flexibility, maintainability, while trying to be
-cost-effective. \gls{osh} means that the \gls{hw} design (i.e., mechanical
+cost-effective. \gls{osh} means that the hardware design (i.e., mechanical
 drawings, schematics, \gls{bom},\gls{pcb} layout data, \gls{hdl} source code),
-and the \gls{sw} that drives the \gls{hw}, are all released under free/libre
+and the software that drives the hardware, are all released under free/libre
 terms~\cite{freeGNU}.
-The user can purchase or manufacture the \gls{hw} components
+The user can purchase or manufacture the hardware components
 individually or in \gls{cots} kits.
 
 The \gls{osh} solutions fall into three main categories: Atmel-based,
@@ -1010,13 +1010,13 @@ powerful \gls{mcu}, dictating the deprecation of the 8-bit ones~\cite{fmu8BitDep
 Currently, the vast majority of \gls{osh} projects are based on 32-bit ARM platforms
 (\lstinline{Pixhawk 4}, \lstinline{CC3D}, \lstinline{Paparazzi Chimera},
 \lstinline{CUAV v5 Plus}, etc.) and supported by initiatives
-like the Pixhawk \gls{hw} standardization. Pixhawk is a company that develops open
-standards for drone hardware, providing readily available \gls{hw}
+like the Pixhawk hardware standardization. Pixhawk is a company that develops open
+standards for drone hardware, providing readily available hardware
 mechanical and electrical specifications and guidelines for drone development~\cite{pixhawk}.
 %
 The \lstinline{Pixhawk 4} (see Fig.~\ref{fig:osh-pixhawk4}) is a flight
 controller developed in collaboration by the Holybro manufacturer and the PX4
-\gls{sw} teams, and suitable for academic and commercial developers~\cite{pixhawk4}.
+software teams, and suitable for academic and commercial developers~\cite{pixhawk4}.
 It was released under the \gls{bsd} license, comprising two 32-bit ARM
 processors: an Cortex-M7 STM32F765 as the main \gls{fmu} processor and a
 Cortex-M3 STM32F100 as an \gls{io} coprocessor. The Pixhawk 4 comes with
@@ -1143,7 +1143,7 @@ Arm STM32H750 \gls{mcu}~\cite{spRacing}
 with an external 128 MB flash
 memory and all the common onboard sensors and interfaces. Targetted for the \gls{uav} racing market, it supports \gls{fpv} video
 streaming through the available camera interfaces~\cite{spRacing}. The
-Betaflight or Cleanflight \gls{sw} stack is commonly used in the racing
+Betaflight or Cleanflight software stack is commonly used in the racing
 \glspl{uav} such as this one, although it is compatible also with the \lstinline{ArduPilot} stack~\cite{arduPilot-SPRacing}.
 
 % \paragraph{Microcontroller-based platforms}
@@ -1172,12 +1172,12 @@ Betaflight or Cleanflight \gls{sw} stack is commonly used in the racing
 
 % \paragraph{FPGA-based platforms}
 The \lstinline{Aerotenna OcPoC-Zynq Mini} is a \gls{fpga} + ARM \gls{soc} based
-  flight control platform,  which supports the ArduPilot and PX4 \gls{sw}
+  flight control platform,  which supports the ArduPilot and PX4 software
   stacks~\cite{ocpoc} (see Fig.~\ref{fig:hw-ocpoc}). Released back in 2017, it
   is currently discontinued~\cite{ocpoc-discontinued}.
   The Artix-7 \gls{fpga}, with 28 thousand logic cells, provided \gls{ai}
   capabilities and \gls{io}'s flexibility, crucial for rapid sensor integration
-  and customization of the flight controller \gls{hw}. The ARM Cortex-A9
+  and customization of the flight controller hardware. The ARM Cortex-A9
   dual-core runs Linux for data logging and processing, and includes 512 MB
   \gls{ram} and 128 MB of flash memory. The OcPoc-Zynq Mini supported
   triple-redundancy in the \gls{gps}, magnetometers, and \glspl{imu} on top of
@@ -1199,7 +1199,7 @@ The most notable companion computer-based platforms are the Navio2,
 the PixC4-Jetson, and the Auterion Skynode X/S.  
 Similarly to PilotPi, the \lstinline{Navio2} flight controller consists of a
 Raspberry Pi shield, but the hardware design is closed-source.
-Navio2 runs a custom version of the Raspberry Pi OS (debian-based)~\cite{navio2-sw}, which supports ArduPilot and PX4 \gls{sw}
+Navio2 runs a custom version of the Raspberry Pi OS (debian-based)~\cite{navio2-sw}, which supports ArduPilot and PX4 software
 stacks~\cite{arduPilot-Navio2,navio2-px4}.
   The shield includes on-board
   sensors (dual \gls{imu}, barometer), a \gls{gnss} receiver, an \gls{rc}
@@ -1219,7 +1219,7 @@ stacks~\cite{arduPilot-Navio2,navio2-px4}.
   professional high-end flight controller that integrates an dual-ARM
   \gls{fmu} and \gls{io} processors, and the Nvidia Jetson companion
   computer~\cite{arduPilot-horizonJetson}. This flight controller supports the
-  ArduPilot and PX4 \gls{sw} stacks and can be remotely configured through a
+  ArduPilot and PX4 software stacks and can be remotely configured through a
   remote terminal~\cite{arduPilot-horizonJetson}. Thus, extra security measures are required, with the
   PixC4-Jetson providing a \gls{lte} connection management with a Layer-2 peer
   to peer \gls{vpn} and a secure cloud connection to Horizon31's
@@ -1351,13 +1351,13 @@ of mission's success from 20\% to 90\%~\cite{skynodeS-noJamming-2}.
 \subsection{UAV Reference Software}%
 \label{sec:uav-ref-sw}
 In this section we discuss the reference software for \glspl{uav}.
-Firstly, we present an overview over the \gls{sw} architecture. Then, we analyze
+Firstly, we present an overview over the software architecture. Then, we analyze
 in more depth the open-source and commercial software solutions for \glspl{uav}.
 
 \subsubsection{Overview and Architecture}%
 \label{sec:overv-arch-sw}
 Fig.~\ref{fig:uav-sw-arch} illustrates the high-level abstraction of the
-most common structure of \gls{uav} \gls{sw}
+most common structure of \gls{uav} software
 architecture~\cite{leccadito2018survey,px4-sysArch}.
 %
 The main computing platforms are depicted in orange: (1) the flight controller
@@ -1370,8 +1370,8 @@ the \gls{uav}'s navigation in \gls{gps}-denied and/or communications-denied
 environments, using \gls{ai}-based software components (e.g., Auterion
 Skynode~\cite{skynodeS-noJamming}).
 %
-The physical \gls{hw} is depicted in purple (sensors, actuators, and payload),
-while the layers of the \gls{sw} stack are shown in green. The arrows indicate the communication link and
+The physical hardware is depicted in purple (sensors, actuators, and payload),
+while the layers of the software stack are shown in green. The arrows indicate the communication link and
 associated protocols.
 
 % UAV SW Arch
@@ -1384,7 +1384,7 @@ associated protocols.
   \label{fig:uav-sw-arch}
 \end{figure}
 
-The flight controller and companion computer \gls{sw} stack structure is
+The flight controller and companion computer software stack structure is
 similar, and is comprised of four layers:
 
 \begin{enumerate}
@@ -1417,23 +1417,23 @@ similar, and is comprised of four layers:
   \gls{rtos}, e.g., \gls{ros}-based avoidance libraries are available for Linux~\cite{px4-sysArch}.
 %
 \item \textbf{Device Driver Layer (\gls{hal})}: this layer abstracts the
-  underlying \gls{hw}, providing a tractable interface for the \gls{os} for data
+  underlying hardware, providing a tractable interface for the \gls{os} for data
   acquisition and motors' actuation.
 \end{enumerate}
 
-The \gls{gcs} \gls{sw} (e.g., \emph{QGroundControl}) typically runs on a desktop/laptop computer or mobile
+The \gls{gcs} software (e.g., \emph{QGroundControl}) typically runs on a desktop/laptop computer or mobile
 device providing real-time monitoring of the flight superimposed on a map and
 \gls{uav}'s control functionalities, communicating directly with the flight
 controller or indirectly via companion computer. The
-\gls{sw} interface between both systems is achieved through the use of off-board
+software interface between both systems is achieved through the use of off-board
 \glspl{api} or \glspl{sdk}, like \gls{ros} or MAVSDK~\cite{px4-sysArch}. 
 
 \subsubsection{Open-source solutions}%
 \label{sec:open-source-solut-sw}
-\glsxtrfull{oss} solutions, like their \gls{hw} counterparts, have been
+\glsxtrfull{oss} solutions, like their hardware counterparts, have been
 developed to provide more transparency, flexibility, and
 maintainability, while trying to be cost-effective. \gls{oss} means that the
-\gls{sw}'s source code is released under free/libre
+software's source code is released under free/libre
 terms~\cite{freeGNU}. The most prominent \gls{oss} autopilots at the moment are
 \lstinline{PX4}~\cite{px4-github},
 \lstinline{ArduPilot}~\cite{arduPilot-github}, and
@@ -1457,7 +1457,7 @@ industrial and commercial domains
 broad range of \gls{uav} airframes and other \glspl{uv}.
 %
 PX4 is loaded onto
-the flight controller \gls{hw} using the \emph{QGroundControl}
+the flight controller hardware using the \emph{QGroundControl}
 application and runs atop of the NuttX OS, although ROS support is also
 available~\cite{jargalsaikhan2022architectural}. \emph{QGroundControl} is also
 used to configure PX4 and interface the flight controller, and an \gls{rc} unit
@@ -1511,7 +1511,7 @@ implementation, and documentation. The authors concluded the following: (1) only
 lacks a message-centralization mechanism; (3) despite being open source, all
 surveyed systems use proprietary messaging interfaces, which hinders
 portability; (4) and documentation, while generally available, is sometimes hard
-to understand or partially outdated. Fig.~\ref{fig:uav-sw-arch-oss-compar} shows the \gls{sw}
+to understand or partially outdated. Fig.~\ref{fig:uav-sw-arch-oss-compar} shows the software
 stack layers and modules for the aforementioned \gls{oss} solutions and for
 \emph{mpFCS}, the portable \gls{fcs} developed by Jargalsaikhan et
 al.~\cite{jargalsaikhan2022architectural}.
@@ -1575,7 +1575,7 @@ The \lstinline{Auterion Skynode} can be controlled using a \gls{rc} transmitter
 or software running on the \gls{gcs}. The \lstinline{Auterion Mission Control}~\cite{auterion-missionControl}
 is a ground control software specialized for Auterion vehicles, very similar to
 \lstinline{QGroundControl}, enabling the UAV's remote control.
-The \lstinline{Auterion Suite}~\cite{auterion-suite} is a fleet management \gls{sw}, providing
+The \lstinline{Auterion Suite}~\cite{auterion-suite} is a fleet management software, providing
 real-time information about the UAV, predictive maintenance actions, flight
 analysis, and \gls{ota} updates.
 
@@ -1631,7 +1631,7 @@ identified~\cite{kishnaCyberVulnerUAVReview2017,nassi2021sok,mohsan2022towards},
 with a extensive attack surface area --- \gls{fcs}, \gls{gcs}, chassis, \gls{fpv}
 channel, and the cloud services.
 
-The commercial \gls{sw} solutions do not provide the security mechanisms
+The commercial software solutions do not provide the security mechanisms
 required, and, furthermore lack transparency. 
 %
 Buquerin~\cite{buquerin2018security} conducted a security evaluation on the
@@ -1768,7 +1768,7 @@ other \glspl{rtos}.
 % \gls{hal}. The application layer provides the high-level functionality of the
 % system, the middleware abstracts the interface with the \gls{os} and the
 % communications through message passing, the \gls{os} provides the basic services
-% for system's operation, and the \gls{hal} abstracts the underlying \gls{hw}. The
+% for system's operation, and the \gls{hal} abstracts the underlying hardware. The
 % flight controller runs the autopilot (application + middleware) (e.g., PX4 or
 % Ardupilot) on top of a \gls{rtos} (e.g., NuttX, ChibiOS, VXWorks). The mission
 % computer runs a \gls{gpos}, typically Linux-based. On the commercial side,
@@ -1778,7 +1778,7 @@ other \glspl{rtos}.
 % the APX4. It provides a microservices architecture based on the Docker
 % technology to deploy applications on top of AOS.
 
-% The commercial \gls{sw} solutions lack security mechanisms, rendering it
+% The commercial software solutions lack security mechanisms, rendering it
 % susceptible to basic attacks such as buffer overflows or strings
 % vulnerabilities, or more advanced ones such as malware or command injection.
 % To mitigate this issue, Auterion employs application containerization in the

@@ -135,30 +135,43 @@ scheduling and camera's frame rate), and real-flight validation -- enabling secu
 %Mixed-criticality systems such as \gls{uav} applications have stringent
 %requirements on temporal and criticality-level, but also in the security level.
 %
-%The present works addresses this by developing a trustworthy \gls{sw} stack for
+%The present works addresses this by developing a trustworthy software stack for
 %\gls{uav} applications that can 
 
 \section{Goals}
-The main goal of the present work is the development of a trustworthy
-open-source software stack for \gls{uav} applications, where security and safety
-are paramount, thus closing the gap between open-source and commercial solutions
-and contributing for the widespread adoption of secure and safe features.
-
-To this end several main objectives have been outlined:
+The main goal of the present work is to develop of a trustworthy
+open-source software stack for \gls{uav} applications in which security and
+safety are paramount, thus narrowing the gap between open-source and commercial
+solutions and contributing for the widespread adoption of secure and safe features.
+%
+To this end, we define the following objectives:
 \begin{enumerate}
-\item Identify the \gls{uav} application requirements and select the target
-  \gls{hw} platform with several security primitives essential for
-  hypervisor-based isolation
-  (e.g, virtual memory, memory protection, TrustZone, criptographic
-  accelerators, etc.).
-\item Design an open-source software stack for \gls{uav} applications leveraging
-  the Bao hypervisor.
-\item Provide support for autonomous mode (autopilot).
-\item Quantify performance overhead across benchmark scenarios
-\item Demonstrate provable security advantages over alternatives
-\item Validate the devised solution in real-flight conditions meeting
-    SWaP-C constraints
-  
+\item Analyze the state of the art in mixed-criticality \gls{uav} systems and
+  identify improvement opportunities, with a focus on hypervisor-based
+  supervision.
+\item Select a representative mixed-criticality application (e.g., flight
+  control with video surveillance) to provide a concrete use case for
+  consolidating the \gls{mcs} software stacks on a single platform in a secure
+  manner.
+\item Derive application requirements and choose a target hardware platform that
+  offers security primitives essential for hypervisor-based isolation (e.g.,
+  virtual memory, memory protection, TrustZone, etc.) while meeting \gls{swap-c}
+  constraints.
+\item Design and implement an open-source software stack for \gls{uav}
+  applications that leverages the Bao hypervisor, and apply it to the chosen
+  \gls{mcs} use case to consolidate the software stacks while preserving
+  isolation between domains.
+\item Validate the solution and assess its resilience under malicious compromise
+  attempts, expecting the supervised solution to contain faults while the
+  unsupervised one propagates them, leading to system failure and
+  potentially a catastrophic \gls{uav} crash.
+\item Quantify the performance overhead introduced by supervision and the effect
+  of inter-guest interference using a standard benchmark suite (e.g., MiBench
+  \gls{aics}), and explore mitigation techniques (e.g., cache coloring).
+\item Benchmark each guest separately using application-specific metrics, and
+  use these results to compare the unsupervised and supervised solutions.
+\item Evaluate both solutions in real-flight conditions and analyze their
+  behavior when each system is compromised.
 \end{enumerate}
 
 \section{Document Structure}
