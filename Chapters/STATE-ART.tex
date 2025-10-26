@@ -1054,12 +1054,25 @@ grams and was assembled on top of a single-core Raspberry Pi Zero, providing
 on-board barometer and \gls{imu} sensors, expansion ports, and a triple
 redundant power supply~\cite{pxfmini}. Unfortunately, the Erle-Brain 3 and PXFmini were
 deprecated after the Erle Robotics company was bought out~\cite{pxfmini-deprec}.
-%
-The PilotPi shield is another RaspberryPi-based platform, but targetted for hobbyists. The PilotPi shield provides a fully functional open-source
-solution for running PX4 autopilot directly on Raspberry Pi, requiring no
-proprietary drivers while offering open-source \gls{pcb} and
-schematics~\cite{px4-pilotpi}.
 
+The PilotPi shield is a Raspberry~Pi–based platform targeted at hobbyists. It
+offers a fully open-source solution for running the PX4 autopilot directly on
+Raspberry~Pi, requiring no proprietary drivers and providing open-source
+\gls{pcb} designs and schematics~\cite{px4-pilotpi}. Fig.~\ref{fig:pilotpi}
+shows the shield stacked on a Raspberry~Pi~4. The intermediate board integrates
+the typical \gls{uav} sensors (\gls{imu}, compass, barometer) and exposes
+\gls{gps} and telemetry radio as \gls{uart} devices. The top board handles power
+distribution and management, motor actuation, and additional peripherals
+accessible via the \gls{gpio} header.
+
+% Pixhawk 4
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.7\textwidth]{./img/png/rpi-pilotpi} 
+  \caption[PilotPi shield]{PilotPi shield~\cite{px4-pilotpi}\footnotemark}%
+  \label{fig:pilotpi}
+\end{figure}
+\fnlicCCFour{foot:cc-lic}% CC licence
 
   % This flight controller integrates all \gls{io} in the same board, and it uses the  @ 216 MHz (2 MB Flash,
   % 512 Kb \gls{sram}) \gls{mcu}. It comes with on-board sensors

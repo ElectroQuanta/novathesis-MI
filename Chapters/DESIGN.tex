@@ -8,13 +8,31 @@
 \end{flushright}
 \end{quote}
 
-Addressing UAVs' conflicting demands for security, safety, and \gls{swap-c} efficiency necessitates rethinking conventional mixed-criticality architectures. This chapter presents the design of the \gls{sspfs}: a trustworthy flight stack leveraging the Bao hypervisor for video surveillance applications, where resource-intensive but non-critical streaming coexists with safety-critical flight control on consolidated hardware.
+Addressing the conflicting demands of security, safety, and \gls{swap-c}
+efficiency in \glspl{uav} requires rethinking conventional mixed-criticality
+architectures. This chapter presents the design of the \gls{sspfs}: a
+trustworthy flight stack that leverages the Bao hypervisor for
+video-surveillance applications, where resource-intensive but non-critical
+streaming coexists with safety-critical flight control on consolidated hardware.
 
-The conventional \gls{umpfs} approach employs separate hardware nodes—a flight controller for critical systems and a companion computer for tasks like collision avoidance or video streaming. While providing functional separation, this architecture increases weight and power consumption while offering no isolation guarantees, allowing compromises in the companion node to propagate to flight systems.
+We begin by defining requirements and constraints for the target application,
+then analyze the conventional architecture and identify its drawbacks. Next, we
+integrate all components on a single platform without supervision: the
+\gls{uspfs} baseline, used to assess consolidation and its performance
+overhead. Finally, we run this baseline atop the Bao hypervisor, yielding the
+\gls{sspfs}.
 
-Merging flight control and companion functions onto a single platform reduces weight, power requirements, and inter-component latency. However, unsupervised consolidation (\gls{uspfs}) introduces critical risks including performance interference (where non-critical tasks disrupt flight-critical operations) and security vulnerabilities (where a single compromise affects the entire system). Consequently, unsupervised consolidation alone cannot meet stringent safety and security requirements.
+We then select the hardware -- the \gls{uav} and the \gls{uavic} -- and map these
+components into the \gls{uspfs} and \gls{sspfs} systems. To support shared
+\gls{pcie} devices across \glspl{vm}, we design a mailbox-supervision
+mechanism. We conclude by adapting the hardware mapping to the constraints
+imposed by the \gls{uavic} platform and Bao.
 
-The supervised approach hypothesizes that hypervisor oversight enables secure consolidation while preserving SWaP advantages. The \gls{sspfs} employs the Bao hypervisor to achieve hardware-enforced isolation between flight control and companion functions, certifiable separation with minimal performance overhead, and retention of single-board SWaP benefits. The following sections detail this architecture's requirements, components, and security model.
+% The conventional \gls{umpfs} approach employs separate hardware nodes a flight controller for critical systems and a companion computer for tasks like collision avoidance or video streaming. While providing functional separation, this architecture increases weight and power consumption while offering no isolation guarantees, allowing compromises in the companion node to propagate to flight systems.
+
+% Merging flight control and companion functions onto a single platform reduces weight, power requirements, and inter-component latency. However, unsupervised consolidation (\gls{uspfs}) introduces critical risks including performance interference (where non-critical tasks disrupt flight-critical operations) and security vulnerabilities (where a single compromise affects the entire system). Consequently, unsupervised consolidation alone cannot meet stringent safety and security requirements.
+
+% The supervised approach hypothesizes that hypervisor oversight enables secure consolidation while preserving SWaP advantages. The \gls{sspfs} employs the Bao hypervisor to achieve hardware-enforced isolation between flight control and companion functions, certifiable separation with minimal performance overhead, and retention of single-board SWaP benefits. The following sections detail this architecture's requirements, components, and security model.
 
 \section{Requirements and Constraints}
 \label{sec:req-sec}
@@ -418,7 +436,7 @@ connections such as a remote serial interface (UART5).
 
 \begin{figure}[!hbt]
   \centering
-  \includegraphics[width=0.8\textwidth]{./img/png/pilotpi-annotated} 
+  \includegraphics[width=0.9\textwidth]{./img/png/pilotpi-annotated} 
   \caption[UAVIC: Raspberry Pi 4 + PilotPi shield]{UAVIC: Raspberry Pi 4 +
     PilotPi shield (adapted from~\cite{px4-pilotpi})\footnotemark}%
   \label{fig:pilotpi-annot}
@@ -486,7 +504,8 @@ The solid lines represent aggregation, e.g., the \lstinline{root} node includes 
 dashed lines represent dependency, e.g., the \lstinline{power} and \lstinline{firmware} nodes depend on the \lstinline{mailbox}.
 %
 The device tree coloring scheme highlights functional groupings:
-\begin{itemize}[noitemsep,topsep=0pt]
+% \begin{itemize}[noitemsep,topsep=0pt]
+\begin{itemize}
 %
 \item \hlighthex{ADD8E6}{000000}{Generic nodes}: essential for all Raspberry Pi
   4 configurations: \lstinline{memory}, \lstinline{cpu},
