@@ -90,11 +90,10 @@ pursued:
 Our consolidation of mixed-criticality stacks relied on a Raspberry~Pi running a
 Linux \gls{gpos}. However, Linux does not provide hard real-time guarantees;
 therefore, the \gls{uavic} platform should natively support the NuttX \gls{rtos}
-required by the PX4 autopilot and should also have a smaller footprint. A
-promising heterogeneous platform is the NXP i.MX~8M Nano~\cite{imx8mn}, which
-integrates an Arm Cortex-M7 (well suited to NuttX) and a quad-core Arm
-Cortex-A53 (well suited to a Linux \gls{os}). Porting NuttX to this platform
-remains future work.
+required by the PX4 autopilot and should also have a smaller footprint. As noted
+earlier, a promising heterogeneous option is the NXP i.MX~8M Nano~\cite{imx8mn}.
+In the future we plan to port NuttX into this platform,
+matching the software stacks' requirements with the capabilities of the computing elements.
 \item \textbf{A deeper system resources analysis and optimization:}
   Additional data are needed to thoroughly assess resource usage and reduce the
   influence of outliers in the current \gls{uavic}; therefore, more tests should

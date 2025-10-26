@@ -1054,42 +1054,11 @@ grams and was assembled on top of a single-core Raspberry Pi Zero, providing
 on-board barometer and \gls{imu} sensors, expansion ports, and a triple
 redundant power supply~\cite{pxfmini}. Unfortunately, the Erle-Brain 3 and PXFmini were
 deprecated after the Erle Robotics company was bought out~\cite{pxfmini-deprec}.
+%
 The PilotPi shield is another RaspberryPi-based platform, but targetted for hobbyists. The PilotPi shield provides a fully functional open-source
 solution for running PX4 autopilot directly on Raspberry Pi, requiring no
 proprietary drivers while offering open-source \gls{pcb} and
 schematics~\cite{px4-pilotpi}.
-
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=0.8\textwidth]{./img/png/pilotpi-annotated} 
-  \caption[UAVIC: Raspberry Pi 4 + PilotPi shield]{UAVIC: Raspberry Pi 4 +
-    PilotPi shield (adapted from~\cite{px4-pilotpi})\footnotemark}%
-  \label{fig:pilotpi-annot}
-\end{figure}
-%
-%\fnlicReq{Elsevier}{5457890117132}%
-\fnlicCCFour{foot:pilotpi-annotated}%
-
-Fig.~\ref{fig:pilotpi-annot} illustrates the PilotPi shield.
-The Raspberry Pi 4 Model B (1) operates a Linux-based \gls{os}
-from the \gls{sd} card, directly exposing the \gls{csi} camera and
-\gls{usb} interfaces. This model features the Broadcom BCM2711
-\gls{soc}, containing a 64-bit quad-core Arm\textreg Cortex\textreg--A72 \gls{cpu} at
-1.8 GHz and VideoCore VI \gls{gpu} at 500 MHz~\cite{rpi4-specs,rpi4-bcm2711},
-with 8 GB LPDDR4-3200 SDRAM. Connectivity includes dual-band 802.11ac wireless,
-Bluetooth 5.0, Gigabit Ethernet, two \gls{usb} 3.0 ports, and two \gls{usb} 2.0 ports.
-%
-The sensor board (2) mounts atop the Raspberry Pi,
-providing \gls{gps}, telemetry, and \gls{rc} external interfaces mapped to
-\lstinline{/dev/ttySC0}, \lstinline{/dev/ttySC1}, and \lstinline{/dev/ttyAMA0},
-respectively. Onboard sensors include an accelerometer/gyroscope
-(\lstinline{ICM42688P}), magnetometer (\lstinline{IST8310}), and barometer
-(\lstinline{MS5611}) required by PX4.
-%
-The topmost layer contains the power board (3), handling power supply (8),
-monitoring (11), and motor actuation via \gls{pwm} (10) supported by the Linux
-\lstinline{PCA9685} driver. A header exposes unused pins, enabling additional
-connections such as a remote serial interface (UART5).
 
 
   % This flight controller integrates all \gls{io} in the same board, and it uses the  @ 216 MHz (2 MB Flash,
