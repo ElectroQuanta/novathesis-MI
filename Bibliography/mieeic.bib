@@ -1,12 +1,26 @@
 % Cleaned by bib fixer: moved howpublished->url, note(accessed)->urldate, misc->online (when applicable),
 % added titleaddon for GitHub repos, and wrapped corporate authors for GitHub entries.
 
-@article{burns2022mixed,
-  title={Mixed criticality systems-a review:(february 2022)},
-  author={Burns, Alan and Davis, Robert Ian},
-  journal={Department of Computer Science, University of York, Tech. Rep},
-  year={2022},
-  publisher={York}
+%@article{burns2022mixed,
+%  title={Mixed criticality systems-a review:(february 2022)},
+%  author={Burns, Alan and Davis, Robert Ian},
+%  journal={Department of Computer Science, University of York, Tech. Rep},
+%  year={2022},
+%  publisher={York}
+%}
+
+@book{burns2022mixed,
+	title = {Mixed {Criticality} {Systems} - {A} {Review}:(13th {Edition}, {February} 2022)},
+	shorttitle = {Mixed {Criticality} {Systems} - {A} {Review}},
+	url = {https://eprints.whiterose.ac.uk/id/eprint/183619/},
+	abstract = {This review covers research on the topic of mixed criticality systems that has been published since Vestal’s 2007 paper. It covers the period up to end of 2021. The review is organised into the following topics: introduction and motivation, models, single processor analysis (including job-based, hard and soft tasks, fixed priority and EDF scheduling, shared resources and static and synchronous scheduling), multiprocessor analysis, related topics, realistic models, formal treatments, systems issues, industrial practice and research beyond mixed-criticality. A list of PhDs awarded for research relating to mixed-criticality systems is also included.},
+	language = {en},
+	urldate = {2025-10-26},
+	publisher = {York},
+	author = {Burns, Alan and Davis, Robert Ian},
+	month = feb,
+	year = {2022},
+	file = {Full Text PDF:/home/zmp/Zotero/storage/Z5DLPGY3/Burns and Davis - 2022 - Mixed Criticality Systems - A Review(13th Edition, February 2022).pdf:application/pdf;Snapshot:/home/zmp/Zotero/storage/BKWLSPTA/183619.html:text/html},
 }
 
 @article{cinque2022virtualizing,
@@ -24,13 +38,40 @@ keywords = {Virtualization, Real-time applications, Mixed-criticality systems, R
 abstract = {Virtualization is gaining attraction in the industry as it promises a flexible way to integrate, manage, and re-use heterogeneous software components with mixed-criticality levels, on a shared hardware platform, while obtaining isolation guarantees. This work surveys the state-of-the-practice of real-time virtualization technologies by discussing common issues in the industry. In particular, we analyze how different virtualization approaches and solutions can impact isolation guarantees and testing/certification activities, and how they deal with dependability challenges. The aim is to highlight current industry trends and support industrial practitioners to choose the most suitable solution according to their application domains.}
 }
 
-@inproceedings{struhar2020real,
-  title={Real-time containers: A survey},
-  author={Struh{\'a}r, V{\'a}clav and Behnam, Moris and Ashjaei, Mohammad and Papadopoulos, Alessandro V},
-  booktitle={2nd Workshop on Fog Computing and the IoT (Fog-IoT 2020)},
-  year={2020},
-  organization={Schloss Dagstuhl-Leibniz-Zentrum f{\"u}r Informatik}
+%@inproceedings{struhar2020real,
+%  title={Real-time containers: A survey},
+%  author={Struh{\'a}r, V{\'a}clav and Behnam, Moris and Ashjaei, Mohammad and Papadopoulos, Alessandro V},
+%  booktitle={2nd Workshop on Fog Computing and the IoT (Fog-IoT 2020)},
+%  year={2020},
+%  organization={Schloss Dagstuhl-Leibniz-Zentrum f{\"u}r Informatik}
+%}
+
+@article{struhar2020real,
+	title = {Real-{Time} {Containers}: {A} {Survey}},
+	volume = {80},
+	copyright = {Creative Commons Attribution 3.0 Unported license, info:eu-repo/semantics/openAccess},
+	issn = {2190-6807},
+	shorttitle = {Real-{Time} {Containers}},
+	url = {https://drops.dagstuhl.de/entities/document/10.4230/OASIcs.Fog-IoT.2020.7},
+	doi = {10.4230/OASICS.FOG-IOT.2020.7},
+	abstract = {Container-based virtualization has gained a significant importance in a deployment of software applications in cloud-based environments. The technology fully relies on operating system features and does not require a virtualization layer (hypervisor) that introduces a performance degradation. Container-based virtualization allows to co-locate multiple isolated containers on a single computation node as well as to decompose an application into multiple containers distributed among several hosts (e.g., in fog computing layer). Such a technology seems very promising in other domains as well, e.g., in industrial automation, automotive, and aviation industry where mixed criticality containerized applications from various vendors can be co-located on shared resources.
+However, such industrial domains often require real-time behavior (i.e, a capability to meet predefined deadlines). These capabilities are not fully supported by the container-based virtualization yet. In this work, we provide a systematic literature survey study that summarizes the effort of the research community on bringing real-time properties in container-based virtualization. We categorize existing work into main research areas and identify possible immature points of the technology.},
+	language = {en},
+	urldate = {2025-10-26},
+	journal = {OASIcs, Volume 80, Fog-IoT 2020},
+	author = {Struhár, Václav and Behnam, Moris and Ashjaei, Mohammad and Papadopoulos, Alessandro V.},
+	editor = {Cervin, Anton and Yang, Yang},
+	year = {2020},
+	note = {Artwork Size: 9 pages, 380638 bytes
+ISBN: 9783959771443
+Medium: application/pdf
+Publisher: Schloss Dagstuhl – Leibniz-Zentrum für Informatik},
+	keywords = {Computer systems organization → Real-time systems, Containers, Docker, LXC, PREEMPT\_RT, Real-Time, RTAI, Software and its engineering → Virtual machines, Xenomai},
+	pages = {7:1--7:9},
+	annote = {SeriesInformation
+OASIcs, Vol. 80, 2nd Workshop on Fog Computing and the IoT (Fog-IoT 2020), pages 7:1-7:9},
 }
+
 
 @online{xilinxRunX,
   author       = {{Xilinx}},
@@ -59,25 +100,67 @@ abstract = {Virtualization is gaining attraction in the industry as it promises 
   year={2012}
 }
 
-@misc{iso26262,
-  author       = {ISO},
-  title        = {{Product development: software level, ISO 26262: Road Vehicles - Functional safety 6}},
-  howpublished = {},
-  year         = {},
-  note         = {},
-  keywords = {automotive, standard}
+%@misc{iso26262,
+%  author       = {ISO},
+%  title        = {{Product development: software level, ISO 26262: Road Vehicles - Functional safety 6}},
+%  howpublished = {},
+%  year         = {},
+%  note         = {},
+%  keywords = {automotive, standard}
+%}
+
+@article{iso26262,
+	title = {Overview of the {Second} {Edition} of {ISO} 26262: {Functional} {Safety}— {Road} {Vehicles}},
+	volume = {55},
+	issn = {0743-8826},
+	shorttitle = {Overview of the {Second} {Edition} of {ISO} 26262},
+	url = {https://jsystemsafety.com/index.php/jss/article/view/55},
+	doi = {10.56094/jss.v55i1.55},
+	abstract = {Functional safety is of the utmost importance in the development of safety-critical automotive systems, especially with the introduction of driver assist and automated driving systems. ISO 26262: Functional Safety – Road Vehicles, has been the de facto standard for functional safety in the automotive electronics domain since the release of its first edition in 2011. It is currently available in its second edition, published in December 2018.
+In this paper, we present an overview of the standard, which applies to all activities during the safety lifecycle of system development. In the concept phase of ISO 26262, the hazard and risk assessment process focuses on identifying possible hazards caused by malfunctioning behavior of electrical/electronic (E/E) safety-related systems and mitigating them through the identification of safety goals. The design phase includes system, hardware, and software development, with requirements developed from the safety goals. ISO 26262 also prescribes the functional safety management activities to be performed during the safety lifecycle and provides requirements for the supporting processes.
+In addition to presenting an overview of the standard, this paper highlights some major changes introduced in the second edition of ISO 26262.},
+	number = {1},
+	urldate = {2025-10-26},
+	journal = {Journal of System Safety},
+	author = {Debouk, Rami},
+	month = mar,
+	year = {2019},
+	pages = {13--21},
+	file = {Full Text:/home/zmp/Zotero/storage/USEYEU4P/Debouk - 2019 - Overview of the Second Edition of ISO 26262 Functional Safety— Road Vehicles.pdf:application/pdf},
 }
 
+
+%@article{barham2003xen,
+%  title={Xen and the art of virtualization},
+%  author={Barham, Paul and Dragovic, Boris and Fraser, Keir and Hand, Steven and Harris, Tim and Ho, Alex and Neugebauer, Rolf and Pratt, Ian and Warfield, Andrew},
+%  journal={ACM SIGOPS operating systems review},
+%  volume={37},
+%  number={5},
+%  pages={164--177},
+%  year={2003},
+%  publisher={ACM New York, NY, USA}
+%}
+
 @article{barham2003xen,
-  title={Xen and the art of virtualization},
-  author={Barham, Paul and Dragovic, Boris and Fraser, Keir and Hand, Steven and Harris, Tim and Ho, Alex and Neugebauer, Rolf and Pratt, Ian and Warfield, Andrew},
-  journal={ACM SIGOPS operating systems review},
-  volume={37},
-  number={5},
-  pages={164--177},
-  year={2003},
-  publisher={ACM New York, NY, USA}
+	title = {Xen and the art of virtualization},
+	volume = {37},
+	issn = {0163-5980},
+	url = {https://dl.acm.org/doi/10.1145/1165389.945462},
+	doi = {10.1145/1165389.945462},
+	abstract = {Numerous systems have been designed which use virtualization to subdivide the ample resources of a modern computer. Some require specialized hardware, or cannot support commodity operating systems. Some target 100\% binary compatibility at the expense of performance. Others sacrifice security or functionality for speed. Few offer resource isolation or performance guarantees; most provide only best-effort provisioning, risking denial of service.This paper presents Xen, an x86 virtual machine monitor which allows multiple commodity operating systems to share conventional hardware in a safe and resource managed fashion, but without sacrificing either performance or functionality. This is achieved by providing an idealized virtual machine abstraction to which operating systems such as Linux, BSD and Windows XP, can be
+              ported
+              with minimal effort.Our design is targeted at hosting up to 100 virtual machine instances simultaneously on a modern server. The virtualization approach taken by Xen is extremely efficient: we allow operating systems such as Linux and Windows XP to be hosted simultaneously for a negligible performance overhead --- at most a few percent compared with the unvirtualized case. We considerably outperform competing commercial and freely available solutions in a range of microbenchmarks and system-wide tests.},
+	language = {en},
+	number = {5},
+	urldate = {2025-10-26},
+	journal = {ACM SIGOPS Operating Systems Review},
+	author = {Barham, Paul and Dragovic, Boris and Fraser, Keir and Hand, Steven and Harris, Tim and Ho, Alex and Neugebauer, Rolf and Pratt, Ian and Warfield, Andrew},
+	month = dec,
+	year = {2003},
+	pages = {164--177},
+	file = {Submitted Version:/home/zmp/Zotero/storage/PY57LNJ9/Barham et al. - 2003 - Xen and the art of virtualization.pdf:application/pdf},
 }
+
 
 @online{microsoftHyperV,
   author       = {{Microsoft Corporation}},
@@ -88,15 +171,30 @@ abstract = {Virtualization is gaining attraction in the industry as it promises 
   keywords = {virtualization}
 }
 
+%@inproceedings{kivity2007kvm,
+%  title={kvm: the Linux virtual machine monitor},
+%  author={Kivity, Avi and Kamay, Yaniv and Laor, Dor and Lublin, Uri and Liguori, Anthony},
+%  booktitle={Proceedings of the Linux symposium},
+%  volume={1},
+%  number={8},
+%  pages={225--230},
+%  year={2007},
+%  organization={Dttawa, Dntorio, Canada}
+%}
+
 @inproceedings{kivity2007kvm,
-  title={kvm: the Linux virtual machine monitor},
-  author={Kivity, Avi and Kamay, Yaniv and Laor, Dor and Lublin, Uri and Liguori, Anthony},
-  booktitle={Proceedings of the Linux symposium},
-  volume={1},
-  number={8},
-  pages={225--230},
-  year={2007},
-  organization={Dttawa, Dntorio, Canada}
+	title = {kvm: the {Linux} virtual machine monitor},
+	volume = {1},
+	shorttitle = {kvm},
+	url = {https://www.kernel.org/doc/mirror/ols2007v1.pdf#page=225},
+	urldate = {2025-10-26},
+	booktitle = {Proceedings of the {Linux} symposium},
+	publisher = {Dttawa, Dntorio, Canada},
+	author = {Kivity, Avi and Kamay, Yaniv and Laor, Dor and Lublin, Uri and Liguori, Anthony},
+	year = {2007},
+	note = {Issue: 8},
+	pages = {225--230},
+	file = {Available Version (via Google Scholar):/home/zmp/Zotero/storage/93IBP6BH/Kivity et al. - 2007 - kvm the Linux virtual machine monitor.pdf:application/pdf},
 }
 
 @online{jailhouse,
@@ -128,37 +226,94 @@ abstract = {Virtualization is gaining attraction in the industry as it promises 
   annote =	{Keywords: Virtualization, hypervisor, static partitioning, safety, security, real-time, embedded systems, Arm, RISC-V}
 }
 
+%@inproceedings{heiser2008role,
+%  title={The role of virtualization in embedded systems},
+%  author={Heiser, Gernot},
+%  booktitle={Proceedings of the 1st workshop on Isolation and integration in embedded systems},
+%  pages={11--16},
+%  year={2008}
+%}
+
 @inproceedings{heiser2008role,
-  title={The role of virtualization in embedded systems},
-  author={Heiser, Gernot},
-  booktitle={Proceedings of the 1st workshop on Isolation and integration in embedded systems},
-  pages={11--16},
-  year={2008}
+	address = {Glasgow Scotland},
+	title = {The role of virtualization in embedded systems},
+	isbn = {978-1-60558-126-2},
+	url = {https://dl.acm.org/doi/10.1145/1435458.1435461},
+	doi = {10.1145/1435458.1435461},
+	language = {en},
+	urldate = {2025-10-26},
+	booktitle = {Proceedings of the 1st workshop on {Isolation} and integration in embedded systems},
+	publisher = {ACM},
+	author = {Heiser, Gernot},
+	month = apr,
+	year = {2008},
+	pages = {11--16},
 }
+
+%@inproceedings{martins2014clickos,
+%  title={$\{$ClickOS$\}$ and the Art of Network Function Virtualization},
+%  author={Martins, Joao and Ahmed, Mohamed and Raiciu, Costin and Olteanu, Vladimir and Honda, Michio and Bifulco, Roberto and Huici, Felipe},
+%  booktitle={11th USENIX Symposium on Networked Systems Design and Implementation (NSDI 14)},
+%  pages={459--473},
+%  year={2014}
+%}
 
 @inproceedings{martins2014clickos,
-  title={$\{$ClickOS$\}$ and the Art of Network Function Virtualization},
-  author={Martins, Joao and Ahmed, Mohamed and Raiciu, Costin and Olteanu, Vladimir and Honda, Michio and Bifulco, Roberto and Huici, Felipe},
-  booktitle={11th USENIX Symposium on Networked Systems Design and Implementation (NSDI 14)},
-  pages={459--473},
-  year={2014}
+	title = {\{{ClickOS}\} and the {Art} of {Network} {Function} {Virtualization}},
+	isbn = {978-1-931971-09-6},
+	url = {https://www.usenix.org/conference/nsdi14/technical-sessions/presentation/martins},
+	language = {en},
+	urldate = {2025-10-26},
+	author = {Martins, Joao and Ahmed, Mohamed and Raiciu, Costin and Olteanu, Vladimir and Honda, Michio and Bifulco, Roberto and Huici, Felipe},
+	year = {2014},
+	pages = {459--473},
+	file = {Full Text PDF:/home/zmp/Zotero/storage/II44Z34E/Martins et al. - 2014 - ClickOS and the Art of Network Function Virtualization.pdf:application/pdf},
 }
+
+%@inproceedings{lankes2016hermitcore,
+%  title={HermitCore: a unikernel for extreme scale computing},
+%  author={Lankes, Stefan and Pickartz, Simon and Breitbart, Jens},
+%  booktitle={Proceedings of the 6th International Workshop on Runtime and Operating Systems for Supercomputers},
+%  pages={1--8},
+%  year={2016}
+%}
 
 @inproceedings{lankes2016hermitcore,
-  title={HermitCore: a unikernel for extreme scale computing},
-  author={Lankes, Stefan and Pickartz, Simon and Breitbart, Jens},
-  booktitle={Proceedings of the 6th International Workshop on Runtime and Operating Systems for Supercomputers},
-  pages={1--8},
-  year={2016}
+	address = {Kyoto Japan},
+	title = {{HermitCore}: {A} {Unikernel} for {Extreme} {Scale} {Computing}},
+	isbn = {978-1-4503-4387-9},
+	shorttitle = {{HermitCore}},
+	url = {https://dl.acm.org/doi/10.1145/2931088.2931093},
+	doi = {10.1145/2931088.2931093},
+	language = {en},
+	urldate = {2025-10-26},
+	booktitle = {Proceedings of the 6th {International} {Workshop} on {Runtime} and {Operating} {Systems} for {Supercomputers}},
+	publisher = {ACM},
+	author = {Lankes, Stefan and Pickartz, Simon and Breitbart, Jens},
+	month = jun,
+	year = {2016},
+	pages = {1--8},
 }
 
+%@inproceedings{masmano2009xtratum,
+%  title={Xtratum: a hypervisor for safety critical embedded systems},
+%  author={Masmano, Miguel and Ripoll, Ismael and Crespo, Alfons and Metge, J},
+%  booktitle={11th Real-Time Linux Workshop},
+%  pages={263--272},
+%  year={2009},
+%  organization={Citeseer}
+%}
 @inproceedings{masmano2009xtratum,
-  title={Xtratum: a hypervisor for safety critical embedded systems},
-  author={Masmano, Miguel and Ripoll, Ismael and Crespo, Alfons and Metge, J},
-  booktitle={11th Real-Time Linux Workshop},
-  pages={263--272},
-  year={2009},
-  organization={Citeseer}
+	title = {Xtratum: a hypervisor for safety critical embedded systems},
+	volume = {9},
+	shorttitle = {Xtratum},
+	url = {https://www.academia.edu/download/96082900/proceedings_2009.pdf#page=273},
+	urldate = {2025-10-26},
+	booktitle = {11th {Real}-{Time} {Linux} {Workshop}},
+	publisher = {Citeseer},
+	author = {Masmano, Miguel and Ripoll, Ismael and Crespo, Alfons and Metge, J.},
+	year = {2009},
+	file = {Available Version (via Google Scholar):/home/zmp/Zotero/storage/PMLC6M4Y/Masmano et al. - 2009 - Xtratum a hypervisor for safety critical embedded systems.pdf:application/pdf},
 }
 
 @online{pikeOS,
@@ -170,15 +325,32 @@ abstract = {Virtualization is gaining attraction in the industry as it promises 
   keywords = {virtualization}
 }
 
+%@article{pinto2016towards,
+%  title={Towards a TrustZone-assisted hypervisor for real-time embedded systems},
+%  author={Pinto, Sandro and Pereira, Jorge and Gomes, Tiago and Ekpanyapong, Mongkol and Tavares, Adriano},
+%  journal={IEEE computer architecture letters},
+%  volume={16},
+%  number={2},
+%  pages={158--161},
+%  year={2016},
+%  publisher={IEEE}
+%}
+
 @article{pinto2016towards,
-  title={Towards a TrustZone-assisted hypervisor for real-time embedded systems},
-  author={Pinto, Sandro and Pereira, Jorge and Gomes, Tiago and Ekpanyapong, Mongkol and Tavares, Adriano},
-  journal={IEEE computer architecture letters},
-  volume={16},
-  number={2},
-  pages={158--161},
-  year={2016},
-  publisher={IEEE}
+	title = {Towards a {TrustZone}-{Assisted} {Hypervisor} for {Real}-{Time} {Embedded} {Systems}},
+	volume = {16},
+	copyright = {https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html},
+	issn = {1556-6056},
+	url = {http://ieeexplore.ieee.org/document/7590042/},
+	doi = {10.1109/LCA.2016.2617308},
+	number = {2},
+	urldate = {2025-10-26},
+	journal = {IEEE Computer Architecture Letters},
+	author = {Pinto, Sandro and Pereira, Jorge and Gomes, Tiago and Ekpanyapong, Mongkol and Tavares, Adriano},
+	month = jul,
+	year = {2017},
+	pages = {158--161},
+	file = {Submitted Version:/home/zmp/Zotero/storage/7S2ZYIN9/Pinto et al. - 2017 - Towards a TrustZone-Assisted Hypervisor for Real-Time Embedded Systems.pdf:application/pdf},
 }
 
 @Article{rtzvisor,
@@ -195,35 +367,110 @@ ABSTRACT = {Virtualization has been deployed as a key enabling technology for co
 DOI = {10.3390/electronics6040093}
 }
 
-@INPROCEEDINGS{vosysmonitor,
-  author={Lucas, Pierre and Chappuis, Kevin and Boutin, Benjamin and Vetter, Julian and Raho, Daniel},
-  booktitle={2018 23rd Conference of Open Innovations Association (FRUCT)}, 
-  title={VOSYSmonitor, a TrustZone-based Hypervisor for ISO 26262 Mixed-critical System}, 
-  year={2018},
-  volume={},
-  number={},
-  pages={231-238},
-  abstract={With the emergence of multicore embedded System on Chip (SoC), the integration of several applications with different levels of criticality on the same platform is becoming increasingly popular. These platforms, known as mixed-criticality systems, need to meet numerous requirements (e.g. real-time constraints, multiple Operating Systems (OS) scheduling, providing temporal and spatial isolation). In this context Virtual Open Systems has developed VOSYSmonitor, a thin software layer, which allows the co-execution of a safety-critical and noncritical applications on a single ARM-based multi-core SoC. This software element has been developed according to the ISO 26262 standard. One of the key aspects of this standard is the control of random and systematic failures, including the ones induced by faulty or aging hardware. In the case of a software component, the means to detect anomalies on the hardware are limited and depend on choices of the manufacturer (i.e. implementation of Dual redundant Core Lock step (DCLS)). However, the software is able to check a part of these failures. It can be by either reading the configuration registers of a peripheral, or checking the sanity of a memory region. The purpose of this paper is to showcase how a safety-related software element (e.g. VOSYSmonitor) can detect and recover from failures, while ensuring that the safety-related goals are still reached.},
-  keywords={},
-  doi={10.23919/FRUCT.2018.8588018},
-  ISSN={2305-7254},
-  month={11},
+%@inproceedings{lucas2017vosysmonitor,
+%  title={Vosysmonitor, a low latency monitor layer for mixed-criticality systems on armv8-a},
+%  author={Lucas, Pierre and Chappuis, Kevin and Paolino, Michele and Dagieu, Nicolas and Raho, Daniel},
+%  booktitle={29th Euromicro Conference on Real-Time Systems (ECRTS 2017)},
+%  year={2017},
+%  organization={Schloss Dagstuhl-Leibniz-Zentrum fuer Informatik}
+%}
+
+@inproceedings{lucas_vosysmonitor_2018,
+	address = {Bologna},
+	title = {{VOSYSmonitor}, a {TrustZone}-based {Hypervisor} for {ISO} 26262 {Mixed}-critical {System}},
+	isbn = {978-952-68653-6-2},
+	url = {https://ieeexplore.ieee.org/document/8588018/},
+	doi = {10.23919/FRUCT.2018.8588018},
+	urldate = {2025-10-26},
+	booktitle = {2018 23rd {Conference} of {Open} {Innovations} {Association} ({FRUCT})},
+	publisher = {IEEE},
+	author = {Lucas, Pierre and Chappuis, Kevin and Boutin, Benjamin and Vetter, Julian and Raho, Daniel},
+	month = nov,
+	year = {2018},
+	pages = {231--238},
 }
 
-@inproceedings{lucas2017vosysmonitor,
-  title={Vosysmonitor, a low latency monitor layer for mixed-criticality systems on armv8-a},
-  author={Lucas, Pierre and Chappuis, Kevin and Paolino, Michele and Dagieu, Nicolas and Raho, Daniel},
-  booktitle={29th Euromicro Conference on Real-Time Systems (ECRTS 2017)},
-  year={2017},
-  organization={Schloss Dagstuhl-Leibniz-Zentrum fuer Informatik}
+@article{lucas2017vosysmonitor,
+	title = {{VOSYSmonitor}, a {Low} {Latency} {Monitor} {Layer} for {Mixed}-{Criticality} {Systems} on {ARMv8}-{A}},
+	volume = {76},
+	copyright = {Creative Commons Attribution 3.0 Unported license, info:eu-repo/semantics/openAccess},
+	issn = {1868-8969},
+	url = {https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ECRTS.2017.6},
+	doi = {10.4230/LIPICS.ECRTS.2017.6},
+	abstract = {With the emergence of multicore embedded System on Chip (SoC), the integration of several applications with different levels of criticality on the same platform is becoming increasingly popular. These platforms, known as mixed-criticality systems, need to meet numerous requirements such as real-time constraints, Operating System (OS) scheduling, memory and OSes isolation.
+
+To construct mixed-criticality systems, various solutions, based on virtualization extensions, have been presented where OSes are contained in a Virtual Machine (VM) through the use of a hypervisor. However, such implementations usually lack hardware features to ensure a full isolation of other bus masters (e.g., Direct Memory Access (DMA) peripherals, Graphics Processing Unit (GPU)) between OSes. Furthermore on multicore implementation, one core is usually dedicated to one OS, causing CPU underutilization.
+
+To address these issues, this paper presents VOSYSmonitor, a multi-core software layer, which allows the co-execution of a safety-critical Real-Time Operating System (RTOS) and a non-critical General Purpose Operating System (GPOS) on the same hardware ARMv8-A platform.
+VOSYSmonitor main differentiation factors with the known solutions is the possibility for a processor to switch between secure and non-secure code execution at runtime. The partitioning is ensured by the ARM TrustZone technology, thus allowing to preserve the usage of virtualization features for the GPOS.
+
+VOSYSmonitor architecture will be detailed in this paper, while benchmarking its performance versus other known solutions.},
+	language = {en},
+	urldate = {2025-10-26},
+	journal = {LIPIcs, Volume 76, ECRTS 2017},
+	author = {Lucas, Pierre and Chappuis, Kevin and Paolino, Michele and Dagieu, Nicolas and Raho, Daniel},
+	editor = {Bertogna, Marko},
+	year = {2017},
+	note = {Artwork Size: 18 pages, 780702 bytes
+ISBN: 9783959770378
+Medium: application/pdf
+Publisher: Schloss Dagstuhl – Leibniz-Zentrum für Informatik},
+	keywords = {ARM TrustZone, Mixed Criticality, Real Time, VOSYSmonitor},
+	pages = {6:1--6:18},
+	annote = {SeriesInformation
+LIPIcs, Vol. 76, 29th Euromicro Conference on Real-Time Systems (ECRTS 2017), pages 6:1-6:18},
 }
+
+@article{lucas_vosysmonitor_2017,
+	title = {{VOSYSmonitor}, a {Low} {Latency} {Monitor} {Layer} for {Mixed}-{Criticality} {Systems} on {ARMv8}-{A}},
+	volume = {76},
+	copyright = {Creative Commons Attribution 3.0 Unported license, info:eu-repo/semantics/openAccess},
+	issn = {1868-8969},
+	url = {https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ECRTS.2017.6},
+	doi = {10.4230/LIPICS.ECRTS.2017.6},
+	abstract = {With the emergence of multicore embedded System on Chip (SoC), the integration of several applications with different levels of criticality on the same platform is becoming increasingly popular. These platforms, known as mixed-criticality systems, need to meet numerous requirements such as real-time constraints, Operating System (OS) scheduling, memory and OSes isolation.
+
+To construct mixed-criticality systems, various solutions, based on virtualization extensions, have been presented where OSes are contained in a Virtual Machine (VM) through the use of a hypervisor. However, such implementations usually lack hardware features to ensure a full isolation of other bus masters (e.g., Direct Memory Access (DMA) peripherals, Graphics Processing Unit (GPU)) between OSes. Furthermore on multicore implementation, one core is usually dedicated to one OS, causing CPU underutilization.
+
+To address these issues, this paper presents VOSYSmonitor, a multi-core software layer, which allows the co-execution of a safety-critical Real-Time Operating System (RTOS) and a non-critical General Purpose Operating System (GPOS) on the same hardware ARMv8-A platform.
+VOSYSmonitor main differentiation factors with the known solutions is the possibility for a processor to switch between secure and non-secure code execution at runtime. The partitioning is ensured by the ARM TrustZone technology, thus allowing to preserve the usage of virtualization features for the GPOS.
+
+VOSYSmonitor architecture will be detailed in this paper, while benchmarking its performance versus other known solutions.},
+	language = {en},
+	urldate = {2025-10-26},
+	journal = {LIPIcs, Volume 76, ECRTS 2017},
+	author = {Lucas, Pierre and Chappuis, Kevin and Paolino, Michele and Dagieu, Nicolas and Raho, Daniel},
+	editor = {Bertogna, Marko},
+	year = {2017},
+	note = {Artwork Size: 18 pages, 780702 bytes
+ISBN: 9783959770378
+Medium: application/pdf
+Publisher: Schloss Dagstuhl – Leibniz-Zentrum für Informatik},
+	keywords = {ARM TrustZone, Mixed Criticality, Real Time, VOSYSmonitor},
+	pages = {6:1--6:18},
+	annote = {SeriesInformation
+LIPIcs, Vol. 76, 29th Euromicro Conference on Real-Time Systems (ECRTS 2017), pages 6:1-6:18},
+}
+
+
+%@inproceedings{baoEmbeddedWorld2020,
+%  title={Bao: a modern lightweight embedded hypervisor},
+%  author={Martins, Jos{\'e} and Pinto, Sandro},
+%  booktitle={Embedded World Conference},
+%  year={2020},
+%  organization={Nuremberg, Germany}
+%}
 
 @inproceedings{baoEmbeddedWorld2020,
-  title={Bao: a modern lightweight embedded hypervisor},
-  author={Martins, Jos{\'e} and Pinto, Sandro},
-  booktitle={Embedded World Conference},
-  year={2020},
-  organization={Nuremberg, Germany}
+	title = {Bao: {A} modern lightweight embedded hypervisor},
+	shorttitle = {Bao},
+	url = {https://sandro2pinto.github.io/files/ew2020-bao.pdf},
+	urldate = {2025-10-26},
+	booktitle = {Proc. {Embedded} {World} {Conf}},
+	author = {Martins, José and Pinto, Sandro},
+	year = {2020},
+	pages = {1--5},
+	file = {Available Version (via Google Scholar):/home/zmp/Zotero/storage/KBXDBT77/Martins and Pinto - 2020 - Bao A modern lightweight embedded hypervisor.pdf:application/pdf},
 }
 
 @online{baoRepo,
@@ -236,13 +483,23 @@ DOI = {10.3390/electronics6040093}
   keywords = {hypervisor, bao}
 }
 
-@inproceedings{bansal2018evaluating,
-  title={Evaluating the memory subsystem of a configurable heterogeneous mpsoc},
-  author={Bansal, Ayoosh and Tabish, Rohan and Gracioli, Giovani and Mancuso, Renato and Pellizzoni, Rodolfo and Caccamo, Marco},
-  booktitle={Workshop on Operating Systems Platforms for Embedded Real-Time Applications (OSPERT)},
-  volume={7},
-  pages={55},
-  year={2018}
+%@inproceedings{bansal2018evaluating,
+%  title={Evaluating the memory subsystem of a configurable heterogeneous mpsoc},
+%  author={Bansal, Ayoosh and Tabish, Rohan and Gracioli, Giovani and Mancuso, Renato and Pellizzoni, Rodolfo and Caccamo, Marco},
+%  booktitle={Workshop on Operating Systems Platforms for Embedded Real-Time Applications (OSPERT)},
+%  volume={7},
+%  pages={55},
+%  year={2018}
+%}
+
+@article{bansal2018evaluating,
+	title = {Evaluating memory subsystem of configurable heterogeneous {MPSoC}},
+	url = {https://research.utwente.nl/files/276565013/proceedings_ospert2018.pdf#page=56},
+	urldate = {2025-10-26},
+	journal = {Proceedings of the Operating Systems Platforms for Embedded Real-Time applications},
+	author = {Bansal, Ayoosh and Tabish, Rohan and Gracioli, Giovani and Mancuso, Renato and Pellizzoni, Rodolfo and Caccamo, Marco},
+	year = {2018},
+	file = {Available Version (via Google Scholar):/home/zmp/Zotero/storage/89FH62ZM/Bansal et al. - 2018 - Evaluating memory subsystem of configurable heterogeneous MPSoC.pdf:application/pdf},
 }
 
 @article{ge2018survey,
@@ -328,11 +585,25 @@ ABSTRACT = {UAVs—unmanned aerial vehicles—facilitate data acquisition at tem
 DOI = {10.3390/rs9050459}
 }
 
-@article{glossner2021overview,
-  title={An overview of the drone open-source ecosystem},
-  author={Glossner, John and Murphy, Samantha and Iancu, Daniel},
-  journal={arXiv preprint arXiv:2110.02260},
-  year={2021}
+%@article{glossner2021overview,
+%  title={An overview of the drone open-source ecosystem},
+%  author={Glossner, John and Murphy, Samantha and Iancu, Daniel},
+%  journal={arXiv preprint arXiv:2110.02260},
+%  year={2021}
+%}
+
+@misc{glossner2021overview,
+	title = {An {Overview} of the {Drone} {Open}-{Source} {Ecosystem}},
+	copyright = {Creative Commons Attribution Share Alike 4.0 International},
+	url = {https://arxiv.org/abs/2110.02260},
+	doi = {10.48550/ARXIV.2110.02260},
+	abstract = {Unmanned aerial systems capable of beyond visual line of sight operation can be organized into a top-down hierarchy of layers including flight supervision, command and control, simulation of systems, operating systems, and physical hardware. Flight supervision includes unmanned air traffic management, flight planning, authorization, and remote identification. Command and control ensure drones can be piloted safely. Simulation of systems concerns how drones may react to different environments and how changing conditions and information provide input to a piloting system. Electronic hardware controlling drone operation is typically accessed using an operating system. Each layer in the hierarchy has an ecosystem of open-source solutions. In this brief survey we describe representative open-source examples for each level of the hierarchy.},
+	urldate = {2025-10-26},
+	publisher = {arXiv},
+	author = {Glossner, John and Murphy, Samantha and Iancu, Daniel},
+	year = {2021},
+	note = {Version Number: 1},
+	keywords = {FOS: Computer and information sciences, FOS: Electrical engineering, electronic engineering, information engineering, Robotics (cs.RO), Systems and Control (eess.SY)},
 }
 
 @Inbook{Blundell2020,
@@ -419,16 +690,33 @@ url="https://doi.org/10.1007/978-3-030-27126-8_7"
   doi={10.1109/SP40001.2021.00005}
   }
 
-@ARTICLE{Ullah2020UAV5gEULegisl,
-  author={Ullah, Zaib and Al-Turjman, Fadi and Mostarda, Leonardo},
-  journal={IEEE Transactions on Cognitive Communications and Networking}, 
-  title={Cognition in UAV-Aided 5G and Beyond Communications: A Survey}, 
-  year={2020},
-  volume={6},
-  number={3},
-  pages={872-891},
-  doi={10.1109/TCCN.2020.2968311}
-  }
+%@ARTICLE{Ullah2020UAV5gEULegisl,
+%  author={Ullah, Zaib and Al-Turjman, Fadi and Mostarda, Leonardo},
+%  journal={IEEE Transactions on Cognitive Communications and Networking}, 
+%  title={Cognition in UAV-Aided 5G and Beyond Communications: A Survey}, 
+%  year={2020},
+%  volume={6},
+%  number={3},
+%  pages={872-891},
+%  doi={10.1109/TCCN.2020.2968311}
+%  }
+
+@article{Ullah2020UAV5gEULegisl,
+	title = {Cognition in {UAV}-{Aided} {5G} and {Beyond} {Communications}: {A} {Survey}},
+	volume = {6},
+	copyright = {https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html},
+	issn = {2332-7731, 2372-2045},
+	shorttitle = {Cognition in {UAV}-{Aided} {5G} and {Beyond} {Communications}},
+	url = {https://ieeexplore.ieee.org/document/8964329/},
+	doi = {10.1109/TCCN.2020.2968311},
+	number = {3},
+	urldate = {2025-10-26},
+	journal = {IEEE Transactions on Cognitive Communications and Networking},
+	author = {Ullah, Zaib and Al-Turjman, Fadi and Mostarda, Leonardo},
+	month = sep,
+	year = {2020},
+	pages = {872--891},
+}
 
 @online{parrotDrone,
   author       = {Parrot},
@@ -604,13 +892,30 @@ url="https://doi.org/10.1007/978-3-030-27126-8_7"
   doi={10.1109/THS.2013.6699093}
   }
 
+%@inproceedings{ferrao2020stuart,
+%  title={STUART: ReSilient archiTecture to dynamically manage Unmanned aeriAl vehicle networks undeR atTack},
+%  author={Ferr{\~a}o, Isadora G and Pigatto, Daniel F and Fontes, Jo{\~a}o VC and Silva, Natassya BF and Espes, David and Dezan, Catherine and Branco, Kalinka RLJC},
+%  booktitle={2020 IEEE Symposium on Computers and Communications (ISCC)},
+%  pages={1--6},
+%  year={2020},
+%  organization={IEEE}
+%}
+
 @inproceedings{ferrao2020stuart,
-  title={STUART: ReSilient archiTecture to dynamically manage Unmanned aeriAl vehicle networks undeR atTack},
-  author={Ferr{\~a}o, Isadora G and Pigatto, Daniel F and Fontes, Jo{\~a}o VC and Silva, Natassya BF and Espes, David and Dezan, Catherine and Branco, Kalinka RLJC},
-  booktitle={2020 IEEE Symposium on Computers and Communications (ISCC)},
-  pages={1--6},
-  year={2020},
-  organization={IEEE}
+	address = {Rennes, France},
+	title = {{STUART}: {ReSilient} {archiTecture} to dynamically manage {Unmanned} {aeriAl} vehicle networks under {atTack}},
+	copyright = {https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html},
+	isbn = {978-1-7281-8086-1},
+	shorttitle = {{STUART}},
+	url = {https://ieeexplore.ieee.org/document/9219689/},
+	doi = {10.1109/ISCC50000.2020.9219689},
+	urldate = {2025-10-26},
+	booktitle = {2020 {IEEE} {Symposium} on {Computers} and {Communications} ({ISCC})},
+	publisher = {IEEE},
+	author = {Ferrao, Isadora G. and Pigatto, Daniel F. and Fontes, Joao V. C. and Silva, Natassya B. F. and Espes, David and Dezan, Catherine and Branco, Kalinka R. L. J. C.},
+	month = jul,
+	year = {2020},
+	pages = {1--6},
 }
 
 @online{nytimesUAVAccident2018,
@@ -640,14 +945,27 @@ url="https://doi.org/10.1007/978-3-030-27126-8_7"
   keywords = {uav, accident, }
 }
 
+%@article{sathyamoorthy2015review,
+%  title={A review of security threats of unmanned aerial vehicles and mitigation steps},
+%  author={Sathyamoorthy, Dinesh},
+%  journal={J. Def. Secur},
+%  volume={6},
+%  number={1},
+%  pages={81--97},
+%  year={2015}
+%}
+
 @article{sathyamoorthy2015review,
-  title={A review of security threats of unmanned aerial vehicles and mitigation steps},
-  author={Sathyamoorthy, Dinesh},
-  journal={J. Def. Secur},
-  volume={6},
-  number={1},
-  pages={81--97},
-  year={2015}
+	title = {A review of security threats of unmanned aerial vehicles and mitigation steps},
+	volume = {6},
+	url = {https://www.researchgate.net/profile/Dinesh-Sathyamoorthy/publication/282443666_A_Review_of_Security_Threats_of_Unmanned_Aerial_Vehicles_and_Mitigation_Steps/links/56105c9f08ae48337519f39d/A-Review-of-Security-Threats-of-Unmanned-Aerial-Vehicles-and-Mitigation-Steps.pdf},
+	number = {1},
+	urldate = {2025-10-26},
+	journal = {J. Def. Secur},
+	author = {Sathyamoorthy, Dinesh},
+	year = {2015},
+	pages = {81--97},
+	file = {Available Version (via Google Scholar):/home/zmp/Zotero/storage/Z7MJFG29/Sathyamoorthy - 2015 - A review of security threats of unmanned aerial vehicles and mitigation steps.pdf:application/pdf},
 }
 
 @online{freeGNU,
@@ -749,15 +1067,30 @@ url="https://doi.org/10.1007/978-3-030-27126-8_7"
   keywords = {uav, commercial, controller}
 }
 
+%@article{leccadito2018survey,
+%  title={A survey on securing UAS cyber physical systems},
+%  author={Leccadito, Matthew and Bakker, Tim and Klenke, Robert and Elks, Carl},
+%  journal={IEEE Aerospace and Electronic Systems Magazine},
+%  volume={33},
+%  number={10},
+%  pages={22--32},
+%  year={2018},
+%  publisher={IEEE}
+%}
+
 @article{leccadito2018survey,
-  title={A survey on securing UAS cyber physical systems},
-  author={Leccadito, Matthew and Bakker, Tim and Klenke, Robert and Elks, Carl},
-  journal={IEEE Aerospace and Electronic Systems Magazine},
-  volume={33},
-  number={10},
-  pages={22--32},
-  year={2018},
-  publisher={IEEE}
+	title = {A survey on securing {UAS} cyber physical systems},
+	volume = {33},
+	issn = {0885-8985, 1557-959X},
+	url = {https://ieeexplore.ieee.org/document/8538989/},
+	doi = {10.1109/MAES.2018.160145},
+	number = {10},
+	urldate = {2025-10-26},
+	journal = {IEEE Aerospace and Electronic Systems Magazine},
+	author = {Leccadito, Matthew and Bakker, Tim and Klenke, Robert and Elks, Carl},
+	month = oct,
+	year = {2018},
+	pages = {22--32},
 }
 
 @online{px4-home,
@@ -817,15 +1150,33 @@ url="https://doi.org/10.1007/978-3-030-27126-8_7"
   keywords = {uav, open-source, controller}
 }
 
+%@article{jargalsaikhan2022architectural,
+%  title={Architectural Process for Flight Control Software of Unmanned Aerial Vehicle with Module-Level Portability},
+%  author={Jargalsaikhan, TSogbayar and Lee, Keonpyo and Jun, Yong-Kee and Lee, Seongjin},
+%  journal={Aerospace},
+%  volume={9},
+%  number={2},
+%  pages={62},
+%  year={2022},
+%  publisher={MDPI}
+%}
+
 @article{jargalsaikhan2022architectural,
-  title={Architectural Process for Flight Control Software of Unmanned Aerial Vehicle with Module-Level Portability},
-  author={Jargalsaikhan, TSogbayar and Lee, Keonpyo and Jun, Yong-Kee and Lee, Seongjin},
-  journal={Aerospace},
-  volume={9},
-  number={2},
-  pages={62},
-  year={2022},
-  publisher={MDPI}
+	title = {Architectural {Process} for {Flight} {Control} {Software} of {Unmanned} {Aerial} {Vehicle} with {Module}-{Level} {Portability}},
+	volume = {9},
+	issn = {2226-4310},
+	url = {https://www.mdpi.com/2226-4310/9/2/62},
+	doi = {10.3390/aerospace9020062},
+	abstract = {To apply UAVs (Unmanned Aerial Vehicle) into different fields, including research and industry, and expand it quickly, reliable but modular software is required. The existing flight control software (FCS) of the UAV consists of various types of modules categorized into different layers, and it is responsible for coordinating, monitoring, and controlling the vehicle during its flight. This paper proposes mpFCS, a structure of UAV flight control software, which provides portability to its modules and is easy to expand. The mpFCS consists of four segments and several modules within the segments. mpFCS provides portability for each module within the segment. Existing software does not provide portability for its modules because of the tight coupling resulting from its different and private interfaces. The mpFCS uses interfaces of the standard airborne software architecture to transfer data between its modules. Moreover, the structure provides portability for its modules to run in the standard airborne software environment. In order to verify the mpFCS, we tested the mpFCS with the conformance test suite of the airborne software that provides the testing environment for the interfaces and modules of the software. The mpFCS passed the test. Test results show that all modules of the mpFCS are portable. Additionally, portable modules can be interoperable with other software, and the structure is expandable with new modules that use standard airborne software interfaces.},
+	language = {en},
+	number = {2},
+	urldate = {2025-10-26},
+	journal = {Aerospace},
+	author = {Jargalsaikhan, TSogbayar and Lee, Keonpyo and Jun, Yong-Kee and Lee, Seongjin},
+	month = jan,
+	year = {2022},
+	pages = {62},
+	file = {Full Text:/home/zmp/Zotero/storage/JIIQR5HR/Jargalsaikhan et al. - 2022 - Architectural Process for Flight Control Software of Unmanned Aerial Vehicle with Module-Level Porta.pdf:application/pdf},
 }
 
 @online{vxWorks-uav-northrop,
@@ -881,11 +1232,22 @@ ABSTRACT = {This study describes the Computing Platforms (CPs) and the hardware 
 DOI = {10.3390/s22166286}
 }
 
+%@phdthesis{buquerin2018security,
+%  title={Security Evaluation for the Real-time Operating System VxWorks 7 for Avionic Systems},
+%  author={Buquerin, Kevin Klaus Gomez},
+%  year={2018},
+%  school={Technische Hochschule Ingolstadt}
+%}
+
 @phdthesis{buquerin2018security,
-  title={Security Evaluation for the Real-time Operating System VxWorks 7 for Avionic Systems},
-  author={Buquerin, Kevin Klaus Gomez},
-  year={2018},
-  school={Technische Hochschule Ingolstadt}
+	type = {{PhD} {Thesis}},
+	title = {Security evaluation for the real-time operating system {VxWorks} 7 for avionic systems},
+	url = {https://kmyr.de/thesis/Bachelorarbeit-Buquerin.pdf},
+	urldate = {2025-10-26},
+	school = {Technische Hochschule Ingolstadt},
+	author = {Buquerin, Kevin Klaus Gomez},
+	year = {2018},
+	file = {Available Version (via Google Scholar):/home/zmp/Zotero/storage/DSI69VZC/Buquerin - 2018 - Security evaluation for the real-time operating system VxWorks 7 for avionic systems.pdf:application/pdf},
 }
 
 @inproceedings{zhang2021best,
@@ -1052,13 +1414,30 @@ DOI = {10.3390/s22166286}
   keywords = {lipo, uav}
 }
 
+%@inproceedings{martins2023shedding,
+%  title={Shedding light on static partitioning hypervisors for arm-based mixed-criticality systems},
+%  author={Martins, Jos{\'e} and Pinto, Sandro},
+%  booktitle={2023 IEEE 29th Real-Time and Embedded Technology and Applications Symposium (RTAS)},
+%  pages={40--53},
+%  year={2023},
+%  organization={IEEE}
+%}
+
 @inproceedings{martins2023shedding,
-  title={Shedding light on static partitioning hypervisors for arm-based mixed-criticality systems},
-  author={Martins, Jos{\'e} and Pinto, Sandro},
-  booktitle={2023 IEEE 29th Real-Time and Embedded Technology and Applications Symposium (RTAS)},
-  pages={40--53},
-  year={2023},
-  organization={IEEE}
+	address = {San Antonio, TX, USA},
+	title = {Shedding {Light} on {Static} {Partitioning} {Hypervisors} for {Arm}-based {Mixed}-{Criticality} {Systems}},
+	copyright = {https://doi.org/10.15223/policy-029},
+	isbn = {979-8-3503-2176-0},
+	url = {https://ieeexplore.ieee.org/document/10155684/},
+	doi = {10.1109/RTAS58335.2023.00011},
+	urldate = {2025-10-26},
+	booktitle = {2023 {IEEE} 29th {Real}-{Time} and {Embedded} {Technology} and {Applications} {Symposium} ({RTAS})},
+	publisher = {IEEE},
+	author = {Martins, José and Pinto, Sandro},
+	month = may,
+	year = {2023},
+	pages = {40--53},
+	file = {Submitted Version:/home/zmp/Zotero/storage/E2XC6IIF/Martins and Pinto - 2023 - Shedding Light on Static Partitioning Hypervisors for Arm-based Mixed-Criticality Systems.pdf:application/pdf},
 }
 
 @online{panicLinux,
@@ -1088,13 +1467,28 @@ DOI = {10.3390/s22166286}
   keywords = {iomap, Linux kernel}
 }
 
+%@inproceedings{guthaus2001mibench,
+%  title={MiBench: A free, commercially representative embedded benchmark suite},
+%  author={Guthaus, Matthew R and Ringenberg, Jeffrey S and Ernst, Dan and Austin, Todd M and Mudge, Trevor and Brown, Richard B},
+%  booktitle={Proceedings of the fourth annual IEEE international workshop on workload characterization. WWC-4 (Cat. No. 01EX538)},
+%  pages={3--14},
+%  year={2001},
+%  organization={IEEE}
+%}
+
 @inproceedings{guthaus2001mibench,
-  title={MiBench: A free, commercially representative embedded benchmark suite},
-  author={Guthaus, Matthew R and Ringenberg, Jeffrey S and Ernst, Dan and Austin, Todd M and Mudge, Trevor and Brown, Richard B},
-  booktitle={Proceedings of the fourth annual IEEE international workshop on workload characterization. WWC-4 (Cat. No. 01EX538)},
-  pages={3--14},
-  year={2001},
-  organization={IEEE}
+	address = {Austin, TX, USA},
+	title = {{MiBench}: {A} free, commercially representative embedded benchmark suite},
+	isbn = {978-0-7803-7315-0},
+	shorttitle = {{MiBench}},
+	url = {http://ieeexplore.ieee.org/document/990739/},
+	doi = {10.1109/WWC.2001.990739},
+	urldate = {2025-10-26},
+	booktitle = {Proceedings of the {Fourth} {Annual} {IEEE} {International} {Workshop} on {Workload} {Characterization}. {WWC}-4 ({Cat}. {No}.{01EX538})},
+	publisher = {IEEE},
+	author = {Guthaus, M.R. and Ringenberg, J.S. and Ernst, D. and Austin, T.M. and Mudge, T. and Brown, R.B.},
+	year = {2001},
+	pages = {3--14},
 }
 
 @online{shedlightRepo,
@@ -1620,18 +2014,59 @@ DOI = {10.3390/s18124116}
   keywords = {imx8mn, gic}
 }
 
+%@mastersthesis{ribeiro2023virtio,
+%  title={VirtIO Infrastructure for a Static Partition Hypervisor: virtio-blk and virtio-console},
+%  author={Ribeiro, Ant{\'o}nio Nuno Alves Cardoso Capela},
+%  year={2023},
+%  school={Universidade do Minho (Portugal)}
+%}
+
+%@article{ribeiro2023virtio,
 @mastersthesis{ribeiro2023virtio,
-  title={VirtIO Infrastructure for a Static Partition Hypervisor: virtio-blk and virtio-console},
-  author={Ribeiro, Ant{\'o}nio Nuno Alves Cardoso Capela},
-  year={2023},
-  school={Universidade do Minho (Portugal)}
+	title = {{VirtIO} infrastructure for a static partition hypervisor: virtio-blk and virtio-console},
+	shorttitle = {{VirtIO} infrastructure for a static partition hypervisor},
+	url = {https://hdl.handle.net/1822/91640},
+	abstract = {The automotive industry has increasingly focused on the integration of systems that perform very specific functions. At the same time, there is an increasing need to reduce Size, Weight, Power and Cost (SWaP-C) and, consequently, the need to group subsystems, usually with different levels of criticality, onto the same hardware platform. Currently, these systems are referred to as Mixed-Criticality System (MCS) and require strong isolation between systems of different criticality to respect the freedom from interference and real-time deadlines. Virtualization emerged as a natural enabler for MCS, since, in addition to providing a way to integrate different subsystems onto the same hardware platform, it enforces a strong isolation among consolidated workloads. Following this trend, hypervisors, developed for server and cloud applications, were retrofitted to embedded system architectures such as Advanced RISC Machine (ARM). These hypervisors do not fulfil the requirements of real-time embedded systems, leading to the rise and adoption of static partitioning hypervisors. BAO is a static partitioning hypervisor, where the necessary resources are assigned to each Virtual Machine (VM) in the design. Hence, this hypervisor is not prepared for sharing peripherals between VMs, without failing to comply with the necessary requirements of MCSs. Under this light, this thesis proposes the development of an infrastructure following a standard commu nication protocol, known as VirtIO, to communicate between two unprivileged VMs, keeping the hypervisor minimalistic and simple. With this infrastructure, there is a VM exclusively assigned and dedicated to shar ing peripherals. Thus, whenever a VMs needs to perform an operation on a shared peripheral, it will have to make a request to the dedicated VM. To solve the limitation of sharing peripherals, it is necessary to relinquish part of the isolation between the dedicated VM and the other VMs. This thesis also proposes the implementation of two VirtIO devices, the virtio-console and the virtio-block, to test the infrastructure and, to share the Universal Asynchronous Receiver-Transmitter (UART) and Secure Digital (SD) Card peripherals.},
+	language = {eng},
+	urldate = {2025-10-26},
+	author = {Ribeiro, António Nuno Alves Cardoso Capela},
+	month = apr,
+	year = {2023},
+	file = {Full Text PDF:/home/zmp/Zotero/storage/2RPDYXPP/Ribeiro - 2023 - VirtIO infrastructure for a static partition hypervisor virtio-blk and virtio-console.pdf:application/pdf},
 }
   
-  @mastersthesis{costa2022virtio,
-  title={VirtIO infrastructure for a static partition hypervisor: VirtIO-Net},
-  author={Costa, Jo{\~a}o Rodrigo Lima},
-  year={2022},
-  school={Universidade do Minho (Portugal)}
+%  @mastersthesis{costa2022virtio,
+%  title={VirtIO infrastructure for a static partition hypervisor: VirtIO-Net},
+%  author={Costa, Jo{\~a}o Rodrigo Lima},
+%  year={2022},
+%  school={Universidade do Minho (Portugal)}
+%}
+
+%@article{costa2022virtio,
+@mastersthesis{costa2022virtio,
+	title = {{VirtIO} infrastructure for a static partition hypervisor: {VirtIO}-{Net}},
+	shorttitle = {{VirtIO} infrastructure for a static partition hypervisor},
+	url = {https://hdl.handle.net/1822/88717},
+	abstract = {O uso de sistemas embebidos tem crescido exponencialmente em indústrias como a automóvel ou aeronáutica. Isto tem levado a um aumento na complexidade dos sistemas, onde é necessário consolidar várias camadas de software com diferentes níveis de criticidade numa única plataforma de hardware. Para aumentar a segurança destes sistemas, a indústria tem-se focado na tecnologia de virtualização, uma vez que a mesma permite a integração e o isolamento dos vários subsistemas. Recorrendo a um hipervisor é possível partilhar os recursos de hardware entre múltiplas máquinas virtuais (VMs). No entanto, os hipervisores tradicionais não foram desenhados para garantir os requisitos de tempo-real e de segurança. Por este motivo, hipervisores de particionamento estático, como o Jailhouse, que alocam os recursos de hardware estaticamente para as VMs em tempo de design, têm ganho cada vez mais protagonismo. Porém, o Jailhouse depende do Linux para iniciar e gerir as VMs, criando alguns problemas de tempo-real e segurança. Assim sendo, o nosso grupo de investigação focou-se em desenvolver o hipervisor Bao. O Bao implementa uma camada minimalista de software e não tem qualquer dependência de bibliotecas externas. A implementação atual do Bao dá acesso pass-through aos periféricos, não sendo possível a partilha de dispositivos. O trabalho desenvolvido nesta dissertação consiste no desenvolvimento de uma infraestrutura que permite a partilha de dispositivos utilizando VirtIO. Esta infraestrutura deve ser genérica e deve ser com patível com as front-ends já existentes. A infraestrutura do VirtIO é implementada numa máquina virtual dedicada (service guest), cuja função é gerir as múltiplas virtqueues que permitem transmitir e receber dados de outras VMs que utilizam VirtIO. Ao contrário das soluções existentes, nesta dissertação, as back ends do VirtIO são implementadas não no hipervisor, mas numa VM, resultando numa TCB reduzida para o sistema. A segunda parte da dissertação foca-se em implementar duas drivers back-end, i.e., uma para o VirtIO-console e outra para o VirtIO-net. A primeira driver é uma driver simples e é utilizada essencial mente para garantir a validação adequada da interface implementada. A segunda é mais complexa, mas é essencial para qualquer hipervisor moderno.},
+	language = {eng},
+	urldate = {2025-10-26},
+	author = {Costa, João Rodrigo Lima},
+	month = jan,
+	year = {2023},
+	file = {Full Text PDF:/home/zmp/Zotero/storage/YYY8JKCU/Costa - 2023 - VirtIO infrastructure for a static partition hypervisor VirtIO-Net.pdf:application/pdf},
+}
+
+%@article{rocha_mitigating_2023,
+@mastersthesis{rocha_mitigating_2023,
+	title = {Mitigating platform-level memory interference on a static partitioning hypervisor},
+	url = {https://hdl.handle.net/1822/88668},
+	abstract = {Os sistemas embebidos apresentam uma enorme heterogeneidade, incluindo desde pequenos controladores, para sistemas inteligentes operados a bateria até sistemas de computação de alto desempenho em automóveis. Definitivamente, os sistemas embebidos cresceram exponencialmente nos últimos anos, aumentando o seu nível de complexidade numa multiplicidade de indústrias. Tal facto, aportou naturalmente uma consolidação de várias camadas de critícidade sobre a mesma plataforma. Para proporcionar um aumento de isolamento e segurança, a indústria começou a recorrer às capacidades da tecnologia de virtualização. A tecnologia de virtualização permitiu a consolidação e o isolamento de múltiplos subsistemas numa mesma plataforma. Hipervisores, também designados de monitores de máquinas virtuais, são responsáveis pela gestão dos recursos de hardware para as mesmas. No entanto, os hipervisores tradicionais não foram desenhados para garantir requisitos de tempo-real e para as restrições embebidas. Nesse sentido, tanto a indústria com a academia direcionaram esforços para uma nova arquitectura de virtualização, os chamados hipervisores de partição estática. Um exemplo destes hipervisores é o Jailhouse que aloca estáticamente o hardware no momento de inicialização. No entanto, este hipervisor exige que o sistema operativo Linux o inicialize, o que se traduz em desvantagens em termos de tempo de arranque e segurança. Para abordar a maioria dos problemas do Jailhouse, o nosso grupo de investigação desenvolveu o Bao. Bao é um hipervisor estático que não apresenta qualquer dependência externa. Este mesmo hipervisor já implementa a partição da cache de modo a mitigar as interferências causadas pela contenção da partilha da mesma entre máquinas virtuais. Contudo, existem outros pontos de contenção na hierarquia de memória. Assim, a primeira parte desta dissertação concentra-se sobre a implementação de um mecanismo para regulação da largura da banda de memória, cujo o objectivo é o isolamento temporal do controlador DRAM. O mecanismo implementado irá ser avaliado para identificar o nível de capacidade de redução de interferência na DRAM. A segunda fase desta dissertação, explora os possíveis casos de ”side-channel” através do uso de DMAs para avaliar os casos de interferência a nível da plataforma e não apenas ao nível do CPU.},
+	language = {eng},
+	urldate = {2025-10-26},
+	author = {Rocha, Francisco Manuel Barreto},
+	month = jan,
+	year = {2023},
+	file = {Full Text PDF:/home/zmp/Zotero/storage/994JC2E4/Rocha - 2023 - Mitigating platform-level memory interference on a static partitioning hypervisor.pdf:application/pdf},
 }
 
 @ARTICLE{peixoto-virtio-2024,
@@ -1694,4 +2129,34 @@ DOI = {10.3390/drones7030169}
   year         = {2024},
   urldate = {2024-09-27},
   keywords = {nuttx, platforms}
+}
+
+@incollection{wong_fpga_2017,
+	address = {Cham},
+	title = {{FPGA} {Applications} in {Unmanned} {Aerial} {Vehicles} - {A} {Review}},
+	volume = {10216},
+	isbn = {978-3-319-56257-5 978-3-319-56258-2},
+	url = {http://link.springer.com/10.1007/978-3-319-56258-2_19},
+	urldate = {2025-10-25},
+	booktitle = {Applied {Reconfigurable} {Computing}},
+	publisher = {Springer International Publishing},
+	author = {Bouhali, Mustapha and Shamani, Farid and Dahmane, Zine Elabadine and Belaidi, Abdelkader and Nurmi, Jari},
+	editor = {Wong, Stephan and Beck, Antonio Carlos and Bertels, Koen and Carro, Luigi},
+	year = {2017},
+	doi = {10.1007/978-3-319-56258-2_19},
+	note = {Series Title: Lecture Notes in Computer Science},
+	pages = {217--228},
+}
+
+
+@misc{electroquanta_electroquantanuttx_2025,
+	title = {{ElectroQuanta}/nuttx},
+	copyright = {Apache-2.0},
+	url = {https://github.com/ElectroQuanta/nuttx},
+	abstract = {Apache NuttX is a mature, real-time embedded operating system (RTOS)},
+	urldate = {2025-10-26},
+	author = {ElectroQuanta},
+	month = sep,
+	year = {2025},
+	note = {original-date: 2025-09-12T23:46:54Z},
 }

@@ -76,7 +76,9 @@ presented, showing the current research directions and topics.
 \label{sec:mixed-crit-syst}
 Embedded systems have stringent requirements both on timing and criticality of
 the tasks it performs.
-Criticality designations (e.g.~\glspl{asil}, \glspl{dal}, and \glspl{sil}) define the rigor needed to prevent failures, while timing constraints dictate deadline enforcement (hard/soft/firm)~\cite{burns2022mixed}. 
+Criticality designations (e.g.~\glspl{asil}, \glspl{dal}, and \glspl{sil})
+define the rigor needed to prevent failures, while timing constraints dictate
+deadline enforcement (hard/soft/firm)~\cite{burns2022mixed}.
 
 %\subsection{UAVs as MCS Exemplars}
 \glspl{uav} epitomize this challenge: \textbf{flight control (safety-critical)}
@@ -282,7 +284,7 @@ Solutions based on hypervisors can be grouped in four categories~\cite{cinque202
   support provided by these hardware extensions (ARM TrustZone, Intel SGX) to attain stricter isolation
   guarantees. For example, ARM TrustZone eanbles virtual virtualization thanks
   to dual world execution model. However, these solutions are strictly linked to the specific
-  platforms. Examples are LTZVisor/RTZVisor~\cite{pinto2016towards,rtzvisor} and VOSYSMonitor~\cite{vosysmonitor,lucas2017vosysmonitor}.%
+  platforms. Examples are LTZVisor/RTZVisor~\cite{pinto2016towards,rtzvisor} and VOSYSMonitor~\cite{lucas2017vosysmonitor,lucas_vosysmonitor_2018}.%
 \item \textbf{Unikernel}: runs on top of an hypervisor to enable the execution
   of a single application in its virtual domain, providing isolation,
   performance, and security. Examples are ClickOS~\cite{martins2014clickos} and HermitCore~\cite{lankes2016hermitcore}.
