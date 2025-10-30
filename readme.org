@@ -27,6 +27,7 @@
   - [[#abstract][Abstract]]
   - [[#-done-ask-for-permissions-for-figures-httpswwwresearchgatenetpostdo_i_need_a_permission_to_copy_any_figure_from_a_research_article_for_my_review_article5de8fdb7f0fb623dd7346896citationdownload][✔ DONE Ask for permissions for figures https://www.researchgate.net/post/Do_I_need_a_permission_to_copy_any_figure_from_a_research_article_for_my_review_article/5de8fdb7f0fb623dd7346896/citation/download]]
     - [[#licence-footnote][Licence footnote]]
+    - [[#template-to-ask-permission][Template to ask permission]]
   - [[#-done-chapter-style][✔ DONE Chapter style]]
   - [[#outline][Outline]]
     - [[#introduction][Introduction]]
@@ -48,6 +49,23 @@
   - [[#-done-design][✔ DONE Design]]
   - [[#-done-implementation][✔ DONE Implementation]]
   - [[#literature-review-systematic][Literature review systematic]]
+  - [[#virtualization][Virtualization]]
+  - [[#related-work-1][Related work]]
+    - [[#jargal2022][Jargal2022]]
+    - [[#wang2018][Wang2018]]
+    - [[#faultry2019][Faultry2019]]
+    - [[#chen2019][Chen2019]]
+    - [[#sanchez2022][Sanchez2022]]
+    - [[#valente2024][Valente2024]]
+    - [[#baldi2022][baldi2022]]
+    - [[#wang2021][wang2021]]
+    - [[#angelo2024][Angelo2024]]
+    - [[#fathoni2021][Fathoni2021]]
+    - [[#cittadini2023][Cittadini2023]]
+    - [[#mpdrone][MPDrone]]
+    - [[#cinque2022][cinque2022]]
+    - [[#mpsoc-hypervisor][MPSoC hypervisor]]
+    - [[#comparative-analysis][Comparative analysis]]
 
 * Preamble
 ** Git Workflow
@@ -576,6 +594,47 @@ Based on the provided excerpts from your thesis, here are some potential researc
 
 This uses the same note\fnref{foot:cc-lic};
     #+end_src
+*** Template to ask permission
+Hi,
+
+My name is José Pires, a Master's student in Industrial Electronics and
+Computers Engineering at University of Minho. I am preparing my MSc thesis titled “Trustworthy Open-Source Reference Software Stack for UAV Applications.”
+
+I would like permission to reproduce the following image on a single page in the “State of the Art” chapter of my thesis:
+
+Page: [paste the full URL]
+
+Image: “[exact image title/filename if shown]” (screenshot/thumbnail attached for identification)
+
+Use details:
+
+Purpose: Non-commercial academic thesis.
+
+Distribution: Printed examination copies (2 copies) and a publicly accessible
+PDF in University of Minho's institutional repository. I may also host the PDF on my personal website/GitHub for academic sharing. No other reuse or sublicensing.
+
+Credit line (proposed): “Figure X: [Descriptive title]. Image © [Rightsholder], used with permission.”
+
+If approved, could you confirm the exact credit line you prefer and, if available, provide a high-resolution file?
+
+Thank you for your consideration.
+
+Kind regards,
+José Pires
+MSc Candidate, Industrial Electronics and Computers Engineering, University of
+Minho
+
+
+My name is José Pires, a Master's student in Industrial Electronics and
+Computers Engineering at University of Minho. I am preparing my MSc thesis titled “Trustworthy Open-Source Reference Software Stack for UAV Applications.”
+
+I would like permission to reproduce the following image on a single page in the “State of the Art” chapter of my thesis:
+
+https://advancedaircraftcompany.com/wp-content/uploads/2019/10/HAMR-Grass-2019-600x400.jpg
+
+Kind regards,
+Jose Pires
+
 ** ✔ DONE Chapter style
 :LOGBOOK:
 - State "✔ DONE"     from              [2024-05-07 ter 02:28]
@@ -1045,3 +1104,357 @@ Future Work: Future plans include exploring a linear programming approach to ass
                     OR "autopilot" OR rtos OR "operating system" OR firmware OR "reference architecture" )
 )
 AND ( PUBYEAR > 2009 )
+
+** COMMENT MCS
+
+Relaxing the Synchronous Approach for Mixed-Criticality Systems
+ #+begin_quote
+Mixed-criticality
+systems emerge when tasks with diverse levels of importance
+or criticality [1], [4] are integrated together [5]. With respect
+to timing, high criticality tasks are hard real-time because
+they cannot miss any deadlines, whereas lower criticality
+tasks are soft real-time because they can tolerate missed
+deadlines
+ #+end_quote
+
+ Mixed Criticality Systems with Varying Context
+Switch Costs
+
+An important trend in the design of real-time systems is the
+integration of applications with different levels of criticality
+onto the same hardware platform. Here, criticality is the term
+used to described the level of assurance against failure needed
+by each application. A Mixed Criticality System (MCS) is
+one that comprises a set of applications with two or more
+criticality levels. Most of the complex embedded real-time
+systems found in the automotive and avionics industries are
+evolving into MCS in order to meet stringent non-functional
+requirements relating to cost, space, weight, heat generation,
+and power consumption. The fundamental research question
+underlying MCS is how to reconcile the conflicting
+requirements of separation for assurance and sharing for
+efficient resource usage. This question gives rise to theoretical
+problems in modeling and verification, and systems problems
+relating to the design and implementation of the hardware and
+run-time software
+Separation is however also vitally important. The relevant
+safety standards (IEC61508, DO-178C, ISO26262) require that
+either all applications are developed to the standard required for
+the highest criticality application, or that independence between
+different applications is achieved and demonstrated in both
+spatial and temporal domains
+
+Mixed-criticality
+systems emerge when tasks with diverse levels of importance
+or criticality [1], [4] are integrated together [5]. With respect
+to timing, high criticality tasks are hard real-time because
+they cannot miss any deadlines, whereas lower criticality
+tasks are soft real-time because they can tolerate missed
+deadlines
+
+
+** Virtualization
+Lightweight virtualization: a promising new trend. Concern-
+ing lightweight virtualization solutions, they are gaining traction
+for mixed-criticality systems. Especially in the telco industry, we
+are witnessing the trend to softwarize hardware-based network
+elements towards so-called virtual network functions [124], for
+which real-time and mixed-criticality are stringent requirements.
+Since this kind of virtualization allows delivering low-latency,
+bandwidth-efficient, and resilient services they fit well use cases
+like autonomous vehicles, smart cities, and augmented reality,
+which are common scenarios in industrial IoT [151]. However,
+technological questions remain for ensuring reliability and secu-
+rity, but also the timeliness required both for telecommunication
+networks and mixed-criticality systems.
+
+seL4 is a
+formally verified microkernel that can be used as a hypervisor in
+combination with an user-level VMM (e.g., CAmkES VMM)
+
+** Related work
+*** Jargal2022
+jargalsaikhan2022architectural
+#+begin_quote
+→ \subsection{Scope and Trustworthiness Criteria}
+“Several works argue that trustworthy UAV stacks should favor module-level portability via layered designs, standardized interfaces, and HALs; Jargalsaikhan et al. formalize this using the FACE architecture, replacing proprietary in-stack APIs with FACE IO/TS interfaces to reduce coupling and enable reuse across platforms. We adopt these criteria when assessing prior work.”
+
+→ \subsection{Flight-Stack Software Used in Practice} (synthesis sentence)
+“Surveying ArduPilot, PX4, Paparazzi, and dRonin, the authors highlight common layering but heterogeneous internal messaging (uORB/ABI/UAVObject) and uneven HAL support, which impede module portability despite maturity elsewhere; FACE-style standardization is proposed to bridge this gap.”
+
+→ \subsection{Virtualization for Onboard Mixed-Criticality} (bridge/context sentence)
+“Although orthogonal to hypervisor-based isolation, the FACE-aligned mpFCS demonstrates that interface standardization is a prerequisite for safe consolidation: modules can be moved or swapped without entangling device or messaging semantics, simplifying any later partitioned deployment.”
+
+→ \subsection{Consolidation in UAVs (as a Bridge)} (one sentence)
+“The paper’s CTS-validated modules and ‘distCalc’ add-on show low-friction composition, a property we rely on when co-locating control and mission apps under stricter isolation mechanisms.”
+#+end_quote
+
+
+*** Wang2018
+Wang et al., 2018 — “Enabling High-Performance Onboard Computing with Virtualization for UAS” (ICUAS’18).
+
+Bib key: wang2018-virt-uas (use yours if you prefer)
+
+One-line thesis: On Jetson TX2, Docker containers generally outperform KVM VMs for onboard UAS workloads (compute, network, most isolation tests), though VMs remain stronger for kernel-level isolation/security.
+
+#+begin_quote
+→ \subsection{Hardware Platforms for Onboard Integration (Context)}
+“Among SBC candidates (UDOO X86, UP Squared, LattePanda Alpha), Jetson TX2 offered the best compute/GPU profile but required attention to carrier-board size and power; all candidates support virtualization. This motivates using TX2 for onboard consolidation experiments.”
+
+→ \subsection{Virtualization for Onboard Mixed-Criticality}
+“On Arm SoCs like TX2, KVM (with vGIC/QEMU) provides VM-level isolation via trap-and-emulate and 2-stage address translation, whereas Docker relies on Linux namespaces and cgroups (shared kernel). Experiments show Docker is closer to native for compute and network, while KVM provides stronger kernel isolation and fares better under fork-bomb stress.”
+
+→ \subsection{Consolidation in UAVs (as a Bridge)}
+“Partitioning two guests (CPU-pinning and resource assignment) significantly improved simultaneous application performance versus co-running on the host; Docker again outperformed KVM for the evaluated pipelines.”
+
+→ \subsection{Synthesis and Gap Analysis} (support line)
+“While containerization yields better throughput/latency for many UAV workloads on TX2, predictable isolation across DMA/interrupt paths and hard-RT scheduling remain under-explored; VM-style mediation can help but increases overhead and TCB.”
+#+end_quote
+
+*** Faultry2019
+
+\subsection{Virtualization for Onboard Mixed-Criticality}
+“Fautrel et al. advocate a type-1 hypervisor with two-level scheduling: VMs are scheduled first with fixed period/slot windows, and tasks in each VM use FTP. They provide schedulability conditions (extending harmonic periodic-task results), min/max VM-period bounds accounting for context-switch overhead, and an algorithm to compute feasible VM periods and slots—with a bias toward harmonic VM periods to simplify strictly periodic schedules.”
+
+→ \subsection{Consolidation in UAVs (as a Bridge)}
+“In a CEOS case study, three applications—control/command (bare-metal, high-crit), communications (OpenWRT), and video (Debian)—run in separate VMs on a type-1 hypervisor (PikeOS cited for certification). The sizing process yields harmonic periods and slot durations that keep all task deadlines while preserving mixed-critical isolation.”
+
+→ \subsection{Synthesis and Gap Analysis} (support line)
+“This work shows that static VM partitioning with analytically sized
+periods/slots can meet RT constraints; however, it assumes clean harmonic
+relations and does not detail I/O-sharing, DMA/IOMMU paths, or IRQ reinjection
+issues that frequently appear in UAV consolidations.”
+
+
+*** Chen2019
+→ \subsection{Virtualization for Onboard Mixed-Criticality}
+“ContainerDrone shows that containers + Simplex can provide practical isolation for onboard UAV workloads: CPU cores are pinned and scheduled with RT FIFO so the containerized complex controller cannot preempt the host safety path; MemGuard constrains per-core memory bandwidth; and an isolated network with rate-limiting plus a monitor (recv-interval and attitude-error rules) prevents comms-DoS from destabilizing flight.”
+
+→ \subsection{Hardware Platforms for Onboard Integration (Context)}
+“The prototype targets Raspberry Pi 3 Model B with a Navio2 hat, running Linux 4.4-rt and PX4 in both host and container; results indicate container overheads are near-native while VM overheads are noticeably higher on this class of SBC.”
+
+→ \subsection{Consolidation in UAVs (as a Bridge)}
+“Co-locating a complex controller (container) with a safety controller (host) enables advanced functions under normal operation, while Simplex switch-over preserves control when DoS conditions are detected (memory-DoS contained by MemGuard; UDP flood caught by monitoring).”
+
+→ \subsection{Synthesis and Gap Analysis}
+“Containers deliver lightweight isolation and good performance on UAV SBCs, but shared-kernel risks and limited mediation of DMA/interrupt paths remain; stronger guarantees typically require a hypervisor at the cost of overhead and a larger TCB.”
+
+*** Sanchez2022
+\subsection{Hardware Platforms for Onboard Integration (Context)}
+“Using the MILANO MALE system as reference, Sánchez-Aguero et al. virtualize both UAV and GCS networking stacks and then reconnect real payloads (camera, data acquisition, control modules) into the topology, preserving the system’s TCP/IP multi-UAV/multi-GCS architecture and certification backdrop (STANAG-4671).”
+
+→ \subsection{Virtualization for Onboard Mixed-Criticality}
+“The authors deliberately adopt VMs under OpenStack rather than containers to obtain a hardware abstraction layer and portable images for the aircraft/ground servers; the VENUE emulator supplies realistic wireless-link models and mobility-trace-driven connectivity variation to exercise routing/security configurations before flight.”
+
+→ \subsection{Consolidation in UAVs (as a Bridge)}
+“Validation proceeds incrementally: first all-VM components (UAV/GCS routers, LoS) with emulated links, then HW-in-the-loop with the actual camera/DAU/control modules; measured traffic patterns in the GCS VM match the real-equipment runs, and injected coverage loss reproduces expected behavior.”
+
+→ \subsection{Synthesis and Gap Analysis}
+“This work shows a pragmatic path to validate UAS communications/services pre-flight via VM-based softwarization and link emulation; however, it does not analyze DMA/IRQ mediation or hard-RT scheduling that would arise in onboard mixed-critical consolidation, which we target with stronger partitioning later.”
+
+*** Valente2024
+Paste-ready sentences for your sections
+
+→ \subsection{Hardware Platforms for Onboard Integration (Context)}
+“Shaheen demonstrates a nano-UAV-class SoC that keeps compute within a ≤200 mW
+envelope yet exposes hundreds of MB via HyperRAM, pairing a Linux-capable RV64
+host with an 8-core RV32 cluster to cover both mission intelligence and
+flight-control needs.”
+
+→ \subsection{Virtualization for Onboard Mixed-Criticality}
+“The RV64 host implements the ratified RISC-V Hypervisor extension with
+two-stage translation, PMP, and the fence.t instruction to bound timing
+channels; the software stack runs Linux on Bao alongside RT components, while an
+IOTLB enforces safe host↔accelerator sharing.”
+
+→ \subsection{Consolidation in UAVs (as a Bridge)}
+“By co-locating a Linux mission domain and an RT control domain on the same RV64 core (with the RV32 cluster offloading QNN/DSP), the platform shows a concrete path to mixed-critical consolidation on sub-watt UAVs without LPDDR-class memory systems.”
+
+→ \subsection{Synthesis and Gap Analysis}
+“This SoC closes a key gap for nano-UAVs—Linux-class software with hardware
+virtualization + timing-channel protection at very low power—yet leaves open
+system-level topics like peripheral mediation policies, IOMMU coverage for all
+DMA endpoints, and end-to-end RT guarantees across virtualized I/O.”
+
+*** baldi2022
+Baldi et al., 2022 — “ArduPilot-Based Adaptive Autopilot: Architecture and
+Software-in-the-Loop Experiments” (IEEE TAES).
+
+#+begin_quote
+\subsection{Flight-Stack Software Used in Practice} (ArduPilot paragraph, end):
+“ArduPilot’s cascaded PID and TECS (throttle for total energy; elevator for energy balance) provide a pragmatic baseline. Baldi et al. add model-free adaptive control modules around each loop—without changing ArduPilot’s architecture—and report 70–80% lower tracking error with 8–23% less control effort across payload and wind variations in SITL.”
+
+→ \subsection{Consolidation in UAVs (as a Bridge)} (support line):
+“The MFAC augmentation increases robustness to uncertainties (payload steps, turbulent wind) while keeping the legacy PID/TECS structure intact—useful when co-locating additional workloads, as it reduces sensitivity to environmental variation before adding stronger isolation mechanisms.”
+
+→ \subsection{Synthesis and Gap Analysis} (one sentence):
+“Although performance gains are clear, the study is controller-level and does not address I/O mediation, DMA/IRQ handling, or schedulability under mixed-critical consolidation—topics we target with our virtualization design.”
+#+end_quote
+
+
+
+
+*** wang2021
+
+Wang et al., 2021 — “An Exploratory Study of Autopilot Software Bugs in UAVs
+
+#+begin_quote
+“Analyzing 569 fixed issues from PX4 and ArduPilot, Wang et al. identify 168 UAV-specific bugs and categorize their root causes into eight classes—from limit/parameter mishandling to hardware-dependent priority and missing initialization/correction—highlighting pain points unique to CPS autopilots.”
+
+“They report three recurring detection challenges—lack of test oracles for trajectory-like outputs, weak reproducibility of environment-driven faults, and hidden hardware dependencies—and two fixing challenges: hardware-related fixes often exceed a week and fault localization relies heavily on flight logs and parameter probing.”
+
+“Actionable guidance includes enforcing range checks on controller outputs, systematic sensor data correction, cautious parameter evolution, and robust hardware initialization.”
+#+end_quote
+
+
+*** Angelo2024
+Efficient Development of Model-Based Controllers in PX4 Firmware:
+A Template-Based Customization Approach
+
+Furthermore, PX4 operates under a BSD license,
+enabling code modifications without mandatory submission
+to the main branch, thus safeguarding companies’ intellectual
+property
+
+*** Fathoni2021
+
+#+begin_quote
+\subsection{Virtualization for Onboard Mixed-Criticality}
+“Fathoni et al. use a type-1 RT-Xen setup where each quadrotor simulator runs in its own VM, and Litmus-RT inside each guest enforces G-EDF on EOM (100 Hz), SCAS (50 Hz), and Waypoint (25 Hz) tasks. Traces taken with Feather-Trace show no deadline misses and response times with significant slack, illustrating that hierarchical (HV→guest RTOS) scheduling can preserve timing while providing per-UAV isolation.”
+
+→ \subsection{Consolidation in UAVs (as a Bridge)}
+“The design scales to 8 VMs across two 4-core hosts, with leader–follower networking (followers report to a leader, leader ↔ GCS). This pattern is directly applicable when co-locating multiple control stacks on shared hardware while retaining per-instance resource independence.”
+
+→ \subsection{Synthesis and Gap Analysis}
+“While the study validates timing guarantees for in-guest RT tasks under RT-Xen, it does not explore device pass-through policies, DMA/IOMMU coverage, or interrupt reinjection—areas that become critical when moving from simulation to mixed-critical onboard consolidation.”
+#+end_quote
+
+*** Cittadini2023
+2023 — “Supporting AI-powered real-time CPS on heterogeneous platforms via
+hypervisor technology”
+
+Architecture: Two isolated VMs: Linux/GPU-like stack for AI & rich I/O vs. FreeRTOS for control/monitoring; shared-memory channels, wait-free sync; health monitor split across domains.
+
+Platform: ZCU104 MPSoC; Linux gets 3× A53, FreeRTOS 1× A53; Xilinx DPU accelerates YOLOv3; custom UART/I²C/PPM/PWM IPs in FPGA assigned to RT domain.
+
+Workload: Detector pipeline (preproc + YOLOv3/DPU + postproc) parallelized to 3 threads; ~27 FPS at 3 cores; 29.6 FPS at 4 cores (non-HV), camera capped at 30 FPS. HV overhead ≈ negligible.
+
+Timing: Cross-domain setpoint E2E delay: ~0.89 ms min / ~9.5 ms max (consumer period-dominated). Heartbeat path: ~0.30 ms min / ~3.74 ms max.
+
+Fail-safe: With HB checker 4 ms period & threshold 3, backup controller engages ≈10 ms after Linux fault; maintains hover/yaw reference.
+
+SWaP/FPGA: DPU uses large PL share (e.g., ~40% DSP, ~34% BRAM); plan to migrate to Kria K26. Power analysis shows PL dynamic dominates.
+
+#+begin_quote
+“Cittadini et al. implement a two-domain UAV stack on a Zynq UltraScale+: Linux (3 cores) runs the YOLOv3 tracking pipeline on a DPU accelerator, while a FreeRTOS domain hosts low-level control/monitoring. Using the CLARE hypervisor with static allocation and FPGA pass-through, they report near-zero performance loss vs. a non-hypervised baseline, and µs–ms shared-memory latencies governed by consumer periods.”
+
+→ \subsection{Consolidation in UAVs (as a Bridge)}
+“The design assigns AI/vision and rich I/O to Linux and all safety-critical devices (PPM, PWM, IMU, LiDAR) to FreeRTOS with custom FPGA IP, plus a split health monitor and a backup controller. Fault injection in Linux triggers fail-safe in ≈10 ms, maintaining stable hover/yaw, demonstrating practical isolation and recovery.”
+
+→ \subsection{Synthesis and Gap Analysis}
+“This prototype shows that HV-enforced isolation + FPGA acceleration can co-host AI and control on one MPSoC with minimal overhead. Open issues include generalized I/O mediation policies, IOMMU coverage for all DMA endpoints, and broader evaluation beyond a single SoC and DNN pipeline.”
+#+end_quote
+
+
+*** MPDrone
+
+5-bullet digest
+
+Architecture: Companion computer (Ultra96-V2 MPSoC); ROS + MAVROS on CPU; PX4 flight controller via serial; DPU/PYNQ offloads detector.
+
+Perception/Control: YOLOv3 (Vitis-AI model zoo) → bounding box displacement; ROS node feeds a state machine (search/center/approach/land) + PID.
+
+Validation: SITL (Gazebo) and outdoor tests (Pixhawk + USB camera); successful autonomous detect-and-land sequences shown.
+
+Performance/Power: Detector ~380 ms/frame; end-to-end ~469 ms (~2.13 FPS). System ~8 W at ROS idle; +~2 W when FPGA DPU active.
+
+Notes/Limits: Lighting & wind affect detection/control; recommends HIL with the real DPU in the loop for tighter tuning; preprocessing on CPU is latency-sensitive.
+
+Trustworthiness axes (quick rubric)
+
+Openness: High—ROS, PX4, PYNQ; code link provided.
+
+Isolation: None beyond process separation (no HV/containers).
+
+RT/Determinism: Practical real-time (state machine + PID); no formal RT analysis.
+
+TCB size: Moderate (Linux + ROS + drivers + PX4 + DPU stack).
+
+Maintainability: Good—commodity toolchains (Vitis-AI, PYNQ), ROS graph.
+
+SWaP-C fit: Companion-class; +2 W for acceleration is reasonable for small UAVs.
+
+Kövari & Ebeid, 2021 — “MPDrone: FPGA-based Platform for Intelligent Real-time
+Autonomous Drone Operations” (IEEE SSRR’21).
+
+#+begin_quote
+→ \subsection{Hardware Platforms for Onboard Integration (Context)}
+“MPDrone shows a practical companion-computer path on Zynq Ultra96-V2: ROS runs on the CPU, while YOLOv3 inference is offloaded to the FPGA (DPU/PYNQ). The stack integrates with a Pixhawk/PX4 flight controller, yielding an end-to-end detector rate of ~2.1 FPS at roughly 8 W base and +2 W when acceleration is active.”
+
+→ \subsection{Consolidation in UAVs (as a Bridge)}
+“The design cleanly splits perception and control: a ROS state machine (search/center/approach/land) drives PX4 via MAVROS, while the FPGA handles vision. SITL and outdoor tests confirm detect-and-land, but the authors note sensitivity to lighting/wind and recommend HIL with the real DPU to better tune delays.”
+
+→ \subsection{Synthesis and Gap Analysis}
+“This platform evidences that FPGA acceleration can make perception feasible on small airframes at modest power cost; however, it omits isolation mechanisms (e.g., DMA/IOMMU, IRQ mediation, or HV/containers) needed for mixed-critical consolidation, which we address in our design.”
+#+end_quote
+
+*** cinque2022
+“Virtualizing mixed-criticality systems: A survey on industrial trends and issues” (FGCS 2022) — I skimmed it and pulled out what you need for your Related Work section.
+
+The paper surveys how industry uses virtualization to co-locate
+mixed-criticality workloads on shared hardware while preserving isolation and
+real-time behavior. It contrasts static partitioning (small TCB, CPU/core
+pinning, pass-through I/O; great for strong spatial/temporal isolation but
+tricky for device sharing) with general-purpose/dynamic hypervisors (richer
+scheduling and mediated I/O; larger TCB and more integration complexity). It
+discusses dependability angles (fault containment, recovery) and how choices
+affect verification/certification activities. Containers are noted as helpful
+for deployment but insufficient alone for strong isolation; hardware features
+(e.g., IOMMU, virtualization extensions, memory partitioning) are highlighted as
+enablers. The survey closes with practical selection guidance by domain and
+constraints.
+
+
+#+begin_quote
+Scope and Trustworthiness Criteria
+“Industrial MCS deployments commonly rely on virtualization to enforce spatial and temporal isolation, with certification and dependability concerns shaped by TCB size, I/O assignment, and scheduling policy (FGCS 2022).”
+
+Virtualization for Onboard Mixed-Criticality → Static partitioning
+“Static partitioning hypervisors pin vCPUs 1:1 to cores and favor pass-through I/O for deterministic timing; they minimize TCB but complicate safe device sharing and DMA paths (FGCS 2022).”
+
+… → Dynamic/GP hypervisors with RT extensions
+“Dynamic hypervisors (e.g., Xen/KVM variants) add flexible schedulers and mediated I/O, improving consolidation options at the cost of a larger TCB and more complex interrupt/DMA handling (FGCS 2022).”
+
+Commercial and RTOS-based approaches
+“Certification posture often depends less on features and more on evidence generation: partitioning, determinism, and auditable interfaces simplify assurance arguments (FGCS 2022).”
+
+Synthesis & Gap
+“Across industry, predictable interrupt reinjection, DMA/IOMMU configuration, and device-sharing remain the fragile points; small-TCB static partitioning with disciplined I/O assignment is the dominant mitigation (FGCS 2022).”
+#+end_quote
+
+*** MPSoC hypervisor
+VanderLeest & White, 2015 — “MPSoC hypervisor: The safe & secure future of avionics” (DASC’15).
+
+Bib key: vanderleest2015-mpsoc-hv (rename if you like)
+
+One-line thesis: Argues that Zynq UltraScale+ MPSoC + embedded hypervisor
+enables IMA-style time/space partitioning for avionics with better SWaP, and
+surveys Xen (dom0, split drivers), LynxSecure (small TCB, ARINC-653 scheduler),
+and Mentor Multicore Framework patterns, tying them to safety+security
+certification concerns (ARINC 653, DO-178C/DO-254, MILS).
+
+#+begin_quote
+VanderLeest & White detail how Zynq UltraScale+ MPSoC—A53 cluster, R5 lockstep, ECC memories, TrustZone/SMMU, and programmable logic—pairs with an embedded hypervisor to deliver IMA-style partitioning with practical device assignment (pass-through vs split drivers) and even PL-based arbitration when software mediation is too slow.”
+
+“They compare Xen (thin HV, dom0 configuration, split-driver I/O), LynxSecure (small TCB, ARINC-653 scheduler, inter-VM shared-memory) and Mentor’s Multicore Framework (native vs supervised deployments), emphasizing least privilege and system-level certification across HW/HV/guests/FPGA IP.”
+
+“Certification pain points remain WCET under shared-resource interference, DMA/I/O consolidation, and ensuring deterministic partitioning, aligning with CAST-32 guidance.”
+#+end_quote
+
+*** Comparative analysis
+They start from today’s norm: separate boards for autopilot vs. mission apps
+(Pixhawk/Cube, Intel RTF/Aero, Qualcomm DSP-based designs, and generic
+companion-board setups). This gives strong fault isolation by hardware
+separation, but costs SWaP-C and adds latency/bandwidth limits between boards.
+

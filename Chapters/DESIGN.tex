@@ -7,32 +7,38 @@
 \textbf{-- Leonardo Da Vinci}, polymath
 \end{flushright}
 \end{quote}
+% The previous survey motivates a small, open,
+% statically partitioned hypervisor as the consolidation mechanism. We now
+% translate those findings into a concrete architecture suitable for
+% video-surveillance UAVs under tight SWaP-C: the \gls{sspfs} -- 
+% a flight stack that leverages the Bao hypervisor for video-surveillance missions, where resource-intensive but non-critical streaming coexists with safety-critical flight control on consolidated hardware.
 
-Addressing the conflicting demands of security, safety, and \gls{swap-c}
-efficiency in \glspl{uav} requires rethinking conventional mixed-criticality
-architectures. This chapter presents the design of the \gls{sspfs}: a
-trustworthy flight stack that leverages the Bao hypervisor for
-video-surveillance applications, where resource-intensive but non-critical
-streaming coexists with safety-critical flight control on consolidated hardware.
+% We begin by defining requirements and constraints for the target application,
+% then analyze the conventional architecture and its drawbacks. We implement an
+% unsupervised single-platform baseline (\gls{uspfs}) to quantify consolidation
+% overheads, and then deploy the supervised counterpart atop Bao (\gls{sspfs}).
+
+% We then select the hardware -- the \gls{uav} and the \gls{uavic} -- and map these
+% components into the \gls{uspfs} and \gls{sspfs} systems. To support shared
+% \gls{pcie} devices across \glspl{vm}, we design a mailbox-supervision
+% mechanism. We conclude by adapting the hardware mapping to the constraints
+% imposed by the \gls{uavic} platform and Bao.
+
+The previous survey motivates using a small, open, statically partitioned
+hypervisor as the consolidation mechanism. We now translate those findings into
+a concrete architecture for video-surveillance UAVs under tight \gls{swap-c}:
+the \gls{sspfs} -- a flight stack that leverages the Bao hypervisor so resource-intensive, non-critical streaming can coexist with safety-critical flight control on consolidated hardware.
 
 We begin by defining requirements and constraints for the target application,
-then analyze the conventional architecture and identify its drawbacks. Next, we
-integrate all components on a single platform without supervision: the
-\gls{uspfs} baseline, used to assess consolidation and its performance
-overhead. Finally, we run this baseline atop the Bao hypervisor, yielding the
-\gls{sspfs}.
+then analyze the conventional split architecture and its drawbacks. We implement
+an unsupervised single-platform baseline (\gls{uspfs}) to quantify consolidation
+overheads, and then deploy the supervised counterpart atop Bao (\gls{sspfs}).
 
-We then select the hardware -- the \gls{uav} and the \gls{uavic} -- and map these
-components into the \gls{uspfs} and \gls{sspfs} systems. To support shared
-\gls{pcie} devices across \glspl{vm}, we design a mailbox-supervision
+Next, we select the hardware -- the \gls{uav} and the \gls{uavic} -- and map
+these components into the \gls{uspfs} and \gls{sspfs} designs. To support shared
+\gls{pcie} devices across \glspl{vm}, we introduce a supervised mailbox
 mechanism. We conclude by adapting the hardware mapping to the constraints
 imposed by the \gls{uavic} platform and Bao.
-
-% The conventional \gls{umpfs} approach employs separate hardware nodes a flight controller for critical systems and a companion computer for tasks like collision avoidance or video streaming. While providing functional separation, this architecture increases weight and power consumption while offering no isolation guarantees, allowing compromises in the companion node to propagate to flight systems.
-
-% Merging flight control and companion functions onto a single platform reduces weight, power requirements, and inter-component latency. However, unsupervised consolidation (\gls{uspfs}) introduces critical risks including performance interference (where non-critical tasks disrupt flight-critical operations) and security vulnerabilities (where a single compromise affects the entire system). Consequently, unsupervised consolidation alone cannot meet stringent safety and security requirements.
-
-% The supervised approach hypothesizes that hypervisor oversight enables secure consolidation while preserving SWaP advantages. The \gls{sspfs} employs the Bao hypervisor to achieve hardware-enforced isolation between flight control and companion functions, certifiable separation with minimal performance overhead, and retention of single-board SWaP benefits. The following sections detail this architecture's requirements, components, and security model.
 
 \section{Requirements and Constraints}
 \label{sec:req-sec}
