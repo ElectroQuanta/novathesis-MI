@@ -88,8 +88,10 @@ firmware \lstinline{start4.elf} processes \lstinline{config.txt}, enables
 \gls{uart} and the \gls{gic}, and transfers control to \lstinline{bl31.bin}
 (secure services). Then \lstinline{u-boot.bin} initializes peripherals (including
 the console) using the firmware’s \gls{dtb} and its environment, and loads the
-target binary. We focus on the more generic \gls{sspfs} case.
+target binary.
 
+We focus on the more generic \gls{sspfs} case.
+%
 When \lstinline{bao.bin} executes, it:
 (1) initializes CPUs, memory, and the system console;
 (2) configures the interrupt controller;
@@ -120,7 +122,7 @@ stand-alone testing of PX4 and the video-surveillance stack.
 The first step is assembling the airframe and configuring it via the \gls{gcs}.
 Fig.~\ref{fig:uav-assembly} shows the HoverGames-based build alongside the
 QGroundControl interface.
-
+%
 We began with the S500 frame \emph{(3)} as the structural base, then mounted the
 landing gear, arms, and electronics plates. The NEO-M8N \gls{gps} module
 \emph{(1)} was chosen for cost/performance in urban settings~\cite{gps-neom8n-product}.
@@ -130,12 +132,12 @@ driven by opto-coupled 40~A \glspl{esc}.
 Power is provided by a 3S \gls{lipo} battery \emph{(12)} (5000~mAh) with an
 XT-60 connector \emph{(4)}~\cite{lipo-3s-uav}, yielding roughly 30~minutes at
 full throttle (indicative). The \gls{uavic} platform \emph{(7)} combines a
-Raspberry~Pi~4 with the PilotPi shield. Telemetry radios \emph{(5)}, \emph{(6)}
+Raspberry~Pi~4 with the PilotPi shield. Telemetry radios \emph{(5)} \emph{(6)}
 link the \gls{uav} to QGroundControl on the \gls{gcs} \emph{(11)}. For early
 bring-up we enabled a debug \gls{uart} port \emph{(8)} (omitted in the final
 system). The Wi-Fi dongle \emph{(9)} and camera \emph{(10)} required for video
 surveillance connect via \gls{usb} to the \gls{uavic}.
-
+%
 Before parameter configuration in QGroundControl, PX4 must be deployed to the
 \gls{uavic}. Once PX4 is running, the airframe can be configured over telemetry
 radio or Wi-Fi.
@@ -238,7 +240,7 @@ identical \glspl{uav}. Fig.~\ref{fig:uav-cfg-summary} summarizes the final setup
 
 \subsection{Video surveillance}
 \label{sec:video-surveillance}
-The video-surveillance pipeline (cf.\ Fig.~\ref{fig:uav-design-unsup}) was
+The video-surveillance pipeline (see Fig.~\ref{fig:uav-design-unsup}) was
 implemented with \lstinline{GStreamer}. Its modular design, broad codec support,
 and built-in networking made it easy to iterate and test.
 In the sender pipeline, the \gls{uav} captures frames from a USB camera (MJPEG at
@@ -311,10 +313,10 @@ the rootfs; (iii) set the boot console to UART5 (\lstinline{ttyAMA5});
 (iv) include \lstinline{GStreamer} for streaming; and (v) package the Mediatek
 firmware for the Wi-Fi dongle. This produced the Linux image
 \lstinline{Image_1}. Next, we customized the device tree to include the required
-hardware (cf.\ Fig.~\ref{fig:hw-map-1}) and combined it with the kernel to form
+hardware (see Fig.~\ref{fig:hw-map-1}) and combined it with the kernel to form
 a self-contained executable blob, \lstinline{linux_1.bin}.
 
-For firmware, we fetched the Raspberry~Pi~4 \gls{bsp} and patched the Arm
+For the firmware, we fetched the Raspberry~Pi~4 \gls{bsp} and patched the Arm
 Trusted Firmware (\lstinline{bl31.bin}) to redirect the debug console from
 UART0 to UART5 (\lstinline{ttyAMA5}). The make fragment
 \lstinline{configs/atf/atf-patch.mk}~\cite{thesis-sw-github} shows the inline
@@ -343,7 +345,7 @@ mirrors the \gls{uspfs} flow. For each guest we:
 (1) select the kernel, enable the required drivers/packages, and compile a Linux
 \gls{os} image (\lstinline{Image_X});
 (2) customize the guest-specific device tree;
-(3) pack image+\gls{dtb} into a self-contained executable blob
+(3) pack the image and \gls{dtb} into a self-contained executable blob
 (\lstinline{linux_1.bin} for PX4 and \lstinline{linux_2.bin} for video).
 
 %\subsection{Hypervisor and VM construction}
