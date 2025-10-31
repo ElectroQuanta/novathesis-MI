@@ -7,98 +7,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE abstract-en.tex}%
-
-%The booming market for \glspl{uav} brings forth significant challenges
-%concerning security and safety, often overlooked in current system designs. \gls{uav}
-%applications inherently possess real-time constraints with mixed-criticality
-%levels, meaning the risk of failure varies in severity. For instance, a failure
-%in video surveillance, a non-critical function, could propagate to the critical
-%flight controller, leading to catastrophic consequences like a crash and harm to
-%people or goods. Traditional multi-platform flight stacks for \glspl{uav}, while
-%addressing mixed-criticality by separating functions onto different hardware
-%nodes, undesirably increase the \gls{uav}'s weight and footprint and often lack
-%isolation guarantees. Moreover, existing open-source solutions often fall short
-%in meeting mixed-criticality and security requirements, while commercial
-%alternatives frequently lack transparency.
-%%
-%To address these critical issues, this work proposes the \glsxtrfull{sspfs}, an innovative approach that integrates the
-%flight controller and companion computer functions on a single Raspberry Pi 4 +
-%PilotPi shield platform under the Bao hypervisor. This consolidation is achieved by leveraging the Bao hypervisor, a
-%lightweight, security, and safety-oriented bare-metal hypervisor designed for
-%embedded real-time systems and mixed-criticality systems.
-%Bao was extended with a custom mailbox supervisor to mediate firmware
-%% transactions over the shared \glsxtrfull{pcie} bus.
-%transactions over a shared bus.
-%The PX4 autopilot was selected due to its open-source nature, extensive platform
-%support, modular architecture, and widespread adoption in the industry.
-%An \gls{uspfs} counterpart was also developed to quantify the benefits of the supervision layer.
-%%
-%Experimental results demonstrate that \gls{sspfs} provides strong isolation: injected
-%faults in the non-critical Companion \gls{vm} lead to its failure, while the critical
-%PX4 \gls{vm} maintains full functionality, keeping the \gls{uav}
-%airborne. Benchmarking with MiBench shows a small performance degradation and
-%improved cache partitioning reduces interference.
-%The worst-case scheduling overhead for PX4 tasks was very low (2\%). The camera's frame rate in the Companion VM also
-%showed no statistically significant overhead (worst-case of 2\%). In some
-%instances, the \gls{sspfs} even outperformed the \gls{uspfs} system, attributed
-%to the static partitioning of resources.
-%Real-flight tests confirm accurate position tracking and a modest
-%CPU overhead (≈6 \% average), validating
-%that \gls{sspfs} meets real-time requirements without sacrificing safety. This
-%study establishes a viable path toward trustworthy, consolidated
-%mixed-criticality \gls{uav} systems with minimal performance impact.
-%% by providing
-%% a trustworthy open-source reference software stack.
-%
-%Keywords: UAV, Mixed-Criticality Systems, Hypervisor, Bao, Security, PX4.
-
-% The rapid growth of Unmanned Aerial Vehicles (UAVs) brings mixed-criticality
-% demands: safety-critical flight control must coexist with non-critical,
-% resource-intensive mission software under strict size, weight, power, and cost
-% \gls{swap-c} limits. Conventional multi-board stacks provide isolation by hardware
-% separation but add weight and link latency. Nonetheless, the hardware separation
-% is not enough, as a breach in an non-critical system can still cascade to the
-% critical one, because there is no true isolation between domains.
-% Ongoing
-% efforts in the consolation focus either on closed-source components
-% (e.g., PikeOS or CLARE hypervisor) or are unmaintained and application-specific
-% and platform-dependent (FlyOS).
-
-% Other approaches focus only on securing the mission software either by
-% containerization (Auterion) or by deploying formally verified components (seL4 +
-% CAmkES).
-
-% This thesis designs and evaluates a trustworthy, open consolidation of
-% mixed-criticality UAV workloads using Bao, a lightweight type-I hypervisor with
-% static partitioning. We implement two reference stacks on a Raspberry Pi 4 +
-% PilotPi platform: an unsupervised single-platform flight stack (USPFS) and a
-% supervised single-platform flight stack (SSPFS) in which PX4 (flight control)
-% and a live video pipeline (mission) run as separate VMs. To safely share
-% peripherals, we introduce a mailbox-supervision mechanism in Bao that mediates
-% firmware transactions over a shared bus, preventing unintended cross-domain
-% access.
-
-% Experiments show strong isolation: injected faults in the non-critical
-% (Companion) VM cause only that VM to fail, while the PX4 VM maintains control
-% and keeps the UAV airborne. Using MiBench Automotive/Industrial Control System
-% (AICS) workloads, performance overheads are small: PX4 task scheduling overhead
-% is ~2\% (worst case), camera frame-rate overhead is ~2\% and not statistically
-% significant, and average CPU overhead in real-flight traces is ≈6\%. Static
-% partitioning bounds interference; cache-management measures further reduce
-% cross-domain effects.
-
-% These results demonstrate that a small, analyzable hypervisor can consolidate
-% UAV flight-control and mission workloads on commodity hardware with minimal
-% overhead, providing a practical, open path toward trustworthy mixed-criticality
-% UAV systems.
-
-% Keywords: UAV, mixed-criticality systems, hypervisor, Bao, PX4, virtualization,
-% SWaP-C.
-
 The rapid growth of unmanned aerial vehicles (UAVs) brings mixed-criticality
 demands: safety-critical flight control must coexist with non-critical,
 resource-intensive mission software under strict size, weight, power, and cost
-(SWaP-C) limits. Conventional multi-board stacks add weight and link latency—and
+(SWaP-C) limits. Conventional multi-board stacks add weight and link latency, and
 hardware separation alone is insufficient: compromises in non-critical nodes can
 cascade into critical functions via shared interfaces. Ongoing consolidation
 efforts either depend on closed-source hypervisors
@@ -130,9 +42,8 @@ shared bus, preventing unintended cross-domain access.
 Experiments show supervision-driven isolation: injected faults in the
 non-critical guest cause only that guest to fail, while the PX4 guest maintains
 control and keeps the UAV airborne. Offline benchmarking with the MiBench suite
-workloads shows small overheads, corroborated in real-flight tests: PX4
-task-scheduling (≈2\%), camera frame-rate (≈2\%), and average
-CPU load (≈6\%). Static partitioning bounds interference, and cache
+indicates small overheads, corroborated in application tests: PX4
+task-scheduling ≈2\% and camera frame-rate ≈2\%. Real-flight tests demonstrate accurate position tracking and modest average CPU load (≈6\%). Static partitioning bounds interference, and cache
 coloring further mitigates cross-domain effects.
 %
 Overall, a small, open-source static-partitioning hypervisor, such as Bao,

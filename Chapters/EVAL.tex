@@ -9,21 +9,80 @@
 \end{flushright}
 \end{quote}
 
-This chapter presents a comprehensive evaluation of the unsupervised
-(\gls{uspfs}) and supervised (\gls{sspfs}) systems. First, we validate the
-implementation of the mailbox supervisor and the overall operation of the
-\gls{sspfs} system. Then, we analyze the behavior of each system when a malicious
-actor tries to compromise it. Next, we extensively benchmark the impact of
-adding Bao's supervision to the systems. We evaluate the performance degradation
-of the supervised system, with and without mailbox patching, relative to the
-baseline native execution using the MiBench \gls{aics} suite. We also analyze
-the effect of cache coloring on the mitigation of interference between
-guests. Next, we benchmarch each guest separately using application-specific
-metrics and  use these metrics to compare the \gls{uspfs} and \gls{sspfs} solutions.
-Finally, we evaluate both flight stacks in real-flight conditions and analyze
-its behavior when the system is compromised.
+This chapter evaluates the unsupervised (\gls{uspfs}) and supervised
+(\gls{sspfs}) systems end-to-end. We first outline the evaluation design and
+indicate where each research question (RQ) is answered. We then (i) validate the
+mailbox supervisor and overall \gls{sspfs} operation, (ii) assess resilience
+under adversarial conditions, (iii) quantify consolidation overheads with and
+without the mailbox patch using MiBench \gls{aics} (including interference
+mitigation via cache coloring), (iv) benchmark each guest with application-level
+metrics (PX4 scheduling overhead, camera frame rate) to compare \gls{uspfs} vs.\
+\gls{sspfs}, and (v) run real-flight experiments to measure position-tracking
+accuracy and in-flight system resource usage (\gls{cpu}, \gls{ram}) and analyze
+system behavior with and without compromise.
+
+\section{Evaluation Design}
+\label{sec:eval-design}
+Table~\ref{tab:rq-map} maps each research question to its methods, metrics, and the section where it is addressed.
+%
+% --- RQ-to-method map (your paragraph, unchanged) ---
+% \paragraph*{Research Questions and Method Mapping.}
+We evaluate \emph{(RQ1)} timing preservation under consolidation via \emph{offline} measurements (Linux \texttt{perf} events) and MiBench \gls{aics} microbenchmarks; 
+\emph{(RQ2)} fault containment via controlled fault injection in the mission
+\gls{vm} (panic attack, memory exhaustion and corruption, kernel module faults, user-space resource starvation) and observation of control authority (aircraft remains airborne);
+\emph{(RQ3)} consolidation overhead vs.\ \gls{uspfs} using offline MiBench
+\gls{aics} plus application-level metrics (PX4 scheduling overhead, camera frame
+rate);
+\emph{(RQ4)} in-flight behavior of \gls{sspfs} vs.\ \gls{uspfs}, focusing on
+position-tracking accuracy (trajectory vs.\ setpoints) and system resources
+(\gls{cpu} load, \gls{ram} footprint); and 
+\emph{(RQ5)} supervised mailbox sharing correctness and performance via
+functional tests (no cross-domain leakage) and throughput/latency measurements
+for firmware-mediated transactions.
+
+\begin{table}[t]
+  \centering
+  \caption{Research question section mapping and associated metrics/artifacts}
+  \label{tab:rq-map}
+  \begingroup
+  \footnotesize
+  \setlength{\extrarowheight}{0.6ex}
+  \begin{tabular}{@{}llp{6.8cm}l@{}}
+  \toprule
+  \textbf{RQ} & \textbf{Focus} & \textbf{Primary metrics / artifacts} & \textbf{Section} \\
+  \midrule
+  RQ1 & Timing under consolidation (offline) &
+   MiBench \gls{aics} microbenchmarks; Linux \texttt{perf} timing events &
+  \ref{sec:bao-benchmarks} \\
+  RQ2 & Fault containment / control authority &
+  Mission-VM faults (CPU/mem abuse, kmod faults, user-space starvation); flight outcome (aircraft remains airborne) &
+  \ref{sec:functional-tests} \\
+  RQ3 & Overheads vs.\ \gls{uspfs} (offline \& app-level) &
+  MiBench slowdowns; PX4 scheduling overhead; camera FPS &
+  \ref{sec:bao-benchmarks}, \ref{sec:uav-benchmarks} \\
+  RQ4 & In-flight behavior (accuracy \& resources) &
+  Position tracking (trajectory vs.\ setpoints); CPU load; RAM footprint (onboard logs) &
+  \ref{sec:uav-benchmarks} \\
+  RQ5 & Mailbox sharing correctness/performance &
+  Pass/fail isolation tests; firmware transaction latency/throughput &
+  \ref{sec:functional-validation} \\
+  \bottomrule
+  \end{tabular}
+  \endgroup
+\end{table}
+
+% --- Setup (kept brief; details live in each section) ---
+% \paragraph*{Environment and Metrics.}
+We use the \gls{uavic} platform (Raspberry~Pi~4 + PilotPi), two guests (PX4 flight \gls{vm} and Companion \gls{vm}), and a repeatable QGroundControl mission profile. 
+Metrics comprise: (i) offline MiBench \gls{aics} microbenchmarks and Linux \texttt{perf}-based timing; 
+(ii) application-level telemetry (PX4 scheduling overhead, camera \gls{fps}); 
+(iii) in-flight behavior via PX4 logs (position-tracking accuracy: trajectory vs.\ setpoints; system counters: \gls{cpu}/\gls{ram}); and 
+(iv) isolation outcomes under fault injection, plus mailbox-supervision correctness/latency for firmware-mediated services. 
+Statistical comparisons use paired runs with identical configurations; we report
+means and worst cases and flag non-significant changes where applicable.
 
 \section{Functional validation}
+\label{sec:functional-validation}
 In this section we present the results of the functional validation of the
 mailbox supervisor and the \gls{sspfs} system as a whole. To validate the first,
 we introduced some logging messages upon each mailbox transaction, which should
@@ -84,19 +143,6 @@ Next, we started the video receiver pipeline on the \gls{gcs} and the video
 sender one on the Companion \gls{vm} (see Fig.~\ref{fig:sspfs-app-validation-2}). We can
 observe the live stream feed in the \gls{gcs}, which validates the video
 surveillance pipelines.
-% \begin{figure}[h]
-%   \centering
-%   \includegraphics[width=0.5\textwidth]{./img/png/sspfs-px4-validation} 
-%   \caption[SSPFS: PX4 system analysis]{SSPFS: PX4 system analysis via \lstinline{work_queue status}}%
-%   \label{fig:sspfs-px4-validation}
-% \end{figure}
-
-% \begin{figure}
-%   \centering
-%   \includegraphics[width=0.5\textwidth]{./img/png/sspfs-cam-qgc} 
-%   \caption{SSPFS: Video surveillance application}%
-%   \label{fig:sspfs-cam-qgc}
-% \end{figure}
 
 % Figure environment with subfigures
 \begin{figure}[!hbt]
@@ -118,8 +164,6 @@ surveillance pipelines.
   \caption{SSPFS: validation of application software}
   \label{fig:sspfs-app-validation}
 \end{figure}
-
-
 
 \section{Functional tests}
 \label{sec:functional-tests}

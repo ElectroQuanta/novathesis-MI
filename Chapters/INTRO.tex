@@ -6,31 +6,6 @@
 %% Chapter with introduction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE INTRO.tex}%
-
-%\chapter{Introduction}
-%Hello
-%
-%%\prependtographicspath{{Chapters/Figures/Covers/}}
-%\definecolor{Schlgray}{gray}{0.95}
-
-%%\foreach \style in \defaultstyles {
-%%    \chapterstyle{\style}
-%%    \chapter{\style\ Style}
-%%}
-%%
-%%% Preview additional styles
-%%\foreach \style in \additionalstyles {
-%%    \chapterstyle{\style}
-%%    \chapter{\style\ Style}
-%%}
-
-
-% CHAPTER - Introduction -------------------------
-% Preview default styles
-\chapter{Introduction}%
-\label{cha:introduction}
-
 % \begin{ntquote}[14cm][Galileo][Somewhere in a book or speach][Astronomer, physicist and engineer][en]
 %  You cannot teach a man anything; you can only help him discover it in himself.%
 % \end{ntquote}
@@ -47,6 +22,13 @@
 % YOUR TEXT HERE
 
 % \end{ntquote}
+
+\typeout{NT FILE INTRO.tex}%
+
+% CHAPTER - Introduction -------------------------
+% Preview default styles
+\chapter{Introduction}%
+\label{cha:introduction}
 %
 \begin{quote}
 \begin{flushright}
@@ -54,180 +36,165 @@
 \textbf{-- Alan Kay}, computer scientist
 \end{flushright}
 \end{quote}
-  
-% \begin{alignedquote}{l}{Albert Einstein}
-%     Imagination is more important than knowledge.
-% \end{alignedquote}
 
-%\glsxtrfullpl{uav}, \glsxtrfullpl{uas}, or more commonly drones, are a class of
-%unmanned robotic vehicles that can execute flying missions and carry payloads,
-%guided either by remote control stations or in an autonomous
-%way~\cite{alladi2022UAVBlockain,glossner2021overview}.
+\glspl{uav} are increasingly deployed across safety-critical domains -- from
+inspection and mapping to search-and-rescue and
+defense~\cite{silvagni_multipurpose_2017,lammers_airborne_2023,tsouros_review_2019,yu_uav-based_2022,dilshad_applications_2020,caroti_uav-borne_2017}
+-- where
+flight control must coexist with mission applications under tight \gls{swap-c}
+constraints. In these settings, the flight-control stack (safety-critical) runs
+alongside bandwidth- and compute-intensive mission software (non-critical) and
+must remain protected against timing interference, memory corruption, and fault
+propagation. Meanwhile, many countries now permit routine operations in populated
+areas (often below 150\,m)~\cite{nassi2021sok}, raising both safety stakes
+(e.g., crash hazards to people and property) and security/privacy concerns
+(\glspl{uav} can collect sensitive data).
 %
-%The \glsxtrfull{uav}s market is booming. In 2017 the North America market had a revenue of
-%737 million USD dollars and a eight-fold increase is expected for 2026 with a
-%staggering 6.7 billion USD dollars, with strong contributions from the sectors
-%of agriculture and farming, and security and law
-%enforcement~\cite{mohsan2022towards}.
-%
-%The versatility and utility of \glspl{uav} is evident in its wide
-%range of applications, performing tasks with high added value and that would be
-%somewhat hard or impossible for a person to achieve: rescue operations and
-%saving lifes, agriculture and farming, building structures, pipeline
-%inspections, delivering goods and medical supplies, video capturing and filming,
-%surveying, inventory management, providing telecommunications in remote areas,
-%among others~\cite{alladi2022UAVBlockain}.
-%
-%However, only recently regulations have been explicitly enforced on \glspl{uav},
-%with many countries allowing drones to fly over populated areas (at altitudes
-%lower than 150 m)~\cite{nassi2021sok}. This poses several safety and security
-%concerns. First, because a drone's crash, unintentional or not, can severely
-%harm people and goods. Secondly, because they are cyber-physical systems which
-%are able to record sensitive and private information. Thus,
-%it is critical to ensure the security of an \gls{uav} system.
-%
-%Furthermore, \gls{uav}'s applications have real-time constraints but with mixed
-%criticality levels, i.e., the risk of failure is more severe in some case than others.
-%For example, flight control (safety-critical) and video streaming (non-critical)
-%coexist. A compromise in video software could cascade to flight systems, causing
-%catastrophic failure—yet strict hardware separation increases weight and reduces
-%flight time.
-%
-%This exemplifies a \gls{mcs}: systems executing tasks of differing criticality (safety) levels on shared hardware.
-%However, the integration of mixed-criticality components onto a common hardware
-%platform is not an easy task: the designer needs to meet the stringent
-%\gls{swap-c} metrics and safety requirements
-%provided by safety-critical standards, such as those for automotive~\cite{iso26262}, avionics~\cite{johnson1998sw},
-%and railway~\cite{cenelec201250128} industries.
-%While \gls{mcs} challenges are well-studied in automotive/avionics, UAVs face unique
-%constraints: extreme SWaP-C limitations and the need for fail-operational safety
-%in uncontrolled environments. Current solutions either compromise isolation
-%(single-board) or add weight/energy overhead (multi-board).
-%
-%As a result of this integration
-%complexity increases, requiring higher computational power, and thus, these
-%hardware platforms are migrating from single cores to multi-cores and in the
-%future many-core architectures~\cite{burns2022mixed}.
-%This leads to the core challenge: reconciling \emph{partitioning} for safety
-%assurance with \emph{sharing} for efficiency.
-%Consequently, problems arise in the modelling, design, implementation, and
-%verification of the required hardware and software~\cite{burns2022mixed}.
-%Prior research diverges into theoretical (scheduling-focused) and practical (partitioning-focused) approaches, but their incompatibility leaves \gls{uav} consolidation unresolved~\cite{burns2022mixed}. 
-%
-%This thesis bridges this gap by proposing the \gls{sspfs}: a Bao
-%hypervisor-based architecture consolidating mixed-criticality functions on a
-%single \gls{uav} platform. This solutions demonstrated robust isolation (malicious non-critical
-%crashes don't impact flight control), minimal overhead (<2\% in PX4 tasks's
-%scheduling and camera's frame rate), and real-flight validation -- enabling secure, lightweight UAVs without safety compromises while meeting stringent \gls{swap-c} constraints.
+In practice,
+security is often not engineered from the outset~\cite{leccadito2018survey}:
+common configurations expose open, unauthenticated, or unencrypted links that
+invite cyber-attacks~\cite{kishnaCyberVulnerUAVReview2017,mansfieldUAVCyberThreats2013};
+policy reactions have included bans on certain commercial platforms over
+cybersecurity concerns~\cite{suasNewsDjiDronesBanned2017}; and media-reported
+incidents illustrate potential misuse and harm~\cite{spiegelUAVAccident2015,nytimesUAVAccident2018,theDriveUAVAccident2019}.
+As adoption accelerates~\cite{mohsan2022towards} and regulators move from
+permissive pilots to explicit operational rules (e.g., European Union categories; \gls{utm}
+initiatives), assurance and traceability requirements become more
+concrete~\cite{Ullah2020UAV5gEULegisl,glossner2021overview}.
 
-%\section{Motivation}
-%Mixed-criticality systems such as \gls{uav} applications have stringent
-%requirements on temporal and criticality-level, but also in the security level.
-%
-%The present works addresses this by developing a trustworthy software stack for
-%\gls{uav} applications that can
+Conventional multi-board designs -- comprising a dedicated \gls{fmu} plus a
+companion computer -- provide isolation by hardware separation but add weight, power, and
+inter-board latency. Yet hardware separation alone is insufficient:
+compromises in non-critical nodes can still cascade into critical functions via
+shared interfaces. In this space, formally verified components have been used on
+the mission side (e.g., seL4 + CAmkES \gls{vmm})~\cite{klein_formally_2018},
+but the threat models typically exclude attacks on communication links and
+assume a correct, uncompromised flight stack. These assumptions are hard to
+justify given the broad attack surface~\cite{nassi2021sok}, known autopilot bug
+densities~\cite{wang_exploratory_2021}, and vulnerabilities in commercial
+\glspl{rtos}~\cite{buquerin2018security}.
 
-\section{Introduction}
-\label{sec:intro}
-Unmanned Aerial Vehicles (\glspl{uav}) are increasingly deployed across
-safety-critical domains—from inspection and mapping to public safety and
-logistics—where onboard autonomy coexists with mission applications under tight
-\gls{swap-c} constraints. In these settings, the flight-control stack
-(safety-critical) must run alongside bandwidth- and compute-intensive mission
-software (non-critical), yet remain protected against timing interference,
-memory corruption, and fault propagation. Conventional multi-board designs
-(dedicated \gls{fmu} plus companion computer) provide isolation at the expense
-of weight, power, and inter-board latency; single-board solutions based on
-containers or general-purpose hypervisors improve integration but fall short on
-analyzable real-time guarantees and small, auditable \gls{tcb}s.
+Commercial single-board solutions often deploy application-specific software
+in containers on the mission processor~\cite{skynodeS,auterion-sw-services}, but
+containers share a kernel and cannot, by themselves, enforce temporal, spatial,
+or fault isolation between domains~\cite{wang_enabling_2018}. Other consolidation
+efforts rely on closed-source hypervisors (e.g., PikeOS, CLARE~\cite{cittadini_supporting_2023})
+with application-specific flight-stack customizations. While these paths improve
+integration, they tend to lack analyzable real-time guarantees and a small,
+auditable \gls{tcb}.
 
-This thesis investigates how to \emph{safely consolidate} mixed-criticality
+This thesis investigates how to safely consolidate mixed-criticality
 \gls{uav} workloads on shared hardware while preserving temporal, spatial, and
 fault-containment isolation. We adopt a static-partitioning hypervisor approach
 centered on Bao, an open, lightweight type-I hypervisor, and evaluate it in a
-representative video-surveillance use case. Our aim is a trustworthy reference
+representative video-surveillance use case. Our goal is a trustworthy reference
 stack that is practical on commodity platforms, transparent by design, and
 measurable end-to-end.
 
 \section{Motivation}
 \label{sec:motivation}
-\noindent\textbf{Operational pressure.}
-Field operations increasingly require live video, perception, and connectivity (e.g., LTE/5G), which compete for CPU, memory, cache, and I/O bandwidth with control loops. Offloading to a companion computer raises \gls{swap-c}, complicates power/thermal budgets, and introduces link latency/jitter between control and mission domains.
+% \noindent\textbf{Operational pressure:}
+Field operations increasingly require live video, perception, and connectivity
+(e.g., \gls{lte}/5G), which compete with control loops for \gls{cpu}, memory, cache, and \gls{io}
+bandwidth. Offloading to a companion computer raises \gls{swap-c}, complicates
+power/thermal budgets, and introduces link latency/jitter between control and
+mission domains.
 
-\noindent\textbf{Assurance pressure.}
-Safety-critical flight control demands bounded worst-case latency and strong fault containment. Containerization shares a kernel and cannot, alone, provide spatial or fault isolation across domains. General-purpose virtualization offers better separation but typically carries a large \gls{tcb} and host dependencies that frustrate certification and analysis.
+% \noindent\textbf{Assurance and security pressure:}
+Safety-critical flight control demands bounded worst-case latency and strong
+fault containment. Containerization shares a kernel and cannot, by itself,
+provide spatial or fault isolation. Formally verified components improve
+assurance for what they verify, but securing only the mission side -- or
+assuming benign links and perfect autopilots -- leaves critical paths exposed,
+given the documented attack surface and
+defects~\cite{nassi2021sok,wang_exploratory_2021,buquerin2018security}. We
+therefore need system-level supervision that covers both domains and their interfaces.
 
-\noindent\textbf{Platform pressure.}
-Commodity SBCs (e.g., Raspberry~Pi~4) and emerging heterogeneous SoCs make single-board integration attractive, but predictable device assignment, DMA safety, interrupt delivery, and cache interference remain practical hurdles. An approach that is small, analyzable, and open is needed to both \emph{demonstrate} and \emph{measure} trustworthy consolidation on such platforms.
-
-\noindent\textbf{Design choice.}
-Static partitioning (1:1 vCPU:pCPU, pass-through I/O, two-stage translation) minimizes hypervisor complexity and scheduling overheads, enabling clear timing models and a reduced attack surface. Bao provides this with a small codebase and active open-source development, making it an appropriate foundation for a reference \gls{uav} stack.
-
-\section{Goals}
-\label{sec:goals}
-\noindent\textbf{Primary goal.}
-Design, implement, and evaluate a trustworthy, open-source reference stack that consolidates safety-critical flight control and non-critical mission workloads on shared hardware using the Bao hypervisor, while preserving temporal, spatial, and fault-containment isolation under realistic video-surveillance missions.
-
-\noindent\textbf{Objectives.}
-\begin{enumerate}[leftmargin=*,itemsep=0.25em]
-  \item \textit{Architecture}: Specify two baselines—\gls{uspfs} (unsupervised, single-board) and \gls{sspfs} (supervised atop Bao)—including guest/device mapping, boot flow, and inter-domain communication.
-  \item \textit{Mechanisms}: Provide disciplined device assignment and a mailbox-supervision mechanism to safely share \gls{pcie}–attached peripherals across \glspl{vm}.
-  \item \textit{Implementation}: Realize both systems on the chosen \gls{uavic} (Raspberry~Pi~4~+~PilotPi) with PX4 for flight control and a live video pipeline for the mission domain.
-  \item \textit{Evaluation}: 
-    \begin{enumerate}[label*=\alph*),itemsep=0.1em]
-      \item Establish \gls{uspfs} baselines; quantify \gls{sspfs} overheads (CPU, memory, energy) using MiBench \glsxtrfull{aics}.
-      \item Measure interference (cache, DMA/PCIe, interrupt paths) and the effect of mailbox supervision.
-      \item Validate functionality and isolation in lab and real-flight (tracking accuracy, scheduling behavior, frame rate).
-    \end{enumerate}
-  \item \textit{Openness}: Release configurations and code to enable reproduction and community scrutiny.
-\end{enumerate}
-
-\noindent\textbf{Research questions.}
-\begin{enumerate}[leftmargin=*,itemsep=0.25em]
-  \item \textbf{RQ1:} Can static partitioning via Bao maintain flight-control timing while co-locating a live video workload on commodity hardware?
-  \item \textbf{RQ2:} What is the performance/energy overhead of \gls{sspfs} versus \gls{uspfs}, and how does interference manifest across caches, interrupts, and I/O?
-  \item \textbf{RQ3:} Does mailbox supervision enable safe, practical sharing of \gls{pcie} devices between domains without violating isolation?
-\end{enumerate}
-
-\noindent\textbf{Scope and assumptions.}
-We target small/medium multirotors, focus on onboard consolidation (not ground-side networks), and assume standard platform firmware and drivers. Adversarial testing emphasizes isolation (faults, misbehaving guests) rather than radio jamming or GNSS spoofing.
-
+% \noindent\textbf{Platform pressure:}
+Emerging heterogeneous \glspl{soc} make single-board integration attractive, but
+flight-control support, predictable device assignment, \gls{dma} / \gls{iommu}
+integrity, interrupt delivery, and cache interference are practical hurdles. A small, analyzable, open approach is needed to both
+\emph{demonstrate} and \emph{measure} trustworthy consolidation on such
+platforms.
+%
+% \noindent\textbf{Design choice:}
+Static partitioning minimizes hypervisor complexity and scheduling overheads,
+enabling clear timing models and a reduced attack surface. Bao provides this
+with a small codebase and active open-source development, making it a suitable
+foundation for a trustworthy \gls{uav} stack.
 
 \section{Goals}
-The main goal of the present work is to develop of a trustworthy
-open-source software stack for \gls{uav} applications in which security and
-safety are paramount, thus narrowing the gap between open-source and commercial
-solutions and contributing for the widespread adoption of secure and safe features.
+The main goal of this work is to design, implement, and evaluate a trustworthy,
+open-source reference stack that consolidates safety-critical flight control and
+non-critical mission workloads on shared hardware using the Bao hypervisor,
+while preserving temporal, spatial, and fault-containment isolation under
+realistic video-surveillance missions. We target small/medium multirotors and
+focus on onboard consolidation (not ground-side networks). Our adversarial tests
+emphasize inter-domain isolation (faults, misbehaving guests), not radio-frequency
+jamming or \gls{gnss} spoofing.
+
+The main goal of this work is to design, implement, and evaluate a trustworthy,
+open-source reference stack that consolidates safety-critical flight control and
+non-critical mission workloads on shared hardware using the Bao hypervisor,
+while preserving temporal, spatial, and fault-containment isolation under
+realistic video-surveillance missions. We target small/medium multirotors and
+focus on onboard consolidation (not ground-side networks). Our adversarial tests
+emphasize inter-domain isolation (faults, misbehaving guests), not radio-frequency
+jamming or \gls{gnss} spoofing.
+
+Concretely, we implement and assess the design on a Raspberry~Pi~4 + PilotPi
+platform, aiming to narrow the gap between open-source and commercial solutions
+and to encourage widespread adoption of secure-by-design features in UAV
+software stacks.
 %
 To this end, we define the following objectives:
 \begin{enumerate}
 \item Analyze the state of the art in mixed-criticality \gls{uav} systems and
-  identify improvement opportunities, with a focus on hypervisor-based
-  supervision.
-\item Select a representative mixed-criticality application (e.g., flight
-  control with video surveillance) to provide a concrete use case for
-  consolidating the \gls{mcs} software stacks on a single platform in a secure
-  manner.
+      define trustworthiness criteria with emphasis on hypervisor-based supervision.
+\item Select a representative mixed-criticality application (flight control with
+      video surveillance) to drive concrete design choices.
 \item Derive application requirements and choose a target hardware platform that
-  offers security primitives essential for hypervisor-based isolation (e.g.,
-  virtual memory, memory protection, TrustZone, etc.) while meeting \gls{swap-c}
-  constraints.
-\item Design and implement an open-source software stack for \gls{uav}
-  applications that leverages the Bao hypervisor, and apply it to the chosen
-  \gls{mcs} use case to consolidate the software stacks while preserving
-  isolation between domains.
-\item Validate the solution and assess its resilience under malicious compromise
-  attempts, expecting the supervised solution to contain faults while the
-  unsupervised one propagates them, leading to system failure and
-  potentially a catastrophic \gls{uav} crash.
-\item Quantify the performance overhead introduced by supervision and the effect
-  of inter-guest interference using a standard benchmark suite (e.g., MiBench
-  \gls{aics}), and explore mitigation techniques (e.g., cache coloring).
-\item Benchmark each guest separately using application-specific metrics, and
-  use these results to compare the unsupervised and supervised solutions.
-\item Evaluate both solutions in real-flight conditions and analyze their
-  behavior when each system is compromised.
+      offers security primitives essential for hypervisor-based isolation (e.g.,
+      virtual memory, memory protection) while meeting \gls{swap-c} constraints.
+\item Design and implement an unsupervised single-platform baseline (\gls{uspfs})
+      that co-locates mission and flight control without supervision, and a
+      supervised counterpart (\gls{sspfs}) atop Bao with static partitioning,
+      using open-source components.
+\item Design and implement a mailbox-supervision mechanism to safely share
+      \gls{pcie}--attached peripherals across \glspl{vm}.
+\item Validate fault containment by injecting malicious behavior into each system
+      (\gls{cpu}/memory abuse, user-space resource starvation, kernel-level faults) and
+      observing outcomes. We expect \gls{sspfs} to contain faults originating in
+      the mission domain and maintain stable flight, while \gls{uspfs} exhibits
+      fault propagation that can lead to \gls{uav} loss.
+\item Quantify supervision overhead and inter-guest interference using MiBench
+      \gls{aics} workloads (offline benchmarking), and evaluate mitigations
+      (e.g., cache coloring).
+\item Benchmark each guest with application-specific metrics (PX4 task-scheduling
+      overhead; camera frame rate) and compare the unsupervised and supervised
+      solutions.
+\item Evaluate both stacks in real-flight conditions, including behavior under
+      induced component failures, and analyze resource usage and control fidelity
+      from flight logs.
 \end{enumerate}
+
+Furthermore, we identified the following research questions:
+\begin{itemize}
+  \item \textbf{RQ1:} Can static partitioning via Bao maintain flight-control
+        timing while co-locating a live video workload on the same hardware
+        platform?
+  \item \textbf{RQ2:} Does Bao-based supervision contain failures in the
+        non-critical mission \gls{vm}, preserving control authority (i.e., keeping
+        the \gls{uav} airborne)?
+  \item \textbf{RQ3:} What performance overheads does \gls{sspfs} introduce
+        versus \gls{uspfs} -- both in offline MiBench benchmarks and in
+        application-level metrics (PX4 scheduling overhead, camera frame rate)?
+  \item \textbf{RQ4:} What performance overheads does \gls{sspfs} introduce
+        versus \gls{uspfs} in PX4's position tracking and the system's resource
+        usage (\gls{ram} usage, \gls{cpu} load) during flight?
+  \item \textbf{RQ5:} Does mailbox supervision enable safe, practical sharing of
+        \gls{pcie} devices between domains without violating isolation?
+\end{itemize}
 
 \section{Document Structure}
 \label{sec:doc-structure}
