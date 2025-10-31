@@ -11,7 +11,7 @@
 
 This chapter establishes the technical context for the thesis. We begin with mixed-criticality systems (\glspl{mcs}): why they matter, where they appear, and the challenges they pose for timing predictability, isolation, and assurance under practical \gls{swap-c} constraints. We then outline the current approach to manage this complexity, highlighting the trade-offs they introduce.
 %
-Next, we survey \glspl{uav}'s reference hardware and software
+Next, we survey \glspl{uav}' reference hardware and software
 stacks, covering both open-source and commercial solutions, with emphasis on
 properties relevant to mixed-critical deployments (e.g., platform support,
 determinism, and isolation).
@@ -109,7 +109,7 @@ unikernels~\cite{cinque2022virtualizing}.
 Fig.~\ref{fig:virt-mindmap} maps the key concepts referenced in this section,
 and Fig.~\ref{fig:virt-approaches-exs} illustrates representative
 approaches~\cite{cinque2022virtualizing}. Starting on the left, a conventional
-\gls{sw} stack runs an \gls{os} (with runtime and libraries) directly on the
+software stack runs an \gls{os} (with runtime and libraries) directly on the
 hardware and hosts applications. In this model, failures in any component can
 propagate system-wide because no isolation layer intervenes.
 
@@ -263,7 +263,7 @@ behavior~\cite{martins_et_al:OASIcs:2020:11779}.
 \begin{figure}[!hbtp]
   \centering
   \includegraphics[width=0.7\textwidth]{./img/png/bao-arch}
-  \caption[Hypervisor Bao architecture]{Hypervisor Bao architecture~\cite{martins_et_al:OASIcs:2020:11779}\footnotemark}%
+  \caption[Bao hypervisor architecture]{Bao hypervisor architecture~\cite{martins_et_al:OASIcs:2020:11779}\footnotemark}%
   \label{fig:bao-arch}
 \end{figure}
 \fnlicCC{foot:bao-embedded-world-lic1}%
@@ -437,7 +437,7 @@ They belong to a broader class of \glspl{uv}, alongside \glspl{ugv}, \glspl{usv}
 (e.g., boats), and \glspl{uuv}~\cite{glossner2021overview}.
 
 \glspl{uav} date back as far as the 18\textsuperscript{th} century: in 1783,
-France publicly demonstrated the first uncrewed aircraft—a hot-air
+France publicly demonstrated the first uncrewed aircraft -- a hot-air
 balloon~\cite{uavHistory}. In 1896, Alfred Nobel reportedly launched a
 camera-equipped rocket, and in 1935 the first modern radio-controlled aircraft
 was developed in the U.K.~\cite{uavHistory}. The term \emph{drone} is often
@@ -730,18 +730,30 @@ Because \gls{gps} alone can have errors on the order of meters, fusing \gls{imu}
 Electronic propulsion dominates. In multirotors, \glspl{bldc} in the propulsion system \emph{(2)} drive the rotors, controlled by \glspl{esc}—high-frequency inverters that convert \gls{dc} to three-phase \gls{ac} and modulate motor speed~\cite{malyshev_research_2024}. 
 Fixed-wing hybrids additionally use servomotors for control surfaces (e.g., flaps)~\cite{gabrielBLDCFixedWingUAV2011}.
 Figure~\ref{fig:uav-sysOverv-tasks-mindmap} depicts a concept map of the main tasks and components.
-
+%
 % \paragraph{Ecosystem layers.}
 The \gls{uav} ecosystem can be outlined as a top-down view of five layers~\cite{glossner2021overview}
 (Figure~\ref{fig:uav-sysOverv-hierarc-mindmap}): 
-(1) \emph{Flight supervision} (flight management, safety/authorization, remote identification). Commands flow from the \gls{gcs} \emph{(5)} to the \gls{fcs} \emph{(1)}; tools such as \lstinline|QGroundControl| provide planning, mapping, and live telemetry. 
-Fail-safes (geofencing, low battery, loss of \gls{rc}/datalink) must be enforced by the pilot; airspace authorization can be obtained via \lstinline|LAANC| or \lstinline|Google Wing OpenSky|; since 2023, remote ID mandates broadcasting a unique identifier. 
-(2) \emph{Command and control} ensures safe flight via human or autopilot-generated commands over proprietary links or open \glspl{api} (e.g., MAVLink SDK, Parrot SDK). Notable open-source autopilots include \lstinline|PX4|, \lstinline|ArduPilot|, and \lstinline|Paparazzi UAS|. 
-(3) \emph{System simulation} analyzes behavior under varied conditions: \gls{sitl}/\gls{hitl} environments (e.g., Gazebo~\cite{garcia_simulation_2022} with PX4~\cite{px4-sim} or ArduPilot~\cite{arduPilot-sim}, CoppeliaSim) and full flight simulators (FlightGear). 
-(4) \emph{Operating systems} provide hardware abstraction: open-source \glspl{rtos} (\lstinline|NuttX|~\cite{px4-home}, \lstinline|ChibiOS|~\cite{arduPilot-home}, \lstinline|FreeRTOS|~\cite{librePilot-arch}) and \glspl{gpos} (\lstinline|Linux|~\cite{px4-pilotpi}), as well as proprietary options (\lstinline|VxWorks|~\cite{vxWorks-uav-aribus-helionic}). Some flight stacks also run natively without a full \gls{os} (e.g., \lstinline|Paparazzi UAS|~\cite{paparazzi-github}, \lstinline|iNAV|~\cite{inav-github}). 
-(5) \emph{Physical hardware} comprises the electronic platform (sensors,
-compute, communication) and actuators, including propulsion \emph{(2)} and
-payload \emph{(2)}.
+\begin{enumerate}[label=(\arabic*)]
+  \item \emph{Flight supervision} (flight management, safety/authorization, remote identification). 
+        Commands flow from the \gls{gcs} to the \gls{fcs}; tools such as \lstinline|QGroundControl| provide mission planning, mapping, and live telemetry. 
+        Fail-safes (geofencing, low battery, loss of \gls{rc}/datalink) must be enforced by the pilot or autopilot. 
+        Airspace authorization can be obtained via \lstinline|LAANC| or \lstinline|Google Wing OpenSky|; since 2023, remote ID mandates broadcasting a unique identifier.
+
+  \item \emph{Command and control}. 
+        Ensures safe flight via human or autopilot-generated commands over proprietary links or open \glspl{api} (e.g., MAVLink SDK, Parrot SDK). 
+        Notable open-source autopilots include \lstinline|PX4|, \lstinline|ArduPilot|, and \lstinline|Paparazzi UAS|.
+
+  \item \emph{System simulation}. 
+        Analyzes behavior under varied conditions via \gls{sitl}/\gls{hitl} (e.g., Gazebo~\cite{garcia_simulation_2022} with PX4~\cite{px4-sim} or ArduPilot~\cite{arduPilot-sim}, CoppeliaSim~\cite{coppelia-sim}) and full flight simulators (FlightGear~\cite{flightgear}).
+
+  \item \emph{Operating systems}. 
+        Provide hardware abstraction: open-source \glspl{rtos} (\lstinline|NuttX|~\cite{px4-home}, \lstinline|ChibiOS|~\cite{arduPilot-home}, \lstinline|FreeRTOS|~\cite{librePilot-arch}) and \glspl{gpos} (\lstinline|Linux|~\cite{px4-pilotpi}), as well as proprietary options (\lstinline|VxWorks|~\cite{vxWorks-uav-aribus-helionic}). 
+        Some flight stacks also run natively without a full \gls{os} (e.g., \lstinline|Paparazzi UAS|~\cite{paparazzi-github}, \lstinline|INAV|~\cite{inav-github}).
+
+  \item \emph{Physical hardware}. 
+        Comprises sensors, compute, communications, and actuators (propulsion and payload), i.e., the electronic platform and effectors that realize the flight and mission functions.
+\end{enumerate}
 
 
 \subsection{Security and Safety}%
@@ -794,7 +806,7 @@ Fourth, \emph{direct attacks} use \glspl{uav} to harm individuals or steal
 payloads (e.g., medical supplies), with recreational or hobbyist platforms
 frequent targets.
 Finally, \emph{accidental damage} results when a \gls{uav} goes out of control
-due to operator error, cyberattack, or \gls{sw}/\gls{hw} malfunction.
+due to operator error, cyberattack, or software/hardware malfunction.
 Regardless of cause, a falling aircraft can inflict severe harm on people and
 goods.
 
@@ -873,7 +885,7 @@ These Arm-based boards typically feature up to \(\sim\)2\,MiB of Flash and \(\si
 
 \paragraph{Companion-computer-based stacks.}
 These platforms expand \gls{io} via a daughterboard and run the flight stack on an Arm Cortex-A companion under a Linux \gls{gpos} (often with PREEMPT or PREEMPT\_RT), e.g., Erle-Brain 3 and PXFmini~\cite{ebeidUAVPlatformsSurvey2017,erle-brain}. 
-PXFmini, designed for the Raspberry Pi Zero, weighs \(\sim\)15\,g and adds an on-board barometer and \gls{imu}, expansion ports, and triple-redundant power~\cite{pxfmini}. 
+PXFmini, designed for the Raspberry Pi Zero, weighs about 15 grams and adds an on-board barometer and \gls{imu}, expansion ports, and triple-redundant power~\cite{pxfmini}. 
 Both Erle-Brain 3 and PXFmini have since been deprecated~\cite{pxfmini-deprec}.
 
 \paragraph{Raspberry Pi shields.}
@@ -971,7 +983,7 @@ moving targets, reported to be resilient to \gls{gps} jamming or
 denial~\cite{skynodeS-noJamming}.
 Operational reports claim a rise in mission success probability from 20\% to
 90\% in the presence of electronic warfare~\cite{skynodeS-noJamming-2}.
-
+%
 Table~\ref{tab:hw-ref} summarizes the \gls{uav} reference hardware.
       % >{\raggedright\arraybackslash}p{1.5cm}  % Platform
       % >{\raggedright\arraybackslash}p{1.2cm}  % Type
@@ -1048,10 +1060,10 @@ It can also assist navigation in \gls{gps}-denied and communications-denied envi
 Physical hardware (sensors, actuators, payload) is depicted in purple, and the software layers are shown in green. 
 Arrows indicate communication links and protocols.
 
-\begin{figure}[!hbt]
+\begin{figure}[!hbtp]
   \centering
   \includegraphics[width=\textwidth]{./img/pdf/uav-sw-arch.pdf}
-  \caption{UAV software architecture: common structure.}
+  \caption{UAV software architecture: common structure}
   \label{fig:uav-sw-arch}
 \end{figure}
 
@@ -1082,7 +1094,7 @@ Interfaces between onboard components and the \gls{gcs} commonly use off-board \
 
 \glsxtrfull{oss} platforms, like their hardware counterparts, aim for transparency, flexibility, and maintainability while remaining cost-effective. 
 By \gls{oss} we mean that the software source code is released under free/libre terms~\cite{freeGNU}. 
-The most prominent open autopilots today are \lstinline|PX4|~\cite{px4-github}, \lstinline|ArduPilot|~\cite{arduPilot-github}, \lstinline|Paparazzi UAS|~\cite{paparazzi-github}, and \lstinline|iNAV|. 
+The most prominent open autopilots today are \lstinline|PX4|~\cite{px4-github}, \lstinline|ArduPilot|~\cite{arduPilot-github}, \lstinline|Paparazzi UAS|~\cite{paparazzi-github}, and \lstinline|INAV|. 
 Other flight-control firmware -- such as
 \lstinline|Betaflight|~\cite{betaflight-github},
 \lstinline|Cleanflight|~\cite{cleanflight-github},
@@ -1116,14 +1128,14 @@ It runs atop ChibiOS~\cite{paparazzi-sysOverv}, uses \emph{PPRZLINK} for
 \emph{AirBorne Ivy} (\gls{abi}) middleware for intra-stack
 messaging~\cite{jargalsaikhan2022architectural}.
 
-\paragraph{iNAV.}
-Derived from \lstinline|Cleanflight|, \lstinline|iNAV| targets multirotors,
+\paragraph{INAV.}
+Derived from \lstinline|Cleanflight|, \lstinline|INAV| targets multirotors,
 fixed-wing aircraft, and rovers that need \gls{gps}-assisted flight rather than
 acro/racing~\cite{inav-github}.
 It sits between racing-oriented \lstinline|Betaflight| and full-autonomy stacks
 such as \lstinline|ArduPilot|, providing features like position/altitude hold,
 return-to-home, and waypoint missions configured via the
-\lstinline|iNAV Configurator|~\cite{inav-github}.
+\lstinline|INAV Configurator|~\cite{inav-github}.
 Hardware support is limited compared with PX4/ArduPilot, focusing on STM32
 F4/F7/H7 and AT32 families~\cite{inav-github}.
 
@@ -1133,7 +1145,7 @@ F4/F7/H7 and AT32 families~\cite{inav-github}.
 Commercial proprietary platforms typically disclose limited technical detail. 
 Extensibility is offered via vendor \glspl{sdk} (e.g., DJI~\cite{djiSDK}, Parrot~\cite{parrot-sdk}), 
 which enable access to additional features but require specialized knowledge.
-
+%
 Some vendors also leverage permissive \gls{oss} licenses (e.g., PX4’s BSD) to
 add features and ship closed, enterprise-hardened variants.
 A representative example is Auterion PX4 (APX4), a hardened PX4 distribution integrated with Auterion \glspl{fmu} and their mission-computer stack. 
@@ -1157,7 +1169,7 @@ To reduce storage and update overhead, Auterion recommends:
 (i) packaging related services into a single deployable application (e.g., a \emph{Companion App} distributed as a \lstinline|.auterionos| image), and 
 (ii) using a shared base \lstinline|Dockerfile| across services~\cite{auterion-sw-services}. 
 Applications interact with the autopilot through the \lstinline|Auterion SDK| \glspl{api}.
-
+%
 For control and fleet operations, \emph{Auterion Mission Control} provides a \gls{gcs} tailored to Auterion vehicles~\cite{auterion-missionControl}, 
 while \emph{Auterion Suite} offers fleet management, real-time health monitoring, analytics, and \gls{ota} updates~\cite{auterion-suite}. 
 Skynode systems may also be operated with a conventional \gls{rc} transmitter or third-party \gls{gcs} software.
@@ -1184,17 +1196,17 @@ Table~\ref{tab:sw-ref} summarizes the \gls{uav} reference software.
     \toprule
     \textbf{FCS} & \textbf{License} & \textbf{OS} & \textbf{Autopilot} & \textbf{Notes} \\
     \midrule
-    ArduPilot     & GPL~3        & ChibiOS; Linux & Yes & \\
-    PX4           & BSD~3        & NuttX; Linux   & Yes & \\
-    Paparazzi UAS & GPL~2        & ChibiOS        & Yes & \\
+    ArduPilot     & GPL~3        & ChibiOS; Linux & Yes & Autopilot \\
+    PX4           & BSD~3        & NuttX; Linux   & Yes & Autopilot \\
+    Paparazzi UAS & GPL~2        & ChibiOS        & Yes & Autopilot \\
+    INAV          & GPL~3        & Baremetal      & Yes & Autopilot \\
     Crazyflie     & GPL~3        & Baremetal      & No  & Racing \\
     Betaflight    & GPL~3        & Baremetal      & No  & Racing \\
     CleanFlight   & GPL~3        & Baremetal      & No  & Racing \\
     KK2           & GPL~3        & Baremetal      & No  & Not maintained \\
     LibrePilot    & GPL~3        & FreeRTOS       & No  & Not maintained \\
-    iNAV          & GPL~3        & Baremetal      & Yes & \\
     Dji           & Proprietary  & ND             & Yes & Provides SDK \\
-    Parrot        & Proprietary  & ND             & Yes & \\
+    Parrot        & Proprietary  & ND             & Yes & Provides SDK \\
     APX4          & Proprietary  & NuttX          & Yes & Provides SDK \\
     \bottomrule
   \end{tabular}
@@ -1234,14 +1246,14 @@ We use these criteria to assess prior work throughout this section.
 \subsection{Flight Control Software Used in Practice}
 \label{subsec:rw-flight-stacks}
 The most widely used open-source autopilots are PX4, ArduPilot, Paparazzi UAS,
-and iNAV.
+and INAV.
 PX4, widely adopted in industrial and commercial settings, runs on NuttX (and
 Linux), offers broad platform coverage, and has a modular architecture.
 ArduPilot targets Linux and ChibiOS, with extensive support for \gls{osh}
 platforms (e.g., Pixhawk) and rich vehicle types.
 Paparazzi UAS, one of the earliest open stacks, runs atop ChibiOS with a strong
 fixed-wing heritage.
-iNAV sits between racing firmware (e.g., Betaflight) and full autopilots,
+INAV sits between racing firmware (e.g., Betaflight) and full autopilots,
 emphasizing GPS-assisted flight but supporting only a subset of boards (notably
 STM32 F4/F7/H7 and AT32).
 
@@ -1293,7 +1305,7 @@ Thus, an \gls{rtos} alone does not provide the inter-domain isolation required f
 From a mixed-criticality perspective, PX4 and ArduPilot emerge as the most
 mature and widely supported open-source autopilots, but non-standard messaging and large codebases
 complicate portability and assurance. Paparazzi remains influential historically
-yet narrower in scope, while iNAV targets GPS-assisted use cases on a limited
+yet narrower in scope, while INAV targets GPS-assisted use cases on a limited
 set of boards. Openness consistently improves auditability and community
 response, but real-time determinism and isolation depend on the underlying \gls{os}
 (NuttX/ChibiOS/Linux) and on supervisory mechanisms (e.g., hypervisors).

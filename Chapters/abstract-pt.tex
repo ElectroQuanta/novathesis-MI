@@ -13,8 +13,7 @@ impõe exigências de criticalidade mista: o controlo de voo (crítico) tem de
 coexistir com o \emph{software} não-crítico da missão obedecendo aos limites de
 tamanho, peso, potência e custo (\emph{SWaP-C}). As plataformas convencionais, \emph{multi-board},
 adicionam peso e latência nas comunicações e a separação por \emph{hardware} é
-insuficiente: a falha num nodo não crítico pode se repercutir na falha do nodo
-crítico devido às interfaces partilhadas. Os esforços de consolidação em curso
+insuficiente, devido às interfaces partilhadas. Os esforços de consolidação em curso
 dependem de hipervisores proprietários ou assentam em implementações que
 dependem da platforma/aplicação ou que foram abandonados.
 %
@@ -22,9 +21,9 @@ Outras abordagens focam-se apenas na pilha de \emph{software} da missão usando
 contentores ou componentes verificados formalmente. O contentor não garante
 o isolamento adequado, e ambos focam-se apenas na pilha da missão,
 deixando as comunicações e o piloto automático desprotegidos.
-Tais suposições são inseguras dada a extensa superfície de ataque dos \emph{UAVs}, a
-densidade de erros observada nos pilotos automáticos de código aberto e as
-vulnerabilidades reportadas nos sistemas operativos de tempo real comerciais.
+Tais suposições são inseguras dada a extensa superfície de ataque dos
+\emph{UAVs} e as vulnerabilidades reportadas nos pilotos automáticos de código
+aberto e sistemas operativos de tempo real comerciais.
 %
 No presente trabalho concebemos e avaliamos uma consolidação de pilhas de software criticidade mista em \emph{UAVs} recorrendo ao Bao, um
 hipervisor de particionamento estático de tipo I. Implementamos duas pilhas de
@@ -39,10 +38,10 @@ acessos indevidos entre domínios.
 As experiências demonstram que as falhas injetadas
 no \emph{guest} não crítico provocam apenas a falha deste, enquanto o
 PX4 mantém o controlo e a \emph{UAV} em voo. A avaliação realizada com o MiBench
-indica penalizações reduzidas no desempenho, conforme corroborado nos testes
-de voo: 2\% no escalonamento de tarefas do PX4 e na captura de
-vídeo e 6\% na carga do \emph{CPU}. O particionamento estático promove o
-isolamento entre domínios e o \emph{cache coloring} mitiga a interferência entre eles.
+e nos testes de aplicação, indicam penalizações reduzidas no desempenho: 2\% no escalonamento de tarefas do PX4 e na captura de
+vídeo. Os testes de voo demonstraram a robustez do controlo de posição e um
+aumento reduzido na carga do \emph{CPU} (6\%). O particionamento estático
+promove o isolamento entre domínios e o \emph{cache coloring} mitiga a interferência entre eles.
 %
 Em suma, um hipervisor de particionamento estático, como o Bao, permite consolidar as
 pilhas de \emph{software} de voo e de missão numa única plataforma com impacto

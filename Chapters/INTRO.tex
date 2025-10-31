@@ -86,7 +86,7 @@ auditable \gls{tcb}.
 This thesis investigates how to safely consolidate mixed-criticality
 \gls{uav} workloads on shared hardware while preserving temporal, spatial, and
 fault-containment isolation. We adopt a static-partitioning hypervisor approach
-centered on Bao, an open, lightweight type-I hypervisor, and evaluate it in a
+centered on Bao, an open-source, lightweight type-I hypervisor, and evaluate it in a
 representative video-surveillance use case. Our goal is a trustworthy reference
 stack that is practical on commodity platforms, transparent by design, and
 measurable end-to-end.
@@ -163,7 +163,7 @@ To this end, we define the following objectives:
 \item Design and implement a mailbox-supervision mechanism to safely share
       \gls{pcie}--attached peripherals across \glspl{vm}.
 \item Validate fault containment by injecting malicious behavior into each system
-      (\gls{cpu}/memory abuse, user-space resource starvation, kernel-level faults) and
+      (kernel-level faults, \gls{cpu}/memory abuse, user-space resource starvation) and
       observing outcomes. We expect \gls{sspfs} to contain faults originating in
       the mission domain and maintain stable flight, while \gls{uspfs} exhibits
       fault propagation that can lead to \gls{uav} loss.
@@ -230,7 +230,7 @@ driver.
 Assesses functionality, performance, and isolation. Establishes the \gls{uspfs}
 baseline, then quantifies \gls{sspfs} overheads (MiBench \glsxtrfull{aics}),
 guest-to-guest interference (including cache and device effects), and the impact
-of mailbox supervision. Compares single- vs.\ dual-\gls{vm} setups using
+of mailbox supervision. Compares single- versus dual-\gls{vm} setups using
 guest-specific metrics (e.g., PX4 scheduling overhead, camera frame rate), and
 validates both systems in real flight with an automated mission (tracking
 accuracy and resource usage), including repetition of functional tests in
@@ -240,7 +240,7 @@ flight.
 \textbf{Chapter \ref{cha:concl} -- Conclusions and Future Work:}
 Summarizes how \gls{sspfs} consolidates mixed-criticality stacks on shared
 hardware with robust isolation and modest overhead. Outlines future directions:
-broader \gls{uavic} support, advanced shared-resource management, and extended
+broader \gls{uavic} support, deeper system-resource accounting, and extended
 testing (long-duration flights, adversarial scenarios).
 
 \item

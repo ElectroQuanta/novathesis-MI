@@ -8,19 +8,19 @@
 \end{flushright}
 \end{quote}
 
-The previous survey motivates using a small, open, statically partitioned
+The previous survey motivates using a small, open-source, statically partitioned
 hypervisor as the consolidation mechanism. We now translate those findings into
 a concrete architecture for video-surveillance \glspl{uav} under tight \gls{swap-c}:
 the \gls{sspfs}, a flight stack that leverages the Bao hypervisor so that
 resource-intensive, non-critical streaming can coexist with safety-critical
 flight control on consolidated hardware.
-
+%
 We begin by stating requirements and constraints for the target application, then
 analyze the conventional split architecture and its drawbacks. We implement an
 unsupervised single-platform baseline (\gls{uspfs}) to quantify consolidation
 overheads, and subsequently deploy the supervised counterpart atop Bao
 (\gls{sspfs}).
-
+%
 Next, we select the hardware (the \gls{uav} and the \gls{uavic}) and map these
 components into the \gls{uspfs} and \gls{sspfs} designs. To support shared
 \gls{pcie} devices across \glspl{vm}, we introduce a supervised mailbox
@@ -227,7 +227,7 @@ Each \gls{vm} runs a Linux-based \gls{os}, enabling tailored configurations. The
 \gls{fmu} \gls{vm} can use a real-time kernel and be pinned to a dedicated CPU,
 while the companion \gls{vm} can run a standard kernel. Bao’s static
 partitioning assigns CPUs, memory, and devices to each \gls{vm} exclusively,
-and device drivers reside within the respective guest, limiting the blast radius
+and device drivers reside within the respective guest, limiting the effects
 of software bugs.
 
 The main costs are footprint and configuration effort: every \gls{vm} carries a
@@ -306,7 +306,7 @@ does not currently support this board~\cite{nuttx-platforms}.
 
 Our initial plan was to port NuttX to the Cortex-M7 and then enable PX4 on that
 target, including the required device drivers. In parallel, Bao support for this
-board would also be needed. The combined effort (new NuttX port, PX4 enablement,
+board would be needed also. The combined effort (new NuttX port, PX4 enablement,
 and Bao enablement) proved impractical for this work’s scope, so we adopted a
 more direct path.
 %
@@ -354,7 +354,8 @@ actuators. Because the Bao hypervisor enforces static partitioning, we must also
 determine whether the \gls{uavic} hardware can be made fully available to each
 guest in the \gls{sspfs} solution or if alternatives are needed.
 Accordingly, we first map the PX4-required hardware to the Linux device tree for
-the \gls{uspfs} solution and then adapt that mapping to meet Bao’s constraints in the \gls{sspfs} implementation.
+the \gls{uspfs} solution and then adapt that mapping to meet Bao's constraints
+in the \gls{sspfs} implementation.
 
 \subsubsection{USPFS}
 \label{sec:base-scenario}
