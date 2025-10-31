@@ -31,11 +31,11 @@ Table~\ref{tab:rq-map} maps each research question to its methods, metrics, and 
 We evaluate \emph{(RQ1)} timing preservation under consolidation via \emph{offline} measurements (Linux \texttt{perf} events) and MiBench \gls{aics} microbenchmarks; 
 \emph{(RQ2)} fault containment via controlled fault injection in the mission
 \gls{vm} (panic attack, memory exhaustion and corruption, kernel module faults, user-space resource starvation) and observation of control authority (aircraft remains airborne);
-\emph{(RQ3)} consolidation overhead vs.\ \gls{uspfs} using offline MiBench
+\emph{(RQ3)} consolidation overhead versus \gls{uspfs} using offline MiBench
 \gls{aics} plus application-level metrics (PX4 scheduling overhead, camera frame
 rate);
-\emph{(RQ4)} in-flight behavior of \gls{sspfs} vs.\ \gls{uspfs}, focusing on
-position-tracking accuracy (trajectory vs.\ setpoints) and system resources
+\emph{(RQ4)} in-flight behavior of \gls{sspfs} versus \gls{uspfs}, focusing on
+position-tracking accuracy (trajectory versus setpoints) and system resources
 (\gls{cpu} load, \gls{ram} footprint); and 
 \emph{(RQ5)} supervised mailbox sharing correctness and performance via
 functional tests (no cross-domain leakage) and throughput/latency measurements
@@ -77,7 +77,7 @@ for firmware-mediated transactions.
 We use the \gls{uavic} platform (Raspberry~Pi~4 + PilotPi), two guests (PX4 flight \gls{vm} and Companion \gls{vm}), and a repeatable QGroundControl mission profile. 
 Metrics comprise: (i) offline MiBench \gls{aics} microbenchmarks and Linux \texttt{perf}-based timing; 
 (ii) application-level telemetry (PX4 scheduling overhead, camera \gls{fps}); 
-(iii) in-flight behavior via PX4 logs (position-tracking accuracy: trajectory vs.\ setpoints; system counters: \gls{cpu}/\gls{ram}); and 
+(iii) in-flight behavior via PX4 logs (position-tracking accuracy: trajectory versus setpoints; system counters: \gls{cpu}/\gls{ram}); and 
 (iv) isolation outcomes under fault injection, plus mailbox-supervision correctness/latency for firmware-mediated services. 
 Statistical comparisons use paired runs with identical configurations; we report
 means and worst cases and flag non-significant changes where applicable.
@@ -170,7 +170,7 @@ operating, preserving flight capability.
 This comparative setup demonstrates fault containment with \gls{sspfs}: critical
 functions remain available despite failures in the non-critical domain.
 
-\begin{figure}[!hbt]
+\begin{figure}[!hbtp]
   \centering
   \includegraphics[width=0.8\textwidth]{./img/pdf/uav-main-eval-funcTest}
   \caption{Functional tests' overview}%
@@ -182,7 +182,7 @@ functions remain available despite failures in the non-critical domain.
 Malicious actors with privileged access -- via superuser escalation or corrupted
 kernel modules -- pose severe risks. This section evaluates vulnerability to
 privileged-mode attacks by deploying malicious kernel modules.
-
+%
 A basic kernel attack vector is an explicit \lstinline{panic} invocation, which
 signals an unrecoverable state. Listing~\ref{lst:kmod-panic} (line 5) implements
 this and shows the skeleton of a kernel module. Additional modules are in
@@ -247,13 +247,15 @@ Finally, terminating \lstinline{init} compromises the system. The module
 \gls{uspfs} crashed globally, whereas \gls{sspfs} preserved the PX4 \gls{vm} and
 flight capability.
 
+\clearpage
+
 \subsection{Unprivileged mode}
 \label{sec:unprivileged-mode}
 User-space attacks expose a smaller surface because access to critical resources
 is limited. A common tactic is to induce extreme contention that degrades
 performance until the critical system becomes unresponsive, which can still lead
 to a hazardous outcome in flight.
-
+%
 The user-space resource-exhaustion application is available at
 \lstinline{eval/userspace/memhog_module.c}~\cite{thesis-sw-github}. It employs three concurrent vectors:
 (1) memory exhaustion by unbounded allocation while attempting to evade the \gls{oom} killer (\lstinline{memory_attack()});
@@ -265,7 +267,7 @@ A monitoring thread (\lstinline{status_thread()}) records (1) elapsed time, (2) 
 Fig.~\ref{fig:user-memhog-test-uspfs} shows testing on \gls{uspfs}. After boot over \gls{uart} (1) and SSH login over Wi-Fi (2), the system quickly became unresponsive (3). Basic commands such as \lstinline{ls} failed and resources were permanently pinned by the attack (4). Although the host still answered at the network level, it could no longer service PX4 or the video pipeline, severely impacting flight functionality.
 
 We repeated the procedure on \gls{sspfs} (Fig.~\ref{fig:user-memhog-test-sspfs}). The platform was booted over \gls{uart}, bringing up the PX4 and Companion \glspl{vm}. After logging into the PX4 \gls{vm} (1), we connected to the Companion \gls{vm} via SSH (2) and started the attack there. The Companion \gls{vm} became unresponsive (3) and dedicated its resources to the attacker (4), but the PX4 \gls{vm} remained responsive and controllable. Hence only the non-critical domain failed, and the \gls{uav} retained flight capability.
-
+%
 These results confirm that Bao preserves critical-domain availability under severe user-space contention in the non-critical domain, meeting the consolidation and isolation goals.
 
 \begin{figure}[!hbt]
@@ -292,19 +294,29 @@ Prior work has benchmarked the Bao hypervisor in mixed-criticality settings~\cit
 \begin{equation}
   \label{eq:perform-deg}
   PD~(\%) \;=\;
-  \frac{ET_{\text{SSPFS}} - ET_{\text{USPFS}}}{ET_{\text{USPFS}}}\times 100
+  \frac{ET_{\text{SSPFS}} - ET_{\text{USPFS}}}{ET_{\text{USPFS}}}\cdot 100
 \end{equation}
 
 The test suite is MiBench \gls{aics}~\cite{guthaus2001mibench}, with both \emph{small} (resource-constrained) and \emph{large} (realistic load) variants. On Linux guests we use \lstinline{perf}~\cite{perfLinux} to time executions and collect microarchitectural counters; bare-metal guests use the Arm Generic Timer (10~ns resolution) with a custom \gls{pmu} driver. The monitored events include: (1) instruction count; (2) \gls{tlb} accesses/refills; (3) cache accesses/refills; (4) exceptions; and (5) interrupts.
-
-To study inter-VM interference, we deploy a custom bare-metal guest with three \glspl{vcpu} that continuously stream writes into a buffer sized to the \gls{llc}, creating a sustained memory subsystem load (not necessarily worst-case, but intentionally heavy).
+%
+To study inter-VM interference, we deploy a custom bare-metal guest with three
+\glspl{vcpu} that continuously stream writes into a buffer sized to the
+\gls{llc}, creating a sustained memory subsystem load (not necessarily
+worst-case, but intentionally heavy).
 
 Fig.~\ref{fig:uav-main-eval-mibench} summarizes the workflow: build guests (Linux+\lstinline{perf} for MiBench and the interference guest), run experiments, capture logs, and plot results~\cite{shedlightRepo}. We evaluate the \gls{uspfs} baseline and four \gls{sspfs} configurations:
 \lstinline{mibench} (Linux guest on Bao),
 \lstinline{mibench+col} (+ page coloring),
 \lstinline{mibench+interf} (+ interference guest),
 and \lstinline{mibench+interf+col} (+ interference and coloring).
-For each run we place the executable \lstinline{BIN} (\lstinline{linux.bin} or \lstinline{bao.bin}) on the SD card (1), open a persistent capture from \gls{gcs} to \gls{uavic} (2), power on (3), start the binary from U-Boot (4), and append results to a log file (8). Some campaigns require a second binary \lstinline{BIN2} (e.g., iterating the full MiBench set) whose output is redirected into the same log (7). We then close the log and generate figures with a Python script. All MiBench configs, logs, and plotting scripts are in \lstinline{mibench/}~\cite{thesis-sw-github}.
+For each run we place the executable \lstinline{BIN} (\lstinline{linux.bin} or
+\lstinline{bao.bin}) on the SD card (1), open a persistent capture from
+\gls{gcs} to \gls{uavic} (2), power on (3), start the binary from U-Boot (4),
+and append results to a log file (8). Some test runs require a second binary
+\lstinline{BIN2} (e.g., iterating the full MiBench set) whose output is
+redirected into the same log (7). We then close the log and plot relevand data
+with a Python script. All MiBench configuration files, logs, and plotting scripts are in
+\lstinline{mibench/}~\cite{thesis-sw-github}.
 
 \begin{figure}[!hbt]
   \centering
@@ -317,7 +329,10 @@ Fig.~\ref{fig:plot-performDeg-Base} reports relative PD for MiBench \gls{aics} a
 (1) \hlighthex{0097FF}{000000}{\textbf{baremetal-noMail}} — native execution without the mailbox driver patch;
 (2) \hlighthex{399334}{000000}{\textbf{bao-noMail}} — Linux guest on Bao without the mailbox driver patch; and
 (3) \hlighthex{FF9E00}{000000}{\textbf{bao}} — Linux guest on Bao with the mailbox driver patch.
-Average baseline execution times are printed below each benchmark. PD is small overall, especially for longer-running benchmarks (suffix \lstinline{large}, e.g., \lstinline{basicmath large}, \lstinline{qsort large}). The mailbox patch adds negligible overhead; Bao’s contribution to PD is also modest.
+Average baseline execution times are printed below each benchmark. PD is small
+overall, especially for longer-running benchmarks (suffix \lstinline{large},
+e.g., \lstinline{basicmath large}, \lstinline{qsort large}). The mailbox patch
+adds negligible overhead and Bao's contribution to PD is also modest.
 
 \begin{figure}[!hbt]
   \centering
@@ -351,7 +366,7 @@ MiBench (finite runs), PX4 is long-running, so we use \lstinline{perf --timeout}
 to fork PX4, collect counters for a fixed interval, and terminate the child.
 
 Listing~\ref{lst:perf-px4} shows the procedure: five warm-up runs and twenty
-30\,s test runs. The \lstinline{px4_bench()} helper invokes \lstinline{perf}
+30 seconds test runs. The \lstinline{px4_bench()} helper invokes \lstinline{perf}
 with the desired events/timeout and the PX4 launch command (lines 6--17). We
 then set the events (line 18) and call \lstinline{px4_bench} for warm-up and
 measured runs.
@@ -431,7 +446,7 @@ rate on the \gls{uav} side. The script \lstinline{cam_fps.sh}
 terminate the pipeline.
 %
 Fig.~\ref{fig:fps-cmp} reports the relative \gls{fps} performance degradation
-(Bao vs.\ native) across runs, computed with Equation~\ref{eq:1} and
+(Bao versus native) across runs, computed with Equation~\ref{eq:1} and
 Equation~\ref{eq:2}. Most runs are near 0\% degradation; the worst case stays
 below 2\%. Confidence intervals are narrow and include 0\%, indicating no
 statistically significant \gls{fps} penalty from Bao.
@@ -439,7 +454,7 @@ statistically significant \gls{fps} penalty from Bao.
 \begin{figure}[!hbt]
   \centering
   \includegraphics[width=1.0\textwidth]{./img/pdf/fps-cmp} 
-  \caption{Relative FPS performance degradation: Bao vs.\ native execution}%
+  \caption{Relative FPS performance degradation: Bao versus native execution}%
   \label{fig:fps-cmp}
 \end{figure}
 
@@ -458,7 +473,7 @@ notably \lstinline{control_allocator} (6–15\% improvement).
 \begin{figure}[!hbt]
   \centering
   \includegraphics[width=1.0\textwidth]{./img/pdf/px4-sspfs-uspfs} 
-  \caption{PX4 task scheduling overhead: USPFS vs.\ SSPFS}%
+  \caption{PX4 task scheduling overhead: USPFS versus SSPFS}%
   \label{fig:px4-sspfs-uspfs}
 \end{figure}
 
@@ -468,26 +483,26 @@ partitioned resources. Cache coloring yields only marginal gains on the
 \gls{uavic} due to \gls{dma} constraints from \gls{spi} sensors; required
 \gls{dma} mappings in the first 1\,GiB constrain virtual-coloring
 effectiveness. Listing~\ref{lst:place-phys} shows the enforced physical
-placement in the \gls{sspfs} configuration via \lstinline{place_phys = true}.
+placement in the \gls{sspfs} configuration via \lstinline[keepspaces=true]|place_phys = true|.
 
 \begin{longlisting}
 \centering
 \inputminted[]{bash}{./listing/placePhys.c}
-\caption[Physical memory mapping in the SSPFS system]{Physical memory mapping in \gls{sspfs}: \lstinline{place_phys = true}}
+\caption[Physical memory mapping in the SSPFS system]{Physical memory mapping in \gls{sspfs}: \lstinline[keepspaces=true]|place_phys = true|}
 \label{lst:place-phys}
 \end{longlisting}
 
 Fig.~\ref{fig:cam-sspfs-uspfs} compares relative \gls{fps} degradation across
 systems and evaluates cache coloring. Most runs show no statistically
 significant difference (whiskers include 0). Runs 10 and 20 exhibit notable
-outliers with \(>\)30\% improvement, while coloring again has limited impact
+outliers with over 30\% improvement, while coloring again has limited impact
 given \gls{dma} constraints. These results align with the Companion \gls{vm}
 microbenchmarks, indicating minimal impact on video performance.
 
 \begin{figure}[!hbt]
   \centering
   \includegraphics[width=1.0\textwidth]{./img/pdf/cam-sspfs-uspfs} 
-  \caption{Relative FPS performance degradation: USPFS vs.\ SSPFS}%
+  \caption{Relative FPS performance degradation: USPFS versus SSPFS}%
   \label{fig:cam-sspfs-uspfs}
 \end{figure}
 
@@ -507,7 +522,7 @@ The mission design incorporates two critical geospatial elements. An
 external polygon defines the geofence perimeter, which triggers a
 return-to-home failsafe if violated. The internal path is the flight path from
 takeoff \lstinline{T} to landing \lstinline{L}. At takeoff, the \gls{uav} ascends
-to an altitude of 2\,m and flies to waypoint \lstinline{3}, then reverses
+to an altitude of two meters and flies to waypoint \lstinline{3}, then reverses
 direction and proceeds to \lstinline{4}, concluding at \lstinline{L} while maintaining a constant altitude. During landing, the \gls{uav} reduces speed to enable a safe, smooth touchdown.
 
 \begin{figure}[!hbt]
@@ -536,7 +551,7 @@ utilization.
 To account for temporal variations between flights, the time domain was
 normalized to a mission-progress scale $[0, 100]$ using linear interpolation:
 \begin{equation}
-t_{\text{norm}} = \frac{t - t_{\min}}{t_{\max} - t_{\min}} \times 100
+t_{\text{norm}} = \frac{t - t_{\min}}{t_{\max} - t_{\min}} \cdot 100
 \end{equation}
 where $t$ is the original timestamp, and $t_{\min}$ and $t_{\max}$ represent the start and end times of each flight, respectively.
 %
@@ -711,7 +726,7 @@ caching), rather than the mailbox supervisor alone. No hypervisor-managed
 shared-memory window is introduced by our design. In absolute terms, the
 increase is small relative to the \gls{fmu} \gls{vm}'s 144\,MB budget
 (about 90\,kB in \gls{sspfs} versus 10\,kB in \gls{uspfs}). Because these
-metrics are indirect, host-side accounting would be required to apportion
+metrics are indirect, host-side accounting would be required to analyze
 overhead more precisely.
 
 \begin{figure}[!hbt]
