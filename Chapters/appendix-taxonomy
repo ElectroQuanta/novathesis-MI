@@ -59,7 +59,7 @@ The following appendix contains the taxonomies for the virtualization and \gls{u
   \includegraphics[width=1.0\textwidth]{./img/eps/uav2-3-mindmap.eps} 
 %  \includesvg[width=1.0\textwidth]{./img/virtualization.svg} 
   %\caption[Virtualization mind map]{Virtualization mind map}%
-  \caption{UAV mind map: System overview --- Architecture, HW, SW and communications}%
+  \caption{UAV mind map: system overview --- Architecture, HW, SW and communications}%
   \label{fig:uav-sysOverv-arch-mindmap}
 \end{figure}
 

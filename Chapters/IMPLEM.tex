@@ -210,28 +210,28 @@ airframe through the prescribed orientations (Fig.~\ref{fig:uav-cfg-sensors}).
 We then configured the power source (battery chemistry/cell count) to obtain
 correct power/voltage readings and calibrated \gls{esc} \gls{pwm} minimum and
 maximum values to avoid output saturation.
-
-Motor setup followed: we specified motor count and geometry (position/direction),
+%
+Next, we configured the motors. We specified motor count and geometry (position/direction),
 mapped motors to output channels, and verified spin direction and speed using the
 motor test utility. Finally, we reviewed and saved the parameter set; the
 resulting configuration can be replicated across PX4 instances to bootstrap
 identical \glspl{uav}. Fig.~\ref{fig:uav-cfg-summary} summarizes the final setup.
 
-\begin{figure}[!hbt]
+\begin{figure}[!hbtp]
   \centering
   \includegraphics[width=0.9\textwidth]{./img/png/qgc-airframe}
   \caption{UAV configuration: airframe}
   \label{fig:uav-cfg-airframe}
 \end{figure}
 
-\begin{figure}[!hbt]
+\begin{figure}[!hbtp]
   \centering
-  \includegraphics[width=0.9\textwidth]{./img/png/qgc-sensors}
+  \includegraphics[width=0.8\textwidth]{./img/png/qgc-sensors}
   \caption{UAV configuration: sensor calibration}
   \label{fig:uav-cfg-sensors}
 \end{figure}
 
-\begin{figure}[!hbt]
+\begin{figure}[!hbtp]
   \centering
   \includegraphics[width=0.92\textwidth]{./img/png/qgc-summary}
   \caption{UAV configuration: summary}
@@ -245,7 +245,7 @@ implemented with \lstinline{GStreamer}. Its modular design, broad codec support,
 and built-in networking made it easy to iterate and test.
 In the sender pipeline, the \gls{uav} captures frames from a USB camera (MJPEG at
 640{\(\times\)}480, 30~\gls{fps}), decodes them, re-encodes as H.264, and packets the stream as
-RTP over UDP for low-latency delivery. Listing~\ref{lst:gstreamer-sender} shows
+\gls{rtp} over \gls{udp} for low-latency delivery. Listing~\ref{lst:gstreamer-sender} shows
 the test script, including device selection and the target host/port so only the
 designated \gls{gcs} receives the stream.
 

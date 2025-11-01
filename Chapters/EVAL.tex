@@ -156,12 +156,12 @@ deploying a malicious user-space program (\lstinline{crash_app}) and a malicious
 kernel module (\lstinline{crash_mod.ko}) against both \gls{uspfs} and
 \gls{sspfs}.
 %
-In the unsupervised case, malicious components execute directly on the host
+In the \emph{unsupervised} case, malicious components execute directly on the host
 Linux \gls{os}; a process crash or kernel fault is expected to propagate
 system-wide, terminating both the non-critical (video streaming) and
 safety-critical (PX4) stacks, leading to loss of flight control.
-
-In the supervised case, we deploy malicious components solely to the Companion
+%
+In the \emph{supervised} case, we deploy malicious components solely to the Companion
 \gls{vm}, reflecting a likely compromise vector via Wi-Fi. Here, we expect the
 hypervisor to contain the failure to the Companion \gls{vm}: a fatal user-space
 abort or kernel fault triggers a guest crash while the PX4 \gls{vm} continues
@@ -172,7 +172,7 @@ functions remain available despite failures in the non-critical domain.
 
 \begin{figure}[!hbtp]
   \centering
-  \includegraphics[width=0.8\textwidth]{./img/pdf/uav-main-eval-funcTest}
+  \includegraphics[width=0.7\textwidth]{./img/pdf/uav-main-eval-funcTest}
   \caption{Functional tests' overview}%
   \label{fig:uav-main-eval-kmod}
 \end{figure}
@@ -207,13 +207,13 @@ crash (catastrophic \gls{uav} failure).
 
 \begin{figure}[!hbt]
   \centering
-  \begin{subfigure}[t]{0.8\textwidth}
+  \begin{subfigure}[t]{0.7\textwidth}
     \centering
     \includegraphics[width=1.0\textwidth]{./img/png/kmod-panic-test-annot}
     \caption{USPFS}%
     \label{fig:kmod-panic-test-uspfs}
   \end{subfigure}
-  \begin{subfigure}[t]{0.8\textwidth}
+  \begin{subfigure}[t]{0.7\textwidth}
     \centering
     \includegraphics[width=\linewidth]{./img/png/kmod-panic-test-bao-annot}
     \caption{SSPFS}%
@@ -247,7 +247,7 @@ Finally, terminating \lstinline{init} compromises the system. The module
 \gls{uspfs} crashed globally, whereas \gls{sspfs} preserved the PX4 \gls{vm} and
 flight capability.
 
-\clearpage
+% \clearpage
 
 \subsection{Unprivileged mode}
 \label{sec:unprivileged-mode}
@@ -261,24 +261,24 @@ The user-space resource-exhaustion application is available at
 (1) memory exhaustion by unbounded allocation while attempting to evade the \gls{oom} killer (\lstinline{memory_attack()});
 (2) process exhaustion via a fork storm that spawns processes which touch shared memory and then hang (\lstinline{process_attack()});
 (3) \gls{cpu} and \gls{io} starvation (\lstinline{cpu_io_attack()}) by raising the process to the highest scheduling priority (line 132), issuing continuous random page reads (line 140), and forcing frequent rescheduling (line 143).
-
+%
 A monitoring thread (\lstinline{status_thread()}) records (1) elapsed time, (2) free memory via \lstinline{sysinfo()}, (3) process count \lstinline{sysinfo.procs}, (4) \gls{cpu} usage from \lstinline{/proc/stat}, and (5) load average from \lstinline{sysinfo.loads}. The \lstinline{main()} routine removes resource limits, launches the monitor, starts each attack in a child process, and then stays alive in a non-optimizable loop.
 
 Fig.~\ref{fig:user-memhog-test-uspfs} shows testing on \gls{uspfs}. After boot over \gls{uart} (1) and SSH login over Wi-Fi (2), the system quickly became unresponsive (3). Basic commands such as \lstinline{ls} failed and resources were permanently pinned by the attack (4). Although the host still answered at the network level, it could no longer service PX4 or the video pipeline, severely impacting flight functionality.
-
+%
 We repeated the procedure on \gls{sspfs} (Fig.~\ref{fig:user-memhog-test-sspfs}). The platform was booted over \gls{uart}, bringing up the PX4 and Companion \glspl{vm}. After logging into the PX4 \gls{vm} (1), we connected to the Companion \gls{vm} via SSH (2) and started the attack there. The Companion \gls{vm} became unresponsive (3) and dedicated its resources to the attacker (4), but the PX4 \gls{vm} remained responsive and controllable. Hence only the non-critical domain failed, and the \gls{uav} retained flight capability.
 %
 These results confirm that Bao preserves critical-domain availability under severe user-space contention in the non-critical domain, meeting the consolidation and isolation goals.
 
 \begin{figure}[!hbt]
   \centering
-  \begin{subfigure}[t]{0.7\textwidth}
+  \begin{subfigure}[t]{0.72\textwidth}
     \centering
     \includegraphics[width=1.0\textwidth]{./img/png/user-memhog-test-annot}
     \caption{USPFS}%
     \label{fig:user-memhog-test-uspfs}
   \end{subfigure}
-  \begin{subfigure}[t]{0.7\textwidth}
+  \begin{subfigure}[t]{0.72\textwidth}
     \centering
     \includegraphics[width=\linewidth]{./img/png/user-memhog-test-bao-annot}
     \caption{SSPFS}%
@@ -287,6 +287,130 @@ These results confirm that Bao preserves critical-domain availability under seve
   \caption{Functional tests: user-space resource-exhaustion application}
   \label{fig:user-memhog-test}
 \end{figure}
+
+% ==========================================================================
+
+
+
+% Preamble (once, if not already)
+% \usepackage{booktabs}
+% \usepackage{array}
+% \usepackage{multirow}
+% \usepackage[table]{xcolor} % if using colored status macros like \Fail, \Impact, etc.
+
+% (Optional) status macros used in your example:
+% \newcommand{\Run}[1]{\cellcolor{green!10}{\textbf{#1}}}
+% \newcommand{\Impact}[1]{\cellcolor{orange!15}{\textbf{#1}}}
+% \newcommand{\Fail}[1]{\cellcolor{red!10}{\textbf{#1}}}
+% \newcommand{\Neutral}[1]{#1}
+% \definecolor{runbg}{HTML}{E8F5E9}     % light green
+% \definecolor{runfg}{HTML}{1B5E20}     % dark green
+% \definecolor{impactbg}{HTML}{FFF3E0}  % light orange
+% \definecolor{impactfg}{HTML}{E65100}  % dark orange
+% \definecolor{failbg}{HTML}{FDEAEA}    % light red
+% \definecolor{failfg}{HTML}{B00020}    % dark red
+
+Table~\ref{tab:func-val-priv} summarizes functional validation results by privilege level and failure mode for each system. 
+\emph{P}, \emph{C}, \emph{M}, \emph{L}, and \emph{B} denote PX4, Companion, Malicious, Linux, and Bao, respectively. 
+Cell colors indicate the execution status: 
+\hlighthex{E8F5E9}{1B5E20}{\textbf{running}}, 
+\hlighthex{FFF3E0}{E65100}{\textbf{heavy impact}}, and 
+\hlighthex{FDEAEA}{B00020}{\textbf{failure}}.
+Results show that, under supervision (\gls{sspfs}), faults are contained within
+the non-critical stack, whereas the unsupervised baseline (\gls{uspfs}) exhibits
+propagation to critical components.
+
+\begin{table}[!htbp]
+  \centering
+  \caption{Functional validation by privilege level and failure mode for each system}
+  \label{tab:func-val-priv}
+
+  \begingroup
+  \scriptsize
+  \setlength{\tabcolsep}{2.5pt}
+  \renewcommand{\arraystretch}{1.12}
+  \sloppy
+
+  \begin{tabular}{@{}%
+    >{\raggedright\arraybackslash}p{0.10\textwidth} % System
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Priv Panic P
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Priv Panic C
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Priv Panic M
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Priv MemCor P
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Priv MemCor C
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Priv MemCor M
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Priv MemExh P
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Priv MemExh C
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Priv MemExh M
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Priv Killinit P
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Priv Killinit C
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Priv Killinit M
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Unpriv MPCIO P
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Unpriv MPCIO C
+    >{\centering\arraybackslash}p{0.044\textwidth}  % Unpriv MPCIO M
+  @{}}
+    \toprule
+    \multicolumn{1}{c}{} &
+    \multicolumn{12}{c}{\textbf{Privileged}} &
+    \multicolumn{3}{c}{\textbf{Unprivileged}} \\
+    \cmidrule(lr){2-13}\cmidrule(l){14-16}
+    \textbf{System} &
+    \multicolumn{3}{c}{\textbf{Panic}} &
+    \multicolumn{3}{c}{\textbf{Mem corruption}} &
+    \multicolumn{3}{c}{\textbf{Mem exhaust}} &
+    \multicolumn{3}{c}{\textbf{Kill \texttt{init}}} &
+    \multicolumn{3}{c}{\textbf{Mem+Proc+CPU/IO}} \\
+    \midrule
+
+    % ----------------------- USPFS (2 rows) -----------------------
+    \multirow{2}{*}{\textbf{USPFS}} &
+      \Fail{P} & \Fail{C} & \Fail{M} &
+      \Fail{P} & \Fail{C} & \Fail{M} &
+      \Fail{P} & \Fail{C} & \Fail{M} &
+      \Fail{P} & \Fail{C} & \Fail{M} &
+      \Impact{P} & \Impact{C} & \Impact{M} \\
+    & % sub-row with L under each PCM cell
+      \Fail{} & \Fail{L} & \Fail{} &
+      \Fail{} & \Fail{L} & \Fail{} &
+      \Fail{} & \Fail{L} & \Fail{} &
+      \Fail{} & \Fail{L} & \Fail{} &
+      \Impact{} & \Impact{L} & \Impact{} \\
+    \midrule
+
+    % ----------------------- SSPFS (3 rows) -----------------------
+    \multirow{3}{*}{\textbf{SSPFS}} &
+      \Run{P} & \Fail{C} & \Fail{M} &
+      \Run{P} & \Fail{C} & \Fail{M} &
+      \Run{P} & \Fail{C} & \Fail{M} &
+      \Run{P} & \Fail{C} & \Fail{M} &
+      \Run{P} & \Impact{C} & \Impact{M} \\
+    & % L row: P has its own L; C+M share one merged L
+      \Run{L} & \multicolumn{2}{c}{\Fail{L}} &
+      \Run{L} & \multicolumn{2}{c}{\Fail{L}} &
+      \Run{L} & \multicolumn{2}{c}{\Fail{L}} &
+      \Run{L} & \multicolumn{2}{c}{\Fail{L}} &
+      \Run{L} & \multicolumn{2}{c}{\Impact{L}} \\
+    & % B row: same merge pattern for C+M
+     \Run{} & \Run{B} & \Run{}  &
+     \Run{} & \Run{B} & \Run{} &
+     \Run{} & \Run{B} & \Run{} &
+     \Run{} & \Run{B} & \Run{} &
+     \Run{} & \Run{B} & \Run{} \\
+    \bottomrule
+  \end{tabular}
+
+  % Legend (optional, compact)
+  % Legend (optional, compact)
+  \vspace{0.5ex}
+  \begin{tabular}{@{}l l l l l@{}}
+    \Run{\phantom{XX}}\;Running
+    & \Impact{\phantom{XX}}\;Heavy impact
+    & \Fail{\phantom{XX}}\;Fail
+    & \quad P: PX4 \quad C: Companion \quad M: Malicious \quad L: Linux \quad B: Bao
+  \end{tabular}
+
+  \endgroup
+\end{table}
 
 \section{Bao benchmarks}
 \label{sec:bao-benchmarks}
@@ -461,14 +585,14 @@ statistically significant \gls{fps} penalty from Bao.
 \subsection{USPFS vs SSPFS}
 \label{sec:uspfs-vs-sspfs}
 After benchmarking guests individually, we compare \gls{uspfs} and \gls{sspfs} by running PX4 scheduling measurements and camera \gls{fps} tests concurrently on each system, logging data per-architecture.
-
+%
 Fig.~\ref{fig:px4-sspfs-uspfs} contrasts scheduling overheads and shows the
 effect of cache coloring. The baseline is \gls{uspfs}; orange and blue bars
 denote \gls{sspfs} with and without coloring, respectively. Positive values
-indicate degradation; negative values indicate improvement. \gls{sspfs} shows
-only marginal degradation (~1\%) for \lstinline{flight_mode_manager} and
+indicate degradation and negative values indicate improvement. \gls{sspfs} shows
+only marginal degradation (1\%) for \lstinline{flight_mode_manager} and
 \lstinline{pca9685_pwm_out}, while outperforming \gls{uspfs} elsewhere -- most
-notably \lstinline{control_allocator} (6–15\% improvement).
+notably \lstinline{control_allocator} (6-15\% improvement).
 
 \begin{figure}[!hbt]
   \centering
@@ -477,13 +601,16 @@ notably \lstinline{control_allocator} (6–15\% improvement).
   \label{fig:px4-sspfs-uspfs}
 \end{figure}
 
-We attribute this divergence to Bao’s isolation: \gls{uspfs} processes contend
+We attribute this divergence to Bao's isolation: \gls{uspfs} processes contend
 for shared resources, whereas \gls{sspfs} \glspl{vm} enjoy statically
 partitioned resources. Cache coloring yields only marginal gains on the
 \gls{uavic} due to \gls{dma} constraints from \gls{spi} sensors; required
 \gls{dma} mappings in the first 1\,GiB constrain virtual-coloring
 effectiveness. Listing~\ref{lst:place-phys} shows the enforced physical
-placement in the \gls{sspfs} configuration via \lstinline[keepspaces=true]|place_phys = true|.
+placement in the \gls{sspfs} configuration via
+\lstinline[keepspaces=true]|place_phys = true|.
+
+\vspace{1\baselineskip}   % two lines worth of vertical space
 
 \begin{longlisting}
 \centering
@@ -495,9 +622,14 @@ placement in the \gls{sspfs} configuration via \lstinline[keepspaces=true]|place
 Fig.~\ref{fig:cam-sspfs-uspfs} compares relative \gls{fps} degradation across
 systems and evaluates cache coloring. Most runs show no statistically
 significant difference (whiskers include 0). Runs 10 and 20 exhibit notable
-outliers with over 30\% improvement, while coloring again has limited impact
+outliers with over 30\% improvement, while cache coloring again has limited impact
 given \gls{dma} constraints. These results align with the Companion \gls{vm}
 microbenchmarks, indicating minimal impact on video performance.
+%
+Overall, beyond isolation benefits, \gls{sspfs} can deliver performance
+advantages in mixed-criticality consolidation. Static resource partitioning
+reduces contention seen in \gls{uspfs}, making \gls{sspfs} a strong choice for
+integrating flight control and video surveillance.
 
 \begin{figure}[!hbt]
   \centering
@@ -506,10 +638,6 @@ microbenchmarks, indicating minimal impact on video performance.
   \label{fig:cam-sspfs-uspfs}
 \end{figure}
 
-Overall, beyond isolation benefits, \gls{sspfs} can deliver performance
-advantages in mixed-criticality consolidation. Static resource partitioning
-reduces contention seen in \gls{uspfs}, making \gls{sspfs} a strong choice for
-integrating flight control and video surveillance.
 
 \section{UAV benchmarks}
 \label{sec:uav-benchmarks}
@@ -525,7 +653,7 @@ takeoff \lstinline{T} to landing \lstinline{L}. At takeoff, the \gls{uav} ascend
 to an altitude of two meters and flies to waypoint \lstinline{3}, then reverses
 direction and proceeds to \lstinline{4}, concluding at \lstinline{L} while maintaining a constant altitude. During landing, the \gls{uav} reduces speed to enable a safe, smooth touchdown.
 
-\begin{figure}[!hbt]
+\begin{figure}[!hbtp]
   \centering
   \includegraphics[width=0.7\textwidth]{./img/png/mission-final} 
   \caption{Automated mission configuration in QGroundControl}%

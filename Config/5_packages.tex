@@ -159,8 +159,26 @@
 %     \makeatother
 % }
 
-% Define the longlisting environment
-\newenvironment{longlisting}{\captionsetup{type=listing}}{}
+%   Define the longlisting environment
+% Breakable, non-float "longlisting"
+\newenvironment{longlisting}{%
+  % make \caption work outside floats and tighten caption gap
+  \captionsetup{type=listing,position=bottom,skip=0pt}%
+  % tighten the verbatim block; ensure it may break across pages
+  \setminted{
+    fontsize=\scriptsize,
+    baselinestretch=1,
+    breaklines,
+    samepage=false
+  }%
+  % local caption spacing
+  \begingroup
+  \setlength{\abovecaptionskip}{0pt}%
+  \setlength{\belowcaptionskip}{4pt}%
+}{%
+  \endgroup
+}
+
 
 % Date
 %\renewcommand{\today}{\ifcase \month \or January\or February\or March\or %
@@ -193,7 +211,31 @@ align=left, leftmargin=*} %,label=$\star$
 \usepackage{rotating} % provides sidewaystable
 % \usepackage{pdflscape}
 
-%\usepackage{colortbl}
+% \usepackage{colortbl}
+
+%%% Colored tables
+% Color palette (accessible-friendly)
+\definecolor{runbg}{HTML}{E8F5E9}     % light green
+\definecolor{runfg}{HTML}{1B5E20}     % dark green
+\definecolor{impactbg}{HTML}{FFF3E0}  % light orange
+\definecolor{impactfg}{HTML}{E65100}  % dark orange
+\definecolor{failbg}{HTML}{FDEAEA}    % light red
+\definecolor{failfg}{HTML}{B00020}    % dark red
+\definecolor{neutralbg}{HTML}{ECEFF1} % light blue-grey
+\definecolor{neutralfg}{HTML}{263238} % dark blue-grey
+\definecolor{headbg}{HTML}{F5F5F5}
+
+% Status cell helpers (background + text color)
+\newcommand{\Run}[1]{\cellcolor{runbg}{\textcolor{runfg}{\textbf{#1}}}}
+\newcommand{\Impact}[1]{\cellcolor{impactbg}{\textcolor{impactfg}{\textbf{#1}}}}
+\newcommand{\Fail}[1]{\cellcolor{failbg}{\textcolor{failfg}{\textbf{#1}}}}
+\newcommand{\Neutral}[1]{\cellcolor{neutralbg}{\textcolor{neutralfg}{#1}}}
+
+% A centered, fixed-width column type
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+%%%%%%%
+
+
 
 %\usepackage[table,xcdraw]{xcolor}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

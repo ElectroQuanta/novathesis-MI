@@ -22,14 +22,13 @@ benchmarking and real-flight experiments.
 \textbf{RQ1 (Timing under consolidation).}
 Offline timing measurements (perf + MiBench \gls{aics}) show small performance
 overheads attributable to supervision and that interference effects can be mitigated via
-cache coloring. These findings are consistent with prior Bao evaluations
-(e.g., Martins and Pinto~\cite{martins2023shedding}).
+cache coloring. These findings are consistent with prior Bao evaluations~\cite{martins2023shedding}.
 
 \item
 \textbf{RQ2 (Fault containment / control authority).}
-When faults were confined to the mission \gls{vm} -- \gls{cpu}/memory abuse and
-user-space resource-starvation patterns -- \gls{sspfs} contained failures to
-that domain; the PX4 \gls{vm} preserved control authority and the \gls{uav}
+When faults were confined to the mission \gls{vm} (\gls{cpu}/memory abuse and
+user-space resource-starvation patterns) \gls{sspfs} contained failures to
+that domain: the PX4 \gls{vm} preserved control authority and the \gls{uav}
 remained airborne. The unsupervised \gls{uspfs} baseline exhibited fault
 propagation and system-level instability under comparable conditions, causing a
 catastrophic \gls{uav} failure.
@@ -176,16 +175,15 @@ The current flight evaluation analyzed a limited set of PX4 topics. We plan to
 expand telemetry coverage (additional control, estimator, and sensor topics) and
 to repeat the experiments on a NuttX-based \gls{uavic}. Beyond the validated
 fault models, longer-duration and higher-intensity adversarial scenarios (e.g.,
-coordinated CPU/memory pressure with I/O bursts, multi-phase misuse workloads)
+coordinated CPU/memory pressure with I/O bursts)
 will stress isolation over time and under interference.
 
 \item \textbf{Advanced shared-resource management.}
 Cache coloring mitigated some interference but is constrained by hardware
 realities (e.g., \gls{dma} traffic). Next steps include memory-bandwidth
-throttling/shaping and, where available, platform \gls{qos} controls for \glspl{llc}
-and interconnects to strengthen temporal isolation. These directions align with
-Bao’s roadmap~\cite{martins_et_al:OASIcs:2020:11779} and can be evaluated using
-the same \gls{aics} + flight stack harness.
+throttling which is already in-line with
+Bao's roadmap~\cite{martins_et_al:OASIcs:2020:11779} and can be evaluated using
+the same \gls{aics} plus flight stack setup.
 
 \item \textbf{Optimized interrupt virtualization.}
 Bao currently targets Arm GICv2/v3~\cite{baoRepo}, which requires hypervisor
