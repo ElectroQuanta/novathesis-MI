@@ -240,14 +240,13 @@ and industrial requirements.
 \label{sec:bao}
 \emph{Bao} (Mandarin ``bǎohù'', ``to protect'') is an open-source, lightweight,
 security- and safety-oriented bare-metal hypervisor for embedded real-time
-\glspl{mcs}, developed by the ESRGv3 team at the University of
+\glspl{mcs}, developed by the Embedded Systems Research Group at the University of
 Minho~\cite{martins_et_al:OASIcs:2020:11779,baoRepo}. It follows the static,
 type-I partitioning model popularized by \emph{Jailhouse}~\cite{jailhouse} but
 removes the Linux host dependency, thereby reducing the system
-\gls{tcb} -- currently \(\sim 8\,\text{kLOC}\) of C plus \(\sim 500\,\text{LOC}\) of
-assembly -- and easing the path toward
-certification~\cite{martins_et_al:OASIcs:2020:11779}. Bao supports Armv7/8-A,
-Arm-R, and RISC-V (RV32/RV64), with ongoing work toward Infineon TriCore and
+\gls{tcb} (currently \(\sim 8\,\text{kLOC}\) of C plus \(\sim 500\,\text{LOC}\) of
+assembly) and easing the path toward
+certification~\cite{martins_et_al:OASIcs:2020:11779}. Bao supports Armv7/8 (-A and -R), and RISC-V (RV32/RV64), with ongoing work toward Infineon TriCore and
 Renesas RH850.
 
 Bao is a clean-slate design (Fig.~\ref{fig:bao-arch}) comprising a thin,
@@ -553,8 +552,8 @@ At the other end are proprietary ecosystems
 Figure~\ref{fig:uav-types} illustrates several \gls{uav} types, focusing on
 airframe and power source. Core performance characteristics include speed,
 endurance (autonomy), payload, range, and ceiling. Speed depends on propulsion,
-aerodynamics, weather, and power usage; small \glspl{uav} may reach
-\(\sim 50\,\mathrm{km/h}\), while larger platforms can exceed
+aerodynamics, weather, and power usage: small \glspl{uav} may reach
+\(50\,\mathrm{km/h}\), while larger platforms can exceed
 \(300\,\mathrm{km/h}\)~\cite{mohsan2022towards}.
 %
 Table \ref{tab:uav-class-summary} summarizes the classification axes used in
@@ -677,7 +676,7 @@ this survey, linking each axis to concrete categories with some examples.
 
 
 \emph{Autonomy/Endurance} is the maximum continuous flight time on a single
-energy source (battery, fuel, or hybrid), ranging from \(\sim\)20–30\,min for
+energy source (battery, fuel, or hybrid), ranging from about 20–30 minutes for
 small \glspl{uav} to several hours for larger platforms. It is strongly
 influenced by size, weight, aerodynamics, and weather.
 Ongoing work explores in-flight recharging via renewable sources (\gls{pv}
@@ -727,7 +726,8 @@ Navigation typically relies on an \gls{imu} (attitude/heading), a barometer (alt
 Because \gls{gps} alone can have errors on the order of meters, fusing \gls{imu} and barometer data is standard to improve accuracy~\cite{ebeidUAVPlatformsSurvey2017}.
 
 % \paragraph{Actuation.}
-Electronic propulsion dominates. In multirotors, \glspl{bldc} in the propulsion system \emph{(2)} drive the rotors, controlled by \glspl{esc}—high-frequency inverters that convert \gls{dc} to three-phase \gls{ac} and modulate motor speed~\cite{malyshev_research_2024}. 
+Electronic propulsion dominates. In multirotors, \glspl{bldc} in the propulsion
+system \emph{(2)} drive the rotors, controlled by \glspl{esc} -- high-frequency inverters that convert \gls{dc} to three-phase \gls{ac} and modulate motor speed~\cite{malyshev_research_2024}. 
 Fixed-wing hybrids additionally use servomotors for control surfaces (e.g., flaps)~\cite{gabrielBLDCFixedWingUAV2011}.
 Figure~\ref{fig:uav-sysOverv-tasks-mindmap} depicts a concept map of the main tasks and components.
 %
@@ -745,7 +745,7 @@ The \gls{uav} ecosystem can be outlined as a top-down view of five layers~\cite{
         Notable open-source autopilots include \lstinline|PX4|, \lstinline|ArduPilot|, and \lstinline|Paparazzi UAS|.
 
   \item \emph{System simulation}. 
-        Analyzes behavior under varied conditions via \gls{sitl}/\gls{hitl} (e.g., Gazebo~\cite{garcia_simulation_2022} with PX4~\cite{px4-sim} or ArduPilot~\cite{arduPilot-sim}, CoppeliaSim~\cite{coppelia-sim}) and full flight simulators (FlightGear~\cite{flightgear}).
+        Analyzes behavior under varied conditions via \gls{sitl} / \gls{hitl} (e.g., Gazebo~\cite{garcia_simulation_2022} with PX4~\cite{px4-sim} or ArduPilot~\cite{arduPilot-sim}, CoppeliaSim~\cite{coppelia-sim}) and full flight simulators (FlightGear~\cite{flightgear}).
 
   \item \emph{Operating systems}. 
         Provide hardware abstraction: open-source \glspl{rtos} (\lstinline|NuttX|~\cite{px4-home}, \lstinline|ChibiOS|~\cite{arduPilot-home}, \lstinline|FreeRTOS|~\cite{librePilot-arch}) and \glspl{gpos} (\lstinline|Linux|~\cite{px4-pilotpi}), as well as proprietary options (\lstinline|VxWorks|~\cite{vxWorks-uav-aribus-helionic}). 
@@ -952,7 +952,7 @@ The Jetson companion is well suited to computer vision, machine learning, and \g
 
   \begin{subfigure}[t]{0.9\textwidth}
     \includegraphics[width=1.0\textwidth]{./img/png/hw-horizon-pixc4-jetson-arch.png}
-    \caption{HW architecture}
+    \caption{Hardware architecture}
     \label{fig:hw-horizonJetson-arch}
   \end{subfigure}
 
@@ -993,6 +993,7 @@ Table~\ref{tab:hw-ref} summarizes the \gls{uav} reference hardware.
       % >{\raggedright\arraybackslash}p{2.4cm}  % Interfaces
       % >{\raggedright\arraybackslash}p{1cm}  % Specs.
       % >{\raggedright\arraybackslash}p{1cm}  % Refs.
+
 \begin{table}[!htbp]
   \centering
   \caption{UAV hardware reference summary}
@@ -1042,6 +1043,7 @@ Table~\ref{tab:hw-ref} summarizes the \gls{uav} reference hardware.
     \end{tabularx}
   \endgroup
 \end{table}
+% \FloatBarrier
 
 \subsection{UAV Reference Software}%
 \label{sec:uav-ref-sw}
@@ -1059,13 +1061,14 @@ The companion computer provides capabilities that are crucial for autonomy, such
 It can also assist navigation in \gls{gps}-denied and communications-denied environments using \gls{ai}-based components (e.g., Auterion Skynode~\cite{skynodeS-noJamming}). 
 Physical hardware (sensors, actuators, payload) is depicted in purple, and the software layers are shown in green. 
 Arrows indicate communication links and protocols.
-
+%
 \begin{figure}[!hbtp]
   \centering
   \includegraphics[width=\textwidth]{./img/pdf/uav-sw-arch.pdf}
   \caption{UAV software architecture: common structure}
   \label{fig:uav-sw-arch}
 \end{figure}
+
 
 The software stacks on the flight controller and on the companion computer are structurally similar and commonly organized into four layers:
 
@@ -1325,7 +1328,7 @@ Second, single-board Linux systems with add-on shields merge flight control and
 mission functions on one \gls{soc} (e.g., Navio2~\cite{navio2-px4},
 PilotPi~\cite{px4-pilotpi} on Raspberry Pi), trading strong isolation for
 availability and cost. To consolidate critical and non-critical stacks on a
-shared \gls{hw} platform, a resource-efficient and secure mechanism is
+shared hardware platform, a resource-efficient and secure mechanism is
 needed -- typically a hypervisor with disciplined device assignment.
 
 Third, heterogeneous FPGA+\gls{soc} platforms integrate high-performance
